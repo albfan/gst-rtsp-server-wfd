@@ -27,8 +27,8 @@ ximagesrc ! videoscale ! videoconvert ! "video/x-raw,width=640,height=480,framer
 ### Build steps:
 1. Build and install all gstreamer core and plugins described above.
 2. ./autogen.sh --prefix=/usr/local
-3. ./make
-4. ./sudo make install
+3. make
+4. sudo make install
 
 ##### Tested 
 1. tested on ubuntu 12.04
