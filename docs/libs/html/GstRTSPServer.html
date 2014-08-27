@@ -1,0 +1,937 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>GstRTSPServer</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<link rel="home" href="index.html" title="GStreamer RTSP Server Reference Manual">
+<link rel="up" href="ch01.html" title="">
+<link rel="prev" href="ch01.html" title="">
+<link rel="next" href="GstRTSPClient.html" title="GstRTSPClient">
+<meta name="generator" content="GTK-Doc V1.18 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
+<tr valign="middle">
+<td><a accesskey="p" href="ch01.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="ch01.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">GStreamer RTSP Server Reference Manual</th>
+<td><a accesskey="n" href="GstRTSPClient.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr>
+<tr><td colspan="5" class="shortcuts">
+<a href="#GstRTSPServer.synopsis" class="shortcut">Top</a>
+                   | 
+                  <a href="#GstRTSPServer.description" class="shortcut">Description</a>
+                   | 
+                  <a href="#GstRTSPServer.object-hierarchy" class="shortcut">Object Hierarchy</a>
+                   | 
+                  <a href="#GstRTSPServer.properties" class="shortcut">Properties</a>
+                   | 
+                  <a href="#GstRTSPServer.signals" class="shortcut">Signals</a>
+</td></tr>
+</table>
+<div class="refentry">
+<a name="GstRTSPServer"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="GstRTSPServer.top_of_page"></a>GstRTSPServer</span></h2>
+<p>GstRTSPServer — The main server object</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsynopsisdiv">
+<a name="GstRTSPServer.synopsis"></a><h2>Synopsis</h2>
+<pre class="synopsis">struct              <a class="link" href="GstRTSPServer.html#GstRTSPServer-struct" title="struct GstRTSPServer">GstRTSPServer</a>;
+struct              <a class="link" href="GstRTSPServer.html#GstRTSPServerClass" title="struct GstRTSPServerClass">GstRTSPServerClass</a>;
+<a class="link" href="GstRTSPServer.html" title="GstRTSPServer"><span class="returnvalue">GstRTSPServer</span></a> *     <a class="link" href="GstRTSPServer.html#gst-rtsp-server-new" title="gst_rtsp_server_new ()">gst_rtsp_server_new</a>                 (<em class="parameter"><code><span class="type">void</span></code></em>);
+<a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *             <a class="link" href="GstRTSPServer.html#gst-rtsp-server-get-address" title="gst_rtsp_server_get_address ()">gst_rtsp_server_get_address</a>         (<em class="parameter"><code><a class="link" href="GstRTSPServer.html" title="GstRTSPServer"><span class="type">GstRTSPServer</span></a> *server</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="GstRTSPServer.html#gst-rtsp-server-set-address" title="gst_rtsp_server_set_address ()">gst_rtsp_server_set_address</a>         (<em class="parameter"><code><a class="link" href="GstRTSPServer.html" title="GstRTSPServer"><span class="type">GstRTSPServer</span></a> *server</code></em>,
+                                                         <em class="parameter"><code>const <a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *address</code></em>);
+<a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *             <a class="link" href="GstRTSPServer.html#gst-rtsp-server-get-service" title="gst_rtsp_server_get_service ()">gst_rtsp_server_get_service</a>         (<em class="parameter"><code><a class="link" href="GstRTSPServer.html" title="GstRTSPServer"><span class="type">GstRTSPServer</span></a> *server</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="GstRTSPServer.html#gst-rtsp-server-set-service" title="gst_rtsp_server_set_service ()">gst_rtsp_server_set_service</a>         (<em class="parameter"><code><a class="link" href="GstRTSPServer.html" title="GstRTSPServer"><span class="type">GstRTSPServer</span></a> *server</code></em>,
+                                                         <em class="parameter"><code>const <a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *service</code></em>);
+<a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gint"><span class="returnvalue">gint</span></a>                <a class="link" href="GstRTSPServer.html#gst-rtsp-server-get-backlog" title="gst_rtsp_server_get_backlog ()">gst_rtsp_server_get_backlog</a>         (<em class="parameter"><code><a class="link" href="GstRTSPServer.html" title="GstRTSPServer"><span class="type">GstRTSPServer</span></a> *server</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="GstRTSPServer.html#gst-rtsp-server-set-backlog" title="gst_rtsp_server_set_backlog ()">gst_rtsp_server_set_backlog</a>         (<em class="parameter"><code><a class="link" href="GstRTSPServer.html" title="GstRTSPServer"><span class="type">GstRTSPServer</span></a> *server</code></em>,
+                                                         <em class="parameter"><code><a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gint"><span class="type">gint</span></a> backlog</code></em>);
+<span class="returnvalue">int</span>                 <a class="link" href="GstRTSPServer.html#gst-rtsp-server-get-bound-port" title="gst_rtsp_server_get_bound_port ()">gst_rtsp_server_get_bound_port</a>      (<em class="parameter"><code><a class="link" href="GstRTSPServer.html" title="GstRTSPServer"><span class="type">GstRTSPServer</span></a> *server</code></em>);
+<a class="link" href="GstRTSPMountPoints.html" title="GstRTSPMountPoints"><span class="returnvalue">GstRTSPMountPoints</span></a> * <a class="link" href="GstRTSPServer.html#gst-rtsp-server-get-mount-points" title="gst_rtsp_server_get_mount_points ()">gst_rtsp_server_get_mount_points</a>   (<em class="parameter"><code><a class="link" href="GstRTSPServer.html" title="GstRTSPServer"><span class="type">GstRTSPServer</span></a> *server</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="GstRTSPServer.html#gst-rtsp-server-set-mount-points" title="gst_rtsp_server_set_mount_points ()">gst_rtsp_server_set_mount_points</a>    (<em class="parameter"><code><a class="link" href="GstRTSPServer.html" title="GstRTSPServer"><span class="type">GstRTSPServer</span></a> *server</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GstRTSPMountPoints.html" title="GstRTSPMountPoints"><span class="type">GstRTSPMountPoints</span></a> *mounts</code></em>);
+<a class="link" href="GstRTSPSessionPool.html" title="GstRTSPSessionPool"><span class="returnvalue">GstRTSPSessionPool</span></a> * <a class="link" href="GstRTSPServer.html#gst-rtsp-server-get-session-pool" title="gst_rtsp_server_get_session_pool ()">gst_rtsp_server_get_session_pool</a>   (<em class="parameter"><code><a class="link" href="GstRTSPServer.html" title="GstRTSPServer"><span class="type">GstRTSPServer</span></a> *server</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="GstRTSPServer.html#gst-rtsp-server-set-session-pool" title="gst_rtsp_server_set_session_pool ()">gst_rtsp_server_set_session_pool</a>    (<em class="parameter"><code><a class="link" href="GstRTSPServer.html" title="GstRTSPServer"><span class="type">GstRTSPServer</span></a> *server</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GstRTSPSessionPool.html" title="GstRTSPSessionPool"><span class="type">GstRTSPSessionPool</span></a> *pool</code></em>);
+<a class="link" href="gst-rtsp-server-GstRTSPThreadPool.html#GstRTSPThreadPool" title="struct GstRTSPThreadPool"><span class="returnvalue">GstRTSPThreadPool</span></a> * <a class="link" href="GstRTSPServer.html#gst-rtsp-server-get-thread-pool" title="gst_rtsp_server_get_thread_pool ()">gst_rtsp_server_get_thread_pool</a>     (<em class="parameter"><code><a class="link" href="GstRTSPServer.html" title="GstRTSPServer"><span class="type">GstRTSPServer</span></a> *server</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="GstRTSPServer.html#gst-rtsp-server-set-thread-pool" title="gst_rtsp_server_set_thread_pool ()">gst_rtsp_server_set_thread_pool</a>     (<em class="parameter"><code><a class="link" href="GstRTSPServer.html" title="GstRTSPServer"><span class="type">GstRTSPServer</span></a> *server</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="gst-rtsp-server-GstRTSPThreadPool.html#GstRTSPThreadPool" title="struct GstRTSPThreadPool"><span class="type">GstRTSPThreadPool</span></a> *pool</code></em>);
+<a class="link" href="GstRTSPAuth.html" title="GstRTSPAuth"><span class="returnvalue">GstRTSPAuth</span></a> *       <a class="link" href="GstRTSPServer.html#gst-rtsp-server-get-auth" title="gst_rtsp_server_get_auth ()">gst_rtsp_server_get_auth</a>            (<em class="parameter"><code><a class="link" href="GstRTSPServer.html" title="GstRTSPServer"><span class="type">GstRTSPServer</span></a> *server</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="GstRTSPServer.html#gst-rtsp-server-set-auth" title="gst_rtsp_server_set_auth ()">gst_rtsp_server_set_auth</a>            (<em class="parameter"><code><a class="link" href="GstRTSPServer.html" title="GstRTSPServer"><span class="type">GstRTSPServer</span></a> *server</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GstRTSPAuth.html" title="GstRTSPAuth"><span class="type">GstRTSPAuth</span></a> *auth</code></em>);
+<a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="GstRTSPServer.html#gst-rtsp-server-transfer-connection" title="gst_rtsp_server_transfer_connection ()">gst_rtsp_server_transfer_connection</a> (<em class="parameter"><code><a class="link" href="GstRTSPServer.html" title="GstRTSPServer"><span class="type">GstRTSPServer</span></a> *server</code></em>,
+                                                         <em class="parameter"><code><a href="/usr/share/gtk-doc/html/gio/GSocket.html"><span class="type">GSocket</span></a> *socket</code></em>,
+                                                         <em class="parameter"><code>const <a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *ip</code></em>,
+                                                         <em class="parameter"><code><a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gint"><span class="type">gint</span></a> port</code></em>,
+                                                         <em class="parameter"><code>const <a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *initial_buffer</code></em>);
+<a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="GstRTSPServer.html#gst-rtsp-server-io-func" title="gst_rtsp_server_io_func ()">gst_rtsp_server_io_func</a>             (<em class="parameter"><code><a href="/usr/share/gtk-doc/html/gio/GSocket.html"><span class="type">GSocket</span></a> *socket</code></em>,
+                                                         <em class="parameter"><code><a href="/usr/share/gtk-doc/html/glib/glib-IO-Channels.html#GIOCondition"><span class="type">GIOCondition</span></a> condition</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GstRTSPServer.html" title="GstRTSPServer"><span class="type">GstRTSPServer</span></a> *server</code></em>);
+<a href="/usr/share/gtk-doc/html/gio/GSocket.html"><span class="returnvalue">GSocket</span></a> *           <a class="link" href="GstRTSPServer.html#gst-rtsp-server-create-socket" title="gst_rtsp_server_create_socket ()">gst_rtsp_server_create_socket</a>       (<em class="parameter"><code><a class="link" href="GstRTSPServer.html" title="GstRTSPServer"><span class="type">GstRTSPServer</span></a> *server</code></em>,
+                                                         <em class="parameter"><code><a href="/usr/share/gtk-doc/html/gio/GCancellable.html"><span class="type">GCancellable</span></a> *cancellable</code></em>,
+                                                         <em class="parameter"><code><a href="/usr/share/gtk-doc/html/glib/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);
+<a href="/usr/share/gtk-doc/html/glib/glib-The-Main-Event-Loop.html#GSource"><span class="returnvalue">GSource</span></a> *           <a class="link" href="GstRTSPServer.html#gst-rtsp-server-create-source" title="gst_rtsp_server_create_source ()">gst_rtsp_server_create_source</a>       (<em class="parameter"><code><a class="link" href="GstRTSPServer.html" title="GstRTSPServer"><span class="type">GstRTSPServer</span></a> *server</code></em>,
+                                                         <em class="parameter"><code><a href="/usr/share/gtk-doc/html/gio/GCancellable.html"><span class="type">GCancellable</span></a> *cancellable</code></em>,
+                                                         <em class="parameter"><code><a href="/usr/share/gtk-doc/html/glib/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);
+<a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#guint"><span class="returnvalue">guint</span></a>               <a class="link" href="GstRTSPServer.html#gst-rtsp-server-attach" title="gst_rtsp_server_attach ()">gst_rtsp_server_attach</a>              (<em class="parameter"><code><a class="link" href="GstRTSPServer.html" title="GstRTSPServer"><span class="type">GstRTSPServer</span></a> *server</code></em>,
+                                                         <em class="parameter"><code><a href="/usr/share/gtk-doc/html/glib/glib-The-Main-Event-Loop.html#GMainContext"><span class="type">GMainContext</span></a> *context</code></em>);
+<a class="link" href="GstRTSPSession.html#GstRTSPFilterResult" title="enum GstRTSPFilterResult"><span class="returnvalue">GstRTSPFilterResult</span></a> (<a class="link" href="GstRTSPServer.html#GstRTSPServerClientFilterFunc" title="GstRTSPServerClientFilterFunc ()">*GstRTSPServerClientFilterFunc</a>)    (<em class="parameter"><code><a class="link" href="GstRTSPServer.html" title="GstRTSPServer"><span class="type">GstRTSPServer</span></a> *server</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GstRTSPClient.html" title="GstRTSPClient"><span class="type">GstRTSPClient</span></a> *client</code></em>,
+                                                         <em class="parameter"><code><a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> user_data</code></em>);
+<a href="/usr/share/gtk-doc/html/glib/glib-Doubly-Linked-Lists.html#GList"><span class="returnvalue">GList</span></a> *             <a class="link" href="GstRTSPServer.html#gst-rtsp-server-client-filter" title="gst_rtsp_server_client_filter ()">gst_rtsp_server_client_filter</a>       (<em class="parameter"><code><a class="link" href="GstRTSPServer.html" title="GstRTSPServer"><span class="type">GstRTSPServer</span></a> *server</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GstRTSPServer.html#GstRTSPServerClientFilterFunc" title="GstRTSPServerClientFilterFunc ()"><span class="type">GstRTSPServerClientFilterFunc</span></a> func</code></em>,
+                                                         <em class="parameter"><code><a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> user_data</code></em>);
+</pre>
+</div>
+<div class="refsect1">
+<a name="GstRTSPServer.object-hierarchy"></a><h2>Object Hierarchy</h2>
+<pre class="synopsis">
+  <a href="/usr/share/gtk-doc/html/gobject/gobject-The-Base-Object-Type.html#GObject">GObject</a>
+   +----GstRTSPServer
+</pre>
+</div>
+<div class="refsect1">
+<a name="GstRTSPServer.properties"></a><h2>Properties</h2>
+<pre class="synopsis">
+  "<a class="link" href="GstRTSPServer.html#GstRTSPServer--address" title='The "address" property'>address</a>"                  <a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a>*                : Read / Write
+  "<a class="link" href="GstRTSPServer.html#GstRTSPServer--backlog" title='The "backlog" property'>backlog</a>"                  <a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gint"><span class="type">gint</span></a>                  : Read / Write
+  "<a class="link" href="GstRTSPServer.html#GstRTSPServer--bound-port" title='The "bound-port" property'>bound-port</a>"               <a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gint"><span class="type">gint</span></a>                  : Read
+  "<a class="link" href="GstRTSPServer.html#GstRTSPServer--mount-points" title='The "mount-points" property'>mount-points</a>"             <a class="link" href="GstRTSPMountPoints.html" title="GstRTSPMountPoints"><span class="type">GstRTSPMountPoints</span></a>*   : Read / Write
+  "<a class="link" href="GstRTSPServer.html#GstRTSPServer--service" title='The "service" property'>service</a>"                  <a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a>*                : Read / Write
+  "<a class="link" href="GstRTSPServer.html#GstRTSPServer--session-pool" title='The "session-pool" property'>session-pool</a>"             <a class="link" href="GstRTSPSessionPool.html" title="GstRTSPSessionPool"><span class="type">GstRTSPSessionPool</span></a>*   : Read / Write
+</pre>
+</div>
+<div class="refsect1">
+<a name="GstRTSPServer.signals"></a><h2>Signals</h2>
+<pre class="synopsis">
+  "<a class="link" href="GstRTSPServer.html#GstRTSPServer-client-connected" title='The "client-connected" signal'>client-connected</a>"                               : <a href="/usr/share/gtk-doc/html/gobject/gobject-Signals.html#G-SIGNAL-RUN-LAST:CAPS"><code class="literal">Run Last</code></a>
+</pre>
+</div>
+<div class="refsect1">
+<a name="GstRTSPServer.description"></a><h2>Description</h2>
+<p>
+The server object is the object listening for connections on a port and
+creating <a class="link" href="GstRTSPClient.html" title="GstRTSPClient"><span class="type">GstRTSPClient</span></a> objects to handle those connections.
+</p>
+<p>
+The server will listen on the address set with <a class="link" href="GstRTSPServer.html#gst-rtsp-server-set-address" title="gst_rtsp_server_set_address ()"><code class="function">gst_rtsp_server_set_address()</code></a>
+and the port or service configured with <a class="link" href="GstRTSPServer.html#gst-rtsp-server-set-service" title="gst_rtsp_server_set_service ()"><code class="function">gst_rtsp_server_set_service()</code></a>.
+Use <a class="link" href="GstRTSPServer.html#gst-rtsp-server-set-backlog" title="gst_rtsp_server_set_backlog ()"><code class="function">gst_rtsp_server_set_backlog()</code></a> to configure the amount of pending requests
+that the server will keep. By default the server listens on the current
+network (0.0.0.0) and port 8554.
+</p>
+<p>
+The server will require an SSL connection when a TLS certificate has been
+set in the auth object with <a class="link" href="GstRTSPAuth.html#gst-rtsp-auth-set-tls-certificate" title="gst_rtsp_auth_set_tls_certificate ()"><code class="function">gst_rtsp_auth_set_tls_certificate()</code></a>.
+</p>
+<p>
+To start the server, use <a class="link" href="GstRTSPServer.html#gst-rtsp-server-attach" title="gst_rtsp_server_attach ()"><code class="function">gst_rtsp_server_attach()</code></a> to attach it to a
+<a href="/usr/share/gtk-doc/html/glib/glib-The-Main-Event-Loop.html#GMainContext"><span class="type">GMainContext</span></a>. For more control, <a class="link" href="GstRTSPServer.html#gst-rtsp-server-create-source" title="gst_rtsp_server_create_source ()"><code class="function">gst_rtsp_server_create_source()</code></a> and
+<a class="link" href="GstRTSPServer.html#gst-rtsp-server-create-socket" title="gst_rtsp_server_create_socket ()"><code class="function">gst_rtsp_server_create_socket()</code></a> can be used to get a <a href="/usr/share/gtk-doc/html/glib/glib-The-Main-Event-Loop.html#GSource"><span class="type">GSource</span></a> and <a href="/usr/share/gtk-doc/html/gio/GSocket.html"><span class="type">GSocket</span></a>
+respectively.
+</p>
+<p>
+<a class="link" href="GstRTSPServer.html#gst-rtsp-server-transfer-connection" title="gst_rtsp_server_transfer_connection ()"><code class="function">gst_rtsp_server_transfer_connection()</code></a> can be used to transfer an existing
+socket to the RTSP server, for example from an HTTP server.
+</p>
+<p>
+Once the server socket is attached to a mainloop, it will start accepting
+connections. When a new connection is received, a new <a class="link" href="GstRTSPClient.html" title="GstRTSPClient"><span class="type">GstRTSPClient</span></a> object
+is created to handle the connection. The new client will be configured with
+the server <a class="link" href="GstRTSPAuth.html" title="GstRTSPAuth"><span class="type">GstRTSPAuth</span></a>, <a class="link" href="GstRTSPMountPoints.html" title="GstRTSPMountPoints"><span class="type">GstRTSPMountPoints</span></a>, <a class="link" href="GstRTSPSessionPool.html" title="GstRTSPSessionPool"><span class="type">GstRTSPSessionPool</span></a> and
+<a class="link" href="gst-rtsp-server-GstRTSPThreadPool.html#GstRTSPThreadPool" title="struct GstRTSPThreadPool"><span class="type">GstRTSPThreadPool</span></a>.
+</p>
+<p>
+The server uses the configured <a class="link" href="gst-rtsp-server-GstRTSPThreadPool.html#GstRTSPThreadPool" title="struct GstRTSPThreadPool"><span class="type">GstRTSPThreadPool</span></a> object to handle the
+remainder of the communication with this client.
+</p>
+<p>
+Last reviewed on 2013-07-11 (1.0.0)
+</p>
+</div>
+<div class="refsect1">
+<a name="GstRTSPServer.details"></a><h2>Details</h2>
+<div class="refsect2">
+<a name="GstRTSPServer-struct"></a><h3>struct GstRTSPServer</h3>
+<pre class="programlisting">struct GstRTSPServer;</pre>
+<p>
+This object listens on a port, creates and manages the clients connected to
+it.
+</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="GstRTSPServerClass"></a><h3>struct GstRTSPServerClass</h3>
+<pre class="programlisting">struct GstRTSPServerClass {
+  GObjectClass  parent_class;
+
+  GstRTSPClient * (*create_client)      (GstRTSPServer *server);
+
+  /* signals */
+  void            (*client_connected)   (GstRTSPServer *server, GstRTSPClient *client);
+};
+</pre>
+<p>
+The RTSP server class structure
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><a href="/usr/share/gtk-doc/html/gobject/gobject-The-Base-Object-Type.html#GObjectClass"><span class="type">GObjectClass</span></a> <em class="structfield"><code><a name="GstRTSPServerClass.parent-class"></a>parent_class</code></em>;</span></p></td>
+<td></td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="structfield"><code><a name="GstRTSPServerClass.create-client"></a>create_client</code></em> ()</span></p></td>
+<td>Create, configure a new GstRTSPClient
+object that handles the new connection on <em class="parameter"><code>socket</code></em>. The default
+implementation will create a GstRTSPClient and will configure the
+mount-points, auth, session-pool and thread-pool on the client.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="structfield"><code><a name="GstRTSPServerClass.client-connected"></a>client_connected</code></em> ()</span></p></td>
+<td>emited when a new client connected.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gst-rtsp-server-new"></a><h3>gst_rtsp_server_new ()</h3>
+<pre class="programlisting"><a class="link" href="GstRTSPServer.html" title="GstRTSPServer"><span class="returnvalue">GstRTSPServer</span></a> *     gst_rtsp_server_new                 (<em class="parameter"><code><span class="type">void</span></code></em>);</pre>
+<p>
+Create a new <a class="link" href="GstRTSPServer.html" title="GstRTSPServer"><span class="type">GstRTSPServer</span></a> instance.
+</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gst-rtsp-server-get-address"></a><h3>gst_rtsp_server_get_address ()</h3>
+<pre class="programlisting"><a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *             gst_rtsp_server_get_address         (<em class="parameter"><code><a class="link" href="GstRTSPServer.html" title="GstRTSPServer"><span class="type">GstRTSPServer</span></a> *server</code></em>);</pre>
+<p>
+Get the address on which the server will accept connections.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>server</code></em> :</span></p></td>
+<td>a <a class="link" href="GstRTSPServer.html" title="GstRTSPServer"><span class="type">GstRTSPServer</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>the server address. <a href="/usr/share/gtk-doc/html/glib/glib-Memory-Allocation.html#g-free"><code class="function">g_free()</code></a> after usage.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gst-rtsp-server-set-address"></a><h3>gst_rtsp_server_set_address ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                gst_rtsp_server_set_address         (<em class="parameter"><code><a class="link" href="GstRTSPServer.html" title="GstRTSPServer"><span class="type">GstRTSPServer</span></a> *server</code></em>,
+                                                         <em class="parameter"><code>const <a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *address</code></em>);</pre>
+<p>
+Configure <em class="parameter"><code>server</code></em> to accept connections on the given address.
+</p>
+<p>
+This function must be called before the server is bound.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>server</code></em> :</span></p></td>
+<td>a <a class="link" href="GstRTSPServer.html" title="GstRTSPServer"><span class="type">GstRTSPServer</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>address</code></em> :</span></p></td>
+<td>the address</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gst-rtsp-server-get-service"></a><h3>gst_rtsp_server_get_service ()</h3>
+<pre class="programlisting"><a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *             gst_rtsp_server_get_service         (<em class="parameter"><code><a class="link" href="GstRTSPServer.html" title="GstRTSPServer"><span class="type">GstRTSPServer</span></a> *server</code></em>);</pre>
+<p>
+Get the service on which the server will accept connections.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>server</code></em> :</span></p></td>
+<td>a <a class="link" href="GstRTSPServer.html" title="GstRTSPServer"><span class="type">GstRTSPServer</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>the service. use <a href="/usr/share/gtk-doc/html/glib/glib-Memory-Allocation.html#g-free"><code class="function">g_free()</code></a> after usage.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gst-rtsp-server-set-service"></a><h3>gst_rtsp_server_set_service ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                gst_rtsp_server_set_service         (<em class="parameter"><code><a class="link" href="GstRTSPServer.html" title="GstRTSPServer"><span class="type">GstRTSPServer</span></a> *server</code></em>,
+                                                         <em class="parameter"><code>const <a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *service</code></em>);</pre>
+<p>
+Configure <em class="parameter"><code>server</code></em> to accept connections on the given service.
+<em class="parameter"><code>service</code></em> should be a string containing the service name (see services(5)) or
+a string containing a port number between 1 and 65535.
+</p>
+<p>
+When <em class="parameter"><code>service</code></em> is set to "0", the server will listen on a random free
+port. The actual used port can be retrieved with
+<a class="link" href="GstRTSPServer.html#gst-rtsp-server-get-bound-port" title="gst_rtsp_server_get_bound_port ()"><code class="function">gst_rtsp_server_get_bound_port()</code></a>.
+</p>
+<p>
+This function must be called before the server is bound.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>server</code></em> :</span></p></td>
+<td>a <a class="link" href="GstRTSPServer.html" title="GstRTSPServer"><span class="type">GstRTSPServer</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>service</code></em> :</span></p></td>
+<td>the service</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gst-rtsp-server-get-backlog"></a><h3>gst_rtsp_server_get_backlog ()</h3>
+<pre class="programlisting"><a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gint"><span class="returnvalue">gint</span></a>                gst_rtsp_server_get_backlog         (<em class="parameter"><code><a class="link" href="GstRTSPServer.html" title="GstRTSPServer"><span class="type">GstRTSPServer</span></a> *server</code></em>);</pre>
+<p>
+The maximum amount of queued requests for the server.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>server</code></em> :</span></p></td>
+<td>a <a class="link" href="GstRTSPServer.html" title="GstRTSPServer"><span class="type">GstRTSPServer</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>the server backlog.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gst-rtsp-server-set-backlog"></a><h3>gst_rtsp_server_set_backlog ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                gst_rtsp_server_set_backlog         (<em class="parameter"><code><a class="link" href="GstRTSPServer.html" title="GstRTSPServer"><span class="type">GstRTSPServer</span></a> *server</code></em>,
+                                                         <em class="parameter"><code><a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gint"><span class="type">gint</span></a> backlog</code></em>);</pre>
+<p>
+configure the maximum amount of requests that may be queued for the
+server.
+</p>
+<p>
+This function must be called before the server is bound.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>server</code></em> :</span></p></td>
+<td>a <a class="link" href="GstRTSPServer.html" title="GstRTSPServer"><span class="type">GstRTSPServer</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>backlog</code></em> :</span></p></td>
+<td>the backlog</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gst-rtsp-server-get-bound-port"></a><h3>gst_rtsp_server_get_bound_port ()</h3>
+<pre class="programlisting"><span class="returnvalue">int</span>                 gst_rtsp_server_get_bound_port      (<em class="parameter"><code><a class="link" href="GstRTSPServer.html" title="GstRTSPServer"><span class="type">GstRTSPServer</span></a> *server</code></em>);</pre>
+<p>
+Get the port number where the server was bound to.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>server</code></em> :</span></p></td>
+<td>a <a class="link" href="GstRTSPServer.html" title="GstRTSPServer"><span class="type">GstRTSPServer</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>the port number</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gst-rtsp-server-get-mount-points"></a><h3>gst_rtsp_server_get_mount_points ()</h3>
+<pre class="programlisting"><a class="link" href="GstRTSPMountPoints.html" title="GstRTSPMountPoints"><span class="returnvalue">GstRTSPMountPoints</span></a> * gst_rtsp_server_get_mount_points   (<em class="parameter"><code><a class="link" href="GstRTSPServer.html" title="GstRTSPServer"><span class="type">GstRTSPServer</span></a> *server</code></em>);</pre>
+<p>
+Get the <a class="link" href="GstRTSPMountPoints.html" title="GstRTSPMountPoints"><span class="type">GstRTSPMountPoints</span></a> used as the mount points of <em class="parameter"><code>server</code></em>.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>server</code></em> :</span></p></td>
+<td>a <a class="link" href="GstRTSPServer.html" title="GstRTSPServer"><span class="type">GstRTSPServer</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>the <a class="link" href="GstRTSPMountPoints.html" title="GstRTSPMountPoints"><span class="type">GstRTSPMountPoints</span></a> of <em class="parameter"><code>server</code></em>. <a href="/usr/share/gtk-doc/html/gobject/gobject-The-Base-Object-Type.html#g-object-unref"><code class="function">g_object_unref()</code></a> after
+usage. <span class="annotation">[<acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>]</span>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gst-rtsp-server-set-mount-points"></a><h3>gst_rtsp_server_set_mount_points ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                gst_rtsp_server_set_mount_points    (<em class="parameter"><code><a class="link" href="GstRTSPServer.html" title="GstRTSPServer"><span class="type">GstRTSPServer</span></a> *server</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GstRTSPMountPoints.html" title="GstRTSPMountPoints"><span class="type">GstRTSPMountPoints</span></a> *mounts</code></em>);</pre>
+<p>
+configure <em class="parameter"><code>mounts</code></em> to be used as the mount points of <em class="parameter"><code>server</code></em>.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>server</code></em> :</span></p></td>
+<td>a <a class="link" href="GstRTSPServer.html" title="GstRTSPServer"><span class="type">GstRTSPServer</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>mounts</code></em> :</span></p></td>
+<td>a <a class="link" href="GstRTSPMountPoints.html" title="GstRTSPMountPoints"><span class="type">GstRTSPMountPoints</span></a>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gst-rtsp-server-get-session-pool"></a><h3>gst_rtsp_server_get_session_pool ()</h3>
+<pre class="programlisting"><a class="link" href="GstRTSPSessionPool.html" title="GstRTSPSessionPool"><span class="returnvalue">GstRTSPSessionPool</span></a> * gst_rtsp_server_get_session_pool   (<em class="parameter"><code><a class="link" href="GstRTSPServer.html" title="GstRTSPServer"><span class="type">GstRTSPServer</span></a> *server</code></em>);</pre>
+<p>
+Get the <a class="link" href="GstRTSPSessionPool.html" title="GstRTSPSessionPool"><span class="type">GstRTSPSessionPool</span></a> used as the session pool of <em class="parameter"><code>server</code></em>.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>server</code></em> :</span></p></td>
+<td>a <a class="link" href="GstRTSPServer.html" title="GstRTSPServer"><span class="type">GstRTSPServer</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>the <a class="link" href="GstRTSPSessionPool.html" title="GstRTSPSessionPool"><span class="type">GstRTSPSessionPool</span></a> used for sessions. <a href="/usr/share/gtk-doc/html/gobject/gobject-The-Base-Object-Type.html#g-object-unref"><code class="function">g_object_unref()</code></a> after
+usage. <span class="annotation">[<acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>]</span>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gst-rtsp-server-set-session-pool"></a><h3>gst_rtsp_server_set_session_pool ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                gst_rtsp_server_set_session_pool    (<em class="parameter"><code><a class="link" href="GstRTSPServer.html" title="GstRTSPServer"><span class="type">GstRTSPServer</span></a> *server</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GstRTSPSessionPool.html" title="GstRTSPSessionPool"><span class="type">GstRTSPSessionPool</span></a> *pool</code></em>);</pre>
+<p>
+configure <em class="parameter"><code>pool</code></em> to be used as the session pool of <em class="parameter"><code>server</code></em>.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>server</code></em> :</span></p></td>
+<td>a <a class="link" href="GstRTSPServer.html" title="GstRTSPServer"><span class="type">GstRTSPServer</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>pool</code></em> :</span></p></td>
+<td>a <a class="link" href="GstRTSPSessionPool.html" title="GstRTSPSessionPool"><span class="type">GstRTSPSessionPool</span></a>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gst-rtsp-server-get-thread-pool"></a><h3>gst_rtsp_server_get_thread_pool ()</h3>
+<pre class="programlisting"><a class="link" href="gst-rtsp-server-GstRTSPThreadPool.html#GstRTSPThreadPool" title="struct GstRTSPThreadPool"><span class="returnvalue">GstRTSPThreadPool</span></a> * gst_rtsp_server_get_thread_pool     (<em class="parameter"><code><a class="link" href="GstRTSPServer.html" title="GstRTSPServer"><span class="type">GstRTSPServer</span></a> *server</code></em>);</pre>
+<p>
+Get the <a class="link" href="gst-rtsp-server-GstRTSPThreadPool.html#GstRTSPThreadPool" title="struct GstRTSPThreadPool"><span class="type">GstRTSPThreadPool</span></a> used as the thread pool of <em class="parameter"><code>server</code></em>.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>server</code></em> :</span></p></td>
+<td>a <a class="link" href="GstRTSPServer.html" title="GstRTSPServer"><span class="type">GstRTSPServer</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>the <a class="link" href="gst-rtsp-server-GstRTSPThreadPool.html#GstRTSPThreadPool" title="struct GstRTSPThreadPool"><span class="type">GstRTSPThreadPool</span></a> of <em class="parameter"><code>server</code></em>. <a href="/usr/share/gtk-doc/html/gobject/gobject-The-Base-Object-Type.html#g-object-unref"><code class="function">g_object_unref()</code></a> after
+usage. <span class="annotation">[<acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>]</span>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gst-rtsp-server-set-thread-pool"></a><h3>gst_rtsp_server_set_thread_pool ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                gst_rtsp_server_set_thread_pool     (<em class="parameter"><code><a class="link" href="GstRTSPServer.html" title="GstRTSPServer"><span class="type">GstRTSPServer</span></a> *server</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="gst-rtsp-server-GstRTSPThreadPool.html#GstRTSPThreadPool" title="struct GstRTSPThreadPool"><span class="type">GstRTSPThreadPool</span></a> *pool</code></em>);</pre>
+<p>
+configure <em class="parameter"><code>pool</code></em> to be used as the thread pool of <em class="parameter"><code>server</code></em>.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>server</code></em> :</span></p></td>
+<td>a <a class="link" href="GstRTSPServer.html" title="GstRTSPServer"><span class="type">GstRTSPServer</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>pool</code></em> :</span></p></td>
+<td>a <a class="link" href="gst-rtsp-server-GstRTSPThreadPool.html#GstRTSPThreadPool" title="struct GstRTSPThreadPool"><span class="type">GstRTSPThreadPool</span></a>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gst-rtsp-server-get-auth"></a><h3>gst_rtsp_server_get_auth ()</h3>
+<pre class="programlisting"><a class="link" href="GstRTSPAuth.html" title="GstRTSPAuth"><span class="returnvalue">GstRTSPAuth</span></a> *       gst_rtsp_server_get_auth            (<em class="parameter"><code><a class="link" href="GstRTSPServer.html" title="GstRTSPServer"><span class="type">GstRTSPServer</span></a> *server</code></em>);</pre>
+<p>
+Get the <a class="link" href="GstRTSPAuth.html" title="GstRTSPAuth"><span class="type">GstRTSPAuth</span></a> used as the authentication manager of <em class="parameter"><code>server</code></em>.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>server</code></em> :</span></p></td>
+<td>a <a class="link" href="GstRTSPServer.html" title="GstRTSPServer"><span class="type">GstRTSPServer</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>the <a class="link" href="GstRTSPAuth.html" title="GstRTSPAuth"><span class="type">GstRTSPAuth</span></a> of <em class="parameter"><code>server</code></em>. <a href="/usr/share/gtk-doc/html/gobject/gobject-The-Base-Object-Type.html#g-object-unref"><code class="function">g_object_unref()</code></a> after
+usage. <span class="annotation">[<acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>]</span>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gst-rtsp-server-set-auth"></a><h3>gst_rtsp_server_set_auth ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                gst_rtsp_server_set_auth            (<em class="parameter"><code><a class="link" href="GstRTSPServer.html" title="GstRTSPServer"><span class="type">GstRTSPServer</span></a> *server</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GstRTSPAuth.html" title="GstRTSPAuth"><span class="type">GstRTSPAuth</span></a> *auth</code></em>);</pre>
+<p>
+configure <em class="parameter"><code>auth</code></em> to be used as the authentication manager of <em class="parameter"><code>server</code></em>.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>server</code></em> :</span></p></td>
+<td>a <a class="link" href="GstRTSPServer.html" title="GstRTSPServer"><span class="type">GstRTSPServer</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>auth</code></em> :</span></p></td>
+<td>a <a class="link" href="GstRTSPAuth.html" title="GstRTSPAuth"><span class="type">GstRTSPAuth</span></a>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gst-rtsp-server-transfer-connection"></a><h3>gst_rtsp_server_transfer_connection ()</h3>
+<pre class="programlisting"><a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            gst_rtsp_server_transfer_connection (<em class="parameter"><code><a class="link" href="GstRTSPServer.html" title="GstRTSPServer"><span class="type">GstRTSPServer</span></a> *server</code></em>,
+                                                         <em class="parameter"><code><a href="/usr/share/gtk-doc/html/gio/GSocket.html"><span class="type">GSocket</span></a> *socket</code></em>,
+                                                         <em class="parameter"><code>const <a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *ip</code></em>,
+                                                         <em class="parameter"><code><a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gint"><span class="type">gint</span></a> port</code></em>,
+                                                         <em class="parameter"><code>const <a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *initial_buffer</code></em>);</pre>
+<p>
+Take an existing network socket and use it for an RTSP connection. This
+is used when transferring a socket from an HTTP server which should be used
+as an RTSP over HTTP tunnel. The <em class="parameter"><code>initial_buffer</code></em> contains any remaining data
+that the HTTP server read from the socket while parsing the HTTP header.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>server</code></em> :</span></p></td>
+<td>a <a class="link" href="GstRTSPServer.html" title="GstRTSPServer"><span class="type">GstRTSPServer</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>socket</code></em> :</span></p></td>
+<td>a network socket. <span class="annotation">[<acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>]</span>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>ip</code></em> :</span></p></td>
+<td>the IP address of the remote client</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>port</code></em> :</span></p></td>
+<td>the port used by the other end</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>initial_buffer</code></em> :</span></p></td>
+<td>any initial data that was already read from the socket</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>TRUE if all was ok, FALSE if an error occured.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gst-rtsp-server-io-func"></a><h3>gst_rtsp_server_io_func ()</h3>
+<pre class="programlisting"><a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            gst_rtsp_server_io_func             (<em class="parameter"><code><a href="/usr/share/gtk-doc/html/gio/GSocket.html"><span class="type">GSocket</span></a> *socket</code></em>,
+                                                         <em class="parameter"><code><a href="/usr/share/gtk-doc/html/glib/glib-IO-Channels.html#GIOCondition"><span class="type">GIOCondition</span></a> condition</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GstRTSPServer.html" title="GstRTSPServer"><span class="type">GstRTSPServer</span></a> *server</code></em>);</pre>
+<p>
+A default <a href="/usr/share/gtk-doc/html/gio/GSocket.html#GSocketSourceFunc"><span class="type">GSocketSourceFunc</span></a> that creates a new <a class="link" href="GstRTSPClient.html" title="GstRTSPClient"><span class="type">GstRTSPClient</span></a> to accept and handle a
+new connection on <em class="parameter"><code>socket</code></em> or <em class="parameter"><code>server</code></em>.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>socket</code></em> :</span></p></td>
+<td>a <a href="/usr/share/gtk-doc/html/gio/GSocket.html"><span class="type">GSocket</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>condition</code></em> :</span></p></td>
+<td>the condition on <em class="parameter"><code>source</code></em>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>server</code></em> :</span></p></td>
+<td>a <a class="link" href="GstRTSPServer.html" title="GstRTSPServer"><span class="type">GstRTSPServer</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>TRUE if the source could be connected, FALSE if an error occured.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gst-rtsp-server-create-socket"></a><h3>gst_rtsp_server_create_socket ()</h3>
+<pre class="programlisting"><a href="/usr/share/gtk-doc/html/gio/GSocket.html"><span class="returnvalue">GSocket</span></a> *           gst_rtsp_server_create_socket       (<em class="parameter"><code><a class="link" href="GstRTSPServer.html" title="GstRTSPServer"><span class="type">GstRTSPServer</span></a> *server</code></em>,
+                                                         <em class="parameter"><code><a href="/usr/share/gtk-doc/html/gio/GCancellable.html"><span class="type">GCancellable</span></a> *cancellable</code></em>,
+                                                         <em class="parameter"><code><a href="/usr/share/gtk-doc/html/glib/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);</pre>
+<p>
+Create a <a href="/usr/share/gtk-doc/html/gio/GSocket.html"><span class="type">GSocket</span></a> for <em class="parameter"><code>server</code></em>. The socket will listen on the
+configured service.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>server</code></em> :</span></p></td>
+<td>a <a class="link" href="GstRTSPServer.html" title="GstRTSPServer"><span class="type">GstRTSPServer</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>cancellable</code></em> :</span></p></td>
+<td>a <a href="/usr/share/gtk-doc/html/gio/GCancellable.html"><span class="type">GCancellable</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>error</code></em> :</span></p></td>
+<td>a <a href="/usr/share/gtk-doc/html/glib/glib-Error-Reporting.html#GError"><span class="type">GError</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>the <a href="/usr/share/gtk-doc/html/gio/GSocket.html"><span class="type">GSocket</span></a> for <em class="parameter"><code>server</code></em> or <a href="/usr/share/gtk-doc/html/glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> when an error occured. <span class="annotation">[<acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>]</span>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gst-rtsp-server-create-source"></a><h3>gst_rtsp_server_create_source ()</h3>
+<pre class="programlisting"><a href="/usr/share/gtk-doc/html/glib/glib-The-Main-Event-Loop.html#GSource"><span class="returnvalue">GSource</span></a> *           gst_rtsp_server_create_source       (<em class="parameter"><code><a class="link" href="GstRTSPServer.html" title="GstRTSPServer"><span class="type">GstRTSPServer</span></a> *server</code></em>,
+                                                         <em class="parameter"><code><a href="/usr/share/gtk-doc/html/gio/GCancellable.html"><span class="type">GCancellable</span></a> *cancellable</code></em>,
+                                                         <em class="parameter"><code><a href="/usr/share/gtk-doc/html/glib/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);</pre>
+<p>
+Create a <a href="/usr/share/gtk-doc/html/glib/glib-The-Main-Event-Loop.html#GSource"><span class="type">GSource</span></a> for <em class="parameter"><code>server</code></em>. The new source will have a default
+<a href="/usr/share/gtk-doc/html/gio/GSocket.html#GSocketSourceFunc"><span class="type">GSocketSourceFunc</span></a> of <a class="link" href="GstRTSPServer.html#gst-rtsp-server-io-func" title="gst_rtsp_server_io_func ()"><code class="function">gst_rtsp_server_io_func()</code></a>.
+</p>
+<p>
+<em class="parameter"><code>cancellable</code></em> if not <a href="/usr/share/gtk-doc/html/glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> can be used to cancel the source, which will cause
+the source to trigger, reporting the current condition (which is likely 0
+unless cancellation happened at the same time as a condition change). You can
+check for this in the callback using <a href="/usr/share/gtk-doc/html/gio/GCancellable.html#g-cancellable-is-cancelled"><code class="function">g_cancellable_is_cancelled()</code></a>.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>server</code></em> :</span></p></td>
+<td>a <a class="link" href="GstRTSPServer.html" title="GstRTSPServer"><span class="type">GstRTSPServer</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>cancellable</code></em> :</span></p></td>
+<td>a <a href="/usr/share/gtk-doc/html/gio/GCancellable.html"><span class="type">GCancellable</span></a> or <a href="/usr/share/gtk-doc/html/glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>error</code></em> :</span></p></td>
+<td>a <a href="/usr/share/gtk-doc/html/glib/glib-Error-Reporting.html#GError"><span class="type">GError</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>the <a href="/usr/share/gtk-doc/html/glib/glib-The-Main-Event-Loop.html#GSource"><span class="type">GSource</span></a> for <em class="parameter"><code>server</code></em> or <a href="/usr/share/gtk-doc/html/glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> when an error occured. Free with
+<a href="/usr/share/gtk-doc/html/glib/glib-The-Main-Event-Loop.html#g-source-unref"><code class="function">g_source_unref()</code></a>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gst-rtsp-server-attach"></a><h3>gst_rtsp_server_attach ()</h3>
+<pre class="programlisting"><a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#guint"><span class="returnvalue">guint</span></a>               gst_rtsp_server_attach              (<em class="parameter"><code><a class="link" href="GstRTSPServer.html" title="GstRTSPServer"><span class="type">GstRTSPServer</span></a> *server</code></em>,
+                                                         <em class="parameter"><code><a href="/usr/share/gtk-doc/html/glib/glib-The-Main-Event-Loop.html#GMainContext"><span class="type">GMainContext</span></a> *context</code></em>);</pre>
+<p>
+Attaches <em class="parameter"><code>server</code></em> to <em class="parameter"><code>context</code></em>. When the mainloop for <em class="parameter"><code>context</code></em> is run, the
+server will be dispatched. When <em class="parameter"><code>context</code></em> is <a href="/usr/share/gtk-doc/html/glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>, the default context will be
+used).
+</p>
+<p>
+This function should be called when the server properties and urls are fully
+configured and the server is ready to start.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>server</code></em> :</span></p></td>
+<td>a <a class="link" href="GstRTSPServer.html" title="GstRTSPServer"><span class="type">GstRTSPServer</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>context</code></em> :</span></p></td>
+<td>a <a href="/usr/share/gtk-doc/html/glib/glib-The-Main-Event-Loop.html#GMainContext"><span class="type">GMainContext</span></a>. <span class="annotation">[<acronym title="NULL is ok, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>the ID (greater than 0) for the source within the GMainContext.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="GstRTSPServerClientFilterFunc"></a><h3>GstRTSPServerClientFilterFunc ()</h3>
+<pre class="programlisting"><a class="link" href="GstRTSPSession.html#GstRTSPFilterResult" title="enum GstRTSPFilterResult"><span class="returnvalue">GstRTSPFilterResult</span></a> (*GstRTSPServerClientFilterFunc)    (<em class="parameter"><code><a class="link" href="GstRTSPServer.html" title="GstRTSPServer"><span class="type">GstRTSPServer</span></a> *server</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GstRTSPClient.html" title="GstRTSPClient"><span class="type">GstRTSPClient</span></a> *client</code></em>,
+                                                         <em class="parameter"><code><a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> user_data</code></em>);</pre>
+<p>
+This function will be called by the <a class="link" href="GstRTSPServer.html#gst-rtsp-server-client-filter" title="gst_rtsp_server_client_filter ()"><code class="function">gst_rtsp_server_client_filter()</code></a>. An
+implementation should return a value of <a class="link" href="GstRTSPSession.html#GstRTSPFilterResult" title="enum GstRTSPFilterResult"><span class="type">GstRTSPFilterResult</span></a>.
+</p>
+<p>
+When this function returns <a class="link" href="GstRTSPSession.html#GST-RTSP-FILTER-REMOVE:CAPS"><span class="type">GST_RTSP_FILTER_REMOVE</span></a>, <em class="parameter"><code>client</code></em> will be removed
+from <em class="parameter"><code>server</code></em>.
+</p>
+<p>
+A return value of <a class="link" href="GstRTSPSession.html#GST-RTSP-FILTER-KEEP:CAPS"><span class="type">GST_RTSP_FILTER_KEEP</span></a> will leave <em class="parameter"><code>client</code></em> untouched in
+<em class="parameter"><code>server</code></em>.
+</p>
+<p>
+A value of <a class="link" href="GstRTSPSession.html#GST-RTSP-FILTER-REF:CAPS"><span class="type">GST_RTSP_FILTER_REF</span></a> will add <em class="parameter"><code>client</code></em> to the result <a href="/usr/share/gtk-doc/html/glib/glib-Doubly-Linked-Lists.html#GList"><span class="type">GList</span></a> of
+<a class="link" href="GstRTSPServer.html#gst-rtsp-server-client-filter" title="gst_rtsp_server_client_filter ()"><code class="function">gst_rtsp_server_client_filter()</code></a>.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>server</code></em> :</span></p></td>
+<td>a <a class="link" href="GstRTSPServer.html" title="GstRTSPServer"><span class="type">GstRTSPServer</span></a> object</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>client</code></em> :</span></p></td>
+<td>a <a class="link" href="GstRTSPClient.html" title="GstRTSPClient"><span class="type">GstRTSPClient</span></a> in <em class="parameter"><code>server</code></em>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>user_data</code></em> :</span></p></td>
+<td>user data that has been given to <a class="link" href="GstRTSPServer.html#gst-rtsp-server-client-filter" title="gst_rtsp_server_client_filter ()"><code class="function">gst_rtsp_server_client_filter()</code></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>a <a class="link" href="GstRTSPSession.html#GstRTSPFilterResult" title="enum GstRTSPFilterResult"><span class="type">GstRTSPFilterResult</span></a>.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gst-rtsp-server-client-filter"></a><h3>gst_rtsp_server_client_filter ()</h3>
+<pre class="programlisting"><a href="/usr/share/gtk-doc/html/glib/glib-Doubly-Linked-Lists.html#GList"><span class="returnvalue">GList</span></a> *             gst_rtsp_server_client_filter       (<em class="parameter"><code><a class="link" href="GstRTSPServer.html" title="GstRTSPServer"><span class="type">GstRTSPServer</span></a> *server</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GstRTSPServer.html#GstRTSPServerClientFilterFunc" title="GstRTSPServerClientFilterFunc ()"><span class="type">GstRTSPServerClientFilterFunc</span></a> func</code></em>,
+                                                         <em class="parameter"><code><a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> user_data</code></em>);</pre>
+<p>
+Call <em class="parameter"><code>func</code></em> for each client managed by <em class="parameter"><code>server</code></em>. The result value of <em class="parameter"><code>func</code></em>
+determines what happens to the client. <em class="parameter"><code>func</code></em> will be called with <em class="parameter"><code>server</code></em>
+locked so no further actions on <em class="parameter"><code>server</code></em> can be performed from <em class="parameter"><code>func</code></em>.
+</p>
+<p>
+If <em class="parameter"><code>func</code></em> returns <a class="link" href="GstRTSPSession.html#GST-RTSP-FILTER-REMOVE:CAPS"><span class="type">GST_RTSP_FILTER_REMOVE</span></a>, the client will be removed from
+<em class="parameter"><code>server</code></em>.
+</p>
+<p>
+If <em class="parameter"><code>func</code></em> returns <a class="link" href="GstRTSPSession.html#GST-RTSP-FILTER-KEEP:CAPS"><span class="type">GST_RTSP_FILTER_KEEP</span></a>, the client will remain in <em class="parameter"><code>server</code></em>.
+</p>
+<p>
+If <em class="parameter"><code>func</code></em> returns <a class="link" href="GstRTSPSession.html#GST-RTSP-FILTER-REF:CAPS"><span class="type">GST_RTSP_FILTER_REF</span></a>, the client will remain in <em class="parameter"><code>server</code></em> but
+will also be added with an additional ref to the result <a href="/usr/share/gtk-doc/html/glib/glib-Doubly-Linked-Lists.html#GList"><span class="type">GList</span></a> of this
+function..
+</p>
+<p>
+When <em class="parameter"><code>func</code></em> is <a href="/usr/share/gtk-doc/html/glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>, <a class="link" href="GstRTSPSession.html#GST-RTSP-FILTER-REF:CAPS"><span class="type">GST_RTSP_FILTER_REF</span></a> will be assumed for each client.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>server</code></em> :</span></p></td>
+<td>a <a class="link" href="GstRTSPServer.html" title="GstRTSPServer"><span class="type">GstRTSPServer</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>func</code></em> :</span></p></td>
+<td>a callback. <span class="annotation">[<acronym title="The callback is valid only during the call to the method."><span class="acronym">scope call</span></acronym>][<acronym title="NULL is ok, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>user_data</code></em> :</span></p></td>
+<td>user data passed to <em class="parameter"><code>func</code></em>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>a <a href="/usr/share/gtk-doc/html/glib/glib-Doubly-Linked-Lists.html#GList"><span class="type">GList</span></a> with all
+clients for which <em class="parameter"><code>func</code></em> returned <a class="link" href="GstRTSPSession.html#GST-RTSP-FILTER-REF:CAPS"><span class="type">GST_RTSP_FILTER_REF</span></a>. After usage, each
+element in the <a href="/usr/share/gtk-doc/html/glib/glib-Doubly-Linked-Lists.html#GList"><span class="type">GList</span></a> should be unreffed before the list is freed. <span class="annotation">[<acronym title="Generics and defining elements of containers and arrays."><span class="acronym">element-type</span></acronym> GstRTSPClient][<acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>]</span>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+<div class="refsect1">
+<a name="GstRTSPServer.property-details"></a><h2>Property Details</h2>
+<div class="refsect2">
+<a name="GstRTSPServer--address"></a><h3>The <code class="literal">"address"</code> property</h3>
+<pre class="programlisting">  "address"                  <a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a>*                : Read / Write</pre>
+<p>The address the server uses to listen on.</p>
+<p>Default value: "0.0.0.0"</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="GstRTSPServer--backlog"></a><h3>The <code class="literal">"backlog"</code> property</h3>
+<pre class="programlisting">  "backlog"                  <a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gint"><span class="type">gint</span></a>                  : Read / Write</pre>
+<p>The maximum length to which the queue of pending connections may grow.</p>
+<p>Allowed values: &gt;= 0</p>
+<p>Default value: 5</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="GstRTSPServer--bound-port"></a><h3>The <code class="literal">"bound-port"</code> property</h3>
+<pre class="programlisting">  "bound-port"               <a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gint"><span class="type">gint</span></a>                  : Read</pre>
+<p>The port number the server is listening on.</p>
+<p>Allowed values: [-1,65535]</p>
+<p>Default value: -1</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="GstRTSPServer--mount-points"></a><h3>The <code class="literal">"mount-points"</code> property</h3>
+<pre class="programlisting">  "mount-points"             <a class="link" href="GstRTSPMountPoints.html" title="GstRTSPMountPoints"><span class="type">GstRTSPMountPoints</span></a>*   : Read / Write</pre>
+<p>The mount points to use for client session.</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="GstRTSPServer--service"></a><h3>The <code class="literal">"service"</code> property</h3>
+<pre class="programlisting">  "service"                  <a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a>*                : Read / Write</pre>
+<p>The service or port number the server uses to listen on.</p>
+<p>Default value: "8554"</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="GstRTSPServer--session-pool"></a><h3>The <code class="literal">"session-pool"</code> property</h3>
+<pre class="programlisting">  "session-pool"             <a class="link" href="GstRTSPSessionPool.html" title="GstRTSPSessionPool"><span class="type">GstRTSPSessionPool</span></a>*   : Read / Write</pre>
+<p>The session pool to use for client session.</p>
+</div>
+</div>
+<div class="refsect1">
+<a name="GstRTSPServer.signal-details"></a><h2>Signal Details</h2>
+<div class="refsect2">
+<a name="GstRTSPServer-client-connected"></a><h3>The <code class="literal">"client-connected"</code> signal</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                user_function                      (<a class="link" href="GstRTSPServer.html" title="GstRTSPServer"><span class="type">GstRTSPServer</span></a> *gstrtspserver,
+                                                        <a class="link" href="GstRTSPClient.html" title="GstRTSPClient"><span class="type">GstRTSPClient</span></a> *arg1,
+                                                        <a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a>       user_data)          : <a href="/usr/share/gtk-doc/html/gobject/gobject-Signals.html#G-SIGNAL-RUN-LAST:CAPS"><code class="literal">Run Last</code></a></pre>
+</div>
+</div>
+<div class="refsect1">
+<a name="GstRTSPServer.see-also"></a><h2>See Also</h2>
+<a class="link" href="GstRTSPClient.html" title="GstRTSPClient"><span class="type">GstRTSPClient</span></a>, <a class="link" href="gst-rtsp-server-GstRTSPThreadPool.html#GstRTSPThreadPool" title="struct GstRTSPThreadPool"><span class="type">GstRTSPThreadPool</span></a>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.18</div>
+</body>
+</html>

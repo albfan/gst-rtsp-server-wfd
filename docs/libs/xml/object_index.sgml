@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<!DOCTYPE informaltable PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
+               "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
+<!ENTITY % version-entities SYSTEM "version.entities">
+%version-entities;
+]>
+
+<informaltable pgwide="1" frame="none">
+<tgroup cols="3">
+<colspec colwidth="1*"/>
+<colspec colwidth="1*"/>
+<colspec colwidth="1*"/>
+<tbody>
+<row>
+<entry><link linkend="GObject">GObject</link></entry>
+<entry><link linkend="GstRTSPAuth">GstRTSPAuth</link></entry>
+<entry><link linkend="GstRTSPClient">GstRTSPClient</link></entry>
+</row>
+<row>
+<entry><link linkend="GstRTSPMedia">GstRTSPMedia</link></entry>
+<entry><link linkend="GstRTSPMediaFactory">GstRTSPMediaFactory</link></entry>
+<entry><link linkend="GstRTSPMountPoints">GstRTSPMountPoints</link></entry>
+</row>
+<row>
+<entry><link linkend="GstRTSPServer">GstRTSPServer</link></entry>
+<entry><link linkend="GstRTSPSession">GstRTSPSession</link></entry>
+<entry><link linkend="GstRTSPSessionPool">GstRTSPSessionPool</link></entry>
+</row>
+<row>
+<entry><link linkend="GstRTSPStream">GstRTSPStream</link></entry>
+</row>
+</tbody></tgroup></informaltable>

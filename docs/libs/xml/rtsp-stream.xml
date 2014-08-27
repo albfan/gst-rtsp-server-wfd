@@ -1,0 +1,673 @@
+<?xml version="1.0"?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
+               "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
+<!ENTITY % version-entities SYSTEM "version.entities">
+%version-entities;
+]>
+
+<refentry id="GstRTSPStream">
+<refmeta>
+<refentrytitle role="top_of_page" id="GstRTSPStream.top_of_page">GstRTSPStream</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>
+  GST-RTSP-SERVER Library
+</refmiscinfo>
+</refmeta>
+<refnamediv>
+<refname>GstRTSPStream</refname>
+<refpurpose>A media stream</refpurpose>
+</refnamediv>
+
+<refsynopsisdiv id="GstRTSPStream.synopsis" role="synopsis">
+<title role="synopsis.title">Synopsis</title>
+
+<synopsis>struct              <link linkend="GstRTSPStream-struct">GstRTSPStream</link>;
+                    <link linkend="GstRTSPStreamClass">GstRTSPStreamClass</link>;
+<link linkend="GstRTSPStream"><returnvalue>GstRTSPStream</returnvalue></link> *     <link linkend="gst-rtsp-stream-new">gst_rtsp_stream_new</link>                 (<parameter><link linkend="guint"><type>guint</type></link> idx</parameter>,
+                                                         <parameter><link linkend="GstElement"><type>GstElement</type></link> *payloader</parameter>,
+                                                         <parameter><link linkend="GstPad"><type>GstPad</type></link> *srcpad</parameter>);
+<link linkend="guint"><returnvalue>guint</returnvalue></link>               <link linkend="gst-rtsp-stream-get-index">gst_rtsp_stream_get_index</link>           (<parameter><link linkend="GstRTSPStream"><type>GstRTSPStream</type></link> *stream</parameter>);
+<link linkend="GstPad"><returnvalue>GstPad</returnvalue></link> *            <link linkend="gst-rtsp-stream-get-srcpad">gst_rtsp_stream_get_srcpad</link>          (<parameter><link linkend="GstRTSPStream"><type>GstRTSPStream</type></link> *stream</parameter>);
+<link linkend="gchar"><returnvalue>gchar</returnvalue></link> *             <link linkend="gst-rtsp-stream-get-control">gst_rtsp_stream_get_control</link>         (<parameter><link linkend="GstRTSPStream"><type>GstRTSPStream</type></link> *stream</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="gst-rtsp-stream-set-control">gst_rtsp_stream_set_control</link>         (<parameter><link linkend="GstRTSPStream"><type>GstRTSPStream</type></link> *stream</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *control</parameter>);
+<link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            <link linkend="gst-rtsp-stream-has-control">gst_rtsp_stream_has_control</link>         (<parameter><link linkend="GstRTSPStream"><type>GstRTSPStream</type></link> *stream</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *control</parameter>);
+<link linkend="guint"><returnvalue>guint</returnvalue></link>               <link linkend="gst-rtsp-stream-get-mtu">gst_rtsp_stream_get_mtu</link>             (<parameter><link linkend="GstRTSPStream"><type>GstRTSPStream</type></link> *stream</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="gst-rtsp-stream-set-mtu">gst_rtsp_stream_set_mtu</link>             (<parameter><link linkend="GstRTSPStream"><type>GstRTSPStream</type></link> *stream</parameter>,
+                                                         <parameter><link linkend="guint"><type>guint</type></link> mtu</parameter>);
+<link linkend="gint"><returnvalue>gint</returnvalue></link>                <link linkend="gst-rtsp-stream-get-dscp-qos">gst_rtsp_stream_get_dscp_qos</link>        (<parameter><link linkend="GstRTSPStream"><type>GstRTSPStream</type></link> *stream</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="gst-rtsp-stream-set-dscp-qos">gst_rtsp_stream_set_dscp_qos</link>        (<parameter><link linkend="GstRTSPStream"><type>GstRTSPStream</type></link> *stream</parameter>,
+                                                         <parameter><link linkend="gint"><type>gint</type></link> dscp_qos</parameter>);
+<link linkend="GstRTSPLowerTrans"><returnvalue>GstRTSPLowerTrans</returnvalue></link>   <link linkend="gst-rtsp-stream-get-protocols">gst_rtsp_stream_get_protocols</link>       (<parameter><link linkend="GstRTSPStream"><type>GstRTSPStream</type></link> *stream</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="gst-rtsp-stream-set-protocols">gst_rtsp_stream_set_protocols</link>       (<parameter><link linkend="GstRTSPStream"><type>GstRTSPStream</type></link> *stream</parameter>,
+                                                         <parameter><link linkend="GstRTSPLowerTrans"><type>GstRTSPLowerTrans</type></link> protocols</parameter>);
+<link linkend="GstRTSPAddressPool"><returnvalue>GstRTSPAddressPool</returnvalue></link> * <link linkend="gst-rtsp-stream-get-address-pool">gst_rtsp_stream_get_address_pool</link>   (<parameter><link linkend="GstRTSPStream"><type>GstRTSPStream</type></link> *stream</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="gst-rtsp-stream-set-address-pool">gst_rtsp_stream_set_address_pool</link>    (<parameter><link linkend="GstRTSPStream"><type>GstRTSPStream</type></link> *stream</parameter>,
+                                                         <parameter><link linkend="GstRTSPAddressPool"><type>GstRTSPAddressPool</type></link> *pool</parameter>);
+<link linkend="GstRTSPAddress"><returnvalue>GstRTSPAddress</returnvalue></link> *    <link linkend="gst-rtsp-stream-reserve-address">gst_rtsp_stream_reserve_address</link>     (<parameter><link linkend="GstRTSPStream"><type>GstRTSPStream</type></link> *stream</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *address</parameter>,
+                                                         <parameter><link linkend="guint"><type>guint</type></link> port</parameter>,
+                                                         <parameter><link linkend="guint"><type>guint</type></link> n_ports</parameter>,
+                                                         <parameter><link linkend="guint"><type>guint</type></link> ttl</parameter>);
+<link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            <link linkend="gst-rtsp-stream-join-bin">gst_rtsp_stream_join_bin</link>            (<parameter><link linkend="GstRTSPStream"><type>GstRTSPStream</type></link> *stream</parameter>,
+                                                         <parameter><link linkend="GstBin"><type>GstBin</type></link> *bin</parameter>,
+                                                         <parameter><link linkend="GstElement"><type>GstElement</type></link> *rtpbin</parameter>,
+                                                         <parameter><link linkend="GstState"><type>GstState</type></link> state</parameter>);
+<link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            <link linkend="gst-rtsp-stream-leave-bin">gst_rtsp_stream_leave_bin</link>           (<parameter><link linkend="GstRTSPStream"><type>GstRTSPStream</type></link> *stream</parameter>,
+                                                         <parameter><link linkend="GstBin"><type>GstBin</type></link> *bin</parameter>,
+                                                         <parameter><link linkend="GstElement"><type>GstElement</type></link> *rtpbin</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="gst-rtsp-stream-get-server-port">gst_rtsp_stream_get_server_port</link>     (<parameter><link linkend="GstRTSPStream"><type>GstRTSPStream</type></link> *stream</parameter>,
+                                                         <parameter><link linkend="GstRTSPRange"><type>GstRTSPRange</type></link> *server_port</parameter>,
+                                                         <parameter><link linkend="GSocketFamily"><type>GSocketFamily</type></link> family</parameter>);
+<link linkend="GstRTSPAddress"><returnvalue>GstRTSPAddress</returnvalue></link> *    <link linkend="gst-rtsp-stream-get-multicast-address">gst_rtsp_stream_get_multicast_address</link>
+                                                        (<parameter><link linkend="GstRTSPStream"><type>GstRTSPStream</type></link> *stream</parameter>,
+                                                         <parameter><link linkend="GSocketFamily"><type>GSocketFamily</type></link> family</parameter>);
+<link linkend="GObject"><returnvalue>GObject</returnvalue></link> *           <link linkend="gst-rtsp-stream-get-rtpsession">gst_rtsp_stream_get_rtpsession</link>      (<parameter><link linkend="GstRTSPStream"><type>GstRTSPStream</type></link> *stream</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="gst-rtsp-stream-get-ssrc">gst_rtsp_stream_get_ssrc</link>            (<parameter><link linkend="GstRTSPStream"><type>GstRTSPStream</type></link> *stream</parameter>,
+                                                         <parameter><link linkend="guint"><type>guint</type></link> *ssrc</parameter>);
+<link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            <link linkend="gst-rtsp-stream-get-rtpinfo">gst_rtsp_stream_get_rtpinfo</link>         (<parameter><link linkend="GstRTSPStream"><type>GstRTSPStream</type></link> *stream</parameter>,
+                                                         <parameter><link linkend="guint"><type>guint</type></link> *rtptime</parameter>,
+                                                         <parameter><link linkend="guint"><type>guint</type></link> *seq</parameter>,
+                                                         <parameter><link linkend="guint"><type>guint</type></link> *clock_rate</parameter>,
+                                                         <parameter><link linkend="GstClockTime"><type>GstClockTime</type></link> *running_time</parameter>);
+<link linkend="GstCaps"><returnvalue>GstCaps</returnvalue></link> *           <link linkend="gst-rtsp-stream-get-caps">gst_rtsp_stream_get_caps</link>            (<parameter><link linkend="GstRTSPStream"><type>GstRTSPStream</type></link> *stream</parameter>);
+<link linkend="GstFlowReturn"><returnvalue>GstFlowReturn</returnvalue></link>       <link linkend="gst-rtsp-stream-recv-rtcp">gst_rtsp_stream_recv_rtcp</link>           (<parameter><link linkend="GstRTSPStream"><type>GstRTSPStream</type></link> *stream</parameter>,
+                                                         <parameter><link linkend="GstBuffer"><type>GstBuffer</type></link> *buffer</parameter>);
+<link linkend="GstFlowReturn"><returnvalue>GstFlowReturn</returnvalue></link>       <link linkend="gst-rtsp-stream-recv-rtp">gst_rtsp_stream_recv_rtp</link>            (<parameter><link linkend="GstRTSPStream"><type>GstRTSPStream</type></link> *stream</parameter>,
+                                                         <parameter><link linkend="GstBuffer"><type>GstBuffer</type></link> *buffer</parameter>);
+<link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            <link linkend="gst-rtsp-stream-add-transport">gst_rtsp_stream_add_transport</link>       (<parameter><link linkend="GstRTSPStream"><type>GstRTSPStream</type></link> *stream</parameter>,
+                                                         <parameter><link linkend="GstRTSPStreamTransport"><type>GstRTSPStreamTransport</type></link> *trans</parameter>);
+<link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            <link linkend="gst-rtsp-stream-remove-transport">gst_rtsp_stream_remove_transport</link>    (<parameter><link linkend="GstRTSPStream"><type>GstRTSPStream</type></link> *stream</parameter>,
+                                                         <parameter><link linkend="GstRTSPStreamTransport"><type>GstRTSPStreamTransport</type></link> *trans</parameter>);
+<link linkend="GSocket"><returnvalue>GSocket</returnvalue></link> *           <link linkend="gst-rtsp-stream-get-rtp-socket">gst_rtsp_stream_get_rtp_socket</link>      (<parameter><link linkend="GstRTSPStream"><type>GstRTSPStream</type></link> *stream</parameter>,
+                                                         <parameter><link linkend="GSocketFamily"><type>GSocketFamily</type></link> family</parameter>);
+<link linkend="GSocket"><returnvalue>GSocket</returnvalue></link> *           <link linkend="gst-rtsp-stream-get-rtcp-socket">gst_rtsp_stream_get_rtcp_socket</link>     (<parameter><link linkend="GstRTSPStream"><type>GstRTSPStream</type></link> *stream</parameter>,
+                                                         <parameter><link linkend="GSocketFamily"><type>GSocketFamily</type></link> family</parameter>);
+<link linkend="GstRTSPFilterResult"><returnvalue>GstRTSPFilterResult</returnvalue></link> (<link linkend="GstRTSPStreamTransportFilterFunc">*GstRTSPStreamTransportFilterFunc</link>) (<parameter><link linkend="GstRTSPStream"><type>GstRTSPStream</type></link> *stream</parameter>,
+                                                         <parameter><link linkend="GstRTSPStreamTransport"><type>GstRTSPStreamTransport</type></link> *trans</parameter>,
+                                                         <parameter><link linkend="gpointer"><type>gpointer</type></link> user_data</parameter>);
+<link linkend="GList"><returnvalue>GList</returnvalue></link> *             <link linkend="gst-rtsp-stream-transport-filter">gst_rtsp_stream_transport_filter</link>    (<parameter><link linkend="GstRTSPStream"><type>GstRTSPStream</type></link> *stream</parameter>,
+                                                         <parameter><link linkend="GstRTSPStreamTransportFilterFunc"><type>GstRTSPStreamTransportFilterFunc</type></link> func</parameter>,
+                                                         <parameter><link linkend="gpointer"><type>gpointer</type></link> user_data</parameter>);
+</synopsis>
+</refsynopsisdiv>
+<refsect1 id="GstRTSPStream.object-hierarchy" role="object_hierarchy">
+<title role="object_hierarchy.title">Object Hierarchy</title>
+<synopsis>
+  <link linkend="GObject">GObject</link>
+   +----GstRTSPStream
+</synopsis>
+</refsect1>
+
+<refsect1 id="GstRTSPStream.description" role="desc">
+<title role="desc.title">Description</title>
+<para>
+The <link linkend="GstRTSPStream"><type>GstRTSPStream</type></link> object manages the data transport for one stream. It
+is created from a payloader element and a source pad that produce the RTP
+packets for the stream.
+</para>
+<para>
+With <link linkend="gst-rtsp-stream-join-bin"><function>gst_rtsp_stream_join_bin()</function></link> the streaming elements are added to the bin
+and rtpbin. <link linkend="gst-rtsp-stream-leave-bin"><function>gst_rtsp_stream_leave_bin()</function></link> removes the elements again.
+</para>
+<para>
+The <link linkend="GstRTSPStream"><type>GstRTSPStream</type></link> will use the configured addresspool, as set with
+<link linkend="gst-rtsp-stream-set-address-pool"><function>gst_rtsp_stream_set_address_pool()</function></link>, to allocate multicast addresses for the
+stream. With <link linkend="gst-rtsp-stream-get-multicast-address"><function>gst_rtsp_stream_get_multicast_address()</function></link> you can get the
+configured address.
+</para>
+<para>
+With <link linkend="gst-rtsp-stream-get-server-port"><function>gst_rtsp_stream_get_server_port()</function></link> you can get the port that the server
+will use to receive RTCP. This is the part that the clients will use to send
+RTCP to.
+</para>
+<para>
+With <link linkend="gst-rtsp-stream-add-transport"><function>gst_rtsp_stream_add_transport()</function></link> destinations can be added where the
+stream should be sent to. Use <link linkend="gst-rtsp-stream-remove-transport"><function>gst_rtsp_stream_remove_transport()</function></link> to remove
+the destination again.
+</para>
+<para>
+Last reviewed on 2013-07-16 (1.0.0)
+</para>
+</refsect1>
+<refsect1 id="GstRTSPStream.details" role="details">
+<title role="details.title">Details</title>
+<refsect2 id="GstRTSPStream-struct" role="struct">
+<title>struct GstRTSPStream</title>
+<indexterm zone="GstRTSPStream-struct"><primary>GstRTSPStream</primary></indexterm>
+<programlisting>struct GstRTSPStream;</programlisting>
+<para>
+The definition of a media stream.
+</para></refsect2>
+<refsect2 id="GstRTSPStreamClass" role="struct">
+<title>GstRTSPStreamClass</title>
+<indexterm zone="GstRTSPStreamClass"><primary>GstRTSPStreamClass</primary></indexterm>
+<programlisting>typedef struct _GstRTSPStreamClass GstRTSPStreamClass;</programlisting>
+</refsect2>
+<refsect2 id="gst-rtsp-stream-new" role="function">
+<title>gst_rtsp_stream_new ()</title>
+<indexterm zone="gst-rtsp-stream-new"><primary>gst_rtsp_stream_new</primary></indexterm>
+<programlisting><link linkend="GstRTSPStream"><returnvalue>GstRTSPStream</returnvalue></link> *     gst_rtsp_stream_new                 (<parameter><link linkend="guint"><type>guint</type></link> idx</parameter>,
+                                                         <parameter><link linkend="GstElement"><type>GstElement</type></link> *payloader</parameter>,
+                                                         <parameter><link linkend="GstPad"><type>GstPad</type></link> *srcpad</parameter>);</programlisting>
+<para>
+Create a new media stream with index <parameter>idx</parameter> that handles RTP data on
+<parameter>srcpad</parameter> and has a payloader element <parameter>payloader</parameter>.
+</para><variablelist role="params">
+<varlistentry><term><parameter>idx</parameter>&#160;:</term>
+<listitem><simpara>an index</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>srcpad</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstPad"><type>GstPad</type></link></simpara></listitem></varlistentry>
+<varlistentry><term><parameter>payloader</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstElement"><type>GstElement</type></link></simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>a new <link linkend="GstRTSPStream"><type>GstRTSPStream</type></link></simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gst-rtsp-stream-get-index" role="function">
+<title>gst_rtsp_stream_get_index ()</title>
+<indexterm zone="gst-rtsp-stream-get-index"><primary>gst_rtsp_stream_get_index</primary></indexterm>
+<programlisting><link linkend="guint"><returnvalue>guint</returnvalue></link>               gst_rtsp_stream_get_index           (<parameter><link linkend="GstRTSPStream"><type>GstRTSPStream</type></link> *stream</parameter>);</programlisting>
+<para>
+Get the stream index.
+</para>
+<para>
+Return: the stream index.
+</para><variablelist role="params">
+<varlistentry><term><parameter>stream</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstRTSPStream"><type>GstRTSPStream</type></link></simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gst-rtsp-stream-get-srcpad" role="function">
+<title>gst_rtsp_stream_get_srcpad ()</title>
+<indexterm zone="gst-rtsp-stream-get-srcpad"><primary>gst_rtsp_stream_get_srcpad</primary></indexterm>
+<programlisting><link linkend="GstPad"><returnvalue>GstPad</returnvalue></link> *            gst_rtsp_stream_get_srcpad          (<parameter><link linkend="GstRTSPStream"><type>GstRTSPStream</type></link> *stream</parameter>);</programlisting>
+<para>
+Get the srcpad associated with <parameter>stream</parameter>.
+</para><variablelist role="params">
+<varlistentry><term><parameter>stream</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstRTSPStream"><type>GstRTSPStream</type></link></simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>the srcpad. Unref after usage. <emphasis role="annotation">[<acronym>transfer full</acronym>]</emphasis></simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gst-rtsp-stream-get-control" role="function">
+<title>gst_rtsp_stream_get_control ()</title>
+<indexterm zone="gst-rtsp-stream-get-control"><primary>gst_rtsp_stream_get_control</primary></indexterm>
+<programlisting><link linkend="gchar"><returnvalue>gchar</returnvalue></link> *             gst_rtsp_stream_get_control         (<parameter><link linkend="GstRTSPStream"><type>GstRTSPStream</type></link> *stream</parameter>);</programlisting>
+<para>
+Get the control string to identify this stream.
+</para><variablelist role="params">
+<varlistentry><term><parameter>stream</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstRTSPStream"><type>GstRTSPStream</type></link></simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>the control string. free after usage. <emphasis role="annotation">[<acronym>transfer full</acronym>]</emphasis></simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gst-rtsp-stream-set-control" role="function">
+<title>gst_rtsp_stream_set_control ()</title>
+<indexterm zone="gst-rtsp-stream-set-control"><primary>gst_rtsp_stream_set_control</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                gst_rtsp_stream_set_control         (<parameter><link linkend="GstRTSPStream"><type>GstRTSPStream</type></link> *stream</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *control</parameter>);</programlisting>
+<para>
+Set the control string in <parameter>stream</parameter>.
+</para><variablelist role="params">
+<varlistentry><term><parameter>stream</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstRTSPStream"><type>GstRTSPStream</type></link></simpara></listitem></varlistentry>
+<varlistentry><term><parameter>control</parameter>&#160;:</term>
+<listitem><simpara>a control string</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gst-rtsp-stream-has-control" role="function">
+<title>gst_rtsp_stream_has_control ()</title>
+<indexterm zone="gst-rtsp-stream-has-control"><primary>gst_rtsp_stream_has_control</primary></indexterm>
+<programlisting><link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            gst_rtsp_stream_has_control         (<parameter><link linkend="GstRTSPStream"><type>GstRTSPStream</type></link> *stream</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *control</parameter>);</programlisting>
+<para>
+Check if <parameter>stream</parameter> has the control string <parameter>control</parameter>.
+</para><variablelist role="params">
+<varlistentry><term><parameter>stream</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstRTSPStream"><type>GstRTSPStream</type></link></simpara></listitem></varlistentry>
+<varlistentry><term><parameter>control</parameter>&#160;:</term>
+<listitem><simpara>a control string</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara><link linkend="TRUE:CAPS"><literal>TRUE</literal></link> is <parameter>stream</parameter> has <parameter>control</parameter> as the control string</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gst-rtsp-stream-get-mtu" role="function">
+<title>gst_rtsp_stream_get_mtu ()</title>
+<indexterm zone="gst-rtsp-stream-get-mtu"><primary>gst_rtsp_stream_get_mtu</primary></indexterm>
+<programlisting><link linkend="guint"><returnvalue>guint</returnvalue></link>               gst_rtsp_stream_get_mtu             (<parameter><link linkend="GstRTSPStream"><type>GstRTSPStream</type></link> *stream</parameter>);</programlisting>
+<para>
+Get the configured MTU in the payloader of <parameter>stream</parameter>.
+</para><variablelist role="params">
+<varlistentry><term><parameter>stream</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstRTSPStream"><type>GstRTSPStream</type></link></simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>the MTU of the payloader.</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gst-rtsp-stream-set-mtu" role="function">
+<title>gst_rtsp_stream_set_mtu ()</title>
+<indexterm zone="gst-rtsp-stream-set-mtu"><primary>gst_rtsp_stream_set_mtu</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                gst_rtsp_stream_set_mtu             (<parameter><link linkend="GstRTSPStream"><type>GstRTSPStream</type></link> *stream</parameter>,
+                                                         <parameter><link linkend="guint"><type>guint</type></link> mtu</parameter>);</programlisting>
+<para>
+Configure the mtu in the payloader of <parameter>stream</parameter> to <parameter>mtu</parameter>.
+</para><variablelist role="params">
+<varlistentry><term><parameter>stream</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstRTSPStream"><type>GstRTSPStream</type></link></simpara></listitem></varlistentry>
+<varlistentry><term><parameter>mtu</parameter>&#160;:</term>
+<listitem><simpara>a new MTU</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gst-rtsp-stream-get-dscp-qos" role="function">
+<title>gst_rtsp_stream_get_dscp_qos ()</title>
+<indexterm zone="gst-rtsp-stream-get-dscp-qos"><primary>gst_rtsp_stream_get_dscp_qos</primary></indexterm>
+<programlisting><link linkend="gint"><returnvalue>gint</returnvalue></link>                gst_rtsp_stream_get_dscp_qos        (<parameter><link linkend="GstRTSPStream"><type>GstRTSPStream</type></link> *stream</parameter>);</programlisting>
+<para>
+Get the configured DSCP QoS in of the outgoing sockets.
+</para><variablelist role="params">
+<varlistentry><term><parameter>stream</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstRTSPStream"><type>GstRTSPStream</type></link></simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>the DSCP QoS value of the outgoing sockets, or -1 if disbled.</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gst-rtsp-stream-set-dscp-qos" role="function">
+<title>gst_rtsp_stream_set_dscp_qos ()</title>
+<indexterm zone="gst-rtsp-stream-set-dscp-qos"><primary>gst_rtsp_stream_set_dscp_qos</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                gst_rtsp_stream_set_dscp_qos        (<parameter><link linkend="GstRTSPStream"><type>GstRTSPStream</type></link> *stream</parameter>,
+                                                         <parameter><link linkend="gint"><type>gint</type></link> dscp_qos</parameter>);</programlisting>
+<para>
+Configure the dscp qos of the outgoing sockets to <parameter>dscp_qos</parameter>.
+</para><variablelist role="params">
+<varlistentry><term><parameter>stream</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstRTSPStream"><type>GstRTSPStream</type></link></simpara></listitem></varlistentry>
+<varlistentry><term><parameter>dscp_qos</parameter>&#160;:</term>
+<listitem><simpara>a new dscp qos value (0-63, or -1 to disable)</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gst-rtsp-stream-get-protocols" role="function">
+<title>gst_rtsp_stream_get_protocols ()</title>
+<indexterm zone="gst-rtsp-stream-get-protocols"><primary>gst_rtsp_stream_get_protocols</primary></indexterm>
+<programlisting><link linkend="GstRTSPLowerTrans"><returnvalue>GstRTSPLowerTrans</returnvalue></link>   gst_rtsp_stream_get_protocols       (<parameter><link linkend="GstRTSPStream"><type>GstRTSPStream</type></link> *stream</parameter>);</programlisting>
+<para>
+Get the allowed protocols of <parameter>stream</parameter>.
+</para><variablelist role="params">
+<varlistentry><term><parameter>stream</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstRTSPStream"><type>GstRTSPStream</type></link></simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>a <link linkend="GstRTSPLowerTrans"><type>GstRTSPLowerTrans</type></link></simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gst-rtsp-stream-set-protocols" role="function">
+<title>gst_rtsp_stream_set_protocols ()</title>
+<indexterm zone="gst-rtsp-stream-set-protocols"><primary>gst_rtsp_stream_set_protocols</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                gst_rtsp_stream_set_protocols       (<parameter><link linkend="GstRTSPStream"><type>GstRTSPStream</type></link> *stream</parameter>,
+                                                         <parameter><link linkend="GstRTSPLowerTrans"><type>GstRTSPLowerTrans</type></link> protocols</parameter>);</programlisting>
+<para>
+Configure the allowed lower transport for <parameter>stream</parameter>.
+</para><variablelist role="params">
+<varlistentry><term><parameter>stream</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstRTSPStream"><type>GstRTSPStream</type></link></simpara></listitem></varlistentry>
+<varlistentry><term><parameter>protocols</parameter>&#160;:</term>
+<listitem><simpara>the new flags</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gst-rtsp-stream-get-address-pool" role="function">
+<title>gst_rtsp_stream_get_address_pool ()</title>
+<indexterm zone="gst-rtsp-stream-get-address-pool"><primary>gst_rtsp_stream_get_address_pool</primary></indexterm>
+<programlisting><link linkend="GstRTSPAddressPool"><returnvalue>GstRTSPAddressPool</returnvalue></link> * gst_rtsp_stream_get_address_pool   (<parameter><link linkend="GstRTSPStream"><type>GstRTSPStream</type></link> *stream</parameter>);</programlisting>
+<para>
+Get the <link linkend="GstRTSPAddressPool"><type>GstRTSPAddressPool</type></link> used as the address pool of <parameter>stream</parameter>.
+</para><variablelist role="params">
+<varlistentry><term><parameter>stream</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstRTSPStream"><type>GstRTSPStream</type></link></simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>the <link linkend="GstRTSPAddressPool"><type>GstRTSPAddressPool</type></link> of <parameter>stream</parameter>. <link linkend="g-object-unref"><function>g_object_unref()</function></link> after
+usage. <emphasis role="annotation">[<acronym>transfer full</acronym>]</emphasis></simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gst-rtsp-stream-set-address-pool" role="function">
+<title>gst_rtsp_stream_set_address_pool ()</title>
+<indexterm zone="gst-rtsp-stream-set-address-pool"><primary>gst_rtsp_stream_set_address_pool</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                gst_rtsp_stream_set_address_pool    (<parameter><link linkend="GstRTSPStream"><type>GstRTSPStream</type></link> *stream</parameter>,
+                                                         <parameter><link linkend="GstRTSPAddressPool"><type>GstRTSPAddressPool</type></link> *pool</parameter>);</programlisting>
+<para>
+configure <parameter>pool</parameter> to be used as the address pool of <parameter>stream</parameter>.
+</para><variablelist role="params">
+<varlistentry><term><parameter>stream</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstRTSPStream"><type>GstRTSPStream</type></link></simpara></listitem></varlistentry>
+<varlistentry><term><parameter>pool</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstRTSPAddressPool"><type>GstRTSPAddressPool</type></link></simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gst-rtsp-stream-reserve-address" role="function">
+<title>gst_rtsp_stream_reserve_address ()</title>
+<indexterm zone="gst-rtsp-stream-reserve-address"><primary>gst_rtsp_stream_reserve_address</primary></indexterm>
+<programlisting><link linkend="GstRTSPAddress"><returnvalue>GstRTSPAddress</returnvalue></link> *    gst_rtsp_stream_reserve_address     (<parameter><link linkend="GstRTSPStream"><type>GstRTSPStream</type></link> *stream</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *address</parameter>,
+                                                         <parameter><link linkend="guint"><type>guint</type></link> port</parameter>,
+                                                         <parameter><link linkend="guint"><type>guint</type></link> n_ports</parameter>,
+                                                         <parameter><link linkend="guint"><type>guint</type></link> ttl</parameter>);</programlisting>
+<para>
+Reserve <parameter>address</parameter> and <parameter>port</parameter> as the address and port of <parameter>stream</parameter>.
+</para><variablelist role="params">
+<varlistentry><term><parameter>stream</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstRTSPStream"><type>GstRTSPStream</type></link></simpara></listitem></varlistentry>
+<varlistentry><term><parameter>address</parameter>&#160;:</term>
+<listitem><simpara>an address</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>port</parameter>&#160;:</term>
+<listitem><simpara>a port</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>n_ports</parameter>&#160;:</term>
+<listitem><simpara>n_ports</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>ttl</parameter>&#160;:</term>
+<listitem><simpara>a TTL</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>the <link linkend="GstRTSPAddress"><type>GstRTSPAddress</type></link> of <parameter>stream</parameter> or <link linkend="NULL:CAPS"><literal>NULL</literal></link> when the address could be
+reserved. <link linkend="gst-rtsp-address-free"><function>gst_rtsp_address_free()</function></link> after usage.</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gst-rtsp-stream-join-bin" role="function">
+<title>gst_rtsp_stream_join_bin ()</title>
+<indexterm zone="gst-rtsp-stream-join-bin"><primary>gst_rtsp_stream_join_bin</primary></indexterm>
+<programlisting><link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            gst_rtsp_stream_join_bin            (<parameter><link linkend="GstRTSPStream"><type>GstRTSPStream</type></link> *stream</parameter>,
+                                                         <parameter><link linkend="GstBin"><type>GstBin</type></link> *bin</parameter>,
+                                                         <parameter><link linkend="GstElement"><type>GstElement</type></link> *rtpbin</parameter>,
+                                                         <parameter><link linkend="GstState"><type>GstState</type></link> state</parameter>);</programlisting>
+<para>
+Join the <link linkend="GstBin"><type>GstBin</type></link> <parameter>bin</parameter> that contains the element <parameter>rtpbin</parameter>.
+</para>
+<para>
+<parameter>stream</parameter> will link to <parameter>rtpbin</parameter>, which must be inside <parameter>bin</parameter>. The elements
+added to <parameter>bin</parameter> will be set to the state given in <parameter>state</parameter>.
+</para><variablelist role="params">
+<varlistentry><term><parameter>stream</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstRTSPStream"><type>GstRTSPStream</type></link></simpara></listitem></varlistentry>
+<varlistentry><term><parameter>bin</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstBin"><type>GstBin</type></link> to join</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>rtpbin</parameter>&#160;:</term>
+<listitem><simpara>a rtpbin element in <parameter>bin</parameter></simpara></listitem></varlistentry>
+<varlistentry><term><parameter>state</parameter>&#160;:</term>
+<listitem><simpara>the target state of the new elements</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara><link linkend="TRUE:CAPS"><literal>TRUE</literal></link> on success.</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gst-rtsp-stream-leave-bin" role="function">
+<title>gst_rtsp_stream_leave_bin ()</title>
+<indexterm zone="gst-rtsp-stream-leave-bin"><primary>gst_rtsp_stream_leave_bin</primary></indexterm>
+<programlisting><link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            gst_rtsp_stream_leave_bin           (<parameter><link linkend="GstRTSPStream"><type>GstRTSPStream</type></link> *stream</parameter>,
+                                                         <parameter><link linkend="GstBin"><type>GstBin</type></link> *bin</parameter>,
+                                                         <parameter><link linkend="GstElement"><type>GstElement</type></link> *rtpbin</parameter>);</programlisting>
+<para>
+Remove the elements of <parameter>stream</parameter> from <parameter>bin</parameter>.
+</para>
+<para>
+Return: <link linkend="TRUE:CAPS"><literal>TRUE</literal></link> on success.
+</para><variablelist role="params">
+<varlistentry><term><parameter>stream</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstRTSPStream"><type>GstRTSPStream</type></link></simpara></listitem></varlistentry>
+<varlistentry><term><parameter>bin</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstBin"><type>GstBin</type></link></simpara></listitem></varlistentry>
+<varlistentry><term><parameter>rtpbin</parameter>&#160;:</term>
+<listitem><simpara>a rtpbin <link linkend="GstElement"><type>GstElement</type></link></simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gst-rtsp-stream-get-server-port" role="function">
+<title>gst_rtsp_stream_get_server_port ()</title>
+<indexterm zone="gst-rtsp-stream-get-server-port"><primary>gst_rtsp_stream_get_server_port</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                gst_rtsp_stream_get_server_port     (<parameter><link linkend="GstRTSPStream"><type>GstRTSPStream</type></link> *stream</parameter>,
+                                                         <parameter><link linkend="GstRTSPRange"><type>GstRTSPRange</type></link> *server_port</parameter>,
+                                                         <parameter><link linkend="GSocketFamily"><type>GSocketFamily</type></link> family</parameter>);</programlisting>
+<para>
+Fill <parameter>server_port</parameter> with the port pair used by the server. This function can
+only be called when <parameter>stream</parameter> has been joined.
+</para><variablelist role="params">
+<varlistentry><term><parameter>stream</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstRTSPStream"><type>GstRTSPStream</type></link></simpara></listitem></varlistentry>
+<varlistentry><term><parameter>server_port</parameter>&#160;:</term>
+<listitem><simpara>result server port. <emphasis role="annotation">[<acronym>out</acronym>]</emphasis></simpara></listitem></varlistentry>
+<varlistentry><term><parameter>family</parameter>&#160;:</term>
+<listitem><simpara>the port family to get</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gst-rtsp-stream-get-multicast-address" role="function">
+<title>gst_rtsp_stream_get_multicast_address ()</title>
+<indexterm zone="gst-rtsp-stream-get-multicast-address"><primary>gst_rtsp_stream_get_multicast_address</primary></indexterm>
+<programlisting><link linkend="GstRTSPAddress"><returnvalue>GstRTSPAddress</returnvalue></link> *    gst_rtsp_stream_get_multicast_address
+                                                        (<parameter><link linkend="GstRTSPStream"><type>GstRTSPStream</type></link> *stream</parameter>,
+                                                         <parameter><link linkend="GSocketFamily"><type>GSocketFamily</type></link> family</parameter>);</programlisting>
+<para>
+Get the multicast address of <parameter>stream</parameter> for <parameter>family</parameter>.
+</para><variablelist role="params">
+<varlistentry><term><parameter>stream</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstRTSPStream"><type>GstRTSPStream</type></link></simpara></listitem></varlistentry>
+<varlistentry><term><parameter>family</parameter>&#160;:</term>
+<listitem><simpara>the <link linkend="GSocketFamily"><type>GSocketFamily</type></link></simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>the <link linkend="GstRTSPAddress"><type>GstRTSPAddress</type></link> of <parameter>stream</parameter> or <link linkend="NULL:CAPS"><literal>NULL</literal></link> when no address could be
+allocated. <link linkend="gst-rtsp-address-free"><function>gst_rtsp_address_free()</function></link> after usage.</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gst-rtsp-stream-get-rtpsession" role="function">
+<title>gst_rtsp_stream_get_rtpsession ()</title>
+<indexterm zone="gst-rtsp-stream-get-rtpsession"><primary>gst_rtsp_stream_get_rtpsession</primary></indexterm>
+<programlisting><link linkend="GObject"><returnvalue>GObject</returnvalue></link> *           gst_rtsp_stream_get_rtpsession      (<parameter><link linkend="GstRTSPStream"><type>GstRTSPStream</type></link> *stream</parameter>);</programlisting>
+<para>
+Get the RTP session of this stream.
+</para><variablelist role="params">
+<varlistentry><term><parameter>stream</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstRTSPStream"><type>GstRTSPStream</type></link></simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>The RTP session of this stream. Unref after usage. <emphasis role="annotation">[<acronym>transfer full</acronym>]</emphasis></simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gst-rtsp-stream-get-ssrc" role="function">
+<title>gst_rtsp_stream_get_ssrc ()</title>
+<indexterm zone="gst-rtsp-stream-get-ssrc"><primary>gst_rtsp_stream_get_ssrc</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                gst_rtsp_stream_get_ssrc            (<parameter><link linkend="GstRTSPStream"><type>GstRTSPStream</type></link> *stream</parameter>,
+                                                         <parameter><link linkend="guint"><type>guint</type></link> *ssrc</parameter>);</programlisting>
+<para>
+Get the SSRC used by the RTP session of this stream. This function can only
+be called when <parameter>stream</parameter> has been joined.
+</para><variablelist role="params">
+<varlistentry><term><parameter>stream</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstRTSPStream"><type>GstRTSPStream</type></link></simpara></listitem></varlistentry>
+<varlistentry><term><parameter>ssrc</parameter>&#160;:</term>
+<listitem><simpara>result ssrc. <emphasis role="annotation">[<acronym>out</acronym>]</emphasis></simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gst-rtsp-stream-get-rtpinfo" role="function">
+<title>gst_rtsp_stream_get_rtpinfo ()</title>
+<indexterm zone="gst-rtsp-stream-get-rtpinfo"><primary>gst_rtsp_stream_get_rtpinfo</primary></indexterm>
+<programlisting><link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            gst_rtsp_stream_get_rtpinfo         (<parameter><link linkend="GstRTSPStream"><type>GstRTSPStream</type></link> *stream</parameter>,
+                                                         <parameter><link linkend="guint"><type>guint</type></link> *rtptime</parameter>,
+                                                         <parameter><link linkend="guint"><type>guint</type></link> *seq</parameter>,
+                                                         <parameter><link linkend="guint"><type>guint</type></link> *clock_rate</parameter>,
+                                                         <parameter><link linkend="GstClockTime"><type>GstClockTime</type></link> *running_time</parameter>);</programlisting>
+<para>
+Retrieve the current rtptime, seq and running-time. This is used to
+construct a RTPInfo reply header.
+</para><variablelist role="params">
+<varlistentry><term><parameter>stream</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstRTSPStream"><type>GstRTSPStream</type></link></simpara></listitem></varlistentry>
+<varlistentry><term><parameter>rtptime</parameter>&#160;:</term>
+<listitem><simpara>result RTP timestamp. <emphasis role="annotation">[<acronym>allow-none</acronym>]</emphasis></simpara></listitem></varlistentry>
+<varlistentry><term><parameter>seq</parameter>&#160;:</term>
+<listitem><simpara>result RTP seqnum. <emphasis role="annotation">[<acronym>allow-none</acronym>]</emphasis></simpara></listitem></varlistentry>
+<varlistentry><term><parameter>clock_rate</parameter>&#160;:</term>
+<listitem><simpara>the clock rate</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>running_time</parameter>&#160;:</term>
+<listitem><simpara>result running-time. <emphasis role="annotation">[<acronym>allow-none</acronym>]</emphasis></simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara><link linkend="TRUE:CAPS"><literal>TRUE</literal></link> when rtptime, seq and running-time could be determined.</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gst-rtsp-stream-get-caps" role="function">
+<title>gst_rtsp_stream_get_caps ()</title>
+<indexterm zone="gst-rtsp-stream-get-caps"><primary>gst_rtsp_stream_get_caps</primary></indexterm>
+<programlisting><link linkend="GstCaps"><returnvalue>GstCaps</returnvalue></link> *           gst_rtsp_stream_get_caps            (<parameter><link linkend="GstRTSPStream"><type>GstRTSPStream</type></link> *stream</parameter>);</programlisting>
+<para>
+Retrieve the current caps of <parameter>stream</parameter>.
+</para><variablelist role="params">
+<varlistentry><term><parameter>stream</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstRTSPStream"><type>GstRTSPStream</type></link></simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>the <link linkend="GstCaps"><type>GstCaps</type></link> of <parameter>stream</parameter>. use <link linkend="gst-caps-unref"><function>gst_caps_unref()</function></link>
+after usage. <emphasis role="annotation">[<acronym>transfer full</acronym>]</emphasis></simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gst-rtsp-stream-recv-rtcp" role="function">
+<title>gst_rtsp_stream_recv_rtcp ()</title>
+<indexterm zone="gst-rtsp-stream-recv-rtcp"><primary>gst_rtsp_stream_recv_rtcp</primary></indexterm>
+<programlisting><link linkend="GstFlowReturn"><returnvalue>GstFlowReturn</returnvalue></link>       gst_rtsp_stream_recv_rtcp           (<parameter><link linkend="GstRTSPStream"><type>GstRTSPStream</type></link> *stream</parameter>,
+                                                         <parameter><link linkend="GstBuffer"><type>GstBuffer</type></link> *buffer</parameter>);</programlisting>
+<para>
+Handle an RTCP buffer for the stream. This method is usually called when a
+message has been received from a client using the TCP transport.
+</para>
+<para>
+This function takes ownership of <parameter>buffer</parameter>.
+</para><variablelist role="params">
+<varlistentry><term><parameter>stream</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstRTSPStream"><type>GstRTSPStream</type></link></simpara></listitem></varlistentry>
+<varlistentry><term><parameter>buffer</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstBuffer"><type>GstBuffer</type></link>. <emphasis role="annotation">[<acronym>transfer full</acronym>]</emphasis></simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>a GstFlowReturn.</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gst-rtsp-stream-recv-rtp" role="function">
+<title>gst_rtsp_stream_recv_rtp ()</title>
+<indexterm zone="gst-rtsp-stream-recv-rtp"><primary>gst_rtsp_stream_recv_rtp</primary></indexterm>
+<programlisting><link linkend="GstFlowReturn"><returnvalue>GstFlowReturn</returnvalue></link>       gst_rtsp_stream_recv_rtp            (<parameter><link linkend="GstRTSPStream"><type>GstRTSPStream</type></link> *stream</parameter>,
+                                                         <parameter><link linkend="GstBuffer"><type>GstBuffer</type></link> *buffer</parameter>);</programlisting>
+<para>
+Handle an RTP buffer for the stream. This method is usually called when a
+message has been received from a client using the TCP transport.
+</para>
+<para>
+This function takes ownership of <parameter>buffer</parameter>.
+</para><variablelist role="params">
+<varlistentry><term><parameter>stream</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstRTSPStream"><type>GstRTSPStream</type></link></simpara></listitem></varlistentry>
+<varlistentry><term><parameter>buffer</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstBuffer"><type>GstBuffer</type></link>. <emphasis role="annotation">[<acronym>transfer full</acronym>]</emphasis></simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>a GstFlowReturn.</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gst-rtsp-stream-add-transport" role="function">
+<title>gst_rtsp_stream_add_transport ()</title>
+<indexterm zone="gst-rtsp-stream-add-transport"><primary>gst_rtsp_stream_add_transport</primary></indexterm>
+<programlisting><link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            gst_rtsp_stream_add_transport       (<parameter><link linkend="GstRTSPStream"><type>GstRTSPStream</type></link> *stream</parameter>,
+                                                         <parameter><link linkend="GstRTSPStreamTransport"><type>GstRTSPStreamTransport</type></link> *trans</parameter>);</programlisting>
+<para>
+Add the transport in <parameter>trans</parameter> to <parameter>stream</parameter>. The media of <parameter>stream</parameter> will
+then also be send to the values configured in <parameter>trans</parameter>.
+</para>
+<para>
+<parameter>stream</parameter> must be joined to a bin.
+</para>
+<para>
+<parameter>trans</parameter> must contain a valid <link linkend="GstRTSPTransport"><type>GstRTSPTransport</type></link>.
+</para><variablelist role="params">
+<varlistentry><term><parameter>stream</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstRTSPStream"><type>GstRTSPStream</type></link></simpara></listitem></varlistentry>
+<varlistentry><term><parameter>trans</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstRTSPStreamTransport"><type>GstRTSPStreamTransport</type></link></simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara><link linkend="TRUE:CAPS"><literal>TRUE</literal></link> if <parameter>trans</parameter> was added</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gst-rtsp-stream-remove-transport" role="function">
+<title>gst_rtsp_stream_remove_transport ()</title>
+<indexterm zone="gst-rtsp-stream-remove-transport"><primary>gst_rtsp_stream_remove_transport</primary></indexterm>
+<programlisting><link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            gst_rtsp_stream_remove_transport    (<parameter><link linkend="GstRTSPStream"><type>GstRTSPStream</type></link> *stream</parameter>,
+                                                         <parameter><link linkend="GstRTSPStreamTransport"><type>GstRTSPStreamTransport</type></link> *trans</parameter>);</programlisting>
+<para>
+Remove the transport in <parameter>trans</parameter> from <parameter>stream</parameter>. The media of <parameter>stream</parameter> will
+not be sent to the values configured in <parameter>trans</parameter>.
+</para>
+<para>
+<parameter>stream</parameter> must be joined to a bin.
+</para>
+<para>
+<parameter>trans</parameter> must contain a valid <link linkend="GstRTSPTransport"><type>GstRTSPTransport</type></link>.
+</para><variablelist role="params">
+<varlistentry><term><parameter>stream</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstRTSPStream"><type>GstRTSPStream</type></link></simpara></listitem></varlistentry>
+<varlistentry><term><parameter>trans</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstRTSPStreamTransport"><type>GstRTSPStreamTransport</type></link></simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara><link linkend="TRUE:CAPS"><literal>TRUE</literal></link> if <parameter>trans</parameter> was removed</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gst-rtsp-stream-get-rtp-socket" role="function">
+<title>gst_rtsp_stream_get_rtp_socket ()</title>
+<indexterm zone="gst-rtsp-stream-get-rtp-socket"><primary>gst_rtsp_stream_get_rtp_socket</primary></indexterm>
+<programlisting><link linkend="GSocket"><returnvalue>GSocket</returnvalue></link> *           gst_rtsp_stream_get_rtp_socket      (<parameter><link linkend="GstRTSPStream"><type>GstRTSPStream</type></link> *stream</parameter>,
+                                                         <parameter><link linkend="GSocketFamily"><type>GSocketFamily</type></link> family</parameter>);</programlisting>
+<para>
+Get the RTP socket from <parameter>stream</parameter> for a <parameter>family</parameter>.
+</para>
+<para>
+<parameter>stream</parameter> must be joined to a bin.
+</para><variablelist role="params">
+<varlistentry><term><parameter>stream</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstRTSPStream"><type>GstRTSPStream</type></link></simpara></listitem></varlistentry>
+<varlistentry><term><parameter>family</parameter>&#160;:</term>
+<listitem><simpara>the socket family</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>the RTP socket or <link linkend="NULL:CAPS"><literal>NULL</literal></link> if no socket could be allocated for <parameter>family</parameter>.
+Unref after usage</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gst-rtsp-stream-get-rtcp-socket" role="function">
+<title>gst_rtsp_stream_get_rtcp_socket ()</title>
+<indexterm zone="gst-rtsp-stream-get-rtcp-socket"><primary>gst_rtsp_stream_get_rtcp_socket</primary></indexterm>
+<programlisting><link linkend="GSocket"><returnvalue>GSocket</returnvalue></link> *           gst_rtsp_stream_get_rtcp_socket     (<parameter><link linkend="GstRTSPStream"><type>GstRTSPStream</type></link> *stream</parameter>,
+                                                         <parameter><link linkend="GSocketFamily"><type>GSocketFamily</type></link> family</parameter>);</programlisting>
+<para>
+Get the RTCP socket from <parameter>stream</parameter> for a <parameter>family</parameter>.
+</para>
+<para>
+<parameter>stream</parameter> must be joined to a bin.
+</para><variablelist role="params">
+<varlistentry><term><parameter>stream</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstRTSPStream"><type>GstRTSPStream</type></link></simpara></listitem></varlistentry>
+<varlistentry><term><parameter>family</parameter>&#160;:</term>
+<listitem><simpara>the socket family</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>the RTCP socket or <link linkend="NULL:CAPS"><literal>NULL</literal></link> if no socket could be allocated for
+<parameter>family</parameter>. Unref after usage</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GstRTSPStreamTransportFilterFunc" role="function">
+<title>GstRTSPStreamTransportFilterFunc ()</title>
+<indexterm zone="GstRTSPStreamTransportFilterFunc"><primary>GstRTSPStreamTransportFilterFunc</primary></indexterm>
+<programlisting><link linkend="GstRTSPFilterResult"><returnvalue>GstRTSPFilterResult</returnvalue></link> (*GstRTSPStreamTransportFilterFunc) (<parameter><link linkend="GstRTSPStream"><type>GstRTSPStream</type></link> *stream</parameter>,
+                                                         <parameter><link linkend="GstRTSPStreamTransport"><type>GstRTSPStreamTransport</type></link> *trans</parameter>,
+                                                         <parameter><link linkend="gpointer"><type>gpointer</type></link> user_data</parameter>);</programlisting>
+<para>
+This function will be called by the <link linkend="gst-rtsp-stream-transport-filter"><function>gst_rtsp_stream_transport_filter()</function></link>. An
+implementation should return a value of <link linkend="GstRTSPFilterResult"><type>GstRTSPFilterResult</type></link>.
+</para>
+<para>
+When this function returns <link linkend="GST-RTSP-FILTER-REMOVE:CAPS"><type>GST_RTSP_FILTER_REMOVE</type></link>, <parameter>trans</parameter> will be removed
+from <parameter>stream</parameter>.
+</para>
+<para>
+A return value of <link linkend="GST-RTSP-FILTER-KEEP:CAPS"><type>GST_RTSP_FILTER_KEEP</type></link> will leave <parameter>trans</parameter> untouched in
+<parameter>stream</parameter>.
+</para>
+<para>
+A value of <link linkend="GST-RTSP-FILTER-REF:CAPS"><type>GST_RTSP_FILTER_REF</type></link> will add <parameter>trans</parameter> to the result <link linkend="GList"><type>GList</type></link> of
+<link linkend="gst-rtsp-stream-transport-filter"><function>gst_rtsp_stream_transport_filter()</function></link>.
+</para><variablelist role="params">
+<varlistentry><term><parameter>stream</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstRTSPStream"><type>GstRTSPStream</type></link> object</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>trans</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstRTSPStreamTransport"><type>GstRTSPStreamTransport</type></link> in <parameter>stream</parameter></simpara></listitem></varlistentry>
+<varlistentry><term><parameter>user_data</parameter>&#160;:</term>
+<listitem><simpara>user data that has been given to <link linkend="gst-rtsp-stream-transport-filter"><function>gst_rtsp_stream_transport_filter()</function></link></simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>a <link linkend="GstRTSPFilterResult"><type>GstRTSPFilterResult</type></link>.</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gst-rtsp-stream-transport-filter" role="function">
+<title>gst_rtsp_stream_transport_filter ()</title>
+<indexterm zone="gst-rtsp-stream-transport-filter"><primary>gst_rtsp_stream_transport_filter</primary></indexterm>
+<programlisting><link linkend="GList"><returnvalue>GList</returnvalue></link> *             gst_rtsp_stream_transport_filter    (<parameter><link linkend="GstRTSPStream"><type>GstRTSPStream</type></link> *stream</parameter>,
+                                                         <parameter><link linkend="GstRTSPStreamTransportFilterFunc"><type>GstRTSPStreamTransportFilterFunc</type></link> func</parameter>,
+                                                         <parameter><link linkend="gpointer"><type>gpointer</type></link> user_data</parameter>);</programlisting>
+<para>
+Call <parameter>func</parameter> for each transport managed by <parameter>stream</parameter>. The result value of <parameter>func</parameter>
+determines what happens to the transport. <parameter>func</parameter> will be called with <parameter>stream</parameter>
+locked so no further actions on <parameter>stream</parameter> can be performed from <parameter>func</parameter>.
+</para>
+<para>
+If <parameter>func</parameter> returns <link linkend="GST-RTSP-FILTER-REMOVE:CAPS"><type>GST_RTSP_FILTER_REMOVE</type></link>, the transport will be removed from
+<parameter>stream</parameter>.
+</para>
+<para>
+If <parameter>func</parameter> returns <link linkend="GST-RTSP-FILTER-KEEP:CAPS"><type>GST_RTSP_FILTER_KEEP</type></link>, the transport will remain in <parameter>stream</parameter>.
+</para>
+<para>
+If <parameter>func</parameter> returns <link linkend="GST-RTSP-FILTER-REF:CAPS"><type>GST_RTSP_FILTER_REF</type></link>, the transport will remain in <parameter>stream</parameter> but
+will also be added with an additional ref to the result <link linkend="GList"><type>GList</type></link> of this
+function..
+</para>
+<para>
+When <parameter>func</parameter> is <link linkend="NULL:CAPS"><literal>NULL</literal></link>, <link linkend="GST-RTSP-FILTER-REF:CAPS"><type>GST_RTSP_FILTER_REF</type></link> will be assumed for each transport.
+</para><variablelist role="params">
+<varlistentry><term><parameter>stream</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstRTSPStream"><type>GstRTSPStream</type></link></simpara></listitem></varlistentry>
+<varlistentry><term><parameter>func</parameter>&#160;:</term>
+<listitem><simpara>a callback. <emphasis role="annotation">[<acronym>scope call</acronym>][<acronym>allow-none</acronym>]</emphasis></simpara></listitem></varlistentry>
+<varlistentry><term><parameter>user_data</parameter>&#160;:</term>
+<listitem><simpara>user data passed to <parameter>func</parameter></simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>a <link linkend="GList"><type>GList</type></link> with all
+transports for which <parameter>func</parameter> returned <link linkend="GST-RTSP-FILTER-REF:CAPS"><type>GST_RTSP_FILTER_REF</type></link>. After usage, each
+element in the <link linkend="GList"><type>GList</type></link> should be unreffed before the list is freed. <emphasis role="annotation">[<acronym>element-type</acronym> GstRTSPStreamTransport][<acronym>transfer full</acronym>]</emphasis></simpara></listitem></varlistentry>
+</variablelist></refsect2>
+
+</refsect1>
+<refsect1 id="GstRTSPStream.see-also">
+<title>See Also</title>
+<link linkend="GstRTSPMedia"><type>GstRTSPMedia</type></link>
+</refsect1>
+
+</refentry>

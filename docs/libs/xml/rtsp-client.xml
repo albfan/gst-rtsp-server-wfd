@@ -1,0 +1,601 @@
+<?xml version="1.0"?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
+               "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
+<!ENTITY % version-entities SYSTEM "version.entities">
+%version-entities;
+]>
+
+<refentry id="GstRTSPClient">
+<refmeta>
+<refentrytitle role="top_of_page" id="GstRTSPClient.top_of_page">GstRTSPClient</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>
+  GST-RTSP-SERVER Library
+</refmiscinfo>
+</refmeta>
+<refnamediv>
+<refname>GstRTSPClient</refname>
+<refpurpose>A client connection state</refpurpose>
+</refnamediv>
+
+<refsynopsisdiv id="GstRTSPClient.synopsis" role="synopsis">
+<title role="synopsis.title">Synopsis</title>
+
+<synopsis>struct              <link linkend="GstRTSPClient-struct">GstRTSPClient</link>;
+struct              <link linkend="GstRTSPClientClass">GstRTSPClientClass</link>;
+<link linkend="GstRTSPClient"><returnvalue>GstRTSPClient</returnvalue></link> *     <link linkend="gst-rtsp-client-new">gst_rtsp_client_new</link>                 (<parameter><type>void</type></parameter>);
+<link linkend="GstRTSPSessionPool"><returnvalue>GstRTSPSessionPool</returnvalue></link> * <link linkend="gst-rtsp-client-get-session-pool">gst_rtsp_client_get_session_pool</link>   (<parameter><link linkend="GstRTSPClient"><type>GstRTSPClient</type></link> *client</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="gst-rtsp-client-set-session-pool">gst_rtsp_client_set_session_pool</link>    (<parameter><link linkend="GstRTSPClient"><type>GstRTSPClient</type></link> *client</parameter>,
+                                                         <parameter><link linkend="GstRTSPSessionPool"><type>GstRTSPSessionPool</type></link> *pool</parameter>);
+<link linkend="GstRTSPMountPoints"><returnvalue>GstRTSPMountPoints</returnvalue></link> * <link linkend="gst-rtsp-client-get-mount-points">gst_rtsp_client_get_mount_points</link>   (<parameter><link linkend="GstRTSPClient"><type>GstRTSPClient</type></link> *client</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="gst-rtsp-client-set-mount-points">gst_rtsp_client_set_mount_points</link>    (<parameter><link linkend="GstRTSPClient"><type>GstRTSPClient</type></link> *client</parameter>,
+                                                         <parameter><link linkend="GstRTSPMountPoints"><type>GstRTSPMountPoints</type></link> *mounts</parameter>);
+<link linkend="GstRTSPAuth"><returnvalue>GstRTSPAuth</returnvalue></link> *       <link linkend="gst-rtsp-client-get-auth">gst_rtsp_client_get_auth</link>            (<parameter><link linkend="GstRTSPClient"><type>GstRTSPClient</type></link> *client</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="gst-rtsp-client-set-auth">gst_rtsp_client_set_auth</link>            (<parameter><link linkend="GstRTSPClient"><type>GstRTSPClient</type></link> *client</parameter>,
+                                                         <parameter><link linkend="GstRTSPAuth"><type>GstRTSPAuth</type></link> *auth</parameter>);
+<link linkend="GstRTSPThreadPool"><returnvalue>GstRTSPThreadPool</returnvalue></link> * <link linkend="gst-rtsp-client-get-thread-pool">gst_rtsp_client_get_thread_pool</link>     (<parameter><link linkend="GstRTSPClient"><type>GstRTSPClient</type></link> *client</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="gst-rtsp-client-set-thread-pool">gst_rtsp_client_set_thread_pool</link>     (<parameter><link linkend="GstRTSPClient"><type>GstRTSPClient</type></link> *client</parameter>,
+                                                         <parameter><link linkend="GstRTSPThreadPool"><type>GstRTSPThreadPool</type></link> *pool</parameter>);
+<link linkend="GstRTSPConnection"><returnvalue>GstRTSPConnection</returnvalue></link> * <link linkend="gst-rtsp-client-get-connection">gst_rtsp_client_get_connection</link>      (<parameter><link linkend="GstRTSPClient"><type>GstRTSPClient</type></link> *client</parameter>);
+<link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            <link linkend="gst-rtsp-client-set-connection">gst_rtsp_client_set_connection</link>      (<parameter><link linkend="GstRTSPClient"><type>GstRTSPClient</type></link> *client</parameter>,
+                                                         <parameter><link linkend="GstRTSPConnection"><type>GstRTSPConnection</type></link> *conn</parameter>);
+<link linkend="guint"><returnvalue>guint</returnvalue></link>               <link linkend="gst-rtsp-client-attach">gst_rtsp_client_attach</link>              (<parameter><link linkend="GstRTSPClient"><type>GstRTSPClient</type></link> *client</parameter>,
+                                                         <parameter><link linkend="GMainContext"><type>GMainContext</type></link> *context</parameter>);
+<link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            (<link linkend="GstRTSPClientSendFunc">*GstRTSPClientSendFunc</link>)            (<parameter><link linkend="GstRTSPClient"><type>GstRTSPClient</type></link> *client</parameter>,
+                                                         <parameter><link linkend="GstRTSPMessage"><type>GstRTSPMessage</type></link> *message</parameter>,
+                                                         <parameter><link linkend="gboolean"><type>gboolean</type></link> close</parameter>,
+                                                         <parameter><link linkend="gpointer"><type>gpointer</type></link> user_data</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="gst-rtsp-client-set-send-func">gst_rtsp_client_set_send_func</link>       (<parameter><link linkend="GstRTSPClient"><type>GstRTSPClient</type></link> *client</parameter>,
+                                                         <parameter><link linkend="GstRTSPClientSendFunc"><type>GstRTSPClientSendFunc</type></link> func</parameter>,
+                                                         <parameter><link linkend="gpointer"><type>gpointer</type></link> user_data</parameter>,
+                                                         <parameter><link linkend="GDestroyNotify"><type>GDestroyNotify</type></link> notify</parameter>);
+<link linkend="GstRTSPResult"><returnvalue>GstRTSPResult</returnvalue></link>       <link linkend="gst-rtsp-client-handle-message">gst_rtsp_client_handle_message</link>      (<parameter><link linkend="GstRTSPClient"><type>GstRTSPClient</type></link> *client</parameter>,
+                                                         <parameter><link linkend="GstRTSPMessage"><type>GstRTSPMessage</type></link> *message</parameter>);
+<link linkend="GstRTSPResult"><returnvalue>GstRTSPResult</returnvalue></link>       <link linkend="gst-rtsp-client-send-message">gst_rtsp_client_send_message</link>        (<parameter><link linkend="GstRTSPClient"><type>GstRTSPClient</type></link> *client</parameter>,
+                                                         <parameter><link linkend="GstRTSPSession"><type>GstRTSPSession</type></link> *session</parameter>,
+                                                         <parameter><link linkend="GstRTSPMessage"><type>GstRTSPMessage</type></link> *message</parameter>);
+<link linkend="GstRTSPFilterResult"><returnvalue>GstRTSPFilterResult</returnvalue></link> (<link linkend="GstRTSPClientSessionFilterFunc">*GstRTSPClientSessionFilterFunc</link>)   (<parameter><link linkend="GstRTSPClient"><type>GstRTSPClient</type></link> *client</parameter>,
+                                                         <parameter><link linkend="GstRTSPSession"><type>GstRTSPSession</type></link> *sess</parameter>,
+                                                         <parameter><link linkend="gpointer"><type>gpointer</type></link> user_data</parameter>);
+<link linkend="GList"><returnvalue>GList</returnvalue></link> *             <link linkend="gst-rtsp-client-session-filter">gst_rtsp_client_session_filter</link>      (<parameter><link linkend="GstRTSPClient"><type>GstRTSPClient</type></link> *client</parameter>,
+                                                         <parameter><link linkend="GstRTSPClientSessionFilterFunc"><type>GstRTSPClientSessionFilterFunc</type></link> func</parameter>,
+                                                         <parameter><link linkend="gpointer"><type>gpointer</type></link> user_data</parameter>);
+</synopsis>
+</refsynopsisdiv>
+<refsect1 id="GstRTSPClient.object-hierarchy" role="object_hierarchy">
+<title role="object_hierarchy.title">Object Hierarchy</title>
+<synopsis>
+  <link linkend="GObject">GObject</link>
+   +----GstRTSPClient
+</synopsis>
+</refsect1>
+<refsect1 id="GstRTSPClient.properties" role="properties">
+<title role="properties.title">Properties</title>
+<synopsis>
+  &quot;<link linkend="GstRTSPClient--mount-points">mount-points</link>&quot;             <link linkend="GstRTSPMountPoints"><type>GstRTSPMountPoints</type></link>*   : Read / Write
+  &quot;<link linkend="GstRTSPClient--session-pool">session-pool</link>&quot;             <link linkend="GstRTSPSessionPool"><type>GstRTSPSessionPool</type></link>*   : Read / Write
+</synopsis>
+</refsect1>
+<refsect1 id="GstRTSPClient.signals" role="signal_proto">
+<title role="signal_proto.title">Signals</title>
+<synopsis>
+  &quot;<link linkend="GstRTSPClient-closed">closed</link>&quot;                                         : <link linkend="G-SIGNAL-RUN-LAST:CAPS"><literal>Run Last</literal></link>
+  &quot;<link linkend="GstRTSPClient-describe-request">describe-request</link>&quot;                               : <link linkend="G-SIGNAL-RUN-LAST:CAPS"><literal>Run Last</literal></link>
+  &quot;<link linkend="GstRTSPClient-get-parameter-request">get-parameter-request</link>&quot;                          : <link linkend="G-SIGNAL-RUN-LAST:CAPS"><literal>Run Last</literal></link>
+  &quot;<link linkend="GstRTSPClient-handle-response">handle-response</link>&quot;                                : <link linkend="G-SIGNAL-RUN-LAST:CAPS"><literal>Run Last</literal></link>
+  &quot;<link linkend="GstRTSPClient-new-session">new-session</link>&quot;                                    : <link linkend="G-SIGNAL-RUN-LAST:CAPS"><literal>Run Last</literal></link>
+  &quot;<link linkend="GstRTSPClient-options-request">options-request</link>&quot;                                : <link linkend="G-SIGNAL-RUN-LAST:CAPS"><literal>Run Last</literal></link>
+  &quot;<link linkend="GstRTSPClient-pause-request">pause-request</link>&quot;                                  : <link linkend="G-SIGNAL-RUN-LAST:CAPS"><literal>Run Last</literal></link>
+  &quot;<link linkend="GstRTSPClient-play-request">play-request</link>&quot;                                   : <link linkend="G-SIGNAL-RUN-LAST:CAPS"><literal>Run Last</literal></link>
+  &quot;<link linkend="GstRTSPClient-set-parameter-request">set-parameter-request</link>&quot;                          : <link linkend="G-SIGNAL-RUN-LAST:CAPS"><literal>Run Last</literal></link>
+  &quot;<link linkend="GstRTSPClient-setup-request">setup-request</link>&quot;                                  : <link linkend="G-SIGNAL-RUN-LAST:CAPS"><literal>Run Last</literal></link>
+  &quot;<link linkend="GstRTSPClient-teardown-request">teardown-request</link>&quot;                               : <link linkend="G-SIGNAL-RUN-LAST:CAPS"><literal>Run Last</literal></link>
+</synopsis>
+</refsect1>
+
+<refsect1 id="GstRTSPClient.description" role="desc">
+<title role="desc.title">Description</title>
+<para>
+The client object handles the connection with a client for as long as a TCP
+connection is open.
+</para>
+<para>
+A <link linkend="GstRTSPClient"><type>GstRTSPClient</type></link> is created by <link linkend="GstRTSPServer"><type>GstRTSPServer</type></link> when a new connection is
+accepted and it inherits the <link linkend="GstRTSPMountPoints"><type>GstRTSPMountPoints</type></link>, <link linkend="GstRTSPSessionPool"><type>GstRTSPSessionPool</type></link>,
+<link linkend="GstRTSPAuth"><type>GstRTSPAuth</type></link> and <link linkend="GstRTSPThreadPool"><type>GstRTSPThreadPool</type></link> from the server.
+</para>
+<para>
+The client connection should be configured with the <link linkend="GstRTSPConnection"><type>GstRTSPConnection</type></link> using
+<link linkend="gst-rtsp-client-set-connection"><function>gst_rtsp_client_set_connection()</function></link> before it can be attached to a <link linkend="GMainContext"><type>GMainContext</type></link>
+using <link linkend="gst-rtsp-client-attach"><function>gst_rtsp_client_attach()</function></link>. From then on the client will handle requests
+on the connection.
+</para>
+<para>
+Use <link linkend="gst-rtsp-client-session-filter"><function>gst_rtsp_client_session_filter()</function></link> to iterate or modify all the
+<link linkend="GstRTSPSession"><type>GstRTSPSession</type></link> objects managed by the client object.
+</para>
+<para>
+Last reviewed on 2013-07-11 (1.0.0)
+</para>
+</refsect1>
+<refsect1 id="GstRTSPClient.details" role="details">
+<title role="details.title">Details</title>
+<refsect2 id="GstRTSPClient-struct" role="struct">
+<title>struct GstRTSPClient</title>
+<indexterm zone="GstRTSPClient-struct"><primary>GstRTSPClient</primary></indexterm>
+<programlisting>struct GstRTSPClient;</programlisting>
+<para>
+The client object represents the connection and its state with a client.
+</para></refsect2>
+<refsect2 id="GstRTSPClientClass" role="struct">
+<title>struct GstRTSPClientClass</title>
+<indexterm zone="GstRTSPClientClass"><primary>GstRTSPClientClass</primary></indexterm>
+<programlisting>struct GstRTSPClientClass {
+  GObjectClass  parent_class;
+
+  GstSDPMessage * (*create_sdp) (GstRTSPClient *client, GstRTSPMedia *media);
+  gboolean        (*configure_client_media)     (GstRTSPClient * client,
+                                                 GstRTSPMedia * media, GstRTSPStream * stream,
+                                                 GstRTSPContext * ctx);
+  gboolean        (*configure_client_transport) (GstRTSPClient * client,
+                                                 GstRTSPContext * ctx,
+                                                 GstRTSPTransport * ct);
+  GstRTSPResult   (*params_set) (GstRTSPClient *client, GstRTSPContext *ctx);
+  GstRTSPResult   (*params_get) (GstRTSPClient *client, GstRTSPContext *ctx);
+  gchar *         (*make_path_from_uri) (GstRTSPClient *client, const GstRTSPUrl *uri);
+
+  /* signals */
+  void     (*closed)                  (GstRTSPClient *client);
+  void     (*new_session)             (GstRTSPClient *client, GstRTSPSession *session);
+  void     (*options_request)         (GstRTSPClient *client, GstRTSPContext *ctx);
+  void     (*describe_request)        (GstRTSPClient *client, GstRTSPContext *ctx);
+  void     (*setup_request)           (GstRTSPClient *client, GstRTSPContext *ctx);
+  void     (*play_request)            (GstRTSPClient *client, GstRTSPContext *ctx);
+  void     (*pause_request)           (GstRTSPClient *client, GstRTSPContext *ctx);
+  void     (*teardown_request)        (GstRTSPClient *client, GstRTSPContext *ctx);
+  void     (*set_parameter_request)   (GstRTSPClient *client, GstRTSPContext *ctx);
+  void     (*get_parameter_request)   (GstRTSPClient *client, GstRTSPContext *ctx);
+  void     (*handle_response)         (GstRTSPClient *client, GstRTSPContext *ctx);
+};
+</programlisting>
+<para>
+The client class structure.
+</para><variablelist role="struct">
+<varlistentry><term><link linkend="GObjectClass"><type>GObjectClass</type></link>&#160;<structfield id="GstRTSPClientClass.parent-class">parent_class</structfield>;</term>
+<listitem />
+</varlistentry>
+<varlistentry><term><structfield id="GstRTSPClientClass.create-sdp">create_sdp</structfield>&#160;()</term>
+<listitem><simpara>called when the SDP needs to be created for media.</simpara></listitem>
+</varlistentry>
+<varlistentry><term><structfield id="GstRTSPClientClass.configure-client-media">configure_client_media</structfield>&#160;()</term>
+<listitem><simpara>called when the stream in media needs to be configured.
+The default implementation will configure the blocksize on the payloader when
+spcified in the request headers.</simpara></listitem>
+</varlistentry>
+<varlistentry><term><structfield id="GstRTSPClientClass.configure-client-transport">configure_client_transport</structfield>&#160;()</term>
+<listitem><simpara>called when the client transport needs to be
+configured.</simpara></listitem>
+</varlistentry>
+<varlistentry><term><structfield id="GstRTSPClientClass.params-set">params_set</structfield>&#160;()</term>
+<listitem><simpara>set parameters. This function should also initialize the
+RTSP response(ctx->response) via a call to <link linkend="gst-rtsp-message-init-response"><function>gst_rtsp_message_init_response()</function></link></simpara></listitem>
+</varlistentry>
+<varlistentry><term><structfield id="GstRTSPClientClass.params-get">params_get</structfield>&#160;()</term>
+<listitem><simpara>get parameters. This function should also initialize the
+RTSP response(ctx->response) via a call to <link linkend="gst-rtsp-message-init-response"><function>gst_rtsp_message_init_response()</function></link></simpara></listitem>
+</varlistentry>
+<varlistentry><term><structfield id="GstRTSPClientClass.make-path-from-uri">make_path_from_uri</structfield>&#160;()</term>
+<listitem />
+</varlistentry>
+<varlistentry><term><structfield id="GstRTSPClientClass.closed">closed</structfield>&#160;()</term>
+<listitem />
+</varlistentry>
+<varlistentry><term><structfield id="GstRTSPClientClass.new-session">new_session</structfield>&#160;()</term>
+<listitem />
+</varlistentry>
+<varlistentry><term><structfield id="GstRTSPClientClass.options-request">options_request</structfield>&#160;()</term>
+<listitem />
+</varlistentry>
+<varlistentry><term><structfield id="GstRTSPClientClass.describe-request">describe_request</structfield>&#160;()</term>
+<listitem />
+</varlistentry>
+<varlistentry><term><structfield id="GstRTSPClientClass.setup-request">setup_request</structfield>&#160;()</term>
+<listitem />
+</varlistentry>
+<varlistentry><term><structfield id="GstRTSPClientClass.play-request">play_request</structfield>&#160;()</term>
+<listitem />
+</varlistentry>
+<varlistentry><term><structfield id="GstRTSPClientClass.pause-request">pause_request</structfield>&#160;()</term>
+<listitem />
+</varlistentry>
+<varlistentry><term><structfield id="GstRTSPClientClass.teardown-request">teardown_request</structfield>&#160;()</term>
+<listitem />
+</varlistentry>
+<varlistentry><term><structfield id="GstRTSPClientClass.set-parameter-request">set_parameter_request</structfield>&#160;()</term>
+<listitem />
+</varlistentry>
+<varlistentry><term><structfield id="GstRTSPClientClass.get-parameter-request">get_parameter_request</structfield>&#160;()</term>
+<listitem />
+</varlistentry>
+<varlistentry><term><structfield id="GstRTSPClientClass.handle-response">handle_response</structfield>&#160;()</term>
+<listitem />
+</varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gst-rtsp-client-new" role="function">
+<title>gst_rtsp_client_new ()</title>
+<indexterm zone="gst-rtsp-client-new"><primary>gst_rtsp_client_new</primary></indexterm>
+<programlisting><link linkend="GstRTSPClient"><returnvalue>GstRTSPClient</returnvalue></link> *     gst_rtsp_client_new                 (<parameter><type>void</type></parameter>);</programlisting>
+<para>
+Create a new <link linkend="GstRTSPClient"><type>GstRTSPClient</type></link> instance.
+</para><variablelist role="params">
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>a new <link linkend="GstRTSPClient"><type>GstRTSPClient</type></link></simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gst-rtsp-client-get-session-pool" role="function">
+<title>gst_rtsp_client_get_session_pool ()</title>
+<indexterm zone="gst-rtsp-client-get-session-pool"><primary>gst_rtsp_client_get_session_pool</primary></indexterm>
+<programlisting><link linkend="GstRTSPSessionPool"><returnvalue>GstRTSPSessionPool</returnvalue></link> * gst_rtsp_client_get_session_pool   (<parameter><link linkend="GstRTSPClient"><type>GstRTSPClient</type></link> *client</parameter>);</programlisting>
+<para>
+Get the <link linkend="GstRTSPSessionPool"><type>GstRTSPSessionPool</type></link> object that <parameter>client</parameter> uses to manage its sessions.
+</para><variablelist role="params">
+<varlistentry><term><parameter>client</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstRTSPClient"><type>GstRTSPClient</type></link></simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>a <link linkend="GstRTSPSessionPool"><type>GstRTSPSessionPool</type></link>, unref after usage. <emphasis role="annotation">[<acronym>transfer full</acronym>]</emphasis></simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gst-rtsp-client-set-session-pool" role="function">
+<title>gst_rtsp_client_set_session_pool ()</title>
+<indexterm zone="gst-rtsp-client-set-session-pool"><primary>gst_rtsp_client_set_session_pool</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                gst_rtsp_client_set_session_pool    (<parameter><link linkend="GstRTSPClient"><type>GstRTSPClient</type></link> *client</parameter>,
+                                                         <parameter><link linkend="GstRTSPSessionPool"><type>GstRTSPSessionPool</type></link> *pool</parameter>);</programlisting>
+<para>
+Set <parameter>pool</parameter> as the sessionpool for <parameter>client</parameter> which it will use to find
+or allocate sessions. the sessionpool is usually inherited from the server
+that created the client but can be overridden later.
+</para><variablelist role="params">
+<varlistentry><term><parameter>client</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstRTSPClient"><type>GstRTSPClient</type></link></simpara></listitem></varlistentry>
+<varlistentry><term><parameter>pool</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstRTSPSessionPool"><type>GstRTSPSessionPool</type></link></simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gst-rtsp-client-get-mount-points" role="function">
+<title>gst_rtsp_client_get_mount_points ()</title>
+<indexterm zone="gst-rtsp-client-get-mount-points"><primary>gst_rtsp_client_get_mount_points</primary></indexterm>
+<programlisting><link linkend="GstRTSPMountPoints"><returnvalue>GstRTSPMountPoints</returnvalue></link> * gst_rtsp_client_get_mount_points   (<parameter><link linkend="GstRTSPClient"><type>GstRTSPClient</type></link> *client</parameter>);</programlisting>
+<para>
+Get the <link linkend="GstRTSPMountPoints"><type>GstRTSPMountPoints</type></link> object that <parameter>client</parameter> uses to manage its sessions.
+</para><variablelist role="params">
+<varlistentry><term><parameter>client</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstRTSPClient"><type>GstRTSPClient</type></link></simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>a <link linkend="GstRTSPMountPoints"><type>GstRTSPMountPoints</type></link>, unref after usage. <emphasis role="annotation">[<acronym>transfer full</acronym>]</emphasis></simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gst-rtsp-client-set-mount-points" role="function">
+<title>gst_rtsp_client_set_mount_points ()</title>
+<indexterm zone="gst-rtsp-client-set-mount-points"><primary>gst_rtsp_client_set_mount_points</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                gst_rtsp_client_set_mount_points    (<parameter><link linkend="GstRTSPClient"><type>GstRTSPClient</type></link> *client</parameter>,
+                                                         <parameter><link linkend="GstRTSPMountPoints"><type>GstRTSPMountPoints</type></link> *mounts</parameter>);</programlisting>
+<para>
+Set <parameter>mounts</parameter> as the mount points for <parameter>client</parameter> which it will use to map urls
+to media streams. These mount points are usually inherited from the server that
+created the client but can be overriden later.
+</para><variablelist role="params">
+<varlistentry><term><parameter>client</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstRTSPClient"><type>GstRTSPClient</type></link></simpara></listitem></varlistentry>
+<varlistentry><term><parameter>mounts</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstRTSPMountPoints"><type>GstRTSPMountPoints</type></link></simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gst-rtsp-client-get-auth" role="function">
+<title>gst_rtsp_client_get_auth ()</title>
+<indexterm zone="gst-rtsp-client-get-auth"><primary>gst_rtsp_client_get_auth</primary></indexterm>
+<programlisting><link linkend="GstRTSPAuth"><returnvalue>GstRTSPAuth</returnvalue></link> *       gst_rtsp_client_get_auth            (<parameter><link linkend="GstRTSPClient"><type>GstRTSPClient</type></link> *client</parameter>);</programlisting>
+<para>
+Get the <link linkend="GstRTSPAuth"><type>GstRTSPAuth</type></link> used as the authentication manager of <parameter>client</parameter>.
+</para><variablelist role="params">
+<varlistentry><term><parameter>client</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstRTSPClient"><type>GstRTSPClient</type></link></simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>the <link linkend="GstRTSPAuth"><type>GstRTSPAuth</type></link> of <parameter>client</parameter>. <link linkend="g-object-unref"><function>g_object_unref()</function></link> after
+usage. <emphasis role="annotation">[<acronym>transfer full</acronym>]</emphasis></simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gst-rtsp-client-set-auth" role="function">
+<title>gst_rtsp_client_set_auth ()</title>
+<indexterm zone="gst-rtsp-client-set-auth"><primary>gst_rtsp_client_set_auth</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                gst_rtsp_client_set_auth            (<parameter><link linkend="GstRTSPClient"><type>GstRTSPClient</type></link> *client</parameter>,
+                                                         <parameter><link linkend="GstRTSPAuth"><type>GstRTSPAuth</type></link> *auth</parameter>);</programlisting>
+<para>
+configure <parameter>auth</parameter> to be used as the authentication manager of <parameter>client</parameter>.
+</para><variablelist role="params">
+<varlistentry><term><parameter>client</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstRTSPClient"><type>GstRTSPClient</type></link></simpara></listitem></varlistentry>
+<varlistentry><term><parameter>auth</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstRTSPAuth"><type>GstRTSPAuth</type></link></simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gst-rtsp-client-get-thread-pool" role="function">
+<title>gst_rtsp_client_get_thread_pool ()</title>
+<indexterm zone="gst-rtsp-client-get-thread-pool"><primary>gst_rtsp_client_get_thread_pool</primary></indexterm>
+<programlisting><link linkend="GstRTSPThreadPool"><returnvalue>GstRTSPThreadPool</returnvalue></link> * gst_rtsp_client_get_thread_pool     (<parameter><link linkend="GstRTSPClient"><type>GstRTSPClient</type></link> *client</parameter>);</programlisting>
+<para>
+Get the <link linkend="GstRTSPThreadPool"><type>GstRTSPThreadPool</type></link> used as the thread pool of <parameter>client</parameter>.
+</para><variablelist role="params">
+<varlistentry><term><parameter>client</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstRTSPClient"><type>GstRTSPClient</type></link></simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>the <link linkend="GstRTSPThreadPool"><type>GstRTSPThreadPool</type></link> of <parameter>client</parameter>. <link linkend="g-object-unref"><function>g_object_unref()</function></link> after
+usage. <emphasis role="annotation">[<acronym>transfer full</acronym>]</emphasis></simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gst-rtsp-client-set-thread-pool" role="function">
+<title>gst_rtsp_client_set_thread_pool ()</title>
+<indexterm zone="gst-rtsp-client-set-thread-pool"><primary>gst_rtsp_client_set_thread_pool</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                gst_rtsp_client_set_thread_pool     (<parameter><link linkend="GstRTSPClient"><type>GstRTSPClient</type></link> *client</parameter>,
+                                                         <parameter><link linkend="GstRTSPThreadPool"><type>GstRTSPThreadPool</type></link> *pool</parameter>);</programlisting>
+<para>
+configure <parameter>pool</parameter> to be used as the thread pool of <parameter>client</parameter>.
+</para><variablelist role="params">
+<varlistentry><term><parameter>client</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstRTSPClient"><type>GstRTSPClient</type></link></simpara></listitem></varlistentry>
+<varlistentry><term><parameter>pool</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstRTSPThreadPool"><type>GstRTSPThreadPool</type></link></simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gst-rtsp-client-get-connection" role="function">
+<title>gst_rtsp_client_get_connection ()</title>
+<indexterm zone="gst-rtsp-client-get-connection"><primary>gst_rtsp_client_get_connection</primary></indexterm>
+<programlisting><link linkend="GstRTSPConnection"><returnvalue>GstRTSPConnection</returnvalue></link> * gst_rtsp_client_get_connection      (<parameter><link linkend="GstRTSPClient"><type>GstRTSPClient</type></link> *client</parameter>);</programlisting>
+<para>
+Get the <link linkend="GstRTSPConnection"><type>GstRTSPConnection</type></link> of <parameter>client</parameter>.
+</para><variablelist role="params">
+<varlistentry><term><parameter>client</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstRTSPClient"><type>GstRTSPClient</type></link></simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>the <link linkend="GstRTSPConnection"><type>GstRTSPConnection</type></link> of <parameter>client</parameter>.
+The connection object returned remains valid until the client is freed. <emphasis role="annotation">[<acronym>transfer none</acronym>]</emphasis></simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gst-rtsp-client-set-connection" role="function">
+<title>gst_rtsp_client_set_connection ()</title>
+<indexterm zone="gst-rtsp-client-set-connection"><primary>gst_rtsp_client_set_connection</primary></indexterm>
+<programlisting><link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            gst_rtsp_client_set_connection      (<parameter><link linkend="GstRTSPClient"><type>GstRTSPClient</type></link> *client</parameter>,
+                                                         <parameter><link linkend="GstRTSPConnection"><type>GstRTSPConnection</type></link> *conn</parameter>);</programlisting>
+<para>
+Set the <link linkend="GstRTSPConnection"><type>GstRTSPConnection</type></link> of <parameter>client</parameter>. This function takes ownership of
+<parameter>conn</parameter>.
+</para><variablelist role="params">
+<varlistentry><term><parameter>client</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstRTSPClient"><type>GstRTSPClient</type></link></simpara></listitem></varlistentry>
+<varlistentry><term><parameter>conn</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstRTSPConnection"><type>GstRTSPConnection</type></link>. <emphasis role="annotation">[<acronym>transfer full</acronym>]</emphasis></simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara><link linkend="TRUE:CAPS"><literal>TRUE</literal></link> on success.</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gst-rtsp-client-attach" role="function">
+<title>gst_rtsp_client_attach ()</title>
+<indexterm zone="gst-rtsp-client-attach"><primary>gst_rtsp_client_attach</primary></indexterm>
+<programlisting><link linkend="guint"><returnvalue>guint</returnvalue></link>               gst_rtsp_client_attach              (<parameter><link linkend="GstRTSPClient"><type>GstRTSPClient</type></link> *client</parameter>,
+                                                         <parameter><link linkend="GMainContext"><type>GMainContext</type></link> *context</parameter>);</programlisting>
+<para>
+Attaches <parameter>client</parameter> to <parameter>context</parameter>. When the mainloop for <parameter>context</parameter> is run, the
+client will be dispatched. When <parameter>context</parameter> is <link linkend="NULL:CAPS"><literal>NULL</literal></link>, the default context will be
+used).
+</para>
+<para>
+This function should be called when the client properties and urls are fully
+configured and the client is ready to start.
+</para><variablelist role="params">
+<varlistentry><term><parameter>client</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstRTSPClient"><type>GstRTSPClient</type></link></simpara></listitem></varlistentry>
+<varlistentry><term><parameter>context</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GMainContext"><type>GMainContext</type></link>. <emphasis role="annotation">[<acronym>allow-none</acronym>]</emphasis></simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>the ID (greater than 0) for the source within the GMainContext.</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GstRTSPClientSendFunc" role="function">
+<title>GstRTSPClientSendFunc ()</title>
+<indexterm zone="GstRTSPClientSendFunc"><primary>GstRTSPClientSendFunc</primary></indexterm>
+<programlisting><link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            (*GstRTSPClientSendFunc)            (<parameter><link linkend="GstRTSPClient"><type>GstRTSPClient</type></link> *client</parameter>,
+                                                         <parameter><link linkend="GstRTSPMessage"><type>GstRTSPMessage</type></link> *message</parameter>,
+                                                         <parameter><link linkend="gboolean"><type>gboolean</type></link> close</parameter>,
+                                                         <parameter><link linkend="gpointer"><type>gpointer</type></link> user_data</parameter>);</programlisting>
+<para>
+This callback is called when <parameter>client</parameter> wants to send <parameter>message</parameter>. When <parameter>close</parameter> is
+<link linkend="TRUE:CAPS"><literal>TRUE</literal></link>, the connection should be closed when the message has been sent.
+</para><variablelist role="params">
+<varlistentry><term><parameter>client</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstRTSPClient"><type>GstRTSPClient</type></link></simpara></listitem></varlistentry>
+<varlistentry><term><parameter>message</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstRTSPMessage"><type>GstRTSPMessage</type></link></simpara></listitem></varlistentry>
+<varlistentry><term><parameter>close</parameter>&#160;:</term>
+<listitem><simpara>close the connection</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>user_data</parameter>&#160;:</term>
+<listitem><simpara>user data when registering the callback</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara><link linkend="TRUE:CAPS"><literal>TRUE</literal></link> on success.</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gst-rtsp-client-set-send-func" role="function">
+<title>gst_rtsp_client_set_send_func ()</title>
+<indexterm zone="gst-rtsp-client-set-send-func"><primary>gst_rtsp_client_set_send_func</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                gst_rtsp_client_set_send_func       (<parameter><link linkend="GstRTSPClient"><type>GstRTSPClient</type></link> *client</parameter>,
+                                                         <parameter><link linkend="GstRTSPClientSendFunc"><type>GstRTSPClientSendFunc</type></link> func</parameter>,
+                                                         <parameter><link linkend="gpointer"><type>gpointer</type></link> user_data</parameter>,
+                                                         <parameter><link linkend="GDestroyNotify"><type>GDestroyNotify</type></link> notify</parameter>);</programlisting>
+<para>
+Set <parameter>func</parameter> as the callback that will be called when a new message needs to be
+sent to the client. <parameter>user_data</parameter> is passed to <parameter>func</parameter> and <parameter>notify</parameter> is called when
+<parameter>user_data</parameter> is no longer in use.
+</para>
+<para>
+By default, the client will send the messages on the <link linkend="GstRTSPConnection"><type>GstRTSPConnection</type></link> that
+was configured with <link linkend="gst-rtsp-client-attach"><function>gst_rtsp_client_attach()</function></link> was called.
+</para><variablelist role="params">
+<varlistentry><term><parameter>client</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstRTSPClient"><type>GstRTSPClient</type></link></simpara></listitem></varlistentry>
+<varlistentry><term><parameter>func</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstRTSPClientSendFunc"><type>GstRTSPClientSendFunc</type></link></simpara></listitem></varlistentry>
+<varlistentry><term><parameter>user_data</parameter>&#160;:</term>
+<listitem><simpara>user data passed to <parameter>func</parameter></simpara></listitem></varlistentry>
+<varlistentry><term><parameter>notify</parameter>&#160;:</term>
+<listitem><simpara>called when <parameter>user_data</parameter> is no longer in use</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gst-rtsp-client-handle-message" role="function">
+<title>gst_rtsp_client_handle_message ()</title>
+<indexterm zone="gst-rtsp-client-handle-message"><primary>gst_rtsp_client_handle_message</primary></indexterm>
+<programlisting><link linkend="GstRTSPResult"><returnvalue>GstRTSPResult</returnvalue></link>       gst_rtsp_client_handle_message      (<parameter><link linkend="GstRTSPClient"><type>GstRTSPClient</type></link> *client</parameter>,
+                                                         <parameter><link linkend="GstRTSPMessage"><type>GstRTSPMessage</type></link> *message</parameter>);</programlisting>
+<para>
+Let the client handle <parameter>message</parameter>.
+</para><variablelist role="params">
+<varlistentry><term><parameter>client</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstRTSPClient"><type>GstRTSPClient</type></link></simpara></listitem></varlistentry>
+<varlistentry><term><parameter>message</parameter>&#160;:</term>
+<listitem><simpara>an <link linkend="GstRTSPMessage"><type>GstRTSPMessage</type></link></simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>a <link linkend="GstRTSPResult"><type>GstRTSPResult</type></link>.</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gst-rtsp-client-send-message" role="function">
+<title>gst_rtsp_client_send_message ()</title>
+<indexterm zone="gst-rtsp-client-send-message"><primary>gst_rtsp_client_send_message</primary></indexterm>
+<programlisting><link linkend="GstRTSPResult"><returnvalue>GstRTSPResult</returnvalue></link>       gst_rtsp_client_send_message        (<parameter><link linkend="GstRTSPClient"><type>GstRTSPClient</type></link> *client</parameter>,
+                                                         <parameter><link linkend="GstRTSPSession"><type>GstRTSPSession</type></link> *session</parameter>,
+                                                         <parameter><link linkend="GstRTSPMessage"><type>GstRTSPMessage</type></link> *message</parameter>);</programlisting>
+<para>
+Send a message message to the remote end. <parameter>message</parameter> must be a
+<link linkend="GST-RTSP-MESSAGE-REQUEST:CAPS"><type>GST_RTSP_MESSAGE_REQUEST</type></link> or a <link linkend="GST-RTSP-MESSAGE-RESPONSE:CAPS"><type>GST_RTSP_MESSAGE_RESPONSE</type></link>.
+</para><variablelist role="params">
+<varlistentry><term><parameter>client</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstRTSPClient"><type>GstRTSPClient</type></link></simpara></listitem></varlistentry>
+<varlistentry><term><parameter>session</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstRTSPSession"><type>GstRTSPSession</type></link> to send the message to or <link linkend="NULL:CAPS"><literal>NULL</literal></link></simpara></listitem></varlistentry>
+<varlistentry><term><parameter>message</parameter>&#160;:</term>
+<listitem><simpara>The <link linkend="GstRTSPMessage"><type>GstRTSPMessage</type></link> to send</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GstRTSPClientSessionFilterFunc" role="function">
+<title>GstRTSPClientSessionFilterFunc ()</title>
+<indexterm zone="GstRTSPClientSessionFilterFunc"><primary>GstRTSPClientSessionFilterFunc</primary></indexterm>
+<programlisting><link linkend="GstRTSPFilterResult"><returnvalue>GstRTSPFilterResult</returnvalue></link> (*GstRTSPClientSessionFilterFunc)   (<parameter><link linkend="GstRTSPClient"><type>GstRTSPClient</type></link> *client</parameter>,
+                                                         <parameter><link linkend="GstRTSPSession"><type>GstRTSPSession</type></link> *sess</parameter>,
+                                                         <parameter><link linkend="gpointer"><type>gpointer</type></link> user_data</parameter>);</programlisting>
+<para>
+This function will be called by the <link linkend="gst-rtsp-client-session-filter"><function>gst_rtsp_client_session_filter()</function></link>. An
+implementation should return a value of <link linkend="GstRTSPFilterResult"><type>GstRTSPFilterResult</type></link>.
+</para>
+<para>
+When this function returns <link linkend="GST-RTSP-FILTER-REMOVE:CAPS"><type>GST_RTSP_FILTER_REMOVE</type></link>, <parameter>sess</parameter> will be removed
+from <parameter>client</parameter>.
+</para>
+<para>
+A return value of <link linkend="GST-RTSP-FILTER-KEEP:CAPS"><type>GST_RTSP_FILTER_KEEP</type></link> will leave <parameter>sess</parameter> untouched in
+<parameter>client</parameter>.
+</para>
+<para>
+A value of <link linkend="GST-RTSP-FILTER-REF:CAPS"><type>GST_RTSP_FILTER_REF</type></link> will add <parameter>sess</parameter> to the result <link linkend="GList"><type>GList</type></link> of
+<link linkend="gst-rtsp-client-session-filter"><function>gst_rtsp_client_session_filter()</function></link>.
+</para><variablelist role="params">
+<varlistentry><term><parameter>client</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstRTSPClient"><type>GstRTSPClient</type></link> object</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>sess</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstRTSPSession"><type>GstRTSPSession</type></link> in <parameter>client</parameter></simpara></listitem></varlistentry>
+<varlistentry><term><parameter>user_data</parameter>&#160;:</term>
+<listitem><simpara>user data that has been given to <link linkend="gst-rtsp-client-session-filter"><function>gst_rtsp_client_session_filter()</function></link></simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>a <link linkend="GstRTSPFilterResult"><type>GstRTSPFilterResult</type></link>.</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gst-rtsp-client-session-filter" role="function">
+<title>gst_rtsp_client_session_filter ()</title>
+<indexterm zone="gst-rtsp-client-session-filter"><primary>gst_rtsp_client_session_filter</primary></indexterm>
+<programlisting><link linkend="GList"><returnvalue>GList</returnvalue></link> *             gst_rtsp_client_session_filter      (<parameter><link linkend="GstRTSPClient"><type>GstRTSPClient</type></link> *client</parameter>,
+                                                         <parameter><link linkend="GstRTSPClientSessionFilterFunc"><type>GstRTSPClientSessionFilterFunc</type></link> func</parameter>,
+                                                         <parameter><link linkend="gpointer"><type>gpointer</type></link> user_data</parameter>);</programlisting>
+<para>
+Call <parameter>func</parameter> for each session managed by <parameter>client</parameter>. The result value of <parameter>func</parameter>
+determines what happens to the session. <parameter>func</parameter> will be called with <parameter>client</parameter>
+locked so no further actions on <parameter>client</parameter> can be performed from <parameter>func</parameter>.
+</para>
+<para>
+If <parameter>func</parameter> returns <link linkend="GST-RTSP-FILTER-REMOVE:CAPS"><type>GST_RTSP_FILTER_REMOVE</type></link>, the session will be removed from
+<parameter>client</parameter>.
+</para>
+<para>
+If <parameter>func</parameter> returns <link linkend="GST-RTSP-FILTER-KEEP:CAPS"><type>GST_RTSP_FILTER_KEEP</type></link>, the session will remain in <parameter>client</parameter>.
+</para>
+<para>
+If <parameter>func</parameter> returns <link linkend="GST-RTSP-FILTER-REF:CAPS"><type>GST_RTSP_FILTER_REF</type></link>, the session will remain in <parameter>client</parameter> but
+will also be added with an additional ref to the result <link linkend="GList"><type>GList</type></link> of this
+function..
+</para>
+<para>
+When <parameter>func</parameter> is <link linkend="NULL:CAPS"><literal>NULL</literal></link>, <link linkend="GST-RTSP-FILTER-REF:CAPS"><type>GST_RTSP_FILTER_REF</type></link> will be assumed for each session.
+</para><variablelist role="params">
+<varlistentry><term><parameter>client</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstRTSPClient"><type>GstRTSPClient</type></link></simpara></listitem></varlistentry>
+<varlistentry><term><parameter>func</parameter>&#160;:</term>
+<listitem><simpara>a callback. <emphasis role="annotation">[<acronym>scope call</acronym>][<acronym>allow-none</acronym>]</emphasis></simpara></listitem></varlistentry>
+<varlistentry><term><parameter>user_data</parameter>&#160;:</term>
+<listitem><simpara>user data passed to <parameter>func</parameter></simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>a <link linkend="GList"><type>GList</type></link> with all
+sessions for which <parameter>func</parameter> returned <link linkend="GST-RTSP-FILTER-REF:CAPS"><type>GST_RTSP_FILTER_REF</type></link>. After usage, each
+element in the <link linkend="GList"><type>GList</type></link> should be unreffed before the list is freed. <emphasis role="annotation">[<acronym>element-type</acronym> GstRTSPSession][<acronym>transfer full</acronym>]</emphasis></simpara></listitem></varlistentry>
+</variablelist></refsect2>
+
+</refsect1>
+<refsect1 id="GstRTSPClient.property-details" role="property_details">
+<title role="property_details.title">Property Details</title>
+<refsect2 id="GstRTSPClient--mount-points" role="property"><title>The <literal>&quot;mount-points&quot;</literal> property</title>
+<indexterm zone="GstRTSPClient--mount-points"><primary>GstRTSPClient:mount-points</primary></indexterm>
+<programlisting>  &quot;mount-points&quot;             <link linkend="GstRTSPMountPoints"><type>GstRTSPMountPoints</type></link>*   : Read / Write</programlisting>
+<para>The mount points to use for client session.</para></refsect2>
+<refsect2 id="GstRTSPClient--session-pool" role="property"><title>The <literal>&quot;session-pool&quot;</literal> property</title>
+<indexterm zone="GstRTSPClient--session-pool"><primary>GstRTSPClient:session-pool</primary></indexterm>
+<programlisting>  &quot;session-pool&quot;             <link linkend="GstRTSPSessionPool"><type>GstRTSPSessionPool</type></link>*   : Read / Write</programlisting>
+<para>The session pool to use for client session.</para></refsect2>
+</refsect1>
+<refsect1 id="GstRTSPClient.signal-details" role="signals">
+<title role="signals.title">Signal Details</title>
+<refsect2 id="GstRTSPClient-closed" role="signal"><title>The <literal>&quot;closed&quot;</literal> signal</title>
+<indexterm zone="GstRTSPClient-closed"><primary>GstRTSPClient::closed</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                user_function                      (<link linkend="GstRTSPClient"><type>GstRTSPClient</type></link> *gstrtspclient,
+                                                        <link linkend="gpointer"><type>gpointer</type></link>       user_data)          : <link linkend="G-SIGNAL-RUN-LAST:CAPS"><literal>Run Last</literal></link></programlisting>
+</refsect2><refsect2 id="GstRTSPClient-describe-request" role="signal"><title>The <literal>&quot;describe-request&quot;</literal> signal</title>
+<indexterm zone="GstRTSPClient-describe-request"><primary>GstRTSPClient::describe-request</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                user_function                      (<link linkend="GstRTSPClient"><type>GstRTSPClient</type></link> *gstrtspclient,
+                                                        <link linkend="gpointer"><type>gpointer</type></link>       arg1,
+                                                        <link linkend="gpointer"><type>gpointer</type></link>       user_data)          : <link linkend="G-SIGNAL-RUN-LAST:CAPS"><literal>Run Last</literal></link></programlisting>
+</refsect2><refsect2 id="GstRTSPClient-get-parameter-request" role="signal"><title>The <literal>&quot;get-parameter-request&quot;</literal> signal</title>
+<indexterm zone="GstRTSPClient-get-parameter-request"><primary>GstRTSPClient::get-parameter-request</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                user_function                      (<link linkend="GstRTSPClient"><type>GstRTSPClient</type></link> *gstrtspclient,
+                                                        <link linkend="gpointer"><type>gpointer</type></link>       arg1,
+                                                        <link linkend="gpointer"><type>gpointer</type></link>       user_data)          : <link linkend="G-SIGNAL-RUN-LAST:CAPS"><literal>Run Last</literal></link></programlisting>
+</refsect2><refsect2 id="GstRTSPClient-handle-response" role="signal"><title>The <literal>&quot;handle-response&quot;</literal> signal</title>
+<indexterm zone="GstRTSPClient-handle-response"><primary>GstRTSPClient::handle-response</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                user_function                      (<link linkend="GstRTSPClient"><type>GstRTSPClient</type></link> *gstrtspclient,
+                                                        <link linkend="gpointer"><type>gpointer</type></link>       arg1,
+                                                        <link linkend="gpointer"><type>gpointer</type></link>       user_data)          : <link linkend="G-SIGNAL-RUN-LAST:CAPS"><literal>Run Last</literal></link></programlisting>
+</refsect2><refsect2 id="GstRTSPClient-new-session" role="signal"><title>The <literal>&quot;new-session&quot;</literal> signal</title>
+<indexterm zone="GstRTSPClient-new-session"><primary>GstRTSPClient::new-session</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                user_function                      (<link linkend="GstRTSPClient"><type>GstRTSPClient</type></link>  *gstrtspclient,
+                                                        <link linkend="GstRTSPSession"><type>GstRTSPSession</type></link> *arg1,
+                                                        <link linkend="gpointer"><type>gpointer</type></link>        user_data)          : <link linkend="G-SIGNAL-RUN-LAST:CAPS"><literal>Run Last</literal></link></programlisting>
+</refsect2><refsect2 id="GstRTSPClient-options-request" role="signal"><title>The <literal>&quot;options-request&quot;</literal> signal</title>
+<indexterm zone="GstRTSPClient-options-request"><primary>GstRTSPClient::options-request</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                user_function                      (<link linkend="GstRTSPClient"><type>GstRTSPClient</type></link> *gstrtspclient,
+                                                        <link linkend="gpointer"><type>gpointer</type></link>       arg1,
+                                                        <link linkend="gpointer"><type>gpointer</type></link>       user_data)          : <link linkend="G-SIGNAL-RUN-LAST:CAPS"><literal>Run Last</literal></link></programlisting>
+</refsect2><refsect2 id="GstRTSPClient-pause-request" role="signal"><title>The <literal>&quot;pause-request&quot;</literal> signal</title>
+<indexterm zone="GstRTSPClient-pause-request"><primary>GstRTSPClient::pause-request</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                user_function                      (<link linkend="GstRTSPClient"><type>GstRTSPClient</type></link> *gstrtspclient,
+                                                        <link linkend="gpointer"><type>gpointer</type></link>       arg1,
+                                                        <link linkend="gpointer"><type>gpointer</type></link>       user_data)          : <link linkend="G-SIGNAL-RUN-LAST:CAPS"><literal>Run Last</literal></link></programlisting>
+</refsect2><refsect2 id="GstRTSPClient-play-request" role="signal"><title>The <literal>&quot;play-request&quot;</literal> signal</title>
+<indexterm zone="GstRTSPClient-play-request"><primary>GstRTSPClient::play-request</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                user_function                      (<link linkend="GstRTSPClient"><type>GstRTSPClient</type></link> *gstrtspclient,
+                                                        <link linkend="gpointer"><type>gpointer</type></link>       arg1,
+                                                        <link linkend="gpointer"><type>gpointer</type></link>       user_data)          : <link linkend="G-SIGNAL-RUN-LAST:CAPS"><literal>Run Last</literal></link></programlisting>
+</refsect2><refsect2 id="GstRTSPClient-set-parameter-request" role="signal"><title>The <literal>&quot;set-parameter-request&quot;</literal> signal</title>
+<indexterm zone="GstRTSPClient-set-parameter-request"><primary>GstRTSPClient::set-parameter-request</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                user_function                      (<link linkend="GstRTSPClient"><type>GstRTSPClient</type></link> *gstrtspclient,
+                                                        <link linkend="gpointer"><type>gpointer</type></link>       arg1,
+                                                        <link linkend="gpointer"><type>gpointer</type></link>       user_data)          : <link linkend="G-SIGNAL-RUN-LAST:CAPS"><literal>Run Last</literal></link></programlisting>
+</refsect2><refsect2 id="GstRTSPClient-setup-request" role="signal"><title>The <literal>&quot;setup-request&quot;</literal> signal</title>
+<indexterm zone="GstRTSPClient-setup-request"><primary>GstRTSPClient::setup-request</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                user_function                      (<link linkend="GstRTSPClient"><type>GstRTSPClient</type></link> *gstrtspclient,
+                                                        <link linkend="gpointer"><type>gpointer</type></link>       arg1,
+                                                        <link linkend="gpointer"><type>gpointer</type></link>       user_data)          : <link linkend="G-SIGNAL-RUN-LAST:CAPS"><literal>Run Last</literal></link></programlisting>
+</refsect2><refsect2 id="GstRTSPClient-teardown-request" role="signal"><title>The <literal>&quot;teardown-request&quot;</literal> signal</title>
+<indexterm zone="GstRTSPClient-teardown-request"><primary>GstRTSPClient::teardown-request</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                user_function                      (<link linkend="GstRTSPClient"><type>GstRTSPClient</type></link> *gstrtspclient,
+                                                        <link linkend="gpointer"><type>gpointer</type></link>       arg1,
+                                                        <link linkend="gpointer"><type>gpointer</type></link>       user_data)          : <link linkend="G-SIGNAL-RUN-LAST:CAPS"><literal>Run Last</literal></link></programlisting>
+</refsect2>
+</refsect1>
+<refsect1 id="GstRTSPClient.see-also">
+<title>See Also</title>
+<link linkend="GstRTSPServer"><type>GstRTSPServer</type></link>, <link linkend="GstRTSPThreadPool"><type>GstRTSPThreadPool</type></link>
+</refsect1>
+
+</refentry>

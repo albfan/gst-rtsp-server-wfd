@@ -1,0 +1,403 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>GstRTSPSessionMedia</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<link rel="home" href="index.html" title="GStreamer RTSP Server Reference Manual">
+<link rel="up" href="ch01.html" title="">
+<link rel="prev" href="GstRTSPSession.html" title="GstRTSPSession">
+<link rel="next" href="gst-rtsp-server-GstRTSPStreamTransport.html" title="GstRTSPStreamTransport">
+<meta name="generator" content="GTK-Doc V1.18 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
+<tr valign="middle">
+<td><a accesskey="p" href="GstRTSPSession.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="ch01.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">GStreamer RTSP Server Reference Manual</th>
+<td><a accesskey="n" href="gst-rtsp-server-GstRTSPStreamTransport.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr>
+<tr><td colspan="5" class="shortcuts">
+<a href="#gst-rtsp-server-GstRTSPSessionMedia.synopsis" class="shortcut">Top</a>
+                   | 
+                  <a href="#gst-rtsp-server-GstRTSPSessionMedia.description" class="shortcut">Description</a>
+</td></tr>
+</table>
+<div class="refentry">
+<a name="gst-rtsp-server-GstRTSPSessionMedia"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="gst-rtsp-server-GstRTSPSessionMedia.top_of_page"></a>GstRTSPSessionMedia</span></h2>
+<p>GstRTSPSessionMedia — Media managed in a session</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsynopsisdiv">
+<a name="gst-rtsp-server-GstRTSPSessionMedia.synopsis"></a><h2>Synopsis</h2>
+<pre class="synopsis">struct              <a class="link" href="gst-rtsp-server-GstRTSPSessionMedia.html#GstRTSPSessionMedia" title="struct GstRTSPSessionMedia">GstRTSPSessionMedia</a>;
+struct              <a class="link" href="gst-rtsp-server-GstRTSPSessionMedia.html#GstRTSPSessionMediaClass" title="struct GstRTSPSessionMediaClass">GstRTSPSessionMediaClass</a>;
+<a class="link" href="gst-rtsp-server-GstRTSPSessionMedia.html#GstRTSPSessionMedia" title="struct GstRTSPSessionMedia"><span class="returnvalue">GstRTSPSessionMedia</span></a> * <a class="link" href="gst-rtsp-server-GstRTSPSessionMedia.html#gst-rtsp-session-media-new" title="gst_rtsp_session_media_new ()">gst_rtsp_session_media_new</a>        (<em class="parameter"><code>const <a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *path</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GstRTSPMedia.html" title="GstRTSPMedia"><span class="type">GstRTSPMedia</span></a> *media</code></em>);
+<a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="gst-rtsp-server-GstRTSPSessionMedia.html#gst-rtsp-session-media-matches" title="gst_rtsp_session_media_matches ()">gst_rtsp_session_media_matches</a>      (<em class="parameter"><code><a class="link" href="gst-rtsp-server-GstRTSPSessionMedia.html#GstRTSPSessionMedia" title="struct GstRTSPSessionMedia"><span class="type">GstRTSPSessionMedia</span></a> *media</code></em>,
+                                                         <em class="parameter"><code>const <a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *path</code></em>,
+                                                         <em class="parameter"><code><a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gint"><span class="type">gint</span></a> *matched</code></em>);
+<a class="link" href="GstRTSPMedia.html" title="GstRTSPMedia"><span class="returnvalue">GstRTSPMedia</span></a> *      <a class="link" href="gst-rtsp-server-GstRTSPSessionMedia.html#gst-rtsp-session-media-get-media" title="gst_rtsp_session_media_get_media ()">gst_rtsp_session_media_get_media</a>    (<em class="parameter"><code><a class="link" href="gst-rtsp-server-GstRTSPSessionMedia.html#GstRTSPSessionMedia" title="struct GstRTSPSessionMedia"><span class="type">GstRTSPSessionMedia</span></a> *media</code></em>);
+<a href="../gstreamer-1.0/GstClock.html#GstClockTime"><span class="returnvalue">GstClockTime</span></a>        <a class="link" href="gst-rtsp-server-GstRTSPSessionMedia.html#gst-rtsp-session-media-get-base-time" title="gst_rtsp_session_media_get_base_time ()">gst_rtsp_session_media_get_base_time</a>
+                                                        (<em class="parameter"><code><a class="link" href="gst-rtsp-server-GstRTSPSessionMedia.html#GstRTSPSessionMedia" title="struct GstRTSPSessionMedia"><span class="type">GstRTSPSessionMedia</span></a> *media</code></em>);
+<a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="gst-rtsp-server-GstRTSPSessionMedia.html#gst-rtsp-session-media-set-state" title="gst_rtsp_session_media_set_state ()">gst_rtsp_session_media_set_state</a>    (<em class="parameter"><code><a class="link" href="gst-rtsp-server-GstRTSPSessionMedia.html#GstRTSPSessionMedia" title="struct GstRTSPSessionMedia"><span class="type">GstRTSPSessionMedia</span></a> *media</code></em>,
+                                                         <em class="parameter"><code><a href="../gstreamer-1.0/GstElement.html#GstState"><span class="type">GstState</span></a> state</code></em>);
+<a href="../gst-plugins-base-libs-1.0/gst-plugins-base-libs-gstrtspdefs.html#GstRTSPState"><span class="returnvalue">GstRTSPState</span></a>        <a class="link" href="gst-rtsp-server-GstRTSPSessionMedia.html#gst-rtsp-session-media-get-rtsp-state" title="gst_rtsp_session_media_get_rtsp_state ()">gst_rtsp_session_media_get_rtsp_state</a>
+                                                        (<em class="parameter"><code><a class="link" href="gst-rtsp-server-GstRTSPSessionMedia.html#GstRTSPSessionMedia" title="struct GstRTSPSessionMedia"><span class="type">GstRTSPSessionMedia</span></a> *media</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="gst-rtsp-server-GstRTSPSessionMedia.html#gst-rtsp-session-media-set-rtsp-state" title="gst_rtsp_session_media_set_rtsp_state ()">gst_rtsp_session_media_set_rtsp_state</a>
+                                                        (<em class="parameter"><code><a class="link" href="gst-rtsp-server-GstRTSPSessionMedia.html#GstRTSPSessionMedia" title="struct GstRTSPSessionMedia"><span class="type">GstRTSPSessionMedia</span></a> *media</code></em>,
+                                                         <em class="parameter"><code><a href="../gst-plugins-base-libs-1.0/gst-plugins-base-libs-gstrtspdefs.html#GstRTSPState"><span class="type">GstRTSPState</span></a> state</code></em>);
+<a class="link" href="gst-rtsp-server-GstRTSPStreamTransport.html#GstRTSPStreamTransport" title="struct GstRTSPStreamTransport"><span class="returnvalue">GstRTSPStreamTransport</span></a> * <a class="link" href="gst-rtsp-server-GstRTSPSessionMedia.html#gst-rtsp-session-media-get-transport" title="gst_rtsp_session_media_get_transport ()">gst_rtsp_session_media_get_transport</a>
+                                                        (<em class="parameter"><code><a class="link" href="gst-rtsp-server-GstRTSPSessionMedia.html#GstRTSPSessionMedia" title="struct GstRTSPSessionMedia"><span class="type">GstRTSPSessionMedia</span></a> *media</code></em>,
+                                                         <em class="parameter"><code><a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#guint"><span class="type">guint</span></a> idx</code></em>);
+<a class="link" href="gst-rtsp-server-GstRTSPStreamTransport.html#GstRTSPStreamTransport" title="struct GstRTSPStreamTransport"><span class="returnvalue">GstRTSPStreamTransport</span></a> * <a class="link" href="gst-rtsp-server-GstRTSPSessionMedia.html#gst-rtsp-session-media-set-transport" title="gst_rtsp_session_media_set_transport ()">gst_rtsp_session_media_set_transport</a>
+                                                        (<em class="parameter"><code><a class="link" href="gst-rtsp-server-GstRTSPSessionMedia.html#GstRTSPSessionMedia" title="struct GstRTSPSessionMedia"><span class="type">GstRTSPSessionMedia</span></a> *media</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GstRTSPStream.html" title="GstRTSPStream"><span class="type">GstRTSPStream</span></a> *stream</code></em>,
+                                                         <em class="parameter"><code><a href="../gst-plugins-base-libs-1.0/gst-plugins-base-libs-gstrtsptransport.html#GstRTSPTransport"><span class="type">GstRTSPTransport</span></a> *tr</code></em>);
+<a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="gst-rtsp-server-GstRTSPSessionMedia.html#gst-rtsp-session-media-alloc-channels" title="gst_rtsp_session_media_alloc_channels ()">gst_rtsp_session_media_alloc_channels</a>
+                                                        (<em class="parameter"><code><a class="link" href="gst-rtsp-server-GstRTSPSessionMedia.html#GstRTSPSessionMedia" title="struct GstRTSPSessionMedia"><span class="type">GstRTSPSessionMedia</span></a> *media</code></em>,
+                                                         <em class="parameter"><code><a href="../gst-plugins-base-libs-1.0/gst-plugins-base-libs-gstrtsptransport.html#GstRTSPRange"><span class="type">GstRTSPRange</span></a> *range</code></em>);
+</pre>
+</div>
+<div class="refsect1">
+<a name="gst-rtsp-server-GstRTSPSessionMedia.description"></a><h2>Description</h2>
+<p>
+The <a class="link" href="gst-rtsp-server-GstRTSPSessionMedia.html#GstRTSPSessionMedia" title="struct GstRTSPSessionMedia"><span class="type">GstRTSPSessionMedia</span></a> object manages a <a class="link" href="GstRTSPMedia.html" title="GstRTSPMedia"><span class="type">GstRTSPMedia</span></a> with a given path.
+</p>
+<p>
+With <a class="link" href="gst-rtsp-server-GstRTSPSessionMedia.html#gst-rtsp-session-media-get-transport" title="gst_rtsp_session_media_get_transport ()"><code class="function">gst_rtsp_session_media_get_transport()</code></a> and
+<a class="link" href="gst-rtsp-server-GstRTSPSessionMedia.html#gst-rtsp-session-media-set-transport" title="gst_rtsp_session_media_set_transport ()"><code class="function">gst_rtsp_session_media_set_transport()</code></a> the transports of a <a class="link" href="GstRTSPStream.html" title="GstRTSPStream"><span class="type">GstRTSPStream</span></a> of
+the managed <a class="link" href="GstRTSPMedia.html" title="GstRTSPMedia"><span class="type">GstRTSPMedia</span></a> can be retrieved and configured.
+</p>
+<p>
+Use <a class="link" href="gst-rtsp-server-GstRTSPSessionMedia.html#gst-rtsp-session-media-set-state" title="gst_rtsp_session_media_set_state ()"><code class="function">gst_rtsp_session_media_set_state()</code></a> to control the media state and
+transports.
+</p>
+<p>
+Last reviewed on 2013-07-16 (1.0.0)
+</p>
+</div>
+<div class="refsect1">
+<a name="gst-rtsp-server-GstRTSPSessionMedia.details"></a><h2>Details</h2>
+<div class="refsect2">
+<a name="GstRTSPSessionMedia"></a><h3>struct GstRTSPSessionMedia</h3>
+<pre class="programlisting">struct GstRTSPSessionMedia {
+  GObject  parent;
+};
+</pre>
+<p>
+State of a client session regarding a specific media identified by path.
+</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="GstRTSPSessionMediaClass"></a><h3>struct GstRTSPSessionMediaClass</h3>
+<pre class="programlisting">struct GstRTSPSessionMediaClass {
+  GObjectClass  parent_class;
+};
+</pre>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gst-rtsp-session-media-new"></a><h3>gst_rtsp_session_media_new ()</h3>
+<pre class="programlisting"><a class="link" href="gst-rtsp-server-GstRTSPSessionMedia.html#GstRTSPSessionMedia" title="struct GstRTSPSessionMedia"><span class="returnvalue">GstRTSPSessionMedia</span></a> * gst_rtsp_session_media_new        (<em class="parameter"><code>const <a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *path</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GstRTSPMedia.html" title="GstRTSPMedia"><span class="type">GstRTSPMedia</span></a> *media</code></em>);</pre>
+<p>
+Create a new <a class="link" href="gst-rtsp-server-GstRTSPSessionMedia.html#GstRTSPSessionMedia" title="struct GstRTSPSessionMedia"><span class="type">GstRTSPSessionMedia</span></a> that manages the streams
+in <em class="parameter"><code>media</code></em> for <em class="parameter"><code>path</code></em>. <em class="parameter"><code>media</code></em> should be prepared.
+</p>
+<p>
+Ownership is taken of <em class="parameter"><code>media</code></em>.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>path</code></em> :</span></p></td>
+<td>the path</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>media</code></em> :</span></p></td>
+<td>the <a class="link" href="GstRTSPMedia.html" title="GstRTSPMedia"><span class="type">GstRTSPMedia</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>a new <a class="link" href="gst-rtsp-server-GstRTSPSessionMedia.html#GstRTSPSessionMedia" title="struct GstRTSPSessionMedia"><span class="type">GstRTSPSessionMedia</span></a>.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gst-rtsp-session-media-matches"></a><h3>gst_rtsp_session_media_matches ()</h3>
+<pre class="programlisting"><a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            gst_rtsp_session_media_matches      (<em class="parameter"><code><a class="link" href="gst-rtsp-server-GstRTSPSessionMedia.html#GstRTSPSessionMedia" title="struct GstRTSPSessionMedia"><span class="type">GstRTSPSessionMedia</span></a> *media</code></em>,
+                                                         <em class="parameter"><code>const <a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *path</code></em>,
+                                                         <em class="parameter"><code><a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gint"><span class="type">gint</span></a> *matched</code></em>);</pre>
+<p>
+Check if the path of <em class="parameter"><code>media</code></em> matches <em class="parameter"><code>path</code></em>. It <em class="parameter"><code>path</code></em> matches, the amount of
+matched characters is returned in <em class="parameter"><code>matched</code></em>.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>media</code></em> :</span></p></td>
+<td>a <a class="link" href="gst-rtsp-server-GstRTSPSessionMedia.html#GstRTSPSessionMedia" title="struct GstRTSPSessionMedia"><span class="type">GstRTSPSessionMedia</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>path</code></em> :</span></p></td>
+<td>a path</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>matched</code></em> :</span></p></td>
+<td>the amount of matched characters of <em class="parameter"><code>path</code></em>. <span class="annotation">[<acronym title="Parameter for returning results. Default is transfer full."><span class="acronym">out</span></acronym>]</span>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>
+<a href="/usr/share/gtk-doc/html/glib/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> when <em class="parameter"><code>path</code></em> matches the path of <em class="parameter"><code>media</code></em>.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gst-rtsp-session-media-get-media"></a><h3>gst_rtsp_session_media_get_media ()</h3>
+<pre class="programlisting"><a class="link" href="GstRTSPMedia.html" title="GstRTSPMedia"><span class="returnvalue">GstRTSPMedia</span></a> *      gst_rtsp_session_media_get_media    (<em class="parameter"><code><a class="link" href="gst-rtsp-server-GstRTSPSessionMedia.html#GstRTSPSessionMedia" title="struct GstRTSPSessionMedia"><span class="type">GstRTSPSessionMedia</span></a> *media</code></em>);</pre>
+<p>
+Get the <a class="link" href="GstRTSPMedia.html" title="GstRTSPMedia"><span class="type">GstRTSPMedia</span></a> that was used when constructing <em class="parameter"><code>media</code></em>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>media</code></em> :</span></p></td>
+<td>a <a class="link" href="gst-rtsp-server-GstRTSPSessionMedia.html#GstRTSPSessionMedia" title="struct GstRTSPSessionMedia"><span class="type">GstRTSPSessionMedia</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>the <a class="link" href="GstRTSPMedia.html" title="GstRTSPMedia"><span class="type">GstRTSPMedia</span></a> of <em class="parameter"><code>media</code></em>. Remains valid as long
+as <em class="parameter"><code>media</code></em> is valid. <span class="annotation">[<acronym title="Don't free data after the code is done."><span class="acronym">transfer none</span></acronym>]</span>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gst-rtsp-session-media-get-base-time"></a><h3>gst_rtsp_session_media_get_base_time ()</h3>
+<pre class="programlisting"><a href="../gstreamer-1.0/GstClock.html#GstClockTime"><span class="returnvalue">GstClockTime</span></a>        gst_rtsp_session_media_get_base_time
+                                                        (<em class="parameter"><code><a class="link" href="gst-rtsp-server-GstRTSPSessionMedia.html#GstRTSPSessionMedia" title="struct GstRTSPSessionMedia"><span class="type">GstRTSPSessionMedia</span></a> *media</code></em>);</pre>
+<p>
+Get the base_time of the <a class="link" href="GstRTSPMedia.html" title="GstRTSPMedia"><span class="type">GstRTSPMedia</span></a> in <em class="parameter"><code>media</code></em>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>media</code></em> :</span></p></td>
+<td>a <a class="link" href="gst-rtsp-server-GstRTSPSessionMedia.html#GstRTSPSessionMedia" title="struct GstRTSPSessionMedia"><span class="type">GstRTSPSessionMedia</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>the base_time of the media.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gst-rtsp-session-media-set-state"></a><h3>gst_rtsp_session_media_set_state ()</h3>
+<pre class="programlisting"><a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            gst_rtsp_session_media_set_state    (<em class="parameter"><code><a class="link" href="gst-rtsp-server-GstRTSPSessionMedia.html#GstRTSPSessionMedia" title="struct GstRTSPSessionMedia"><span class="type">GstRTSPSessionMedia</span></a> *media</code></em>,
+                                                         <em class="parameter"><code><a href="../gstreamer-1.0/GstElement.html#GstState"><span class="type">GstState</span></a> state</code></em>);</pre>
+<p>
+Tell the media object <em class="parameter"><code>media</code></em> to change to <em class="parameter"><code>state</code></em>.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>media</code></em> :</span></p></td>
+<td>a <a class="link" href="gst-rtsp-server-GstRTSPSessionMedia.html#GstRTSPSessionMedia" title="struct GstRTSPSessionMedia"><span class="type">GstRTSPSessionMedia</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>state</code></em> :</span></p></td>
+<td>the new state</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>
+<a href="/usr/share/gtk-doc/html/glib/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> on success.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gst-rtsp-session-media-get-rtsp-state"></a><h3>gst_rtsp_session_media_get_rtsp_state ()</h3>
+<pre class="programlisting"><a href="../gst-plugins-base-libs-1.0/gst-plugins-base-libs-gstrtspdefs.html#GstRTSPState"><span class="returnvalue">GstRTSPState</span></a>        gst_rtsp_session_media_get_rtsp_state
+                                                        (<em class="parameter"><code><a class="link" href="gst-rtsp-server-GstRTSPSessionMedia.html#GstRTSPSessionMedia" title="struct GstRTSPSessionMedia"><span class="type">GstRTSPSessionMedia</span></a> *media</code></em>);</pre>
+<p>
+Get the current RTSP state of <em class="parameter"><code>media</code></em>.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>media</code></em> :</span></p></td>
+<td>a <a class="link" href="gst-rtsp-server-GstRTSPSessionMedia.html#GstRTSPSessionMedia" title="struct GstRTSPSessionMedia"><span class="type">GstRTSPSessionMedia</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>the current RTSP state of <em class="parameter"><code>media</code></em>.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gst-rtsp-session-media-set-rtsp-state"></a><h3>gst_rtsp_session_media_set_rtsp_state ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                gst_rtsp_session_media_set_rtsp_state
+                                                        (<em class="parameter"><code><a class="link" href="gst-rtsp-server-GstRTSPSessionMedia.html#GstRTSPSessionMedia" title="struct GstRTSPSessionMedia"><span class="type">GstRTSPSessionMedia</span></a> *media</code></em>,
+                                                         <em class="parameter"><code><a href="../gst-plugins-base-libs-1.0/gst-plugins-base-libs-gstrtspdefs.html#GstRTSPState"><span class="type">GstRTSPState</span></a> state</code></em>);</pre>
+<p>
+Set the RTSP state of <em class="parameter"><code>media</code></em> to <em class="parameter"><code>state</code></em>.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>media</code></em> :</span></p></td>
+<td>a <a class="link" href="gst-rtsp-server-GstRTSPSessionMedia.html#GstRTSPSessionMedia" title="struct GstRTSPSessionMedia"><span class="type">GstRTSPSessionMedia</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>state</code></em> :</span></p></td>
+<td>a <a href="../gst-plugins-base-libs-1.0/gst-plugins-base-libs-gstrtspdefs.html#GstRTSPState"><span class="type">GstRTSPState</span></a>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gst-rtsp-session-media-get-transport"></a><h3>gst_rtsp_session_media_get_transport ()</h3>
+<pre class="programlisting"><a class="link" href="gst-rtsp-server-GstRTSPStreamTransport.html#GstRTSPStreamTransport" title="struct GstRTSPStreamTransport"><span class="returnvalue">GstRTSPStreamTransport</span></a> * gst_rtsp_session_media_get_transport
+                                                        (<em class="parameter"><code><a class="link" href="gst-rtsp-server-GstRTSPSessionMedia.html#GstRTSPSessionMedia" title="struct GstRTSPSessionMedia"><span class="type">GstRTSPSessionMedia</span></a> *media</code></em>,
+                                                         <em class="parameter"><code><a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#guint"><span class="type">guint</span></a> idx</code></em>);</pre>
+<p>
+Get a previously created <a class="link" href="gst-rtsp-server-GstRTSPStreamTransport.html#GstRTSPStreamTransport" title="struct GstRTSPStreamTransport"><span class="type">GstRTSPStreamTransport</span></a> for the stream at <em class="parameter"><code>idx</code></em>.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>media</code></em> :</span></p></td>
+<td>a <a class="link" href="gst-rtsp-server-GstRTSPSessionMedia.html#GstRTSPSessionMedia" title="struct GstRTSPSessionMedia"><span class="type">GstRTSPSessionMedia</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>idx</code></em> :</span></p></td>
+<td>the stream index</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>a <a class="link" href="gst-rtsp-server-GstRTSPStreamTransport.html#GstRTSPStreamTransport" title="struct GstRTSPStreamTransport"><span class="type">GstRTSPStreamTransport</span></a> that is valid until the
+session of <em class="parameter"><code>media</code></em> is unreffed. <span class="annotation">[<acronym title="Don't free data after the code is done."><span class="acronym">transfer none</span></acronym>]</span>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gst-rtsp-session-media-set-transport"></a><h3>gst_rtsp_session_media_set_transport ()</h3>
+<pre class="programlisting"><a class="link" href="gst-rtsp-server-GstRTSPStreamTransport.html#GstRTSPStreamTransport" title="struct GstRTSPStreamTransport"><span class="returnvalue">GstRTSPStreamTransport</span></a> * gst_rtsp_session_media_set_transport
+                                                        (<em class="parameter"><code><a class="link" href="gst-rtsp-server-GstRTSPSessionMedia.html#GstRTSPSessionMedia" title="struct GstRTSPSessionMedia"><span class="type">GstRTSPSessionMedia</span></a> *media</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GstRTSPStream.html" title="GstRTSPStream"><span class="type">GstRTSPStream</span></a> *stream</code></em>,
+                                                         <em class="parameter"><code><a href="../gst-plugins-base-libs-1.0/gst-plugins-base-libs-gstrtsptransport.html#GstRTSPTransport"><span class="type">GstRTSPTransport</span></a> *tr</code></em>);</pre>
+<p>
+Configure the transport for <em class="parameter"><code>stream</code></em> to <em class="parameter"><code>tr</code></em> in <em class="parameter"><code>media</code></em>.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>media</code></em> :</span></p></td>
+<td>a <a class="link" href="gst-rtsp-server-GstRTSPSessionMedia.html#GstRTSPSessionMedia" title="struct GstRTSPSessionMedia"><span class="type">GstRTSPSessionMedia</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>stream</code></em> :</span></p></td>
+<td>a <a class="link" href="GstRTSPStream.html" title="GstRTSPStream"><span class="type">GstRTSPStream</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>tr</code></em> :</span></p></td>
+<td>a <a href="../gst-plugins-base-libs-1.0/gst-plugins-base-libs-gstrtsptransport.html#GstRTSPTransport"><span class="type">GstRTSPTransport</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>the new or updated <a class="link" href="gst-rtsp-server-GstRTSPStreamTransport.html#GstRTSPStreamTransport" title="struct GstRTSPStreamTransport"><span class="type">GstRTSPStreamTransport</span></a> for <em class="parameter"><code>stream</code></em>. <span class="annotation">[<acronym title="Don't free data after the code is done."><span class="acronym">transfer none</span></acronym>]</span>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gst-rtsp-session-media-alloc-channels"></a><h3>gst_rtsp_session_media_alloc_channels ()</h3>
+<pre class="programlisting"><a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            gst_rtsp_session_media_alloc_channels
+                                                        (<em class="parameter"><code><a class="link" href="gst-rtsp-server-GstRTSPSessionMedia.html#GstRTSPSessionMedia" title="struct GstRTSPSessionMedia"><span class="type">GstRTSPSessionMedia</span></a> *media</code></em>,
+                                                         <em class="parameter"><code><a href="../gst-plugins-base-libs-1.0/gst-plugins-base-libs-gstrtsptransport.html#GstRTSPRange"><span class="type">GstRTSPRange</span></a> *range</code></em>);</pre>
+<p>
+Fill <em class="parameter"><code>range</code></em> with the next available min and max channels for
+interleaved transport.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>media</code></em> :</span></p></td>
+<td>a <a class="link" href="gst-rtsp-server-GstRTSPSessionMedia.html#GstRTSPSessionMedia" title="struct GstRTSPSessionMedia"><span class="type">GstRTSPSessionMedia</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>range</code></em> :</span></p></td>
+<td>a <a href="../gst-plugins-base-libs-1.0/gst-plugins-base-libs-gstrtsptransport.html#GstRTSPRange"><span class="type">GstRTSPRange</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>
+<a href="/usr/share/gtk-doc/html/glib/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> on success.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+<div class="refsect1">
+<a name="gst-rtsp-server-GstRTSPSessionMedia.see-also"></a><h2>See Also</h2>
+<a class="link" href="GstRTSPMedia.html" title="GstRTSPMedia"><span class="type">GstRTSPMedia</span></a>, <a class="link" href="GstRTSPSession.html" title="GstRTSPSession"><span class="type">GstRTSPSession</span></a>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.18</div>
+</body>
+</html>

@@ -1,0 +1,403 @@
+<?xml version="1.0"?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
+               "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
+<!ENTITY % version-entities SYSTEM "version.entities">
+%version-entities;
+]>
+
+<refentry id="GstRTSPSession">
+<refmeta>
+<refentrytitle role="top_of_page" id="GstRTSPSession.top_of_page">GstRTSPSession</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>
+  GST-RTSP-SERVER Library
+</refmiscinfo>
+</refmeta>
+<refnamediv>
+<refname>GstRTSPSession</refname>
+<refpurpose>An object to manage media</refpurpose>
+</refnamediv>
+
+<refsynopsisdiv id="GstRTSPSession.synopsis" role="synopsis">
+<title role="synopsis.title">Synopsis</title>
+
+<synopsis>struct              <link linkend="GstRTSPSession-struct">GstRTSPSession</link>;
+struct              <link linkend="GstRTSPSessionClass">GstRTSPSessionClass</link>;
+<link linkend="GstRTSPSession"><returnvalue>GstRTSPSession</returnvalue></link> *    <link linkend="gst-rtsp-session-new">gst_rtsp_session_new</link>                (<parameter>const <link linkend="gchar"><type>gchar</type></link> *sessionid</parameter>);
+const <link linkend="gchar"><returnvalue>gchar</returnvalue></link> *       <link linkend="gst-rtsp-session-get-sessionid">gst_rtsp_session_get_sessionid</link>      (<parameter><link linkend="GstRTSPSession"><type>GstRTSPSession</type></link> *session</parameter>);
+<link linkend="gchar"><returnvalue>gchar</returnvalue></link> *             <link linkend="gst-rtsp-session-get-header">gst_rtsp_session_get_header</link>         (<parameter><link linkend="GstRTSPSession"><type>GstRTSPSession</type></link> *session</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="gst-rtsp-session-set-timeout">gst_rtsp_session_set_timeout</link>        (<parameter><link linkend="GstRTSPSession"><type>GstRTSPSession</type></link> *session</parameter>,
+                                                         <parameter><link linkend="guint"><type>guint</type></link> timeout</parameter>);
+<link linkend="guint"><returnvalue>guint</returnvalue></link>               <link linkend="gst-rtsp-session-get-timeout">gst_rtsp_session_get_timeout</link>        (<parameter><link linkend="GstRTSPSession"><type>GstRTSPSession</type></link> *session</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="gst-rtsp-session-touch">gst_rtsp_session_touch</link>              (<parameter><link linkend="GstRTSPSession"><type>GstRTSPSession</type></link> *session</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="gst-rtsp-session-prevent-expire">gst_rtsp_session_prevent_expire</link>     (<parameter><link linkend="GstRTSPSession"><type>GstRTSPSession</type></link> *session</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="gst-rtsp-session-allow-expire">gst_rtsp_session_allow_expire</link>       (<parameter><link linkend="GstRTSPSession"><type>GstRTSPSession</type></link> *session</parameter>);
+<link linkend="gint"><returnvalue>gint</returnvalue></link>                <link linkend="gst-rtsp-session-next-timeout">gst_rtsp_session_next_timeout</link>       (<parameter><link linkend="GstRTSPSession"><type>GstRTSPSession</type></link> *session</parameter>,
+                                                         <parameter><link linkend="GTimeVal"><type>GTimeVal</type></link> *now</parameter>);
+<link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            <link linkend="gst-rtsp-session-is-expired">gst_rtsp_session_is_expired</link>         (<parameter><link linkend="GstRTSPSession"><type>GstRTSPSession</type></link> *session</parameter>,
+                                                         <parameter><link linkend="GTimeVal"><type>GTimeVal</type></link> *now</parameter>);
+<link linkend="GstRTSPSessionMedia"><returnvalue>GstRTSPSessionMedia</returnvalue></link> * <link linkend="gst-rtsp-session-manage-media">gst_rtsp_session_manage_media</link>     (<parameter><link linkend="GstRTSPSession"><type>GstRTSPSession</type></link> *sess</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *path</parameter>,
+                                                         <parameter><link linkend="GstRTSPMedia"><type>GstRTSPMedia</type></link> *media</parameter>);
+<link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            <link linkend="gst-rtsp-session-release-media">gst_rtsp_session_release_media</link>      (<parameter><link linkend="GstRTSPSession"><type>GstRTSPSession</type></link> *sess</parameter>,
+                                                         <parameter><link linkend="GstRTSPSessionMedia"><type>GstRTSPSessionMedia</type></link> *media</parameter>);
+<link linkend="GstRTSPSessionMedia"><returnvalue>GstRTSPSessionMedia</returnvalue></link> * <link linkend="gst-rtsp-session-get-media">gst_rtsp_session_get_media</link>        (<parameter><link linkend="GstRTSPSession"><type>GstRTSPSession</type></link> *sess</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *path</parameter>,
+                                                         <parameter><link linkend="gint"><type>gint</type></link> *matched</parameter>);
+enum                <link linkend="GstRTSPFilterResult">GstRTSPFilterResult</link>;
+<link linkend="GstRTSPFilterResult"><returnvalue>GstRTSPFilterResult</returnvalue></link> (<link linkend="GstRTSPSessionFilterFunc">*GstRTSPSessionFilterFunc</link>)         (<parameter><link linkend="GstRTSPSession"><type>GstRTSPSession</type></link> *sess</parameter>,
+                                                         <parameter><link linkend="GstRTSPSessionMedia"><type>GstRTSPSessionMedia</type></link> *media</parameter>,
+                                                         <parameter><link linkend="gpointer"><type>gpointer</type></link> user_data</parameter>);
+<link linkend="GList"><returnvalue>GList</returnvalue></link> *             <link linkend="gst-rtsp-session-filter">gst_rtsp_session_filter</link>             (<parameter><link linkend="GstRTSPSession"><type>GstRTSPSession</type></link> *sess</parameter>,
+                                                         <parameter><link linkend="GstRTSPSessionFilterFunc"><type>GstRTSPSessionFilterFunc</type></link> func</parameter>,
+                                                         <parameter><link linkend="gpointer"><type>gpointer</type></link> user_data</parameter>);
+</synopsis>
+</refsynopsisdiv>
+<refsect1 id="GstRTSPSession.object-hierarchy" role="object_hierarchy">
+<title role="object_hierarchy.title">Object Hierarchy</title>
+<synopsis>
+  <link linkend="GObject">GObject</link>
+   +----GstRTSPSession
+</synopsis>
+</refsect1>
+<refsect1 id="GstRTSPSession.properties" role="properties">
+<title role="properties.title">Properties</title>
+<synopsis>
+  &quot;<link linkend="GstRTSPSession--sessionid">sessionid</link>&quot;                <link linkend="gchar"><type>gchar</type></link>*                : Read / Write / Construct Only
+  &quot;<link linkend="GstRTSPSession--timeout">timeout</link>&quot;                  <link linkend="guint"><type>guint</type></link>                 : Read / Write
+</synopsis>
+</refsect1>
+
+<refsect1 id="GstRTSPSession.description" role="desc">
+<title role="desc.title">Description</title>
+<para>
+The <link linkend="GstRTSPSession"><type>GstRTSPSession</type></link> is identified by an id, unique in the
+<link linkend="GstRTSPSessionPool"><type>GstRTSPSessionPool</type></link> that created the session and manages media and its
+configuration.
+</para>
+<para>
+A <link linkend="GstRTSPSession"><type>GstRTSPSession</type></link> has a timeout that can be retrieved with
+<link linkend="gst-rtsp-session-get-timeout"><function>gst_rtsp_session_get_timeout()</function></link>. You can check if the sessions is expired with
+<link linkend="gst-rtsp-session-is-expired"><function>gst_rtsp_session_is_expired()</function></link>. <link linkend="gst-rtsp-session-touch"><function>gst_rtsp_session_touch()</function></link> will reset the
+expiration counter of the session.
+</para>
+<para>
+When a client configures a media with SETUP, a session will be created to
+keep track of the configuration of that media. With
+<link linkend="gst-rtsp-session-manage-media"><function>gst_rtsp_session_manage_media()</function></link>, the media is added to the managed media
+in the session. With <link linkend="gst-rtsp-session-release-media"><function>gst_rtsp_session_release_media()</function></link> the media can be
+released again from the session. Managed media is identified in the sessions
+with a url. Use <link linkend="gst-rtsp-session-get-media"><function>gst_rtsp_session_get_media()</function></link> to get the media that matches
+(part of) the given url.
+</para>
+<para>
+The media in a session can be iterated with <link linkend="gst-rtsp-session-filter"><function>gst_rtsp_session_filter()</function></link>.
+</para>
+<para>
+Last reviewed on 2013-07-11 (1.0.0)
+</para>
+</refsect1>
+<refsect1 id="GstRTSPSession.details" role="details">
+<title role="details.title">Details</title>
+<refsect2 id="GstRTSPSession-struct" role="struct">
+<title>struct GstRTSPSession</title>
+<indexterm zone="GstRTSPSession-struct"><primary>GstRTSPSession</primary></indexterm>
+<programlisting>struct GstRTSPSession;</programlisting>
+<para>
+Session information kept by the server for a specific client.
+One client session, identified with a session id, can handle multiple medias
+identified with the url of a media.
+</para></refsect2>
+<refsect2 id="GstRTSPSessionClass" role="struct">
+<title>struct GstRTSPSessionClass</title>
+<indexterm zone="GstRTSPSessionClass"><primary>GstRTSPSessionClass</primary></indexterm>
+<programlisting>struct GstRTSPSessionClass {
+  GObjectClass  parent_class;
+};
+</programlisting>
+</refsect2>
+<refsect2 id="gst-rtsp-session-new" role="function">
+<title>gst_rtsp_session_new ()</title>
+<indexterm zone="gst-rtsp-session-new"><primary>gst_rtsp_session_new</primary></indexterm>
+<programlisting><link linkend="GstRTSPSession"><returnvalue>GstRTSPSession</returnvalue></link> *    gst_rtsp_session_new                (<parameter>const <link linkend="gchar"><type>gchar</type></link> *sessionid</parameter>);</programlisting>
+<para>
+Create a new <link linkend="GstRTSPSession"><type>GstRTSPSession</type></link> instance with <parameter>sessionid</parameter>.
+</para><variablelist role="params">
+<varlistentry><term><parameter>sessionid</parameter>&#160;:</term>
+<listitem><simpara>a session id</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gst-rtsp-session-get-sessionid" role="function">
+<title>gst_rtsp_session_get_sessionid ()</title>
+<indexterm zone="gst-rtsp-session-get-sessionid"><primary>gst_rtsp_session_get_sessionid</primary></indexterm>
+<programlisting>const <link linkend="gchar"><returnvalue>gchar</returnvalue></link> *       gst_rtsp_session_get_sessionid      (<parameter><link linkend="GstRTSPSession"><type>GstRTSPSession</type></link> *session</parameter>);</programlisting>
+<para>
+Get the sessionid of <parameter>session</parameter>.
+</para><variablelist role="params">
+<varlistentry><term><parameter>session</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstRTSPSession"><type>GstRTSPSession</type></link></simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>the sessionid of <parameter>session</parameter>. The value remains valid as long as
+<parameter>session</parameter> is alive.</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gst-rtsp-session-get-header" role="function">
+<title>gst_rtsp_session_get_header ()</title>
+<indexterm zone="gst-rtsp-session-get-header"><primary>gst_rtsp_session_get_header</primary></indexterm>
+<programlisting><link linkend="gchar"><returnvalue>gchar</returnvalue></link> *             gst_rtsp_session_get_header         (<parameter><link linkend="GstRTSPSession"><type>GstRTSPSession</type></link> *session</parameter>);</programlisting>
+<para>
+Get the string that can be placed in the Session header field.
+</para><variablelist role="params">
+<varlistentry><term><parameter>session</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstRTSPSession"><type>GstRTSPSession</type></link></simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>the Session header of <parameter>session</parameter>. <link linkend="g-free"><function>g_free()</function></link> after usage. <emphasis role="annotation">[<acronym>transfer full</acronym>]</emphasis></simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gst-rtsp-session-set-timeout" role="function">
+<title>gst_rtsp_session_set_timeout ()</title>
+<indexterm zone="gst-rtsp-session-set-timeout"><primary>gst_rtsp_session_set_timeout</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                gst_rtsp_session_set_timeout        (<parameter><link linkend="GstRTSPSession"><type>GstRTSPSession</type></link> *session</parameter>,
+                                                         <parameter><link linkend="guint"><type>guint</type></link> timeout</parameter>);</programlisting>
+<para>
+Configure <parameter>session</parameter> for a timeout of <parameter>timeout</parameter> seconds. The session will be
+cleaned up when there is no activity for <parameter>timeout</parameter> seconds.
+</para><variablelist role="params">
+<varlistentry><term><parameter>session</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstRTSPSession"><type>GstRTSPSession</type></link></simpara></listitem></varlistentry>
+<varlistentry><term><parameter>timeout</parameter>&#160;:</term>
+<listitem><simpara>the new timeout</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gst-rtsp-session-get-timeout" role="function">
+<title>gst_rtsp_session_get_timeout ()</title>
+<indexterm zone="gst-rtsp-session-get-timeout"><primary>gst_rtsp_session_get_timeout</primary></indexterm>
+<programlisting><link linkend="guint"><returnvalue>guint</returnvalue></link>               gst_rtsp_session_get_timeout        (<parameter><link linkend="GstRTSPSession"><type>GstRTSPSession</type></link> *session</parameter>);</programlisting>
+<para>
+Get the timeout value of <parameter>session</parameter>.
+</para><variablelist role="params">
+<varlistentry><term><parameter>session</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstRTSPSession"><type>GstRTSPSession</type></link></simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>the timeout of <parameter>session</parameter> in seconds.</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gst-rtsp-session-touch" role="function">
+<title>gst_rtsp_session_touch ()</title>
+<indexterm zone="gst-rtsp-session-touch"><primary>gst_rtsp_session_touch</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                gst_rtsp_session_touch              (<parameter><link linkend="GstRTSPSession"><type>GstRTSPSession</type></link> *session</parameter>);</programlisting>
+<para>
+Update the last_access time of the session to the current time.
+</para><variablelist role="params">
+<varlistentry><term><parameter>session</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstRTSPSession"><type>GstRTSPSession</type></link></simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gst-rtsp-session-prevent-expire" role="function">
+<title>gst_rtsp_session_prevent_expire ()</title>
+<indexterm zone="gst-rtsp-session-prevent-expire"><primary>gst_rtsp_session_prevent_expire</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                gst_rtsp_session_prevent_expire     (<parameter><link linkend="GstRTSPSession"><type>GstRTSPSession</type></link> *session</parameter>);</programlisting>
+<para>
+Prevent <parameter>session</parameter> from expiring.
+</para><variablelist role="params">
+<varlistentry><term><parameter>session</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstRTSPSession"><type>GstRTSPSession</type></link></simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gst-rtsp-session-allow-expire" role="function">
+<title>gst_rtsp_session_allow_expire ()</title>
+<indexterm zone="gst-rtsp-session-allow-expire"><primary>gst_rtsp_session_allow_expire</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                gst_rtsp_session_allow_expire       (<parameter><link linkend="GstRTSPSession"><type>GstRTSPSession</type></link> *session</parameter>);</programlisting>
+<para>
+Allow <parameter>session</parameter> to expire. This method must be called an equal
+amount of time as <link linkend="gst-rtsp-session-prevent-expire"><function>gst_rtsp_session_prevent_expire()</function></link>.
+</para><variablelist role="params">
+<varlistentry><term><parameter>session</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstRTSPSession"><type>GstRTSPSession</type></link></simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gst-rtsp-session-next-timeout" role="function">
+<title>gst_rtsp_session_next_timeout ()</title>
+<indexterm zone="gst-rtsp-session-next-timeout"><primary>gst_rtsp_session_next_timeout</primary></indexterm>
+<programlisting><link linkend="gint"><returnvalue>gint</returnvalue></link>                gst_rtsp_session_next_timeout       (<parameter><link linkend="GstRTSPSession"><type>GstRTSPSession</type></link> *session</parameter>,
+                                                         <parameter><link linkend="GTimeVal"><type>GTimeVal</type></link> *now</parameter>);</programlisting>
+<para>
+Get the amount of milliseconds till the session will expire.
+</para><variablelist role="params">
+<varlistentry><term><parameter>session</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstRTSPSession"><type>GstRTSPSession</type></link></simpara></listitem></varlistentry>
+<varlistentry><term><parameter>now</parameter>&#160;:</term>
+<listitem><simpara>the current system time</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>the amount of milliseconds since the session will time out.</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gst-rtsp-session-is-expired" role="function">
+<title>gst_rtsp_session_is_expired ()</title>
+<indexterm zone="gst-rtsp-session-is-expired"><primary>gst_rtsp_session_is_expired</primary></indexterm>
+<programlisting><link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            gst_rtsp_session_is_expired         (<parameter><link linkend="GstRTSPSession"><type>GstRTSPSession</type></link> *session</parameter>,
+                                                         <parameter><link linkend="GTimeVal"><type>GTimeVal</type></link> *now</parameter>);</programlisting>
+<para>
+Check if <parameter>session</parameter> timeout out.
+</para><variablelist role="params">
+<varlistentry><term><parameter>session</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstRTSPSession"><type>GstRTSPSession</type></link></simpara></listitem></varlistentry>
+<varlistentry><term><parameter>now</parameter>&#160;:</term>
+<listitem><simpara>the current system time</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara><link linkend="TRUE:CAPS"><literal>TRUE</literal></link> if <parameter>session</parameter> timed out</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gst-rtsp-session-manage-media" role="function">
+<title>gst_rtsp_session_manage_media ()</title>
+<indexterm zone="gst-rtsp-session-manage-media"><primary>gst_rtsp_session_manage_media</primary></indexterm>
+<programlisting><link linkend="GstRTSPSessionMedia"><returnvalue>GstRTSPSessionMedia</returnvalue></link> * gst_rtsp_session_manage_media     (<parameter><link linkend="GstRTSPSession"><type>GstRTSPSession</type></link> *sess</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *path</parameter>,
+                                                         <parameter><link linkend="GstRTSPMedia"><type>GstRTSPMedia</type></link> *media</parameter>);</programlisting>
+<para>
+Manage the media object <parameter>obj</parameter> in <parameter>sess</parameter>. <parameter>path</parameter> will be used to retrieve this
+media from the session with <link linkend="gst-rtsp-session-get-media"><function>gst_rtsp_session_get_media()</function></link>.
+</para>
+<para>
+Ownership is taken from <parameter>media</parameter>.
+</para><variablelist role="params">
+<varlistentry><term><parameter>sess</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstRTSPSession"><type>GstRTSPSession</type></link></simpara></listitem></varlistentry>
+<varlistentry><term><parameter>path</parameter>&#160;:</term>
+<listitem><simpara>the path for the media</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>media</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstRTSPMedia"><type>GstRTSPMedia</type></link>. <emphasis role="annotation">[<acronym>transfer full</acronym>]</emphasis></simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>a new <parameter>GstRTSPSessionMedia</parameter> object. <emphasis role="annotation">[<acronym>transfer none</acronym>]</emphasis></simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gst-rtsp-session-release-media" role="function">
+<title>gst_rtsp_session_release_media ()</title>
+<indexterm zone="gst-rtsp-session-release-media"><primary>gst_rtsp_session_release_media</primary></indexterm>
+<programlisting><link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            gst_rtsp_session_release_media      (<parameter><link linkend="GstRTSPSession"><type>GstRTSPSession</type></link> *sess</parameter>,
+                                                         <parameter><link linkend="GstRTSPSessionMedia"><type>GstRTSPSessionMedia</type></link> *media</parameter>);</programlisting>
+<para>
+Release the managed <parameter>media</parameter> in <parameter>sess</parameter>, freeing the memory allocated by it.
+</para><variablelist role="params">
+<varlistentry><term><parameter>sess</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstRTSPSession"><type>GstRTSPSession</type></link></simpara></listitem></varlistentry>
+<varlistentry><term><parameter>media</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstRTSPMedia"><type>GstRTSPMedia</type></link></simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara><link linkend="TRUE:CAPS"><literal>TRUE</literal></link> if there are more media session left in <parameter>sess</parameter>.</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gst-rtsp-session-get-media" role="function">
+<title>gst_rtsp_session_get_media ()</title>
+<indexterm zone="gst-rtsp-session-get-media"><primary>gst_rtsp_session_get_media</primary></indexterm>
+<programlisting><link linkend="GstRTSPSessionMedia"><returnvalue>GstRTSPSessionMedia</returnvalue></link> * gst_rtsp_session_get_media        (<parameter><link linkend="GstRTSPSession"><type>GstRTSPSession</type></link> *sess</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *path</parameter>,
+                                                         <parameter><link linkend="gint"><type>gint</type></link> *matched</parameter>);</programlisting>
+<para>
+Get the session media for <parameter>path</parameter>. <parameter>matched</parameter> will contain the number of matched
+characters of <parameter>path</parameter>.
+</para><variablelist role="params">
+<varlistentry><term><parameter>sess</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstRTSPSession"><type>GstRTSPSession</type></link></simpara></listitem></varlistentry>
+<varlistentry><term><parameter>path</parameter>&#160;:</term>
+<listitem><simpara>the path for the media</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>matched</parameter>&#160;:</term>
+<listitem><simpara>the amount of matched characters. <emphasis role="annotation">[<acronym>out</acronym>]</emphasis></simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>the configuration for <parameter>path</parameter> in <parameter>sess</parameter>. <emphasis role="annotation">[<acronym>transfer none</acronym>]</emphasis></simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GstRTSPFilterResult" role="enum">
+<title>enum GstRTSPFilterResult</title>
+<indexterm zone="GstRTSPFilterResult"><primary>GstRTSPFilterResult</primary></indexterm>
+<programlisting>typedef enum {
+  GST_RTSP_FILTER_REMOVE,
+  GST_RTSP_FILTER_KEEP,
+  GST_RTSP_FILTER_REF,
+} GstRTSPFilterResult;
+</programlisting>
+<para>
+Possible return values for <link linkend="gst-rtsp-session-pool-filter"><function>gst_rtsp_session_pool_filter()</function></link>.
+</para><variablelist role="enum">
+<varlistentry id="GST-RTSP-FILTER-REMOVE:CAPS" role="constant">
+<term><literal>GST_RTSP_FILTER_REMOVE</literal></term>
+<listitem><simpara>Remove session
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="GST-RTSP-FILTER-KEEP:CAPS" role="constant">
+<term><literal>GST_RTSP_FILTER_KEEP</literal></term>
+<listitem><simpara>Keep session in the pool
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="GST-RTSP-FILTER-REF:CAPS" role="constant">
+<term><literal>GST_RTSP_FILTER_REF</literal></term>
+<listitem><simpara>Ref session in the result list
+</simpara></listitem>
+</varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GstRTSPSessionFilterFunc" role="function">
+<title>GstRTSPSessionFilterFunc ()</title>
+<indexterm zone="GstRTSPSessionFilterFunc"><primary>GstRTSPSessionFilterFunc</primary></indexterm>
+<programlisting><link linkend="GstRTSPFilterResult"><returnvalue>GstRTSPFilterResult</returnvalue></link> (*GstRTSPSessionFilterFunc)         (<parameter><link linkend="GstRTSPSession"><type>GstRTSPSession</type></link> *sess</parameter>,
+                                                         <parameter><link linkend="GstRTSPSessionMedia"><type>GstRTSPSessionMedia</type></link> *media</parameter>,
+                                                         <parameter><link linkend="gpointer"><type>gpointer</type></link> user_data</parameter>);</programlisting>
+<para>
+This function will be called by the <link linkend="gst-rtsp-session-filter"><function>gst_rtsp_session_filter()</function></link>. An
+implementation should return a value of <link linkend="GstRTSPFilterResult"><type>GstRTSPFilterResult</type></link>.
+</para>
+<para>
+When this function returns <link linkend="GST-RTSP-FILTER-REMOVE:CAPS"><type>GST_RTSP_FILTER_REMOVE</type></link>, <parameter>media</parameter> will be removed
+from <parameter>sess</parameter>.
+</para>
+<para>
+A return value of <link linkend="GST-RTSP-FILTER-KEEP:CAPS"><type>GST_RTSP_FILTER_KEEP</type></link> will leave <parameter>media</parameter> untouched in
+<parameter>sess</parameter>.
+</para>
+<para>
+A value of GST_RTSP_FILTER_REF will add <parameter>media</parameter> to the result <link linkend="GList"><type>GList</type></link> of
+<link linkend="gst-rtsp-session-filter"><function>gst_rtsp_session_filter()</function></link>.
+</para><variablelist role="params">
+<varlistentry><term><parameter>sess</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstRTSPSession"><type>GstRTSPSession</type></link> object</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>media</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstRTSPSessionMedia"><type>GstRTSPSessionMedia</type></link> in <parameter>sess</parameter></simpara></listitem></varlistentry>
+<varlistentry><term><parameter>user_data</parameter>&#160;:</term>
+<listitem><simpara>user data that has been given to <link linkend="gst-rtsp-session-filter"><function>gst_rtsp_session_filter()</function></link></simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>a <link linkend="GstRTSPFilterResult"><type>GstRTSPFilterResult</type></link>.</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gst-rtsp-session-filter" role="function">
+<title>gst_rtsp_session_filter ()</title>
+<indexterm zone="gst-rtsp-session-filter"><primary>gst_rtsp_session_filter</primary></indexterm>
+<programlisting><link linkend="GList"><returnvalue>GList</returnvalue></link> *             gst_rtsp_session_filter             (<parameter><link linkend="GstRTSPSession"><type>GstRTSPSession</type></link> *sess</parameter>,
+                                                         <parameter><link linkend="GstRTSPSessionFilterFunc"><type>GstRTSPSessionFilterFunc</type></link> func</parameter>,
+                                                         <parameter><link linkend="gpointer"><type>gpointer</type></link> user_data</parameter>);</programlisting>
+<para>
+Call <parameter>func</parameter> for each media in <parameter>sess</parameter>. The result value of <parameter>func</parameter> determines
+what happens to the media. <parameter>func</parameter> will be called with <parameter>sess</parameter>
+locked so no further actions on <parameter>sess</parameter> can be performed from <parameter>func</parameter>.
+</para>
+<para>
+If <parameter>func</parameter> returns <link linkend="GST-RTSP-FILTER-REMOVE:CAPS"><type>GST_RTSP_FILTER_REMOVE</type></link>, the media will be removed from
+<parameter>sess</parameter>.
+</para>
+<para>
+If <parameter>func</parameter> returns <link linkend="GST-RTSP-FILTER-KEEP:CAPS"><type>GST_RTSP_FILTER_KEEP</type></link>, the media will remain in <parameter>sess</parameter>.
+</para>
+<para>
+If <parameter>func</parameter> returns <link linkend="GST-RTSP-FILTER-REF:CAPS"><type>GST_RTSP_FILTER_REF</type></link>, the media will remain in <parameter>sess</parameter> but
+will also be added with an additional ref to the result <link linkend="GList"><type>GList</type></link> of this
+function..
+</para>
+<para>
+When <parameter>func</parameter> is <link linkend="NULL:CAPS"><literal>NULL</literal></link>, <link linkend="GST-RTSP-FILTER-REF:CAPS"><type>GST_RTSP_FILTER_REF</type></link> will be assumed for all media.
+</para><variablelist role="params">
+<varlistentry><term><parameter>sess</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstRTSPSession"><type>GstRTSPSession</type></link></simpara></listitem></varlistentry>
+<varlistentry><term><parameter>func</parameter>&#160;:</term>
+<listitem><simpara>a callback. <emphasis role="annotation">[<acronym>scope call</acronym>][<acronym>allow-none</acronym>]</emphasis></simpara></listitem></varlistentry>
+<varlistentry><term><parameter>user_data</parameter>&#160;:</term>
+<listitem><simpara>user data passed to <parameter>func</parameter></simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>a GList with all
+media for which <parameter>func</parameter> returned <link linkend="GST-RTSP-FILTER-REF:CAPS"><type>GST_RTSP_FILTER_REF</type></link>. After usage, each
+element in the <link linkend="GList"><type>GList</type></link> should be unreffed before the list is freed. <emphasis role="annotation">[<acronym>element-type</acronym> GstRTSPSessionMedia][<acronym>transfer full</acronym>]</emphasis></simpara></listitem></varlistentry>
+</variablelist></refsect2>
+
+</refsect1>
+<refsect1 id="GstRTSPSession.property-details" role="property_details">
+<title role="property_details.title">Property Details</title>
+<refsect2 id="GstRTSPSession--sessionid" role="property"><title>The <literal>&quot;sessionid&quot;</literal> property</title>
+<indexterm zone="GstRTSPSession--sessionid"><primary>GstRTSPSession:sessionid</primary></indexterm>
+<programlisting>  &quot;sessionid&quot;                <link linkend="gchar"><type>gchar</type></link>*                : Read / Write / Construct Only</programlisting>
+<para>the session id.</para><para>Default value: NULL</para>
+</refsect2>
+<refsect2 id="GstRTSPSession--timeout" role="property"><title>The <literal>&quot;timeout&quot;</literal> property</title>
+<indexterm zone="GstRTSPSession--timeout"><primary>GstRTSPSession:timeout</primary></indexterm>
+<programlisting>  &quot;timeout&quot;                  <link linkend="guint"><type>guint</type></link>                 : Read / Write</programlisting>
+<para>the timeout of the session (0 = never).</para><para>Default value: 60</para>
+</refsect2>
+</refsect1>
+<refsect1 id="GstRTSPSession.see-also">
+<title>See Also</title>
+<link linkend="GstRTSPSessionPool"><type>GstRTSPSessionPool</type></link>, <link linkend="GstRTSPSessionMedia"><type>GstRTSPSessionMedia</type></link>, <link linkend="GstRTSPMedia"><type>GstRTSPMedia</type></link>
+</refsect1>
+
+</refentry>

@@ -1,0 +1,155 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>GstRTSPMediaFactoryURI</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<link rel="home" href="index.html" title="GStreamer RTSP Server Reference Manual">
+<link rel="up" href="ch01.html" title="">
+<link rel="prev" href="GstRTSPMediaFactory.html" title="GstRTSPMediaFactory">
+<link rel="next" href="GstRTSPMedia.html" title="GstRTSPMedia">
+<meta name="generator" content="GTK-Doc V1.18 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
+<tr valign="middle">
+<td><a accesskey="p" href="GstRTSPMediaFactory.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="ch01.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">GStreamer RTSP Server Reference Manual</th>
+<td><a accesskey="n" href="GstRTSPMedia.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr>
+<tr><td colspan="5" class="shortcuts">
+<a href="#gst-rtsp-server-GstRTSPMediaFactoryURI.synopsis" class="shortcut">Top</a>
+                   | 
+                  <a href="#gst-rtsp-server-GstRTSPMediaFactoryURI.description" class="shortcut">Description</a>
+</td></tr>
+</table>
+<div class="refentry">
+<a name="gst-rtsp-server-GstRTSPMediaFactoryURI"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="gst-rtsp-server-GstRTSPMediaFactoryURI.top_of_page"></a>GstRTSPMediaFactoryURI</span></h2>
+<p>GstRTSPMediaFactoryURI — A factory for URI sources</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsynopsisdiv">
+<a name="gst-rtsp-server-GstRTSPMediaFactoryURI.synopsis"></a><h2>Synopsis</h2>
+<pre class="synopsis">struct              <a class="link" href="gst-rtsp-server-GstRTSPMediaFactoryURI.html#GstRTSPMediaFactoryURI" title="struct GstRTSPMediaFactoryURI">GstRTSPMediaFactoryURI</a>;
+struct              <a class="link" href="gst-rtsp-server-GstRTSPMediaFactoryURI.html#GstRTSPMediaFactoryURIClass" title="struct GstRTSPMediaFactoryURIClass">GstRTSPMediaFactoryURIClass</a>;
+<a class="link" href="gst-rtsp-server-GstRTSPMediaFactoryURI.html#GstRTSPMediaFactoryURI" title="struct GstRTSPMediaFactoryURI"><span class="returnvalue">GstRTSPMediaFactoryURI</span></a> * <a class="link" href="gst-rtsp-server-GstRTSPMediaFactoryURI.html#gst-rtsp-media-factory-uri-new" title="gst_rtsp_media_factory_uri_new ()">gst_rtsp_media_factory_uri_new</a> (<em class="parameter"><code><span class="type">void</span></code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="gst-rtsp-server-GstRTSPMediaFactoryURI.html#gst-rtsp-media-factory-uri-set-uri" title="gst_rtsp_media_factory_uri_set_uri ()">gst_rtsp_media_factory_uri_set_uri</a>  (<em class="parameter"><code><a class="link" href="gst-rtsp-server-GstRTSPMediaFactoryURI.html#GstRTSPMediaFactoryURI" title="struct GstRTSPMediaFactoryURI"><span class="type">GstRTSPMediaFactoryURI</span></a> *factory</code></em>,
+                                                         <em class="parameter"><code>const <a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *uri</code></em>);
+<a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *             <a class="link" href="gst-rtsp-server-GstRTSPMediaFactoryURI.html#gst-rtsp-media-factory-uri-get-uri" title="gst_rtsp_media_factory_uri_get_uri ()">gst_rtsp_media_factory_uri_get_uri</a>  (<em class="parameter"><code><a class="link" href="gst-rtsp-server-GstRTSPMediaFactoryURI.html#GstRTSPMediaFactoryURI" title="struct GstRTSPMediaFactoryURI"><span class="type">GstRTSPMediaFactoryURI</span></a> *factory</code></em>);
+</pre>
+</div>
+<div class="refsect1">
+<a name="gst-rtsp-server-GstRTSPMediaFactoryURI.description"></a><h2>Description</h2>
+<p>
+This specialized <a class="link" href="GstRTSPMediaFactory.html" title="GstRTSPMediaFactory"><span class="type">GstRTSPMediaFactory</span></a> constructs media pipelines from a URI,
+given with <a class="link" href="gst-rtsp-server-GstRTSPMediaFactoryURI.html#gst-rtsp-media-factory-uri-set-uri" title="gst_rtsp_media_factory_uri_set_uri ()"><code class="function">gst_rtsp_media_factory_uri_set_uri()</code></a>.
+</p>
+<p>
+It will automatically demux and payload the different streams found in the
+media at URL.
+</p>
+<p>
+Last reviewed on 2013-07-11 (1.0.0)
+</p>
+</div>
+<div class="refsect1">
+<a name="gst-rtsp-server-GstRTSPMediaFactoryURI.details"></a><h2>Details</h2>
+<div class="refsect2">
+<a name="GstRTSPMediaFactoryURI"></a><h3>struct GstRTSPMediaFactoryURI</h3>
+<pre class="programlisting">struct GstRTSPMediaFactoryURI {
+  GstRTSPMediaFactory   parent;
+};
+</pre>
+<p>
+A media factory that creates a pipeline to play and uri.
+</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="GstRTSPMediaFactoryURIClass"></a><h3>struct GstRTSPMediaFactoryURIClass</h3>
+<pre class="programlisting">struct GstRTSPMediaFactoryURIClass {
+  GstRTSPMediaFactoryClass  parent_class;
+};
+</pre>
+<p>
+The <a class="link" href="gst-rtsp-server-GstRTSPMediaFactoryURI.html#GstRTSPMediaFactoryURI" title="struct GstRTSPMediaFactoryURI"><span class="type">GstRTSPMediaFactoryURI</span></a> class structure.
+</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gst-rtsp-media-factory-uri-new"></a><h3>gst_rtsp_media_factory_uri_new ()</h3>
+<pre class="programlisting"><a class="link" href="gst-rtsp-server-GstRTSPMediaFactoryURI.html#GstRTSPMediaFactoryURI" title="struct GstRTSPMediaFactoryURI"><span class="returnvalue">GstRTSPMediaFactoryURI</span></a> * gst_rtsp_media_factory_uri_new (<em class="parameter"><code><span class="type">void</span></code></em>);</pre>
+<p>
+Create a new <a class="link" href="gst-rtsp-server-GstRTSPMediaFactoryURI.html#GstRTSPMediaFactoryURI" title="struct GstRTSPMediaFactoryURI"><span class="type">GstRTSPMediaFactoryURI</span></a> instance.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>a new <a class="link" href="gst-rtsp-server-GstRTSPMediaFactoryURI.html#GstRTSPMediaFactoryURI" title="struct GstRTSPMediaFactoryURI"><span class="type">GstRTSPMediaFactoryURI</span></a> object.</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gst-rtsp-media-factory-uri-set-uri"></a><h3>gst_rtsp_media_factory_uri_set_uri ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                gst_rtsp_media_factory_uri_set_uri  (<em class="parameter"><code><a class="link" href="gst-rtsp-server-GstRTSPMediaFactoryURI.html#GstRTSPMediaFactoryURI" title="struct GstRTSPMediaFactoryURI"><span class="type">GstRTSPMediaFactoryURI</span></a> *factory</code></em>,
+                                                         <em class="parameter"><code>const <a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *uri</code></em>);</pre>
+<p>
+Set the URI of the resource that will be streamed by this factory.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>factory</code></em> :</span></p></td>
+<td>a <a class="link" href="GstRTSPMediaFactory.html" title="GstRTSPMediaFactory"><span class="type">GstRTSPMediaFactory</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>uri</code></em> :</span></p></td>
+<td>the uri the stream</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gst-rtsp-media-factory-uri-get-uri"></a><h3>gst_rtsp_media_factory_uri_get_uri ()</h3>
+<pre class="programlisting"><a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *             gst_rtsp_media_factory_uri_get_uri  (<em class="parameter"><code><a class="link" href="gst-rtsp-server-GstRTSPMediaFactoryURI.html#GstRTSPMediaFactoryURI" title="struct GstRTSPMediaFactoryURI"><span class="type">GstRTSPMediaFactoryURI</span></a> *factory</code></em>);</pre>
+<p>
+Get the URI that will provide media for this factory.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>factory</code></em> :</span></p></td>
+<td>a <a class="link" href="GstRTSPMediaFactory.html" title="GstRTSPMediaFactory"><span class="type">GstRTSPMediaFactory</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>the configured URI. <a href="/usr/share/gtk-doc/html/glib/glib-Memory-Allocation.html#g-free"><code class="function">g_free()</code></a> after usage.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+<div class="refsect1">
+<a name="gst-rtsp-server-GstRTSPMediaFactoryURI.see-also"></a><h2>See Also</h2>
+<a class="link" href="GstRTSPMediaFactory.html" title="GstRTSPMediaFactory"><span class="type">GstRTSPMediaFactory</span></a>, <a class="link" href="GstRTSPMedia.html" title="GstRTSPMedia"><span class="type">GstRTSPMedia</span></a>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.18</div>
+</body>
+</html>

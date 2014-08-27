@@ -1,0 +1,74 @@
+<?xml version="1.0"?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
+               "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
+<!ENTITY % version-entities SYSTEM "version.entities">
+%version-entities;
+]>
+
+<refentry id="gst-rtsp-server-GstRTSPParams">
+<refmeta>
+<refentrytitle role="top_of_page" id="gst-rtsp-server-GstRTSPParams.top_of_page">GstRTSPParams</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>
+  GST-RTSP-SERVER Library
+</refmiscinfo>
+</refmeta>
+<refnamediv>
+<refname>GstRTSPParams</refname>
+<refpurpose>Param get and set implementation</refpurpose>
+</refnamediv>
+
+<refsynopsisdiv id="gst-rtsp-server-GstRTSPParams.synopsis" role="synopsis">
+<title role="synopsis.title">Synopsis</title>
+
+<synopsis><link linkend="GstRTSPResult"><returnvalue>GstRTSPResult</returnvalue></link>       <link linkend="gst-rtsp-params-get">gst_rtsp_params_get</link>                 (<parameter><link linkend="GstRTSPClient"><type>GstRTSPClient</type></link> *client</parameter>,
+                                                         <parameter><link linkend="GstRTSPContext"><type>GstRTSPContext</type></link> *ctx</parameter>);
+<link linkend="GstRTSPResult"><returnvalue>GstRTSPResult</returnvalue></link>       <link linkend="gst-rtsp-params-set">gst_rtsp_params_set</link>                 (<parameter><link linkend="GstRTSPClient"><type>GstRTSPClient</type></link> *client</parameter>,
+                                                         <parameter><link linkend="GstRTSPContext"><type>GstRTSPContext</type></link> *ctx</parameter>);
+</synopsis>
+</refsynopsisdiv>
+
+<refsect1 id="gst-rtsp-server-GstRTSPParams.description" role="desc">
+<title role="desc.title">Description</title>
+<para>
+Last reviewed on 2013-07-11 (1.0.0)
+</para>
+</refsect1>
+<refsect1 id="gst-rtsp-server-GstRTSPParams.details" role="details">
+<title role="details.title">Details</title>
+<refsect2 id="gst-rtsp-params-get" role="function">
+<title>gst_rtsp_params_get ()</title>
+<indexterm zone="gst-rtsp-params-get"><primary>gst_rtsp_params_get</primary></indexterm>
+<programlisting><link linkend="GstRTSPResult"><returnvalue>GstRTSPResult</returnvalue></link>       gst_rtsp_params_get                 (<parameter><link linkend="GstRTSPClient"><type>GstRTSPClient</type></link> *client</parameter>,
+                                                         <parameter><link linkend="GstRTSPContext"><type>GstRTSPContext</type></link> *ctx</parameter>);</programlisting>
+<para>
+Get parameters (not implemented yet)
+</para><variablelist role="params">
+<varlistentry><term><parameter>client</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstRTSPClient"><type>GstRTSPClient</type></link></simpara></listitem></varlistentry>
+<varlistentry><term><parameter>ctx</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstRTSPContext"><type>GstRTSPContext</type></link></simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>a <link linkend="GstRTSPResult"><type>GstRTSPResult</type></link></simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gst-rtsp-params-set" role="function">
+<title>gst_rtsp_params_set ()</title>
+<indexterm zone="gst-rtsp-params-set"><primary>gst_rtsp_params_set</primary></indexterm>
+<programlisting><link linkend="GstRTSPResult"><returnvalue>GstRTSPResult</returnvalue></link>       gst_rtsp_params_set                 (<parameter><link linkend="GstRTSPClient"><type>GstRTSPClient</type></link> *client</parameter>,
+                                                         <parameter><link linkend="GstRTSPContext"><type>GstRTSPContext</type></link> *ctx</parameter>);</programlisting>
+<para>
+Set parameters (not implemented yet)
+</para><variablelist role="params">
+<varlistentry><term><parameter>client</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstRTSPClient"><type>GstRTSPClient</type></link></simpara></listitem></varlistentry>
+<varlistentry><term><parameter>ctx</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstRTSPContext"><type>GstRTSPContext</type></link></simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>a <link linkend="GstRTSPResult"><type>GstRTSPResult</type></link></simpara></listitem></varlistentry>
+</variablelist></refsect2>
+
+</refsect1>
+<refsect1 id="gst-rtsp-server-GstRTSPParams.see-also">
+<title>See Also</title>
+<link linkend="GstRTSPClient"><type>GstRTSPClient</type></link>
+</refsect1>
+
+</refentry>

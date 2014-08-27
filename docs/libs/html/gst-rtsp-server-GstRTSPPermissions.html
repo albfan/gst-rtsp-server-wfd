@@ -1,0 +1,314 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>GstRTSPPermissions</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<link rel="home" href="index.html" title="GStreamer RTSP Server Reference Manual">
+<link rel="up" href="ch01.html" title="">
+<link rel="prev" href="gst-rtsp-server-GstRTSPToken.html" title="GstRTSPToken">
+<link rel="next" href="gst-rtsp-server-GstRTSPParams.html" title="GstRTSPParams">
+<meta name="generator" content="GTK-Doc V1.18 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
+<tr valign="middle">
+<td><a accesskey="p" href="gst-rtsp-server-GstRTSPToken.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="ch01.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">GStreamer RTSP Server Reference Manual</th>
+<td><a accesskey="n" href="gst-rtsp-server-GstRTSPParams.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr>
+<tr><td colspan="5" class="shortcuts">
+<a href="#gst-rtsp-server-GstRTSPPermissions.synopsis" class="shortcut">Top</a>
+                   | 
+                  <a href="#gst-rtsp-server-GstRTSPPermissions.description" class="shortcut">Description</a>
+</td></tr>
+</table>
+<div class="refentry">
+<a name="gst-rtsp-server-GstRTSPPermissions"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="gst-rtsp-server-GstRTSPPermissions.top_of_page"></a>GstRTSPPermissions</span></h2>
+<p>GstRTSPPermissions — Roles and associated permissions</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsynopsisdiv">
+<a name="gst-rtsp-server-GstRTSPPermissions.synopsis"></a><h2>Synopsis</h2>
+<pre class="synopsis">struct              <a class="link" href="gst-rtsp-server-GstRTSPPermissions.html#GstRTSPPermissions" title="struct GstRTSPPermissions">GstRTSPPermissions</a>;
+<a class="link" href="gst-rtsp-server-GstRTSPPermissions.html#GstRTSPPermissions" title="struct GstRTSPPermissions"><span class="returnvalue">GstRTSPPermissions</span></a> * <a class="link" href="gst-rtsp-server-GstRTSPPermissions.html#gst-rtsp-permissions-new" title="gst_rtsp_permissions_new ()">gst_rtsp_permissions_new</a>           (<em class="parameter"><code><span class="type">void</span></code></em>);
+<a class="link" href="gst-rtsp-server-GstRTSPPermissions.html#GstRTSPPermissions" title="struct GstRTSPPermissions"><span class="returnvalue">GstRTSPPermissions</span></a> * <a class="link" href="gst-rtsp-server-GstRTSPPermissions.html#gst-rtsp-permissions-ref" title="gst_rtsp_permissions_ref ()">gst_rtsp_permissions_ref</a>           (<em class="parameter"><code><a class="link" href="gst-rtsp-server-GstRTSPPermissions.html#GstRTSPPermissions" title="struct GstRTSPPermissions"><span class="type">GstRTSPPermissions</span></a> *permissions</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="gst-rtsp-server-GstRTSPPermissions.html#gst-rtsp-permissions-unref" title="gst_rtsp_permissions_unref ()">gst_rtsp_permissions_unref</a>          (<em class="parameter"><code><a class="link" href="gst-rtsp-server-GstRTSPPermissions.html#GstRTSPPermissions" title="struct GstRTSPPermissions"><span class="type">GstRTSPPermissions</span></a> *permissions</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="gst-rtsp-server-GstRTSPPermissions.html#gst-rtsp-permissions-add-role" title="gst_rtsp_permissions_add_role ()">gst_rtsp_permissions_add_role</a>       (<em class="parameter"><code><a class="link" href="gst-rtsp-server-GstRTSPPermissions.html#GstRTSPPermissions" title="struct GstRTSPPermissions"><span class="type">GstRTSPPermissions</span></a> *permissions</code></em>,
+                                                         <em class="parameter"><code>const <a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *role</code></em>,
+                                                         <em class="parameter"><code>const <a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *fieldname</code></em>,
+                                                         <em class="parameter"><code>...</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="gst-rtsp-server-GstRTSPPermissions.html#gst-rtsp-permissions-add-role-valist" title="gst_rtsp_permissions_add_role_valist ()">gst_rtsp_permissions_add_role_valist</a>
+                                                        (<em class="parameter"><code><a class="link" href="gst-rtsp-server-GstRTSPPermissions.html#GstRTSPPermissions" title="struct GstRTSPPermissions"><span class="type">GstRTSPPermissions</span></a> *permissions</code></em>,
+                                                         <em class="parameter"><code>const <a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *role</code></em>,
+                                                         <em class="parameter"><code>const <a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *fieldname</code></em>,
+                                                         <em class="parameter"><code><span class="type">va_list</span> var_args</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="gst-rtsp-server-GstRTSPPermissions.html#gst-rtsp-permissions-remove-role" title="gst_rtsp_permissions_remove_role ()">gst_rtsp_permissions_remove_role</a>    (<em class="parameter"><code><a class="link" href="gst-rtsp-server-GstRTSPPermissions.html#GstRTSPPermissions" title="struct GstRTSPPermissions"><span class="type">GstRTSPPermissions</span></a> *permissions</code></em>,
+                                                         <em class="parameter"><code>const <a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *role</code></em>);
+const <a href="../gstreamer-1.0/gstreamer-GstStructure.html#GstStructure"><span class="returnvalue">GstStructure</span></a> * <a class="link" href="gst-rtsp-server-GstRTSPPermissions.html#gst-rtsp-permissions-get-role" title="gst_rtsp_permissions_get_role ()">gst_rtsp_permissions_get_role</a>      (<em class="parameter"><code><a class="link" href="gst-rtsp-server-GstRTSPPermissions.html#GstRTSPPermissions" title="struct GstRTSPPermissions"><span class="type">GstRTSPPermissions</span></a> *permissions</code></em>,
+                                                         <em class="parameter"><code>const <a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *role</code></em>);
+<a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="gst-rtsp-server-GstRTSPPermissions.html#gst-rtsp-permissions-is-allowed" title="gst_rtsp_permissions_is_allowed ()">gst_rtsp_permissions_is_allowed</a>     (<em class="parameter"><code><a class="link" href="gst-rtsp-server-GstRTSPPermissions.html#GstRTSPPermissions" title="struct GstRTSPPermissions"><span class="type">GstRTSPPermissions</span></a> *permissions</code></em>,
+                                                         <em class="parameter"><code>const <a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *role</code></em>,
+                                                         <em class="parameter"><code>const <a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *permission</code></em>);
+</pre>
+</div>
+<div class="refsect1">
+<a name="gst-rtsp-server-GstRTSPPermissions.description"></a><h2>Description</h2>
+<p>
+The <a class="link" href="gst-rtsp-server-GstRTSPPermissions.html#GstRTSPPermissions" title="struct GstRTSPPermissions"><span class="type">GstRTSPPermissions</span></a> object contains an array of roles and associated
+permissions. The roles are represented with a string and the permissions with
+a generic <a href="../gstreamer-1.0/gstreamer-GstStructure.html#GstStructure"><span class="type">GstStructure</span></a>.
+</p>
+<p>
+The permissions are deliberately kept generic. The possible values of the
+roles and <a href="../gstreamer-1.0/gstreamer-GstStructure.html#GstStructure"><span class="type">GstStructure</span></a> keys and values are only determined by the <a class="link" href="GstRTSPAuth.html" title="GstRTSPAuth"><span class="type">GstRTSPAuth</span></a>
+object that performs the checks on the permissions and the current
+<a class="link" href="gst-rtsp-server-GstRTSPToken.html#GstRTSPToken" title="struct GstRTSPToken"><span class="type">GstRTSPToken</span></a>.
+</p>
+<p>
+As a convenience function, <a class="link" href="gst-rtsp-server-GstRTSPPermissions.html#gst-rtsp-permissions-is-allowed" title="gst_rtsp_permissions_is_allowed ()"><code class="function">gst_rtsp_permissions_is_allowed()</code></a> can be used to
+check if the permissions contains a role that contains the boolean value
+<a href="/usr/share/gtk-doc/html/glib/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> for the the given key.
+</p>
+<p>
+Last reviewed on 2013-07-15 (1.0.0)
+</p>
+</div>
+<div class="refsect1">
+<a name="gst-rtsp-server-GstRTSPPermissions.details"></a><h2>Details</h2>
+<div class="refsect2">
+<a name="GstRTSPPermissions"></a><h3>struct GstRTSPPermissions</h3>
+<pre class="programlisting">struct GstRTSPPermissions {
+  GstMiniObject mini_object;
+};
+</pre>
+<p>
+The opaque permissions structure. It is used to define the permissions
+of objects in different roles.
+</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gst-rtsp-permissions-new"></a><h3>gst_rtsp_permissions_new ()</h3>
+<pre class="programlisting"><a class="link" href="gst-rtsp-server-GstRTSPPermissions.html#GstRTSPPermissions" title="struct GstRTSPPermissions"><span class="returnvalue">GstRTSPPermissions</span></a> * gst_rtsp_permissions_new           (<em class="parameter"><code><span class="type">void</span></code></em>);</pre>
+<p>
+Create a new empty Authorization permissions.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>a new empty authorization permissions. <span class="annotation">[<acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>]</span>
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gst-rtsp-permissions-ref"></a><h3>gst_rtsp_permissions_ref ()</h3>
+<pre class="programlisting"><a class="link" href="gst-rtsp-server-GstRTSPPermissions.html#GstRTSPPermissions" title="struct GstRTSPPermissions"><span class="returnvalue">GstRTSPPermissions</span></a> * gst_rtsp_permissions_ref           (<em class="parameter"><code><a class="link" href="gst-rtsp-server-GstRTSPPermissions.html#GstRTSPPermissions" title="struct GstRTSPPermissions"><span class="type">GstRTSPPermissions</span></a> *permissions</code></em>);</pre>
+<p>
+Increase the refcount of this permissions.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>permissions</code></em> :</span></p></td>
+<td>The permissions to refcount</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>
+<em class="parameter"><code>permissions</code></em> (for convenience when doing assignments). <span class="annotation">[<acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>]</span>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gst-rtsp-permissions-unref"></a><h3>gst_rtsp_permissions_unref ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                gst_rtsp_permissions_unref          (<em class="parameter"><code><a class="link" href="gst-rtsp-server-GstRTSPPermissions.html#GstRTSPPermissions" title="struct GstRTSPPermissions"><span class="type">GstRTSPPermissions</span></a> *permissions</code></em>);</pre>
+<p>
+Decrease the refcount of an permissions, freeing it if the refcount reaches 0.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>permissions</code></em> :</span></p></td>
+<td>the permissions to refcount. <span class="annotation">[<acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>]</span>
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gst-rtsp-permissions-add-role"></a><h3>gst_rtsp_permissions_add_role ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                gst_rtsp_permissions_add_role       (<em class="parameter"><code><a class="link" href="gst-rtsp-server-GstRTSPPermissions.html#GstRTSPPermissions" title="struct GstRTSPPermissions"><span class="type">GstRTSPPermissions</span></a> *permissions</code></em>,
+                                                         <em class="parameter"><code>const <a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *role</code></em>,
+                                                         <em class="parameter"><code>const <a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *fieldname</code></em>,
+                                                         <em class="parameter"><code>...</code></em>);</pre>
+<p>
+Add a new <em class="parameter"><code>role</code></em> to <em class="parameter"><code>permissions</code></em> with the given variables. The fields
+are the same layout as <a href="../gstreamer-1.0/gstreamer-GstStructure.html#gst-structure-new"><code class="function">gst_structure_new()</code></a>.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>permissions</code></em> :</span></p></td>
+<td>a <a class="link" href="gst-rtsp-server-GstRTSPPermissions.html#GstRTSPPermissions" title="struct GstRTSPPermissions"><span class="type">GstRTSPPermissions</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>role</code></em> :</span></p></td>
+<td>a role</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>fieldname</code></em> :</span></p></td>
+<td>the first field name</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>...</code></em> :</span></p></td>
+<td>additional arguments</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gst-rtsp-permissions-add-role-valist"></a><h3>gst_rtsp_permissions_add_role_valist ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                gst_rtsp_permissions_add_role_valist
+                                                        (<em class="parameter"><code><a class="link" href="gst-rtsp-server-GstRTSPPermissions.html#GstRTSPPermissions" title="struct GstRTSPPermissions"><span class="type">GstRTSPPermissions</span></a> *permissions</code></em>,
+                                                         <em class="parameter"><code>const <a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *role</code></em>,
+                                                         <em class="parameter"><code>const <a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *fieldname</code></em>,
+                                                         <em class="parameter"><code><span class="type">va_list</span> var_args</code></em>);</pre>
+<p>
+Add a new <em class="parameter"><code>role</code></em> to <em class="parameter"><code>permissions</code></em> with the given variables. Structure fields
+are set according to the varargs in a manner similar to <a href="../gstreamer-1.0/gstreamer-GstStructure.html#gst-structure-new"><code class="function">gst_structure_new()</code></a>.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>permissions</code></em> :</span></p></td>
+<td>a <a class="link" href="gst-rtsp-server-GstRTSPPermissions.html#GstRTSPPermissions" title="struct GstRTSPPermissions"><span class="type">GstRTSPPermissions</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>role</code></em> :</span></p></td>
+<td>a role</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>fieldname</code></em> :</span></p></td>
+<td>the first field name</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>var_args</code></em> :</span></p></td>
+<td>additional fields to add</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gst-rtsp-permissions-remove-role"></a><h3>gst_rtsp_permissions_remove_role ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                gst_rtsp_permissions_remove_role    (<em class="parameter"><code><a class="link" href="gst-rtsp-server-GstRTSPPermissions.html#GstRTSPPermissions" title="struct GstRTSPPermissions"><span class="type">GstRTSPPermissions</span></a> *permissions</code></em>,
+                                                         <em class="parameter"><code>const <a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *role</code></em>);</pre>
+<p>
+Remove all permissions for <em class="parameter"><code>role</code></em> in <em class="parameter"><code>permissions</code></em>.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>permissions</code></em> :</span></p></td>
+<td>a <a class="link" href="gst-rtsp-server-GstRTSPPermissions.html#GstRTSPPermissions" title="struct GstRTSPPermissions"><span class="type">GstRTSPPermissions</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>role</code></em> :</span></p></td>
+<td>a role</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gst-rtsp-permissions-get-role"></a><h3>gst_rtsp_permissions_get_role ()</h3>
+<pre class="programlisting">const <a href="../gstreamer-1.0/gstreamer-GstStructure.html#GstStructure"><span class="returnvalue">GstStructure</span></a> * gst_rtsp_permissions_get_role      (<em class="parameter"><code><a class="link" href="gst-rtsp-server-GstRTSPPermissions.html#GstRTSPPermissions" title="struct GstRTSPPermissions"><span class="type">GstRTSPPermissions</span></a> *permissions</code></em>,
+                                                         <em class="parameter"><code>const <a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *role</code></em>);</pre>
+<p>
+Get all permissions for <em class="parameter"><code>role</code></em> in <em class="parameter"><code>permissions</code></em>.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>permissions</code></em> :</span></p></td>
+<td>a <a class="link" href="gst-rtsp-server-GstRTSPPermissions.html#GstRTSPPermissions" title="struct GstRTSPPermissions"><span class="type">GstRTSPPermissions</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>role</code></em> :</span></p></td>
+<td>a role</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>the structure with permissions for <em class="parameter"><code>role</code></em>.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gst-rtsp-permissions-is-allowed"></a><h3>gst_rtsp_permissions_is_allowed ()</h3>
+<pre class="programlisting"><a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            gst_rtsp_permissions_is_allowed     (<em class="parameter"><code><a class="link" href="gst-rtsp-server-GstRTSPPermissions.html#GstRTSPPermissions" title="struct GstRTSPPermissions"><span class="type">GstRTSPPermissions</span></a> *permissions</code></em>,
+                                                         <em class="parameter"><code>const <a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *role</code></em>,
+                                                         <em class="parameter"><code>const <a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *permission</code></em>);</pre>
+<p>
+Check if <em class="parameter"><code>role</code></em> in <em class="parameter"><code>permissions</code></em> is given permission for <em class="parameter"><code>permission</code></em>.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>permissions</code></em> :</span></p></td>
+<td>a <a class="link" href="gst-rtsp-server-GstRTSPPermissions.html#GstRTSPPermissions" title="struct GstRTSPPermissions"><span class="type">GstRTSPPermissions</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>role</code></em> :</span></p></td>
+<td>a role</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>permission</code></em> :</span></p></td>
+<td>a permission</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>
+<a href="/usr/share/gtk-doc/html/glib/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if <em class="parameter"><code>role</code></em> is allowed <em class="parameter"><code>permission</code></em>.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+<div class="refsect1">
+<a name="gst-rtsp-server-GstRTSPPermissions.see-also"></a><h2>See Also</h2>
+<a class="link" href="gst-rtsp-server-GstRTSPToken.html#GstRTSPToken" title="struct GstRTSPToken"><span class="type">GstRTSPToken</span></a>, <a class="link" href="GstRTSPAuth.html" title="GstRTSPAuth"><span class="type">GstRTSPAuth</span></a>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.18</div>
+</body>
+</html>

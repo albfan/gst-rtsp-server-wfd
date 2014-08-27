@@ -1,0 +1,274 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>GstRTSPMountPoints</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<link rel="home" href="index.html" title="GStreamer RTSP Server Reference Manual">
+<link rel="up" href="ch01.html" title="">
+<link rel="prev" href="gst-rtsp-server-GstRTSPContext.html" title="GstRTSPContext">
+<link rel="next" href="GstRTSPMediaFactory.html" title="GstRTSPMediaFactory">
+<meta name="generator" content="GTK-Doc V1.18 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
+<tr valign="middle">
+<td><a accesskey="p" href="gst-rtsp-server-GstRTSPContext.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="ch01.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">GStreamer RTSP Server Reference Manual</th>
+<td><a accesskey="n" href="GstRTSPMediaFactory.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr>
+<tr><td colspan="5" class="shortcuts">
+<a href="#GstRTSPMountPoints.synopsis" class="shortcut">Top</a>
+                   | 
+                  <a href="#GstRTSPMountPoints.description" class="shortcut">Description</a>
+                   | 
+                  <a href="#GstRTSPMountPoints.object-hierarchy" class="shortcut">Object Hierarchy</a>
+</td></tr>
+</table>
+<div class="refentry">
+<a name="GstRTSPMountPoints"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="GstRTSPMountPoints.top_of_page"></a>GstRTSPMountPoints</span></h2>
+<p>GstRTSPMountPoints — Map a path to media</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsynopsisdiv">
+<a name="GstRTSPMountPoints.synopsis"></a><h2>Synopsis</h2>
+<pre class="synopsis">struct              <a class="link" href="GstRTSPMountPoints.html#GstRTSPMountPoints-struct" title="struct GstRTSPMountPoints">GstRTSPMountPoints</a>;
+struct              <a class="link" href="GstRTSPMountPoints.html#GstRTSPMountPointsClass" title="struct GstRTSPMountPointsClass">GstRTSPMountPointsClass</a>;
+<a class="link" href="GstRTSPMountPoints.html" title="GstRTSPMountPoints"><span class="returnvalue">GstRTSPMountPoints</span></a> * <a class="link" href="GstRTSPMountPoints.html#gst-rtsp-mount-points-new" title="gst_rtsp_mount_points_new ()">gst_rtsp_mount_points_new</a>          (<em class="parameter"><code><span class="type">void</span></code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="GstRTSPMountPoints.html#gst-rtsp-mount-points-add-factory" title="gst_rtsp_mount_points_add_factory ()">gst_rtsp_mount_points_add_factory</a>   (<em class="parameter"><code><a class="link" href="GstRTSPMountPoints.html" title="GstRTSPMountPoints"><span class="type">GstRTSPMountPoints</span></a> *mounts</code></em>,
+                                                         <em class="parameter"><code>const <a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *path</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GstRTSPMediaFactory.html" title="GstRTSPMediaFactory"><span class="type">GstRTSPMediaFactory</span></a> *factory</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="GstRTSPMountPoints.html#gst-rtsp-mount-points-remove-factory" title="gst_rtsp_mount_points_remove_factory ()">gst_rtsp_mount_points_remove_factory</a>
+                                                        (<em class="parameter"><code><a class="link" href="GstRTSPMountPoints.html" title="GstRTSPMountPoints"><span class="type">GstRTSPMountPoints</span></a> *mounts</code></em>,
+                                                         <em class="parameter"><code>const <a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *path</code></em>);
+<a class="link" href="GstRTSPMediaFactory.html" title="GstRTSPMediaFactory"><span class="returnvalue">GstRTSPMediaFactory</span></a> * <a class="link" href="GstRTSPMountPoints.html#gst-rtsp-mount-points-match" title="gst_rtsp_mount_points_match ()">gst_rtsp_mount_points_match</a>       (<em class="parameter"><code><a class="link" href="GstRTSPMountPoints.html" title="GstRTSPMountPoints"><span class="type">GstRTSPMountPoints</span></a> *mounts</code></em>,
+                                                         <em class="parameter"><code>const <a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *path</code></em>,
+                                                         <em class="parameter"><code><a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gint"><span class="type">gint</span></a> *matched</code></em>);
+<a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *             <a class="link" href="GstRTSPMountPoints.html#gst-rtsp-mount-points-make-path" title="gst_rtsp_mount_points_make_path ()">gst_rtsp_mount_points_make_path</a>     (<em class="parameter"><code><a class="link" href="GstRTSPMountPoints.html" title="GstRTSPMountPoints"><span class="type">GstRTSPMountPoints</span></a> *mounts</code></em>,
+                                                         <em class="parameter"><code>const <a href="../gst-plugins-base-libs-1.0/gst-plugins-base-libs-gstrtspurl.html#GstRTSPUrl"><span class="type">GstRTSPUrl</span></a> *url</code></em>);
+</pre>
+</div>
+<div class="refsect1">
+<a name="GstRTSPMountPoints.object-hierarchy"></a><h2>Object Hierarchy</h2>
+<pre class="synopsis">
+  <a href="/usr/share/gtk-doc/html/gobject/gobject-The-Base-Object-Type.html#GObject">GObject</a>
+   +----GstRTSPMountPoints
+</pre>
+</div>
+<div class="refsect1">
+<a name="GstRTSPMountPoints.description"></a><h2>Description</h2>
+<p>
+A <a class="link" href="GstRTSPMountPoints.html" title="GstRTSPMountPoints"><span class="type">GstRTSPMountPoints</span></a> object maintains a relation between paths
+and <a class="link" href="GstRTSPMediaFactory.html" title="GstRTSPMediaFactory"><span class="type">GstRTSPMediaFactory</span></a> objects. This object is usually given to
+<a class="link" href="GstRTSPClient.html" title="GstRTSPClient"><span class="type">GstRTSPClient</span></a> and used to find the media attached to a path.
+</p>
+<p>
+With <a class="link" href="GstRTSPMountPoints.html#gst-rtsp-mount-points-add-factory" title="gst_rtsp_mount_points_add_factory ()"><code class="function">gst_rtsp_mount_points_add_factory()</code></a> and
+<a class="link" href="GstRTSPMountPoints.html#gst-rtsp-mount-points-remove-factory" title="gst_rtsp_mount_points_remove_factory ()"><code class="function">gst_rtsp_mount_points_remove_factory()</code></a>, factories can be added and
+removed.
+</p>
+<p>
+With <a class="link" href="GstRTSPMountPoints.html#gst-rtsp-mount-points-match" title="gst_rtsp_mount_points_match ()"><code class="function">gst_rtsp_mount_points_match()</code></a> you can find the <a class="link" href="GstRTSPMediaFactory.html" title="GstRTSPMediaFactory"><span class="type">GstRTSPMediaFactory</span></a>
+object that completely matches the given path.
+</p>
+<p>
+Last reviewed on 2013-07-11 (1.0.0)
+</p>
+</div>
+<div class="refsect1">
+<a name="GstRTSPMountPoints.details"></a><h2>Details</h2>
+<div class="refsect2">
+<a name="GstRTSPMountPoints-struct"></a><h3>struct GstRTSPMountPoints</h3>
+<pre class="programlisting">struct GstRTSPMountPoints;</pre>
+<p>
+Creates a <a class="link" href="GstRTSPMediaFactory.html" title="GstRTSPMediaFactory"><span class="type">GstRTSPMediaFactory</span></a> object for a given url.
+</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="GstRTSPMountPointsClass"></a><h3>struct GstRTSPMountPointsClass</h3>
+<pre class="programlisting">struct GstRTSPMountPointsClass {
+  GObjectClass  parent_class;
+
+  gchar * (*make_path) (GstRTSPMountPoints *mounts,
+                        const GstRTSPUrl *url);
+};
+</pre>
+<p>
+The class for the media mounts object.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><a href="/usr/share/gtk-doc/html/gobject/gobject-The-Base-Object-Type.html#GObjectClass"><span class="type">GObjectClass</span></a> <em class="structfield"><code><a name="GstRTSPMountPointsClass.parent-class"></a>parent_class</code></em>;</span></p></td>
+<td></td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="structfield"><code><a name="GstRTSPMountPointsClass.make-path"></a>make_path</code></em> ()</span></p></td>
+<td>make a path from the given url.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gst-rtsp-mount-points-new"></a><h3>gst_rtsp_mount_points_new ()</h3>
+<pre class="programlisting"><a class="link" href="GstRTSPMountPoints.html" title="GstRTSPMountPoints"><span class="returnvalue">GstRTSPMountPoints</span></a> * gst_rtsp_mount_points_new          (<em class="parameter"><code><span class="type">void</span></code></em>);</pre>
+<p>
+Make a new mount points object.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>a new <a class="link" href="GstRTSPMountPoints.html" title="GstRTSPMountPoints"><span class="type">GstRTSPMountPoints</span></a>
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gst-rtsp-mount-points-add-factory"></a><h3>gst_rtsp_mount_points_add_factory ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                gst_rtsp_mount_points_add_factory   (<em class="parameter"><code><a class="link" href="GstRTSPMountPoints.html" title="GstRTSPMountPoints"><span class="type">GstRTSPMountPoints</span></a> *mounts</code></em>,
+                                                         <em class="parameter"><code>const <a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *path</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GstRTSPMediaFactory.html" title="GstRTSPMediaFactory"><span class="type">GstRTSPMediaFactory</span></a> *factory</code></em>);</pre>
+<p>
+Attach <em class="parameter"><code>factory</code></em> to the mount point <em class="parameter"><code>path</code></em> in <em class="parameter"><code>mounts</code></em>.
+</p>
+<p>
+<em class="parameter"><code>path</code></em> is of the form (/node)+. Any previous mount point will be freed.
+</p>
+<p>
+Ownership is taken of the reference on <em class="parameter"><code>factory</code></em> so that <em class="parameter"><code>factory</code></em> should not be
+used after calling this function.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>mounts</code></em> :</span></p></td>
+<td>a <a class="link" href="GstRTSPMountPoints.html" title="GstRTSPMountPoints"><span class="type">GstRTSPMountPoints</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>path</code></em> :</span></p></td>
+<td>a mount point</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>factory</code></em> :</span></p></td>
+<td>a <a class="link" href="GstRTSPMediaFactory.html" title="GstRTSPMediaFactory"><span class="type">GstRTSPMediaFactory</span></a>. <span class="annotation">[<acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>]</span>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gst-rtsp-mount-points-remove-factory"></a><h3>gst_rtsp_mount_points_remove_factory ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                gst_rtsp_mount_points_remove_factory
+                                                        (<em class="parameter"><code><a class="link" href="GstRTSPMountPoints.html" title="GstRTSPMountPoints"><span class="type">GstRTSPMountPoints</span></a> *mounts</code></em>,
+                                                         <em class="parameter"><code>const <a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *path</code></em>);</pre>
+<p>
+Remove the <a class="link" href="GstRTSPMediaFactory.html" title="GstRTSPMediaFactory"><span class="type">GstRTSPMediaFactory</span></a> associated with <em class="parameter"><code>path</code></em> in <em class="parameter"><code>mounts</code></em>.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>mounts</code></em> :</span></p></td>
+<td>a <a class="link" href="GstRTSPMountPoints.html" title="GstRTSPMountPoints"><span class="type">GstRTSPMountPoints</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>path</code></em> :</span></p></td>
+<td>a mount point</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gst-rtsp-mount-points-match"></a><h3>gst_rtsp_mount_points_match ()</h3>
+<pre class="programlisting"><a class="link" href="GstRTSPMediaFactory.html" title="GstRTSPMediaFactory"><span class="returnvalue">GstRTSPMediaFactory</span></a> * gst_rtsp_mount_points_match       (<em class="parameter"><code><a class="link" href="GstRTSPMountPoints.html" title="GstRTSPMountPoints"><span class="type">GstRTSPMountPoints</span></a> *mounts</code></em>,
+                                                         <em class="parameter"><code>const <a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *path</code></em>,
+                                                         <em class="parameter"><code><a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gint"><span class="type">gint</span></a> *matched</code></em>);</pre>
+<p>
+Find the factory in <em class="parameter"><code>mounts</code></em> that has the longest match with <em class="parameter"><code>path</code></em>.
+</p>
+<p>
+If <em class="parameter"><code>matched</code></em> is <a href="/usr/share/gtk-doc/html/glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>, <em class="parameter"><code>path</code></em> will match the factory exactly otherwise
+the amount of characters that matched is returned in <em class="parameter"><code>matched</code></em>.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>mounts</code></em> :</span></p></td>
+<td>a <a class="link" href="GstRTSPMountPoints.html" title="GstRTSPMountPoints"><span class="type">GstRTSPMountPoints</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>path</code></em> :</span></p></td>
+<td>a mount point</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>matched</code></em> :</span></p></td>
+<td>the amount of <em class="parameter"><code>path</code></em> matched. <span class="annotation">[<acronym title="Parameter for returning results. Default is transfer full."><span class="acronym">out</span></acronym>]</span>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>the <a class="link" href="GstRTSPMediaFactory.html" title="GstRTSPMediaFactory"><span class="type">GstRTSPMediaFactory</span></a> for <em class="parameter"><code>path</code></em>.
+<a href="/usr/share/gtk-doc/html/gobject/gobject-The-Base-Object-Type.html#g-object-unref"><code class="function">g_object_unref()</code></a> after usage. <span class="annotation">[<acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>]</span>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gst-rtsp-mount-points-make-path"></a><h3>gst_rtsp_mount_points_make_path ()</h3>
+<pre class="programlisting"><a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *             gst_rtsp_mount_points_make_path     (<em class="parameter"><code><a class="link" href="GstRTSPMountPoints.html" title="GstRTSPMountPoints"><span class="type">GstRTSPMountPoints</span></a> *mounts</code></em>,
+                                                         <em class="parameter"><code>const <a href="../gst-plugins-base-libs-1.0/gst-plugins-base-libs-gstrtspurl.html#GstRTSPUrl"><span class="type">GstRTSPUrl</span></a> *url</code></em>);</pre>
+<p>
+Make a path string from <em class="parameter"><code>url</code></em>.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>mounts</code></em> :</span></p></td>
+<td>a <a class="link" href="GstRTSPMountPoints.html" title="GstRTSPMountPoints"><span class="type">GstRTSPMountPoints</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>url</code></em> :</span></p></td>
+<td>a <a href="../gst-plugins-base-libs-1.0/gst-plugins-base-libs-gstrtspurl.html#GstRTSPUrl"><span class="type">GstRTSPUrl</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>a path string for <em class="parameter"><code>url</code></em>, <a href="/usr/share/gtk-doc/html/glib/glib-Memory-Allocation.html#g-free"><code class="function">g_free()</code></a> after usage.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+<div class="refsect1">
+<a name="GstRTSPMountPoints.see-also"></a><h2>See Also</h2>
+<a class="link" href="GstRTSPMediaFactory.html" title="GstRTSPMediaFactory"><span class="type">GstRTSPMediaFactory</span></a>, <a class="link" href="GstRTSPClient.html" title="GstRTSPClient"><span class="type">GstRTSPClient</span></a>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.18</div>
+</body>
+</html>

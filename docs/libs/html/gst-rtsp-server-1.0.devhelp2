@@ -1,0 +1,384 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE book PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "">
+<book xmlns="http://www.devhelp.net/book" title="GStreamer RTSP Server Reference Manual" link="index.html" author="" name="gst-rtsp-server-1.0" version="2" language="c">
+  <chapters>
+    <sub name="" link="ch01.html">
+      <sub name="GstRTSPServer" link="GstRTSPServer.html"/>
+      <sub name="GstRTSPClient" link="GstRTSPClient.html"/>
+      <sub name="GstRTSPContext" link="gst-rtsp-server-GstRTSPContext.html"/>
+      <sub name="GstRTSPMountPoints" link="GstRTSPMountPoints.html"/>
+      <sub name="GstRTSPMediaFactory" link="GstRTSPMediaFactory.html"/>
+      <sub name="GstRTSPMediaFactoryURI" link="gst-rtsp-server-GstRTSPMediaFactoryURI.html"/>
+      <sub name="GstRTSPMedia" link="GstRTSPMedia.html"/>
+      <sub name="GstRTSPStream" link="GstRTSPStream.html"/>
+      <sub name="GstRTSPSessionPool" link="GstRTSPSessionPool.html"/>
+      <sub name="GstRTSPSession" link="GstRTSPSession.html"/>
+      <sub name="GstRTSPSessionMedia" link="gst-rtsp-server-GstRTSPSessionMedia.html"/>
+      <sub name="GstRTSPStreamTransport" link="gst-rtsp-server-GstRTSPStreamTransport.html"/>
+      <sub name="GstRTSPSdp" link="gst-rtsp-server-GstRTSPSdp.html"/>
+      <sub name="GstRTSPAddressPool" link="gst-rtsp-server-GstRTSPAddressPool.html"/>
+      <sub name="GstRTSPThreadPool" link="gst-rtsp-server-GstRTSPThreadPool.html"/>
+      <sub name="GstRTSPAuth" link="GstRTSPAuth.html"/>
+      <sub name="GstRTSPToken" link="gst-rtsp-server-GstRTSPToken.html"/>
+      <sub name="GstRTSPPermissions" link="gst-rtsp-server-GstRTSPPermissions.html"/>
+      <sub name="GstRTSPParams" link="gst-rtsp-server-GstRTSPParams.html"/>
+    </sub>
+    <sub name="Object Hierarchy" link="rtsp-server-hierarchy.html"/>
+    <sub name="API Index" link="api-index-full.html"/>
+    <sub name="Annotation Glossary" link="annotation-glossary.html"/>
+  </chapters>
+  <functions>
+    <keyword type="struct" name="struct GstRTSPServer" link="GstRTSPServer.html#GstRTSPServer-struct"/>
+    <keyword type="struct" name="struct GstRTSPServerClass" link="GstRTSPServer.html#GstRTSPServerClass"/>
+    <keyword type="function" name="gst_rtsp_server_new ()" link="GstRTSPServer.html#gst-rtsp-server-new"/>
+    <keyword type="function" name="gst_rtsp_server_get_address ()" link="GstRTSPServer.html#gst-rtsp-server-get-address"/>
+    <keyword type="function" name="gst_rtsp_server_set_address ()" link="GstRTSPServer.html#gst-rtsp-server-set-address"/>
+    <keyword type="function" name="gst_rtsp_server_get_service ()" link="GstRTSPServer.html#gst-rtsp-server-get-service"/>
+    <keyword type="function" name="gst_rtsp_server_set_service ()" link="GstRTSPServer.html#gst-rtsp-server-set-service"/>
+    <keyword type="function" name="gst_rtsp_server_get_backlog ()" link="GstRTSPServer.html#gst-rtsp-server-get-backlog"/>
+    <keyword type="function" name="gst_rtsp_server_set_backlog ()" link="GstRTSPServer.html#gst-rtsp-server-set-backlog"/>
+    <keyword type="function" name="gst_rtsp_server_get_bound_port ()" link="GstRTSPServer.html#gst-rtsp-server-get-bound-port"/>
+    <keyword type="function" name="gst_rtsp_server_get_mount_points ()" link="GstRTSPServer.html#gst-rtsp-server-get-mount-points"/>
+    <keyword type="function" name="gst_rtsp_server_set_mount_points ()" link="GstRTSPServer.html#gst-rtsp-server-set-mount-points"/>
+    <keyword type="function" name="gst_rtsp_server_get_session_pool ()" link="GstRTSPServer.html#gst-rtsp-server-get-session-pool"/>
+    <keyword type="function" name="gst_rtsp_server_set_session_pool ()" link="GstRTSPServer.html#gst-rtsp-server-set-session-pool"/>
+    <keyword type="function" name="gst_rtsp_server_get_thread_pool ()" link="GstRTSPServer.html#gst-rtsp-server-get-thread-pool"/>
+    <keyword type="function" name="gst_rtsp_server_set_thread_pool ()" link="GstRTSPServer.html#gst-rtsp-server-set-thread-pool"/>
+    <keyword type="function" name="gst_rtsp_server_get_auth ()" link="GstRTSPServer.html#gst-rtsp-server-get-auth"/>
+    <keyword type="function" name="gst_rtsp_server_set_auth ()" link="GstRTSPServer.html#gst-rtsp-server-set-auth"/>
+    <keyword type="function" name="gst_rtsp_server_transfer_connection ()" link="GstRTSPServer.html#gst-rtsp-server-transfer-connection"/>
+    <keyword type="function" name="gst_rtsp_server_io_func ()" link="GstRTSPServer.html#gst-rtsp-server-io-func"/>
+    <keyword type="function" name="gst_rtsp_server_create_socket ()" link="GstRTSPServer.html#gst-rtsp-server-create-socket"/>
+    <keyword type="function" name="gst_rtsp_server_create_source ()" link="GstRTSPServer.html#gst-rtsp-server-create-source"/>
+    <keyword type="function" name="gst_rtsp_server_attach ()" link="GstRTSPServer.html#gst-rtsp-server-attach"/>
+    <keyword type="function" name="GstRTSPServerClientFilterFunc ()" link="GstRTSPServer.html#GstRTSPServerClientFilterFunc"/>
+    <keyword type="function" name="gst_rtsp_server_client_filter ()" link="GstRTSPServer.html#gst-rtsp-server-client-filter"/>
+    <keyword type="property" name="The &quot;address&quot; property" link="GstRTSPServer.html#GstRTSPServer--address"/>
+    <keyword type="property" name="The &quot;backlog&quot; property" link="GstRTSPServer.html#GstRTSPServer--backlog"/>
+    <keyword type="property" name="The &quot;bound-port&quot; property" link="GstRTSPServer.html#GstRTSPServer--bound-port"/>
+    <keyword type="property" name="The &quot;mount-points&quot; property" link="GstRTSPServer.html#GstRTSPServer--mount-points"/>
+    <keyword type="property" name="The &quot;service&quot; property" link="GstRTSPServer.html#GstRTSPServer--service"/>
+    <keyword type="property" name="The &quot;session-pool&quot; property" link="GstRTSPServer.html#GstRTSPServer--session-pool"/>
+    <keyword type="signal" name="The &quot;client-connected&quot; signal" link="GstRTSPServer.html#GstRTSPServer-client-connected"/>
+    <keyword type="struct" name="struct GstRTSPClient" link="GstRTSPClient.html#GstRTSPClient-struct"/>
+    <keyword type="struct" name="struct GstRTSPClientClass" link="GstRTSPClient.html#GstRTSPClientClass"/>
+    <keyword type="function" name="gst_rtsp_client_new ()" link="GstRTSPClient.html#gst-rtsp-client-new"/>
+    <keyword type="function" name="gst_rtsp_client_get_session_pool ()" link="GstRTSPClient.html#gst-rtsp-client-get-session-pool"/>
+    <keyword type="function" name="gst_rtsp_client_set_session_pool ()" link="GstRTSPClient.html#gst-rtsp-client-set-session-pool"/>
+    <keyword type="function" name="gst_rtsp_client_get_mount_points ()" link="GstRTSPClient.html#gst-rtsp-client-get-mount-points"/>
+    <keyword type="function" name="gst_rtsp_client_set_mount_points ()" link="GstRTSPClient.html#gst-rtsp-client-set-mount-points"/>
+    <keyword type="function" name="gst_rtsp_client_get_auth ()" link="GstRTSPClient.html#gst-rtsp-client-get-auth"/>
+    <keyword type="function" name="gst_rtsp_client_set_auth ()" link="GstRTSPClient.html#gst-rtsp-client-set-auth"/>
+    <keyword type="function" name="gst_rtsp_client_get_thread_pool ()" link="GstRTSPClient.html#gst-rtsp-client-get-thread-pool"/>
+    <keyword type="function" name="gst_rtsp_client_set_thread_pool ()" link="GstRTSPClient.html#gst-rtsp-client-set-thread-pool"/>
+    <keyword type="function" name="gst_rtsp_client_get_connection ()" link="GstRTSPClient.html#gst-rtsp-client-get-connection"/>
+    <keyword type="function" name="gst_rtsp_client_set_connection ()" link="GstRTSPClient.html#gst-rtsp-client-set-connection"/>
+    <keyword type="function" name="gst_rtsp_client_attach ()" link="GstRTSPClient.html#gst-rtsp-client-attach"/>
+    <keyword type="function" name="GstRTSPClientSendFunc ()" link="GstRTSPClient.html#GstRTSPClientSendFunc"/>
+    <keyword type="function" name="gst_rtsp_client_set_send_func ()" link="GstRTSPClient.html#gst-rtsp-client-set-send-func"/>
+    <keyword type="function" name="gst_rtsp_client_handle_message ()" link="GstRTSPClient.html#gst-rtsp-client-handle-message"/>
+    <keyword type="function" name="gst_rtsp_client_send_message ()" link="GstRTSPClient.html#gst-rtsp-client-send-message"/>
+    <keyword type="function" name="GstRTSPClientSessionFilterFunc ()" link="GstRTSPClient.html#GstRTSPClientSessionFilterFunc"/>
+    <keyword type="function" name="gst_rtsp_client_session_filter ()" link="GstRTSPClient.html#gst-rtsp-client-session-filter"/>
+    <keyword type="property" name="The &quot;mount-points&quot; property" link="GstRTSPClient.html#GstRTSPClient--mount-points"/>
+    <keyword type="property" name="The &quot;session-pool&quot; property" link="GstRTSPClient.html#GstRTSPClient--session-pool"/>
+    <keyword type="signal" name="The &quot;closed&quot; signal" link="GstRTSPClient.html#GstRTSPClient-closed"/>
+    <keyword type="signal" name="The &quot;describe-request&quot; signal" link="GstRTSPClient.html#GstRTSPClient-describe-request"/>
+    <keyword type="signal" name="The &quot;get-parameter-request&quot; signal" link="GstRTSPClient.html#GstRTSPClient-get-parameter-request"/>
+    <keyword type="signal" name="The &quot;handle-response&quot; signal" link="GstRTSPClient.html#GstRTSPClient-handle-response"/>
+    <keyword type="signal" name="The &quot;new-session&quot; signal" link="GstRTSPClient.html#GstRTSPClient-new-session"/>
+    <keyword type="signal" name="The &quot;options-request&quot; signal" link="GstRTSPClient.html#GstRTSPClient-options-request"/>
+    <keyword type="signal" name="The &quot;pause-request&quot; signal" link="GstRTSPClient.html#GstRTSPClient-pause-request"/>
+    <keyword type="signal" name="The &quot;play-request&quot; signal" link="GstRTSPClient.html#GstRTSPClient-play-request"/>
+    <keyword type="signal" name="The &quot;set-parameter-request&quot; signal" link="GstRTSPClient.html#GstRTSPClient-set-parameter-request"/>
+    <keyword type="signal" name="The &quot;setup-request&quot; signal" link="GstRTSPClient.html#GstRTSPClient-setup-request"/>
+    <keyword type="signal" name="The &quot;teardown-request&quot; signal" link="GstRTSPClient.html#GstRTSPClient-teardown-request"/>
+    <keyword type="struct" name="struct GstRTSPContext" link="gst-rtsp-server-GstRTSPContext.html#GstRTSPContext"/>
+    <keyword type="function" name="gst_rtsp_context_get_current ()" link="gst-rtsp-server-GstRTSPContext.html#gst-rtsp-context-get-current"/>
+    <keyword type="function" name="gst_rtsp_context_push_current ()" link="gst-rtsp-server-GstRTSPContext.html#gst-rtsp-context-push-current"/>
+    <keyword type="function" name="gst_rtsp_context_pop_current ()" link="gst-rtsp-server-GstRTSPContext.html#gst-rtsp-context-pop-current"/>
+    <keyword type="struct" name="struct GstRTSPMountPoints" link="GstRTSPMountPoints.html#GstRTSPMountPoints-struct"/>
+    <keyword type="struct" name="struct GstRTSPMountPointsClass" link="GstRTSPMountPoints.html#GstRTSPMountPointsClass"/>
+    <keyword type="function" name="gst_rtsp_mount_points_new ()" link="GstRTSPMountPoints.html#gst-rtsp-mount-points-new"/>
+    <keyword type="function" name="gst_rtsp_mount_points_add_factory ()" link="GstRTSPMountPoints.html#gst-rtsp-mount-points-add-factory"/>
+    <keyword type="function" name="gst_rtsp_mount_points_remove_factory ()" link="GstRTSPMountPoints.html#gst-rtsp-mount-points-remove-factory"/>
+    <keyword type="function" name="gst_rtsp_mount_points_match ()" link="GstRTSPMountPoints.html#gst-rtsp-mount-points-match"/>
+    <keyword type="function" name="gst_rtsp_mount_points_make_path ()" link="GstRTSPMountPoints.html#gst-rtsp-mount-points-make-path"/>
+    <keyword type="struct" name="struct GstRTSPMediaFactory" link="GstRTSPMediaFactory.html#GstRTSPMediaFactory-struct"/>
+    <keyword type="struct" name="struct GstRTSPMediaFactoryClass" link="GstRTSPMediaFactory.html#GstRTSPMediaFactoryClass"/>
+    <keyword type="function" name="gst_rtsp_media_factory_new ()" link="GstRTSPMediaFactory.html#gst-rtsp-media-factory-new"/>
+    <keyword type="function" name="gst_rtsp_media_factory_get_launch ()" link="GstRTSPMediaFactory.html#gst-rtsp-media-factory-get-launch"/>
+    <keyword type="function" name="gst_rtsp_media_factory_set_launch ()" link="GstRTSPMediaFactory.html#gst-rtsp-media-factory-set-launch"/>
+    <keyword type="function" name="gst_rtsp_media_factory_get_permissions ()" link="GstRTSPMediaFactory.html#gst-rtsp-media-factory-get-permissions"/>
+    <keyword type="function" name="gst_rtsp_media_factory_set_permissions ()" link="GstRTSPMediaFactory.html#gst-rtsp-media-factory-set-permissions"/>
+    <keyword type="function" name="gst_rtsp_media_factory_add_role ()" link="GstRTSPMediaFactory.html#gst-rtsp-media-factory-add-role"/>
+    <keyword type="function" name="gst_rtsp_media_factory_set_shared ()" link="GstRTSPMediaFactory.html#gst-rtsp-media-factory-set-shared"/>
+    <keyword type="function" name="gst_rtsp_media_factory_is_shared ()" link="GstRTSPMediaFactory.html#gst-rtsp-media-factory-is-shared"/>
+    <keyword type="function" name="gst_rtsp_media_factory_is_eos_shutdown ()" link="GstRTSPMediaFactory.html#gst-rtsp-media-factory-is-eos-shutdown"/>
+    <keyword type="function" name="gst_rtsp_media_factory_set_eos_shutdown ()" link="GstRTSPMediaFactory.html#gst-rtsp-media-factory-set-eos-shutdown"/>
+    <keyword type="function" name="gst_rtsp_media_factory_get_protocols ()" link="GstRTSPMediaFactory.html#gst-rtsp-media-factory-get-protocols"/>
+    <keyword type="function" name="gst_rtsp_media_factory_set_protocols ()" link="GstRTSPMediaFactory.html#gst-rtsp-media-factory-set-protocols"/>
+    <keyword type="function" name="gst_rtsp_media_factory_get_address_pool ()" link="GstRTSPMediaFactory.html#gst-rtsp-media-factory-get-address-pool"/>
+    <keyword type="function" name="gst_rtsp_media_factory_set_address_pool ()" link="GstRTSPMediaFactory.html#gst-rtsp-media-factory-set-address-pool"/>
+    <keyword type="function" name="gst_rtsp_media_factory_get_buffer_size ()" link="GstRTSPMediaFactory.html#gst-rtsp-media-factory-get-buffer-size"/>
+    <keyword type="function" name="gst_rtsp_media_factory_set_buffer_size ()" link="GstRTSPMediaFactory.html#gst-rtsp-media-factory-set-buffer-size"/>
+    <keyword type="function" name="gst_rtsp_media_factory_construct ()" link="GstRTSPMediaFactory.html#gst-rtsp-media-factory-construct"/>
+    <keyword type="function" name="gst_rtsp_media_factory_create_element ()" link="GstRTSPMediaFactory.html#gst-rtsp-media-factory-create-element"/>
+    <keyword type="property" name="The &quot;buffer-size&quot; property" link="GstRTSPMediaFactory.html#GstRTSPMediaFactory--buffer-size"/>
+    <keyword type="property" name="The &quot;eos-shutdown&quot; property" link="GstRTSPMediaFactory.html#GstRTSPMediaFactory--eos-shutdown"/>
+    <keyword type="property" name="The &quot;launch&quot; property" link="GstRTSPMediaFactory.html#GstRTSPMediaFactory--launch"/>
+    <keyword type="property" name="The &quot;protocols&quot; property" link="GstRTSPMediaFactory.html#GstRTSPMediaFactory--protocols"/>
+    <keyword type="property" name="The &quot;shared&quot; property" link="GstRTSPMediaFactory.html#GstRTSPMediaFactory--shared"/>
+    <keyword type="property" name="The &quot;suspend-mode&quot; property" link="GstRTSPMediaFactory.html#GstRTSPMediaFactory--suspend-mode"/>
+    <keyword type="signal" name="The &quot;media-configure&quot; signal" link="GstRTSPMediaFactory.html#GstRTSPMediaFactory-media-configure"/>
+    <keyword type="signal" name="The &quot;media-constructed&quot; signal" link="GstRTSPMediaFactory.html#GstRTSPMediaFactory-media-constructed"/>
+    <keyword type="struct" name="struct GstRTSPMediaFactoryURI" link="gst-rtsp-server-GstRTSPMediaFactoryURI.html#GstRTSPMediaFactoryURI"/>
+    <keyword type="struct" name="struct GstRTSPMediaFactoryURIClass" link="gst-rtsp-server-GstRTSPMediaFactoryURI.html#GstRTSPMediaFactoryURIClass"/>
+    <keyword type="function" name="gst_rtsp_media_factory_uri_new ()" link="gst-rtsp-server-GstRTSPMediaFactoryURI.html#gst-rtsp-media-factory-uri-new"/>
+    <keyword type="function" name="gst_rtsp_media_factory_uri_set_uri ()" link="gst-rtsp-server-GstRTSPMediaFactoryURI.html#gst-rtsp-media-factory-uri-set-uri"/>
+    <keyword type="function" name="gst_rtsp_media_factory_uri_get_uri ()" link="gst-rtsp-server-GstRTSPMediaFactoryURI.html#gst-rtsp-media-factory-uri-get-uri"/>
+    <keyword type="struct" name="struct GstRTSPMedia" link="GstRTSPMedia.html#GstRTSPMedia-struct"/>
+    <keyword type="struct" name="struct GstRTSPMediaClass" link="GstRTSPMedia.html#GstRTSPMediaClass"/>
+    <keyword type="function" name="gst_rtsp_media_new ()" link="GstRTSPMedia.html#gst-rtsp-media-new"/>
+    <keyword type="function" name="gst_rtsp_media_get_element ()" link="GstRTSPMedia.html#gst-rtsp-media-get-element"/>
+    <keyword type="function" name="gst_rtsp_media_take_pipeline ()" link="GstRTSPMedia.html#gst-rtsp-media-take-pipeline"/>
+    <keyword type="function" name="gst_rtsp_media_set_permissions ()" link="GstRTSPMedia.html#gst-rtsp-media-set-permissions"/>
+    <keyword type="function" name="gst_rtsp_media_get_permissions ()" link="GstRTSPMedia.html#gst-rtsp-media-get-permissions"/>
+    <keyword type="function" name="gst_rtsp_media_set_shared ()" link="GstRTSPMedia.html#gst-rtsp-media-set-shared"/>
+    <keyword type="function" name="gst_rtsp_media_is_shared ()" link="GstRTSPMedia.html#gst-rtsp-media-is-shared"/>
+    <keyword type="function" name="gst_rtsp_media_set_reusable ()" link="GstRTSPMedia.html#gst-rtsp-media-set-reusable"/>
+    <keyword type="function" name="gst_rtsp_media_is_reusable ()" link="GstRTSPMedia.html#gst-rtsp-media-is-reusable"/>
+    <keyword type="function" name="gst_rtsp_media_set_protocols ()" link="GstRTSPMedia.html#gst-rtsp-media-set-protocols"/>
+    <keyword type="function" name="gst_rtsp_media_get_protocols ()" link="GstRTSPMedia.html#gst-rtsp-media-get-protocols"/>
+    <keyword type="function" name="gst_rtsp_media_set_eos_shutdown ()" link="GstRTSPMedia.html#gst-rtsp-media-set-eos-shutdown"/>
+    <keyword type="function" name="gst_rtsp_media_is_eos_shutdown ()" link="GstRTSPMedia.html#gst-rtsp-media-is-eos-shutdown"/>
+    <keyword type="function" name="gst_rtsp_media_set_address_pool ()" link="GstRTSPMedia.html#gst-rtsp-media-set-address-pool"/>
+    <keyword type="function" name="gst_rtsp_media_get_address_pool ()" link="GstRTSPMedia.html#gst-rtsp-media-get-address-pool"/>
+    <keyword type="function" name="gst_rtsp_media_set_buffer_size ()" link="GstRTSPMedia.html#gst-rtsp-media-set-buffer-size"/>
+    <keyword type="function" name="gst_rtsp_media_get_buffer_size ()" link="GstRTSPMedia.html#gst-rtsp-media-get-buffer-size"/>
+    <keyword type="function" name="gst_rtsp_media_prepare ()" link="GstRTSPMedia.html#gst-rtsp-media-prepare"/>
+    <keyword type="function" name="gst_rtsp_media_unprepare ()" link="GstRTSPMedia.html#gst-rtsp-media-unprepare"/>
+    <keyword type="enum" name="enum GstRTSPMediaStatus" link="GstRTSPMedia.html#GstRTSPMediaStatus"/>
+    <keyword type="function" name="gst_rtsp_media_get_status ()" link="GstRTSPMedia.html#gst-rtsp-media-get-status"/>
+    <keyword type="function" name="gst_rtsp_media_collect_streams ()" link="GstRTSPMedia.html#gst-rtsp-media-collect-streams"/>
+    <keyword type="function" name="gst_rtsp_media_create_stream ()" link="GstRTSPMedia.html#gst-rtsp-media-create-stream"/>
+    <keyword type="function" name="gst_rtsp_media_n_streams ()" link="GstRTSPMedia.html#gst-rtsp-media-n-streams"/>
+    <keyword type="function" name="gst_rtsp_media_get_stream ()" link="GstRTSPMedia.html#gst-rtsp-media-get-stream"/>
+    <keyword type="function" name="gst_rtsp_media_find_stream ()" link="GstRTSPMedia.html#gst-rtsp-media-find-stream"/>
+    <keyword type="function" name="gst_rtsp_media_seek ()" link="GstRTSPMedia.html#gst-rtsp-media-seek"/>
+    <keyword type="function" name="gst_rtsp_media_get_range_string ()" link="GstRTSPMedia.html#gst-rtsp-media-get-range-string"/>
+    <keyword type="function" name="gst_rtsp_media_set_state ()" link="GstRTSPMedia.html#gst-rtsp-media-set-state"/>
+    <keyword type="function" name="gst_rtsp_media_set_pipeline_state ()" link="GstRTSPMedia.html#gst-rtsp-media-set-pipeline-state"/>
+    <keyword type="function" name="gst_rtsp_media_get_clock ()" link="GstRTSPMedia.html#gst-rtsp-media-get-clock"/>
+    <keyword type="function" name="gst_rtsp_media_get_base_time ()" link="GstRTSPMedia.html#gst-rtsp-media-get-base-time"/>
+    <keyword type="function" name="gst_rtsp_media_use_time_provider ()" link="GstRTSPMedia.html#gst-rtsp-media-use-time-provider"/>
+    <keyword type="function" name="gst_rtsp_media_is_time_provider ()" link="GstRTSPMedia.html#gst-rtsp-media-is-time-provider"/>
+    <keyword type="function" name="gst_rtsp_media_get_time_provider ()" link="GstRTSPMedia.html#gst-rtsp-media-get-time-provider"/>
+    <keyword type="property" name="The &quot;buffer-size&quot; property" link="GstRTSPMedia.html#GstRTSPMedia--buffer-size"/>
+    <keyword type="property" name="The &quot;element&quot; property" link="GstRTSPMedia.html#GstRTSPMedia--element"/>
+    <keyword type="property" name="The &quot;eos-shutdown&quot; property" link="GstRTSPMedia.html#GstRTSPMedia--eos-shutdown"/>
+    <keyword type="property" name="The &quot;profiles&quot; property" link="GstRTSPMedia.html#GstRTSPMedia--profiles"/>
+    <keyword type="property" name="The &quot;protocols&quot; property" link="GstRTSPMedia.html#GstRTSPMedia--protocols"/>
+    <keyword type="property" name="The &quot;reusable&quot; property" link="GstRTSPMedia.html#GstRTSPMedia--reusable"/>
+    <keyword type="property" name="The &quot;shared&quot; property" link="GstRTSPMedia.html#GstRTSPMedia--shared"/>
+    <keyword type="property" name="The &quot;suspend-mode&quot; property" link="GstRTSPMedia.html#GstRTSPMedia--suspend-mode"/>
+    <keyword type="property" name="The &quot;time-provider&quot; property" link="GstRTSPMedia.html#GstRTSPMedia--time-provider"/>
+    <keyword type="signal" name="The &quot;new-state&quot; signal" link="GstRTSPMedia.html#GstRTSPMedia-new-state"/>
+    <keyword type="signal" name="The &quot;new-stream&quot; signal" link="GstRTSPMedia.html#GstRTSPMedia-new-stream"/>
+    <keyword type="signal" name="The &quot;prepared&quot; signal" link="GstRTSPMedia.html#GstRTSPMedia-prepared"/>
+    <keyword type="signal" name="The &quot;removed-stream&quot; signal" link="GstRTSPMedia.html#GstRTSPMedia-removed-stream"/>
+    <keyword type="signal" name="The &quot;target-state&quot; signal" link="GstRTSPMedia.html#GstRTSPMedia-target-state"/>
+    <keyword type="signal" name="The &quot;unprepared&quot; signal" link="GstRTSPMedia.html#GstRTSPMedia-unprepared"/>
+    <keyword type="struct" name="struct GstRTSPStream" link="GstRTSPStream.html#GstRTSPStream-struct"/>
+    <keyword type="struct" name="GstRTSPStreamClass" link="GstRTSPStream.html#GstRTSPStreamClass"/>
+    <keyword type="function" name="gst_rtsp_stream_new ()" link="GstRTSPStream.html#gst-rtsp-stream-new"/>
+    <keyword type="function" name="gst_rtsp_stream_get_index ()" link="GstRTSPStream.html#gst-rtsp-stream-get-index"/>
+    <keyword type="function" name="gst_rtsp_stream_get_srcpad ()" link="GstRTSPStream.html#gst-rtsp-stream-get-srcpad"/>
+    <keyword type="function" name="gst_rtsp_stream_get_control ()" link="GstRTSPStream.html#gst-rtsp-stream-get-control"/>
+    <keyword type="function" name="gst_rtsp_stream_set_control ()" link="GstRTSPStream.html#gst-rtsp-stream-set-control"/>
+    <keyword type="function" name="gst_rtsp_stream_has_control ()" link="GstRTSPStream.html#gst-rtsp-stream-has-control"/>
+    <keyword type="function" name="gst_rtsp_stream_get_mtu ()" link="GstRTSPStream.html#gst-rtsp-stream-get-mtu"/>
+    <keyword type="function" name="gst_rtsp_stream_set_mtu ()" link="GstRTSPStream.html#gst-rtsp-stream-set-mtu"/>
+    <keyword type="function" name="gst_rtsp_stream_get_dscp_qos ()" link="GstRTSPStream.html#gst-rtsp-stream-get-dscp-qos"/>
+    <keyword type="function" name="gst_rtsp_stream_set_dscp_qos ()" link="GstRTSPStream.html#gst-rtsp-stream-set-dscp-qos"/>
+    <keyword type="function" name="gst_rtsp_stream_get_protocols ()" link="GstRTSPStream.html#gst-rtsp-stream-get-protocols"/>
+    <keyword type="function" name="gst_rtsp_stream_set_protocols ()" link="GstRTSPStream.html#gst-rtsp-stream-set-protocols"/>
+    <keyword type="function" name="gst_rtsp_stream_get_address_pool ()" link="GstRTSPStream.html#gst-rtsp-stream-get-address-pool"/>
+    <keyword type="function" name="gst_rtsp_stream_set_address_pool ()" link="GstRTSPStream.html#gst-rtsp-stream-set-address-pool"/>
+    <keyword type="function" name="gst_rtsp_stream_reserve_address ()" link="GstRTSPStream.html#gst-rtsp-stream-reserve-address"/>
+    <keyword type="function" name="gst_rtsp_stream_join_bin ()" link="GstRTSPStream.html#gst-rtsp-stream-join-bin"/>
+    <keyword type="function" name="gst_rtsp_stream_leave_bin ()" link="GstRTSPStream.html#gst-rtsp-stream-leave-bin"/>
+    <keyword type="function" name="gst_rtsp_stream_get_server_port ()" link="GstRTSPStream.html#gst-rtsp-stream-get-server-port"/>
+    <keyword type="function" name="gst_rtsp_stream_get_multicast_address ()" link="GstRTSPStream.html#gst-rtsp-stream-get-multicast-address"/>
+    <keyword type="function" name="gst_rtsp_stream_get_rtpsession ()" link="GstRTSPStream.html#gst-rtsp-stream-get-rtpsession"/>
+    <keyword type="function" name="gst_rtsp_stream_get_ssrc ()" link="GstRTSPStream.html#gst-rtsp-stream-get-ssrc"/>
+    <keyword type="function" name="gst_rtsp_stream_get_rtpinfo ()" link="GstRTSPStream.html#gst-rtsp-stream-get-rtpinfo"/>
+    <keyword type="function" name="gst_rtsp_stream_get_caps ()" link="GstRTSPStream.html#gst-rtsp-stream-get-caps"/>
+    <keyword type="function" name="gst_rtsp_stream_recv_rtcp ()" link="GstRTSPStream.html#gst-rtsp-stream-recv-rtcp"/>
+    <keyword type="function" name="gst_rtsp_stream_recv_rtp ()" link="GstRTSPStream.html#gst-rtsp-stream-recv-rtp"/>
+    <keyword type="function" name="gst_rtsp_stream_add_transport ()" link="GstRTSPStream.html#gst-rtsp-stream-add-transport"/>
+    <keyword type="function" name="gst_rtsp_stream_remove_transport ()" link="GstRTSPStream.html#gst-rtsp-stream-remove-transport"/>
+    <keyword type="function" name="gst_rtsp_stream_get_rtp_socket ()" link="GstRTSPStream.html#gst-rtsp-stream-get-rtp-socket"/>
+    <keyword type="function" name="gst_rtsp_stream_get_rtcp_socket ()" link="GstRTSPStream.html#gst-rtsp-stream-get-rtcp-socket"/>
+    <keyword type="function" name="GstRTSPStreamTransportFilterFunc ()" link="GstRTSPStream.html#GstRTSPStreamTransportFilterFunc"/>
+    <keyword type="function" name="gst_rtsp_stream_transport_filter ()" link="GstRTSPStream.html#gst-rtsp-stream-transport-filter"/>
+    <keyword type="struct" name="struct GstRTSPSessionPool" link="GstRTSPSessionPool.html#GstRTSPSessionPool-struct"/>
+    <keyword type="struct" name="struct GstRTSPSessionPoolClass" link="GstRTSPSessionPool.html#GstRTSPSessionPoolClass"/>
+    <keyword type="function" name="gst_rtsp_session_pool_new ()" link="GstRTSPSessionPool.html#gst-rtsp-session-pool-new"/>
+    <keyword type="function" name="gst_rtsp_session_pool_get_max_sessions ()" link="GstRTSPSessionPool.html#gst-rtsp-session-pool-get-max-sessions"/>
+    <keyword type="function" name="gst_rtsp_session_pool_set_max_sessions ()" link="GstRTSPSessionPool.html#gst-rtsp-session-pool-set-max-sessions"/>
+    <keyword type="function" name="gst_rtsp_session_pool_get_n_sessions ()" link="GstRTSPSessionPool.html#gst-rtsp-session-pool-get-n-sessions"/>
+    <keyword type="function" name="gst_rtsp_session_pool_create ()" link="GstRTSPSessionPool.html#gst-rtsp-session-pool-create"/>
+    <keyword type="function" name="gst_rtsp_session_pool_find ()" link="GstRTSPSessionPool.html#gst-rtsp-session-pool-find"/>
+    <keyword type="function" name="gst_rtsp_session_pool_remove ()" link="GstRTSPSessionPool.html#gst-rtsp-session-pool-remove"/>
+    <keyword type="function" name="gst_rtsp_session_pool_cleanup ()" link="GstRTSPSessionPool.html#gst-rtsp-session-pool-cleanup"/>
+    <keyword type="function" name="GstRTSPSessionPoolFunc ()" link="GstRTSPSessionPool.html#GstRTSPSessionPoolFunc"/>
+    <keyword type="function" name="gst_rtsp_session_pool_create_watch ()" link="GstRTSPSessionPool.html#gst-rtsp-session-pool-create-watch"/>
+    <keyword type="function" name="GstRTSPSessionPoolFilterFunc ()" link="GstRTSPSessionPool.html#GstRTSPSessionPoolFilterFunc"/>
+    <keyword type="function" name="gst_rtsp_session_pool_filter ()" link="GstRTSPSessionPool.html#gst-rtsp-session-pool-filter"/>
+    <keyword type="property" name="The &quot;max-sessions&quot; property" link="GstRTSPSessionPool.html#GstRTSPSessionPool--max-sessions"/>
+    <keyword type="struct" name="struct GstRTSPSession" link="GstRTSPSession.html#GstRTSPSession-struct"/>
+    <keyword type="struct" name="struct GstRTSPSessionClass" link="GstRTSPSession.html#GstRTSPSessionClass"/>
+    <keyword type="function" name="gst_rtsp_session_new ()" link="GstRTSPSession.html#gst-rtsp-session-new"/>
+    <keyword type="function" name="gst_rtsp_session_get_sessionid ()" link="GstRTSPSession.html#gst-rtsp-session-get-sessionid"/>
+    <keyword type="function" name="gst_rtsp_session_get_header ()" link="GstRTSPSession.html#gst-rtsp-session-get-header"/>
+    <keyword type="function" name="gst_rtsp_session_set_timeout ()" link="GstRTSPSession.html#gst-rtsp-session-set-timeout"/>
+    <keyword type="function" name="gst_rtsp_session_get_timeout ()" link="GstRTSPSession.html#gst-rtsp-session-get-timeout"/>
+    <keyword type="function" name="gst_rtsp_session_touch ()" link="GstRTSPSession.html#gst-rtsp-session-touch"/>
+    <keyword type="function" name="gst_rtsp_session_prevent_expire ()" link="GstRTSPSession.html#gst-rtsp-session-prevent-expire"/>
+    <keyword type="function" name="gst_rtsp_session_allow_expire ()" link="GstRTSPSession.html#gst-rtsp-session-allow-expire"/>
+    <keyword type="function" name="gst_rtsp_session_next_timeout ()" link="GstRTSPSession.html#gst-rtsp-session-next-timeout"/>
+    <keyword type="function" name="gst_rtsp_session_is_expired ()" link="GstRTSPSession.html#gst-rtsp-session-is-expired"/>
+    <keyword type="function" name="gst_rtsp_session_manage_media ()" link="GstRTSPSession.html#gst-rtsp-session-manage-media"/>
+    <keyword type="function" name="gst_rtsp_session_release_media ()" link="GstRTSPSession.html#gst-rtsp-session-release-media"/>
+    <keyword type="function" name="gst_rtsp_session_get_media ()" link="GstRTSPSession.html#gst-rtsp-session-get-media"/>
+    <keyword type="enum" name="enum GstRTSPFilterResult" link="GstRTSPSession.html#GstRTSPFilterResult"/>
+    <keyword type="function" name="GstRTSPSessionFilterFunc ()" link="GstRTSPSession.html#GstRTSPSessionFilterFunc"/>
+    <keyword type="function" name="gst_rtsp_session_filter ()" link="GstRTSPSession.html#gst-rtsp-session-filter"/>
+    <keyword type="property" name="The &quot;sessionid&quot; property" link="GstRTSPSession.html#GstRTSPSession--sessionid"/>
+    <keyword type="property" name="The &quot;timeout&quot; property" link="GstRTSPSession.html#GstRTSPSession--timeout"/>
+    <keyword type="struct" name="struct GstRTSPSessionMedia" link="gst-rtsp-server-GstRTSPSessionMedia.html#GstRTSPSessionMedia"/>
+    <keyword type="struct" name="struct GstRTSPSessionMediaClass" link="gst-rtsp-server-GstRTSPSessionMedia.html#GstRTSPSessionMediaClass"/>
+    <keyword type="function" name="gst_rtsp_session_media_new ()" link="gst-rtsp-server-GstRTSPSessionMedia.html#gst-rtsp-session-media-new"/>
+    <keyword type="function" name="gst_rtsp_session_media_matches ()" link="gst-rtsp-server-GstRTSPSessionMedia.html#gst-rtsp-session-media-matches"/>
+    <keyword type="function" name="gst_rtsp_session_media_get_media ()" link="gst-rtsp-server-GstRTSPSessionMedia.html#gst-rtsp-session-media-get-media"/>
+    <keyword type="function" name="gst_rtsp_session_media_get_base_time ()" link="gst-rtsp-server-GstRTSPSessionMedia.html#gst-rtsp-session-media-get-base-time"/>
+    <keyword type="function" name="gst_rtsp_session_media_set_state ()" link="gst-rtsp-server-GstRTSPSessionMedia.html#gst-rtsp-session-media-set-state"/>
+    <keyword type="function" name="gst_rtsp_session_media_get_rtsp_state ()" link="gst-rtsp-server-GstRTSPSessionMedia.html#gst-rtsp-session-media-get-rtsp-state"/>
+    <keyword type="function" name="gst_rtsp_session_media_set_rtsp_state ()" link="gst-rtsp-server-GstRTSPSessionMedia.html#gst-rtsp-session-media-set-rtsp-state"/>
+    <keyword type="function" name="gst_rtsp_session_media_get_transport ()" link="gst-rtsp-server-GstRTSPSessionMedia.html#gst-rtsp-session-media-get-transport"/>
+    <keyword type="function" name="gst_rtsp_session_media_set_transport ()" link="gst-rtsp-server-GstRTSPSessionMedia.html#gst-rtsp-session-media-set-transport"/>
+    <keyword type="function" name="gst_rtsp_session_media_alloc_channels ()" link="gst-rtsp-server-GstRTSPSessionMedia.html#gst-rtsp-session-media-alloc-channels"/>
+    <keyword type="struct" name="struct GstRTSPStreamTransport" link="gst-rtsp-server-GstRTSPStreamTransport.html#GstRTSPStreamTransport"/>
+    <keyword type="struct" name="struct GstRTSPStreamTransportClass" link="gst-rtsp-server-GstRTSPStreamTransport.html#GstRTSPStreamTransportClass"/>
+    <keyword type="function" name="gst_rtsp_stream_transport_new ()" link="gst-rtsp-server-GstRTSPStreamTransport.html#gst-rtsp-stream-transport-new"/>
+    <keyword type="function" name="gst_rtsp_stream_transport_get_stream ()" link="gst-rtsp-server-GstRTSPStreamTransport.html#gst-rtsp-stream-transport-get-stream"/>
+    <keyword type="function" name="gst_rtsp_stream_transport_get_transport ()" link="gst-rtsp-server-GstRTSPStreamTransport.html#gst-rtsp-stream-transport-get-transport"/>
+    <keyword type="function" name="gst_rtsp_stream_transport_set_transport ()" link="gst-rtsp-server-GstRTSPStreamTransport.html#gst-rtsp-stream-transport-set-transport"/>
+    <keyword type="function" name="GstRTSPSendFunc ()" link="gst-rtsp-server-GstRTSPStreamTransport.html#GstRTSPSendFunc"/>
+    <keyword type="function" name="gst_rtsp_stream_transport_set_callbacks ()" link="gst-rtsp-server-GstRTSPStreamTransport.html#gst-rtsp-stream-transport-set-callbacks"/>
+    <keyword type="function" name="GstRTSPKeepAliveFunc ()" link="gst-rtsp-server-GstRTSPStreamTransport.html#GstRTSPKeepAliveFunc"/>
+    <keyword type="function" name="gst_rtsp_stream_transport_set_keepalive ()" link="gst-rtsp-server-GstRTSPStreamTransport.html#gst-rtsp-stream-transport-set-keepalive"/>
+    <keyword type="function" name="gst_rtsp_stream_transport_keep_alive ()" link="gst-rtsp-server-GstRTSPStreamTransport.html#gst-rtsp-stream-transport-keep-alive"/>
+    <keyword type="function" name="gst_rtsp_stream_transport_set_active ()" link="gst-rtsp-server-GstRTSPStreamTransport.html#gst-rtsp-stream-transport-set-active"/>
+    <keyword type="function" name="gst_rtsp_stream_transport_set_timed_out ()" link="gst-rtsp-server-GstRTSPStreamTransport.html#gst-rtsp-stream-transport-set-timed-out"/>
+    <keyword type="function" name="gst_rtsp_stream_transport_is_timed_out ()" link="gst-rtsp-server-GstRTSPStreamTransport.html#gst-rtsp-stream-transport-is-timed-out"/>
+    <keyword type="function" name="gst_rtsp_stream_transport_send_rtcp ()" link="gst-rtsp-server-GstRTSPStreamTransport.html#gst-rtsp-stream-transport-send-rtcp"/>
+    <keyword type="function" name="gst_rtsp_stream_transport_send_rtp ()" link="gst-rtsp-server-GstRTSPStreamTransport.html#gst-rtsp-stream-transport-send-rtp"/>
+    <keyword type="struct" name="GstSDPInfo" link="gst-rtsp-server-GstRTSPSdp.html#GstSDPInfo"/>
+    <keyword type="function" name="gst_rtsp_sdp_from_media ()" link="gst-rtsp-server-GstRTSPSdp.html#gst-rtsp-sdp-from-media"/>
+    <keyword type="macro" name="GST_RTSP_ADDRESS_POOL_ANY_IPV4" link="gst-rtsp-server-GstRTSPAddressPool.html#GST-RTSP-ADDRESS-POOL-ANY-IPV4:CAPS"/>
+    <keyword type="macro" name="GST_RTSP_ADDRESS_POOL_ANY_IPV6" link="gst-rtsp-server-GstRTSPAddressPool.html#GST-RTSP-ADDRESS-POOL-ANY-IPV6:CAPS"/>
+    <keyword type="struct" name="struct GstRTSPAddress" link="gst-rtsp-server-GstRTSPAddressPool.html#GstRTSPAddress"/>
+    <keyword type="enum" name="enum GstRTSPAddressFlags" link="gst-rtsp-server-GstRTSPAddressPool.html#GstRTSPAddressFlags"/>
+    <keyword type="function" name="gst_rtsp_address_copy ()" link="gst-rtsp-server-GstRTSPAddressPool.html#gst-rtsp-address-copy"/>
+    <keyword type="function" name="gst_rtsp_address_free ()" link="gst-rtsp-server-GstRTSPAddressPool.html#gst-rtsp-address-free"/>
+    <keyword type="struct" name="struct GstRTSPAddressPool" link="gst-rtsp-server-GstRTSPAddressPool.html#GstRTSPAddressPool"/>
+    <keyword type="struct" name="struct GstRTSPAddressPoolClass" link="gst-rtsp-server-GstRTSPAddressPool.html#GstRTSPAddressPoolClass"/>
+    <keyword type="enum" name="enum GstRTSPAddressPoolResult" link="gst-rtsp-server-GstRTSPAddressPool.html#GstRTSPAddressPoolResult"/>
+    <keyword type="function" name="gst_rtsp_address_pool_new ()" link="gst-rtsp-server-GstRTSPAddressPool.html#gst-rtsp-address-pool-new"/>
+    <keyword type="function" name="gst_rtsp_address_pool_clear ()" link="gst-rtsp-server-GstRTSPAddressPool.html#gst-rtsp-address-pool-clear"/>
+    <keyword type="function" name="gst_rtsp_address_pool_dump ()" link="gst-rtsp-server-GstRTSPAddressPool.html#gst-rtsp-address-pool-dump"/>
+    <keyword type="function" name="gst_rtsp_address_pool_add_range ()" link="gst-rtsp-server-GstRTSPAddressPool.html#gst-rtsp-address-pool-add-range"/>
+    <keyword type="function" name="gst_rtsp_address_pool_has_unicast_addresses ()" link="gst-rtsp-server-GstRTSPAddressPool.html#gst-rtsp-address-pool-has-unicast-addresses"/>
+    <keyword type="function" name="gst_rtsp_address_pool_acquire_address ()" link="gst-rtsp-server-GstRTSPAddressPool.html#gst-rtsp-address-pool-acquire-address"/>
+    <keyword type="function" name="gst_rtsp_address_pool_reserve_address ()" link="gst-rtsp-server-GstRTSPAddressPool.html#gst-rtsp-address-pool-reserve-address"/>
+    <keyword type="enum" name="enum GstRTSPThreadType" link="gst-rtsp-server-GstRTSPThreadPool.html#GstRTSPThreadType"/>
+    <keyword type="struct" name="struct GstRTSPThread" link="gst-rtsp-server-GstRTSPThreadPool.html#GstRTSPThread"/>
+    <keyword type="function" name="gst_rtsp_thread_new ()" link="gst-rtsp-server-GstRTSPThreadPool.html#gst-rtsp-thread-new"/>
+    <keyword type="function" name="gst_rtsp_thread_ref ()" link="gst-rtsp-server-GstRTSPThreadPool.html#gst-rtsp-thread-ref"/>
+    <keyword type="function" name="gst_rtsp_thread_unref ()" link="gst-rtsp-server-GstRTSPThreadPool.html#gst-rtsp-thread-unref"/>
+    <keyword type="function" name="gst_rtsp_thread_reuse ()" link="gst-rtsp-server-GstRTSPThreadPool.html#gst-rtsp-thread-reuse"/>
+    <keyword type="function" name="gst_rtsp_thread_stop ()" link="gst-rtsp-server-GstRTSPThreadPool.html#gst-rtsp-thread-stop"/>
+    <keyword type="struct" name="struct GstRTSPThreadPool" link="gst-rtsp-server-GstRTSPThreadPool.html#GstRTSPThreadPool"/>
+    <keyword type="struct" name="struct GstRTSPThreadPoolClass" link="gst-rtsp-server-GstRTSPThreadPool.html#GstRTSPThreadPoolClass"/>
+    <keyword type="function" name="gst_rtsp_thread_pool_new ()" link="gst-rtsp-server-GstRTSPThreadPool.html#gst-rtsp-thread-pool-new"/>
+    <keyword type="function" name="gst_rtsp_thread_pool_get_max_threads ()" link="gst-rtsp-server-GstRTSPThreadPool.html#gst-rtsp-thread-pool-get-max-threads"/>
+    <keyword type="function" name="gst_rtsp_thread_pool_set_max_threads ()" link="gst-rtsp-server-GstRTSPThreadPool.html#gst-rtsp-thread-pool-set-max-threads"/>
+    <keyword type="function" name="gst_rtsp_thread_pool_get_thread ()" link="gst-rtsp-server-GstRTSPThreadPool.html#gst-rtsp-thread-pool-get-thread"/>
+    <keyword type="function" name="gst_rtsp_thread_pool_cleanup ()" link="gst-rtsp-server-GstRTSPThreadPool.html#gst-rtsp-thread-pool-cleanup"/>
+    <keyword type="struct" name="struct GstRTSPAuth" link="GstRTSPAuth.html#GstRTSPAuth-struct"/>
+    <keyword type="struct" name="struct GstRTSPAuthClass" link="GstRTSPAuth.html#GstRTSPAuthClass"/>
+    <keyword type="function" name="gst_rtsp_auth_new ()" link="GstRTSPAuth.html#gst-rtsp-auth-new"/>
+    <keyword type="function" name="gst_rtsp_auth_get_tls_certificate ()" link="GstRTSPAuth.html#gst-rtsp-auth-get-tls-certificate"/>
+    <keyword type="function" name="gst_rtsp_auth_set_tls_certificate ()" link="GstRTSPAuth.html#gst-rtsp-auth-set-tls-certificate"/>
+    <keyword type="function" name="gst_rtsp_auth_make_basic ()" link="GstRTSPAuth.html#gst-rtsp-auth-make-basic"/>
+    <keyword type="function" name="gst_rtsp_auth_add_basic ()" link="GstRTSPAuth.html#gst-rtsp-auth-add-basic"/>
+    <keyword type="function" name="gst_rtsp_auth_remove_basic ()" link="GstRTSPAuth.html#gst-rtsp-auth-remove-basic"/>
+    <keyword type="function" name="gst_rtsp_auth_check ()" link="GstRTSPAuth.html#gst-rtsp-auth-check"/>
+    <keyword type="function" name="gst_rtsp_auth_get_default_token ()" link="GstRTSPAuth.html#gst-rtsp-auth-get-default-token"/>
+    <keyword type="function" name="gst_rtsp_auth_set_default_token ()" link="GstRTSPAuth.html#gst-rtsp-auth-set-default-token"/>
+    <keyword type="macro" name="GST_RTSP_AUTH_CHECK_CONNECT" link="GstRTSPAuth.html#GST-RTSP-AUTH-CHECK-CONNECT:CAPS"/>
+    <keyword type="macro" name="GST_RTSP_AUTH_CHECK_URL" link="GstRTSPAuth.html#GST-RTSP-AUTH-CHECK-URL:CAPS"/>
+    <keyword type="macro" name="GST_RTSP_AUTH_CHECK_MEDIA_FACTORY_ACCESS" link="GstRTSPAuth.html#GST-RTSP-AUTH-CHECK-MEDIA-FACTORY-ACCESS:CAPS"/>
+    <keyword type="macro" name="GST_RTSP_AUTH_CHECK_MEDIA_FACTORY_CONSTRUCT" link="GstRTSPAuth.html#GST-RTSP-AUTH-CHECK-MEDIA-FACTORY-CONSTRUCT:CAPS"/>
+    <keyword type="macro" name="GST_RTSP_AUTH_CHECK_TRANSPORT_CLIENT_SETTINGS" link="GstRTSPAuth.html#GST-RTSP-AUTH-CHECK-TRANSPORT-CLIENT-SETTINGS:CAPS"/>
+    <keyword type="macro" name="GST_RTSP_TOKEN_MEDIA_FACTORY_ROLE" link="GstRTSPAuth.html#GST-RTSP-TOKEN-MEDIA-FACTORY-ROLE:CAPS"/>
+    <keyword type="macro" name="GST_RTSP_TOKEN_TRANSPORT_CLIENT_SETTINGS" link="GstRTSPAuth.html#GST-RTSP-TOKEN-TRANSPORT-CLIENT-SETTINGS:CAPS"/>
+    <keyword type="macro" name="GST_RTSP_PERM_MEDIA_FACTORY_ACCESS" link="GstRTSPAuth.html#GST-RTSP-PERM-MEDIA-FACTORY-ACCESS:CAPS"/>
+    <keyword type="macro" name="GST_RTSP_PERM_MEDIA_FACTORY_CONSTRUCT" link="GstRTSPAuth.html#GST-RTSP-PERM-MEDIA-FACTORY-CONSTRUCT:CAPS"/>
+    <keyword type="struct" name="struct GstRTSPToken" link="gst-rtsp-server-GstRTSPToken.html#GstRTSPToken"/>
+    <keyword type="function" name="gst_rtsp_token_new_empty ()" link="gst-rtsp-server-GstRTSPToken.html#gst-rtsp-token-new-empty"/>
+    <keyword type="function" name="gst_rtsp_token_new ()" link="gst-rtsp-server-GstRTSPToken.html#gst-rtsp-token-new"/>
+    <keyword type="function" name="gst_rtsp_token_new_valist ()" link="gst-rtsp-server-GstRTSPToken.html#gst-rtsp-token-new-valist"/>
+    <keyword type="function" name="gst_rtsp_token_ref ()" link="gst-rtsp-server-GstRTSPToken.html#gst-rtsp-token-ref"/>
+    <keyword type="function" name="gst_rtsp_token_unref ()" link="gst-rtsp-server-GstRTSPToken.html#gst-rtsp-token-unref"/>
+    <keyword type="function" name="gst_rtsp_token_get_structure ()" link="gst-rtsp-server-GstRTSPToken.html#gst-rtsp-token-get-structure"/>
+    <keyword type="function" name="gst_rtsp_token_writable_structure ()" link="gst-rtsp-server-GstRTSPToken.html#gst-rtsp-token-writable-structure"/>
+    <keyword type="function" name="gst_rtsp_token_get_string ()" link="gst-rtsp-server-GstRTSPToken.html#gst-rtsp-token-get-string"/>
+    <keyword type="function" name="gst_rtsp_token_is_allowed ()" link="gst-rtsp-server-GstRTSPToken.html#gst-rtsp-token-is-allowed"/>
+    <keyword type="struct" name="struct GstRTSPPermissions" link="gst-rtsp-server-GstRTSPPermissions.html#GstRTSPPermissions"/>
+    <keyword type="function" name="gst_rtsp_permissions_new ()" link="gst-rtsp-server-GstRTSPPermissions.html#gst-rtsp-permissions-new"/>
+    <keyword type="function" name="gst_rtsp_permissions_ref ()" link="gst-rtsp-server-GstRTSPPermissions.html#gst-rtsp-permissions-ref"/>
+    <keyword type="function" name="gst_rtsp_permissions_unref ()" link="gst-rtsp-server-GstRTSPPermissions.html#gst-rtsp-permissions-unref"/>
+    <keyword type="function" name="gst_rtsp_permissions_add_role ()" link="gst-rtsp-server-GstRTSPPermissions.html#gst-rtsp-permissions-add-role"/>
+    <keyword type="function" name="gst_rtsp_permissions_add_role_valist ()" link="gst-rtsp-server-GstRTSPPermissions.html#gst-rtsp-permissions-add-role-valist"/>
+    <keyword type="function" name="gst_rtsp_permissions_remove_role ()" link="gst-rtsp-server-GstRTSPPermissions.html#gst-rtsp-permissions-remove-role"/>
+    <keyword type="function" name="gst_rtsp_permissions_get_role ()" link="gst-rtsp-server-GstRTSPPermissions.html#gst-rtsp-permissions-get-role"/>
+    <keyword type="function" name="gst_rtsp_permissions_is_allowed ()" link="gst-rtsp-server-GstRTSPPermissions.html#gst-rtsp-permissions-is-allowed"/>
+    <keyword type="function" name="gst_rtsp_params_get ()" link="gst-rtsp-server-GstRTSPParams.html#gst-rtsp-params-get"/>
+    <keyword type="function" name="gst_rtsp_params_set ()" link="gst-rtsp-server-GstRTSPParams.html#gst-rtsp-params-set"/>
+    <keyword type="constant" name="GST_RTSP_MEDIA_STATUS_UNPREPARED" link="GstRTSPMedia.html#GST-RTSP-MEDIA-STATUS-UNPREPARED:CAPS"/>
+    <keyword type="constant" name="GST_RTSP_MEDIA_STATUS_UNPREPARING" link="GstRTSPMedia.html#GST-RTSP-MEDIA-STATUS-UNPREPARING:CAPS"/>
+    <keyword type="constant" name="GST_RTSP_MEDIA_STATUS_PREPARING" link="GstRTSPMedia.html#GST-RTSP-MEDIA-STATUS-PREPARING:CAPS"/>
+    <keyword type="constant" name="GST_RTSP_MEDIA_STATUS_PREPARED" link="GstRTSPMedia.html#GST-RTSP-MEDIA-STATUS-PREPARED:CAPS"/>
+    <keyword type="constant" name="GST_RTSP_MEDIA_STATUS_SUSPENDED" link="GstRTSPMedia.html#GST-RTSP-MEDIA-STATUS-SUSPENDED:CAPS"/>
+    <keyword type="constant" name="GST_RTSP_MEDIA_STATUS_ERROR" link="GstRTSPMedia.html#GST-RTSP-MEDIA-STATUS-ERROR:CAPS"/>
+    <keyword type="constant" name="GST_RTSP_FILTER_REMOVE" link="GstRTSPSession.html#GST-RTSP-FILTER-REMOVE:CAPS"/>
+    <keyword type="constant" name="GST_RTSP_FILTER_KEEP" link="GstRTSPSession.html#GST-RTSP-FILTER-KEEP:CAPS"/>
+    <keyword type="constant" name="GST_RTSP_FILTER_REF" link="GstRTSPSession.html#GST-RTSP-FILTER-REF:CAPS"/>
+    <keyword type="constant" name="GST_RTSP_ADDRESS_FLAG_NONE" link="gst-rtsp-server-GstRTSPAddressPool.html#GST-RTSP-ADDRESS-FLAG-NONE:CAPS"/>
+    <keyword type="constant" name="GST_RTSP_ADDRESS_FLAG_IPV4" link="gst-rtsp-server-GstRTSPAddressPool.html#GST-RTSP-ADDRESS-FLAG-IPV4:CAPS"/>
+    <keyword type="constant" name="GST_RTSP_ADDRESS_FLAG_IPV6" link="gst-rtsp-server-GstRTSPAddressPool.html#GST-RTSP-ADDRESS-FLAG-IPV6:CAPS"/>
+    <keyword type="constant" name="GST_RTSP_ADDRESS_FLAG_EVEN_PORT" link="gst-rtsp-server-GstRTSPAddressPool.html#GST-RTSP-ADDRESS-FLAG-EVEN-PORT:CAPS"/>
+    <keyword type="constant" name="GST_RTSP_ADDRESS_FLAG_MULTICAST" link="gst-rtsp-server-GstRTSPAddressPool.html#GST-RTSP-ADDRESS-FLAG-MULTICAST:CAPS"/>
+    <keyword type="constant" name="GST_RTSP_ADDRESS_FLAG_UNICAST" link="gst-rtsp-server-GstRTSPAddressPool.html#GST-RTSP-ADDRESS-FLAG-UNICAST:CAPS"/>
+    <keyword type="constant" name="GST_RTSP_ADDRESS_POOL_OK" link="gst-rtsp-server-GstRTSPAddressPool.html#GST-RTSP-ADDRESS-POOL-OK:CAPS"/>
+    <keyword type="constant" name="GST_RTSP_ADDRESS_POOL_EINVAL" link="gst-rtsp-server-GstRTSPAddressPool.html#GST-RTSP-ADDRESS-POOL-EINVAL:CAPS"/>
+    <keyword type="constant" name="GST_RTSP_ADDRESS_POOL_ERESERVED" link="gst-rtsp-server-GstRTSPAddressPool.html#GST-RTSP-ADDRESS-POOL-ERESERVED:CAPS"/>
+    <keyword type="constant" name="GST_RTSP_ADDRESS_POOL_ERANGE" link="gst-rtsp-server-GstRTSPAddressPool.html#GST-RTSP-ADDRESS-POOL-ERANGE:CAPS"/>
+    <keyword type="constant" name="GST_RTSP_ADDRESS_POOL_ELAST" link="gst-rtsp-server-GstRTSPAddressPool.html#GST-RTSP-ADDRESS-POOL-ELAST:CAPS"/>
+    <keyword type="constant" name="GST_RTSP_THREAD_TYPE_CLIENT" link="gst-rtsp-server-GstRTSPThreadPool.html#GST-RTSP-THREAD-TYPE-CLIENT:CAPS"/>
+    <keyword type="constant" name="GST_RTSP_THREAD_TYPE_MEDIA" link="gst-rtsp-server-GstRTSPThreadPool.html#GST-RTSP-THREAD-TYPE-MEDIA:CAPS"/>
+  </functions>
+</book>

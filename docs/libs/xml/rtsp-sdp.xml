@@ -1,0 +1,73 @@
+<?xml version="1.0"?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
+               "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
+<!ENTITY % version-entities SYSTEM "version.entities">
+%version-entities;
+]>
+
+<refentry id="gst-rtsp-server-GstRTSPSdp">
+<refmeta>
+<refentrytitle role="top_of_page" id="gst-rtsp-server-GstRTSPSdp.top_of_page">GstRTSPSdp</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>
+  GST-RTSP-SERVER Library
+</refmiscinfo>
+</refmeta>
+<refnamediv>
+<refname>GstRTSPSdp</refname>
+<refpurpose>Make SDP messages</refpurpose>
+</refnamediv>
+
+<refsynopsisdiv id="gst-rtsp-server-GstRTSPSdp.synopsis" role="synopsis">
+<title role="synopsis.title">Synopsis</title>
+
+<synopsis>                    <link linkend="GstSDPInfo">GstSDPInfo</link>;
+<link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            <link linkend="gst-rtsp-sdp-from-media">gst_rtsp_sdp_from_media</link>             (<parameter><link linkend="GstSDPMessage"><type>GstSDPMessage</type></link> *sdp</parameter>,
+                                                         <parameter><link linkend="GstSDPInfo"><type>GstSDPInfo</type></link> *info</parameter>,
+                                                         <parameter><link linkend="GstRTSPMedia"><type>GstRTSPMedia</type></link> *media</parameter>);
+</synopsis>
+</refsynopsisdiv>
+
+<refsect1 id="gst-rtsp-server-GstRTSPSdp.description" role="desc">
+<title role="desc.title">Description</title>
+<para>
+Last reviewed on 2013-07-11 (1.0.0)
+</para>
+</refsect1>
+<refsect1 id="gst-rtsp-server-GstRTSPSdp.details" role="details">
+<title role="details.title">Details</title>
+<refsect2 id="GstSDPInfo" role="struct">
+<title>GstSDPInfo</title>
+<indexterm zone="GstSDPInfo"><primary>GstSDPInfo</primary></indexterm>
+<programlisting>typedef struct {
+  gboolean is_ipv6;
+  const gchar *server_ip;
+} GstSDPInfo;
+</programlisting>
+</refsect2>
+<refsect2 id="gst-rtsp-sdp-from-media" role="function">
+<title>gst_rtsp_sdp_from_media ()</title>
+<indexterm zone="gst-rtsp-sdp-from-media"><primary>gst_rtsp_sdp_from_media</primary></indexterm>
+<programlisting><link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            gst_rtsp_sdp_from_media             (<parameter><link linkend="GstSDPMessage"><type>GstSDPMessage</type></link> *sdp</parameter>,
+                                                         <parameter><link linkend="GstSDPInfo"><type>GstSDPInfo</type></link> *info</parameter>,
+                                                         <parameter><link linkend="GstRTSPMedia"><type>GstRTSPMedia</type></link> *media</parameter>);</programlisting>
+<para>
+Add <parameter>media</parameter> specific info to <parameter>sdp</parameter>. <parameter>info</parameter> is used to configure the connection
+information in the SDP.
+</para><variablelist role="params">
+<varlistentry><term><parameter>sdp</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstSDPMessage"><type>GstSDPMessage</type></link></simpara></listitem></varlistentry>
+<varlistentry><term><parameter>info</parameter>&#160;:</term>
+<listitem><simpara>info</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>media</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstRTSPMedia"><type>GstRTSPMedia</type></link></simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>TRUE on success.</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+
+</refsect1>
+<refsect1 id="gst-rtsp-server-GstRTSPSdp.see-also">
+<title>See Also</title>
+<link linkend="GstRTSPMedia"><type>GstRTSPMedia</type></link>
+</refsect1>
+
+</refentry>

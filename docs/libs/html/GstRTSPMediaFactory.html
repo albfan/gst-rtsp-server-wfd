@@ -1,0 +1,754 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>GstRTSPMediaFactory</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<link rel="home" href="index.html" title="GStreamer RTSP Server Reference Manual">
+<link rel="up" href="ch01.html" title="">
+<link rel="prev" href="GstRTSPMountPoints.html" title="GstRTSPMountPoints">
+<link rel="next" href="gst-rtsp-server-GstRTSPMediaFactoryURI.html" title="GstRTSPMediaFactoryURI">
+<meta name="generator" content="GTK-Doc V1.18 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
+<tr valign="middle">
+<td><a accesskey="p" href="GstRTSPMountPoints.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="ch01.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">GStreamer RTSP Server Reference Manual</th>
+<td><a accesskey="n" href="gst-rtsp-server-GstRTSPMediaFactoryURI.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr>
+<tr><td colspan="5" class="shortcuts">
+<a href="#GstRTSPMediaFactory.synopsis" class="shortcut">Top</a>
+                   | 
+                  <a href="#GstRTSPMediaFactory.description" class="shortcut">Description</a>
+                   | 
+                  <a href="#GstRTSPMediaFactory.object-hierarchy" class="shortcut">Object Hierarchy</a>
+                   | 
+                  <a href="#GstRTSPMediaFactory.properties" class="shortcut">Properties</a>
+                   | 
+                  <a href="#GstRTSPMediaFactory.signals" class="shortcut">Signals</a>
+</td></tr>
+</table>
+<div class="refentry">
+<a name="GstRTSPMediaFactory"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="GstRTSPMediaFactory.top_of_page"></a>GstRTSPMediaFactory</span></h2>
+<p>GstRTSPMediaFactory — A factory for media pipelines</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsynopsisdiv">
+<a name="GstRTSPMediaFactory.synopsis"></a><h2>Synopsis</h2>
+<pre class="synopsis">struct              <a class="link" href="GstRTSPMediaFactory.html#GstRTSPMediaFactory-struct" title="struct GstRTSPMediaFactory">GstRTSPMediaFactory</a>;
+struct              <a class="link" href="GstRTSPMediaFactory.html#GstRTSPMediaFactoryClass" title="struct GstRTSPMediaFactoryClass">GstRTSPMediaFactoryClass</a>;
+<a class="link" href="GstRTSPMediaFactory.html" title="GstRTSPMediaFactory"><span class="returnvalue">GstRTSPMediaFactory</span></a> * <a class="link" href="GstRTSPMediaFactory.html#gst-rtsp-media-factory-new" title="gst_rtsp_media_factory_new ()">gst_rtsp_media_factory_new</a>        (<em class="parameter"><code><span class="type">void</span></code></em>);
+<a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *             <a class="link" href="GstRTSPMediaFactory.html#gst-rtsp-media-factory-get-launch" title="gst_rtsp_media_factory_get_launch ()">gst_rtsp_media_factory_get_launch</a>   (<em class="parameter"><code><a class="link" href="GstRTSPMediaFactory.html" title="GstRTSPMediaFactory"><span class="type">GstRTSPMediaFactory</span></a> *factory</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="GstRTSPMediaFactory.html#gst-rtsp-media-factory-set-launch" title="gst_rtsp_media_factory_set_launch ()">gst_rtsp_media_factory_set_launch</a>   (<em class="parameter"><code><a class="link" href="GstRTSPMediaFactory.html" title="GstRTSPMediaFactory"><span class="type">GstRTSPMediaFactory</span></a> *factory</code></em>,
+                                                         <em class="parameter"><code>const <a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *launch</code></em>);
+<a class="link" href="gst-rtsp-server-GstRTSPPermissions.html#GstRTSPPermissions" title="struct GstRTSPPermissions"><span class="returnvalue">GstRTSPPermissions</span></a> * <a class="link" href="GstRTSPMediaFactory.html#gst-rtsp-media-factory-get-permissions" title="gst_rtsp_media_factory_get_permissions ()">gst_rtsp_media_factory_get_permissions</a>
+                                                        (<em class="parameter"><code><a class="link" href="GstRTSPMediaFactory.html" title="GstRTSPMediaFactory"><span class="type">GstRTSPMediaFactory</span></a> *factory</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="GstRTSPMediaFactory.html#gst-rtsp-media-factory-set-permissions" title="gst_rtsp_media_factory_set_permissions ()">gst_rtsp_media_factory_set_permissions</a>
+                                                        (<em class="parameter"><code><a class="link" href="GstRTSPMediaFactory.html" title="GstRTSPMediaFactory"><span class="type">GstRTSPMediaFactory</span></a> *factory</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="gst-rtsp-server-GstRTSPPermissions.html#GstRTSPPermissions" title="struct GstRTSPPermissions"><span class="type">GstRTSPPermissions</span></a> *permissions</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="GstRTSPMediaFactory.html#gst-rtsp-media-factory-add-role" title="gst_rtsp_media_factory_add_role ()">gst_rtsp_media_factory_add_role</a>     (<em class="parameter"><code><a class="link" href="GstRTSPMediaFactory.html" title="GstRTSPMediaFactory"><span class="type">GstRTSPMediaFactory</span></a> *factory</code></em>,
+                                                         <em class="parameter"><code>const <a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *role</code></em>,
+                                                         <em class="parameter"><code>const <a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *fieldname</code></em>,
+                                                         <em class="parameter"><code>...</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="GstRTSPMediaFactory.html#gst-rtsp-media-factory-set-shared" title="gst_rtsp_media_factory_set_shared ()">gst_rtsp_media_factory_set_shared</a>   (<em class="parameter"><code><a class="link" href="GstRTSPMediaFactory.html" title="GstRTSPMediaFactory"><span class="type">GstRTSPMediaFactory</span></a> *factory</code></em>,
+                                                         <em class="parameter"><code><a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a> shared</code></em>);
+<a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="GstRTSPMediaFactory.html#gst-rtsp-media-factory-is-shared" title="gst_rtsp_media_factory_is_shared ()">gst_rtsp_media_factory_is_shared</a>    (<em class="parameter"><code><a class="link" href="GstRTSPMediaFactory.html" title="GstRTSPMediaFactory"><span class="type">GstRTSPMediaFactory</span></a> *factory</code></em>);
+<a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="GstRTSPMediaFactory.html#gst-rtsp-media-factory-is-eos-shutdown" title="gst_rtsp_media_factory_is_eos_shutdown ()">gst_rtsp_media_factory_is_eos_shutdown</a>
+                                                        (<em class="parameter"><code><a class="link" href="GstRTSPMediaFactory.html" title="GstRTSPMediaFactory"><span class="type">GstRTSPMediaFactory</span></a> *factory</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="GstRTSPMediaFactory.html#gst-rtsp-media-factory-set-eos-shutdown" title="gst_rtsp_media_factory_set_eos_shutdown ()">gst_rtsp_media_factory_set_eos_shutdown</a>
+                                                        (<em class="parameter"><code><a class="link" href="GstRTSPMediaFactory.html" title="GstRTSPMediaFactory"><span class="type">GstRTSPMediaFactory</span></a> *factory</code></em>,
+                                                         <em class="parameter"><code><a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a> eos_shutdown</code></em>);
+<a href="../gst-plugins-base-libs-1.0/gst-plugins-base-libs-gstrtsptransport.html#GstRTSPLowerTrans"><span class="returnvalue">GstRTSPLowerTrans</span></a>   <a class="link" href="GstRTSPMediaFactory.html#gst-rtsp-media-factory-get-protocols" title="gst_rtsp_media_factory_get_protocols ()">gst_rtsp_media_factory_get_protocols</a>
+                                                        (<em class="parameter"><code><a class="link" href="GstRTSPMediaFactory.html" title="GstRTSPMediaFactory"><span class="type">GstRTSPMediaFactory</span></a> *factory</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="GstRTSPMediaFactory.html#gst-rtsp-media-factory-set-protocols" title="gst_rtsp_media_factory_set_protocols ()">gst_rtsp_media_factory_set_protocols</a>
+                                                        (<em class="parameter"><code><a class="link" href="GstRTSPMediaFactory.html" title="GstRTSPMediaFactory"><span class="type">GstRTSPMediaFactory</span></a> *factory</code></em>,
+                                                         <em class="parameter"><code><a href="../gst-plugins-base-libs-1.0/gst-plugins-base-libs-gstrtsptransport.html#GstRTSPLowerTrans"><span class="type">GstRTSPLowerTrans</span></a> protocols</code></em>);
+<a class="link" href="gst-rtsp-server-GstRTSPAddressPool.html#GstRTSPAddressPool" title="struct GstRTSPAddressPool"><span class="returnvalue">GstRTSPAddressPool</span></a> * <a class="link" href="GstRTSPMediaFactory.html#gst-rtsp-media-factory-get-address-pool" title="gst_rtsp_media_factory_get_address_pool ()">gst_rtsp_media_factory_get_address_pool</a>
+                                                        (<em class="parameter"><code><a class="link" href="GstRTSPMediaFactory.html" title="GstRTSPMediaFactory"><span class="type">GstRTSPMediaFactory</span></a> *factory</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="GstRTSPMediaFactory.html#gst-rtsp-media-factory-set-address-pool" title="gst_rtsp_media_factory_set_address_pool ()">gst_rtsp_media_factory_set_address_pool</a>
+                                                        (<em class="parameter"><code><a class="link" href="GstRTSPMediaFactory.html" title="GstRTSPMediaFactory"><span class="type">GstRTSPMediaFactory</span></a> *factory</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="gst-rtsp-server-GstRTSPAddressPool.html#GstRTSPAddressPool" title="struct GstRTSPAddressPool"><span class="type">GstRTSPAddressPool</span></a> *pool</code></em>);
+<a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#guint"><span class="returnvalue">guint</span></a>               <a class="link" href="GstRTSPMediaFactory.html#gst-rtsp-media-factory-get-buffer-size" title="gst_rtsp_media_factory_get_buffer_size ()">gst_rtsp_media_factory_get_buffer_size</a>
+                                                        (<em class="parameter"><code><a class="link" href="GstRTSPMediaFactory.html" title="GstRTSPMediaFactory"><span class="type">GstRTSPMediaFactory</span></a> *factory</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="GstRTSPMediaFactory.html#gst-rtsp-media-factory-set-buffer-size" title="gst_rtsp_media_factory_set_buffer_size ()">gst_rtsp_media_factory_set_buffer_size</a>
+                                                        (<em class="parameter"><code><a class="link" href="GstRTSPMediaFactory.html" title="GstRTSPMediaFactory"><span class="type">GstRTSPMediaFactory</span></a> *factory</code></em>,
+                                                         <em class="parameter"><code><a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#guint"><span class="type">guint</span></a> size</code></em>);
+<a class="link" href="GstRTSPMedia.html" title="GstRTSPMedia"><span class="returnvalue">GstRTSPMedia</span></a> *      <a class="link" href="GstRTSPMediaFactory.html#gst-rtsp-media-factory-construct" title="gst_rtsp_media_factory_construct ()">gst_rtsp_media_factory_construct</a>    (<em class="parameter"><code><a class="link" href="GstRTSPMediaFactory.html" title="GstRTSPMediaFactory"><span class="type">GstRTSPMediaFactory</span></a> *factory</code></em>,
+                                                         <em class="parameter"><code>const <a href="../gst-plugins-base-libs-1.0/gst-plugins-base-libs-gstrtspurl.html#GstRTSPUrl"><span class="type">GstRTSPUrl</span></a> *url</code></em>);
+<a href="../gstreamer-1.0/GstElement.html"><span class="returnvalue">GstElement</span></a> *        <a class="link" href="GstRTSPMediaFactory.html#gst-rtsp-media-factory-create-element" title="gst_rtsp_media_factory_create_element ()">gst_rtsp_media_factory_create_element</a>
+                                                        (<em class="parameter"><code><a class="link" href="GstRTSPMediaFactory.html" title="GstRTSPMediaFactory"><span class="type">GstRTSPMediaFactory</span></a> *factory</code></em>,
+                                                         <em class="parameter"><code>const <a href="../gst-plugins-base-libs-1.0/gst-plugins-base-libs-gstrtspurl.html#GstRTSPUrl"><span class="type">GstRTSPUrl</span></a> *url</code></em>);
+</pre>
+</div>
+<div class="refsect1">
+<a name="GstRTSPMediaFactory.object-hierarchy"></a><h2>Object Hierarchy</h2>
+<pre class="synopsis">
+  <a href="/usr/share/gtk-doc/html/gobject/gobject-The-Base-Object-Type.html#GObject">GObject</a>
+   +----GstRTSPMediaFactory
+</pre>
+</div>
+<div class="refsect1">
+<a name="GstRTSPMediaFactory.properties"></a><h2>Properties</h2>
+<pre class="synopsis">
+  "<a class="link" href="GstRTSPMediaFactory.html#GstRTSPMediaFactory--buffer-size" title='The "buffer-size" property'>buffer-size</a>"              <a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#guint"><span class="type">guint</span></a>                 : Read / Write
+  "<a class="link" href="GstRTSPMediaFactory.html#GstRTSPMediaFactory--eos-shutdown" title='The "eos-shutdown" property'>eos-shutdown</a>"             <a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a>              : Read / Write
+  "<a class="link" href="GstRTSPMediaFactory.html#GstRTSPMediaFactory--launch" title='The "launch" property'>launch</a>"                   <a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a>*                : Read / Write
+  "<a class="link" href="GstRTSPMediaFactory.html#GstRTSPMediaFactory--protocols" title='The "protocols" property'>protocols</a>"                <a href="../gst-plugins-base-libs-1.0/gst-plugins-base-libs-gstrtsptransport.html#GstRTSPLowerTrans"><span class="type">GstRTSPLowerTrans</span></a>     : Read / Write
+  "<a class="link" href="GstRTSPMediaFactory.html#GstRTSPMediaFactory--shared" title='The "shared" property'>shared</a>"                   <a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a>              : Read / Write
+  "<a class="link" href="GstRTSPMediaFactory.html#GstRTSPMediaFactory--suspend-mode" title='The "suspend-mode" property'>suspend-mode</a>"             <span class="type">GstRTSPSuspendMode</span>    : Read / Write
+</pre>
+</div>
+<div class="refsect1">
+<a name="GstRTSPMediaFactory.signals"></a><h2>Signals</h2>
+<pre class="synopsis">
+  "<a class="link" href="GstRTSPMediaFactory.html#GstRTSPMediaFactory-media-configure" title='The "media-configure" signal'>media-configure</a>"                                : <a href="/usr/share/gtk-doc/html/gobject/gobject-Signals.html#G-SIGNAL-RUN-LAST:CAPS"><code class="literal">Run Last</code></a>
+  "<a class="link" href="GstRTSPMediaFactory.html#GstRTSPMediaFactory-media-constructed" title='The "media-constructed" signal'>media-constructed</a>"                              : <a href="/usr/share/gtk-doc/html/gobject/gobject-Signals.html#G-SIGNAL-RUN-LAST:CAPS"><code class="literal">Run Last</code></a>
+</pre>
+</div>
+<div class="refsect1">
+<a name="GstRTSPMediaFactory.description"></a><h2>Description</h2>
+<p>
+The <a class="link" href="GstRTSPMediaFactory.html" title="GstRTSPMediaFactory"><span class="type">GstRTSPMediaFactory</span></a> is responsible for creating or recycling
+<a class="link" href="GstRTSPMedia.html" title="GstRTSPMedia"><span class="type">GstRTSPMedia</span></a> objects based on the passed URL.
+</p>
+<p>
+The default implementation of the object can create <a class="link" href="GstRTSPMedia.html" title="GstRTSPMedia"><span class="type">GstRTSPMedia</span></a> objects
+containing a pipeline created from a launch description set with
+<a class="link" href="GstRTSPMediaFactory.html#gst-rtsp-media-factory-set-launch" title="gst_rtsp_media_factory_set_launch ()"><code class="function">gst_rtsp_media_factory_set_launch()</code></a>.
+</p>
+<p>
+Media from a factory can be shared by setting the shared flag with
+<a class="link" href="GstRTSPMediaFactory.html#gst-rtsp-media-factory-set-shared" title="gst_rtsp_media_factory_set_shared ()"><code class="function">gst_rtsp_media_factory_set_shared()</code></a>. When a factory is shared,
+<a class="link" href="GstRTSPMediaFactory.html#gst-rtsp-media-factory-construct" title="gst_rtsp_media_factory_construct ()"><code class="function">gst_rtsp_media_factory_construct()</code></a> will return the same <a class="link" href="GstRTSPMedia.html" title="GstRTSPMedia"><span class="type">GstRTSPMedia</span></a> when
+the url matches.
+</p>
+<p>
+Last reviewed on 2013-07-11 (1.0.0)
+</p>
+</div>
+<div class="refsect1">
+<a name="GstRTSPMediaFactory.details"></a><h2>Details</h2>
+<div class="refsect2">
+<a name="GstRTSPMediaFactory-struct"></a><h3>struct GstRTSPMediaFactory</h3>
+<pre class="programlisting">struct GstRTSPMediaFactory;</pre>
+<p>
+The definition and logic for constructing the pipeline for a media. The media
+can contain multiple streams like audio and video.
+</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="GstRTSPMediaFactoryClass"></a><h3>struct GstRTSPMediaFactoryClass</h3>
+<pre class="programlisting">struct GstRTSPMediaFactoryClass {
+  GObjectClass  parent_class;
+
+  gchar *         (*gen_key)            (GstRTSPMediaFactory *factory, const GstRTSPUrl *url);
+
+  GstElement *    (*create_element)     (GstRTSPMediaFactory *factory, const GstRTSPUrl *url);
+  GstRTSPMedia *  (*construct)          (GstRTSPMediaFactory *factory, const GstRTSPUrl *url);
+  GstElement *    (*create_pipeline)    (GstRTSPMediaFactory *factory, GstRTSPMedia *media);
+  void            (*configure)          (GstRTSPMediaFactory *factory, GstRTSPMedia *media);
+
+  /* signals */
+  void            (*media_constructed)  (GstRTSPMediaFactory *factory, GstRTSPMedia *media);
+  void            (*media_configure)    (GstRTSPMediaFactory *factory, GstRTSPMedia *media);
+};
+</pre>
+<p>
+The <a class="link" href="GstRTSPMediaFactory.html" title="GstRTSPMediaFactory"><span class="type">GstRTSPMediaFactory</span></a> class structure.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><a href="/usr/share/gtk-doc/html/gobject/gobject-The-Base-Object-Type.html#GObjectClass"><span class="type">GObjectClass</span></a> <em class="structfield"><code><a name="GstRTSPMediaFactoryClass.parent-class"></a>parent_class</code></em>;</span></p></td>
+<td></td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="structfield"><code><a name="GstRTSPMediaFactoryClass.gen-key"></a>gen_key</code></em> ()</span></p></td>
+<td>convert <em class="parameter"><code>url</code></em> to a key for caching shared <a class="link" href="GstRTSPMedia.html" title="GstRTSPMedia"><span class="type">GstRTSPMedia</span></a> objects.
+The default implementation of this function will use the complete URL
+including the query parameters to return a key.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="structfield"><code><a name="GstRTSPMediaFactoryClass.create-element"></a>create_element</code></em> ()</span></p></td>
+<td>Construct and return a <a href="../gstreamer-1.0/GstElement.html"><span class="type">GstElement</span></a> that is a <a href="../gstreamer-1.0/GstBin.html"><span class="type">GstBin</span></a> containing
+the elements to use for streaming the media. The bin should contain
+payloaders pay%d for each stream. The default implementation of this
+function returns the bin created from the launch parameter.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="structfield"><code><a name="GstRTSPMediaFactoryClass.construct"></a>construct</code></em> ()</span></p></td>
+<td>the vmethod that will be called when the factory has to create the
+<a class="link" href="GstRTSPMedia.html" title="GstRTSPMedia"><span class="type">GstRTSPMedia</span></a> for <em class="parameter"><code>url</code></em>. The default implementation of this
+function calls create_element to retrieve an element and then looks for
+pay%d to create the streams.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="structfield"><code><a name="GstRTSPMediaFactoryClass.create-pipeline"></a>create_pipeline</code></em> ()</span></p></td>
+<td>create a new pipeline or re-use an existing one and
+add the <a class="link" href="GstRTSPMedia.html" title="GstRTSPMedia"><span class="type">GstRTSPMedia</span></a>'s element created by <em class="parameter"><code>construct</code></em> to the pipeline.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="structfield"><code><a name="GstRTSPMediaFactoryClass.configure"></a>configure</code></em> ()</span></p></td>
+<td>configure the media created with <em class="parameter"><code>construct</code></em>. The default
+implementation will configure the 'shared' property of the media.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="structfield"><code><a name="GstRTSPMediaFactoryClass.media-constructed"></a>media_constructed</code></em> ()</span></p></td>
+<td>signal emited when a media was constructed</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="structfield"><code><a name="GstRTSPMediaFactoryClass.media-configure"></a>media_configure</code></em> ()</span></p></td>
+<td>signal emited when a media should be configured</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gst-rtsp-media-factory-new"></a><h3>gst_rtsp_media_factory_new ()</h3>
+<pre class="programlisting"><a class="link" href="GstRTSPMediaFactory.html" title="GstRTSPMediaFactory"><span class="returnvalue">GstRTSPMediaFactory</span></a> * gst_rtsp_media_factory_new        (<em class="parameter"><code><span class="type">void</span></code></em>);</pre>
+<p>
+Create a new <a class="link" href="GstRTSPMediaFactory.html" title="GstRTSPMediaFactory"><span class="type">GstRTSPMediaFactory</span></a> instance.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>a new <a class="link" href="GstRTSPMediaFactory.html" title="GstRTSPMediaFactory"><span class="type">GstRTSPMediaFactory</span></a> object.</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gst-rtsp-media-factory-get-launch"></a><h3>gst_rtsp_media_factory_get_launch ()</h3>
+<pre class="programlisting"><a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *             gst_rtsp_media_factory_get_launch   (<em class="parameter"><code><a class="link" href="GstRTSPMediaFactory.html" title="GstRTSPMediaFactory"><span class="type">GstRTSPMediaFactory</span></a> *factory</code></em>);</pre>
+<p>
+Get the <a href="../gstreamer-1.0/gstreamer-GstParse.html#gst-parse-launch"><code class="function">gst_parse_launch()</code></a> pipeline description that will be used in the
+default prepare vmethod.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>factory</code></em> :</span></p></td>
+<td>a <a class="link" href="GstRTSPMediaFactory.html" title="GstRTSPMediaFactory"><span class="type">GstRTSPMediaFactory</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>the configured launch description. <a href="/usr/share/gtk-doc/html/glib/glib-Memory-Allocation.html#g-free"><code class="function">g_free()</code></a> after usage.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gst-rtsp-media-factory-set-launch"></a><h3>gst_rtsp_media_factory_set_launch ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                gst_rtsp_media_factory_set_launch   (<em class="parameter"><code><a class="link" href="GstRTSPMediaFactory.html" title="GstRTSPMediaFactory"><span class="type">GstRTSPMediaFactory</span></a> *factory</code></em>,
+                                                         <em class="parameter"><code>const <a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *launch</code></em>);</pre>
+<p>
+The <a href="../gstreamer-1.0/gstreamer-GstParse.html#gst-parse-launch"><code class="function">gst_parse_launch()</code></a> line to use for constructing the pipeline in the
+default prepare vmethod.
+</p>
+<p>
+The pipeline description should return a GstBin as the toplevel element
+which can be accomplished by enclosing the dscription with brackets '('
+')'.
+</p>
+<p>
+The description should return a pipeline with payloaders named pay0, pay1,
+etc.. Each of the payloaders will result in a stream.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>factory</code></em> :</span></p></td>
+<td>a <a class="link" href="GstRTSPMediaFactory.html" title="GstRTSPMediaFactory"><span class="type">GstRTSPMediaFactory</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>launch</code></em> :</span></p></td>
+<td>the launch description</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gst-rtsp-media-factory-get-permissions"></a><h3>gst_rtsp_media_factory_get_permissions ()</h3>
+<pre class="programlisting"><a class="link" href="gst-rtsp-server-GstRTSPPermissions.html#GstRTSPPermissions" title="struct GstRTSPPermissions"><span class="returnvalue">GstRTSPPermissions</span></a> * gst_rtsp_media_factory_get_permissions
+                                                        (<em class="parameter"><code><a class="link" href="GstRTSPMediaFactory.html" title="GstRTSPMediaFactory"><span class="type">GstRTSPMediaFactory</span></a> *factory</code></em>);</pre>
+<p>
+Get the permissions object from <em class="parameter"><code>factory</code></em>.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>factory</code></em> :</span></p></td>
+<td>a <a class="link" href="GstRTSPMediaFactory.html" title="GstRTSPMediaFactory"><span class="type">GstRTSPMediaFactory</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>a <a class="link" href="gst-rtsp-server-GstRTSPPermissions.html#GstRTSPPermissions" title="struct GstRTSPPermissions"><span class="type">GstRTSPPermissions</span></a> object, unref after usage. <span class="annotation">[<acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>]</span>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gst-rtsp-media-factory-set-permissions"></a><h3>gst_rtsp_media_factory_set_permissions ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                gst_rtsp_media_factory_set_permissions
+                                                        (<em class="parameter"><code><a class="link" href="GstRTSPMediaFactory.html" title="GstRTSPMediaFactory"><span class="type">GstRTSPMediaFactory</span></a> *factory</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="gst-rtsp-server-GstRTSPPermissions.html#GstRTSPPermissions" title="struct GstRTSPPermissions"><span class="type">GstRTSPPermissions</span></a> *permissions</code></em>);</pre>
+<p>
+Set <em class="parameter"><code>permissions</code></em> on <em class="parameter"><code>factory</code></em>.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>factory</code></em> :</span></p></td>
+<td>a <a class="link" href="GstRTSPMediaFactory.html" title="GstRTSPMediaFactory"><span class="type">GstRTSPMediaFactory</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>permissions</code></em> :</span></p></td>
+<td>a <a class="link" href="gst-rtsp-server-GstRTSPPermissions.html#GstRTSPPermissions" title="struct GstRTSPPermissions"><span class="type">GstRTSPPermissions</span></a>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gst-rtsp-media-factory-add-role"></a><h3>gst_rtsp_media_factory_add_role ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                gst_rtsp_media_factory_add_role     (<em class="parameter"><code><a class="link" href="GstRTSPMediaFactory.html" title="GstRTSPMediaFactory"><span class="type">GstRTSPMediaFactory</span></a> *factory</code></em>,
+                                                         <em class="parameter"><code>const <a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *role</code></em>,
+                                                         <em class="parameter"><code>const <a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *fieldname</code></em>,
+                                                         <em class="parameter"><code>...</code></em>);</pre>
+<p>
+A convenience method to add <em class="parameter"><code>role</code></em> with <em class="parameter"><code>fieldname</code></em> and additional arguments to
+the permissions of <em class="parameter"><code>factory</code></em>. If <em class="parameter"><code>factory</code></em> had no permissions, new permissions
+will be created and the role will be added to it.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>factory</code></em> :</span></p></td>
+<td>a <a class="link" href="GstRTSPMediaFactory.html" title="GstRTSPMediaFactory"><span class="type">GstRTSPMediaFactory</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>role</code></em> :</span></p></td>
+<td>a role</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>fieldname</code></em> :</span></p></td>
+<td>the first field name</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>...</code></em> :</span></p></td>
+<td>additional arguments</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gst-rtsp-media-factory-set-shared"></a><h3>gst_rtsp_media_factory_set_shared ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                gst_rtsp_media_factory_set_shared   (<em class="parameter"><code><a class="link" href="GstRTSPMediaFactory.html" title="GstRTSPMediaFactory"><span class="type">GstRTSPMediaFactory</span></a> *factory</code></em>,
+                                                         <em class="parameter"><code><a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a> shared</code></em>);</pre>
+<p>
+Configure if media created from this factory can be shared between clients.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>factory</code></em> :</span></p></td>
+<td>a <a class="link" href="GstRTSPMediaFactory.html" title="GstRTSPMediaFactory"><span class="type">GstRTSPMediaFactory</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>shared</code></em> :</span></p></td>
+<td>the new value</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gst-rtsp-media-factory-is-shared"></a><h3>gst_rtsp_media_factory_is_shared ()</h3>
+<pre class="programlisting"><a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            gst_rtsp_media_factory_is_shared    (<em class="parameter"><code><a class="link" href="GstRTSPMediaFactory.html" title="GstRTSPMediaFactory"><span class="type">GstRTSPMediaFactory</span></a> *factory</code></em>);</pre>
+<p>
+Get if media created from this factory can be shared between clients.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>factory</code></em> :</span></p></td>
+<td>a <a class="link" href="GstRTSPMediaFactory.html" title="GstRTSPMediaFactory"><span class="type">GstRTSPMediaFactory</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>
+<a href="/usr/share/gtk-doc/html/glib/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if the media will be shared between clients.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gst-rtsp-media-factory-is-eos-shutdown"></a><h3>gst_rtsp_media_factory_is_eos_shutdown ()</h3>
+<pre class="programlisting"><a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            gst_rtsp_media_factory_is_eos_shutdown
+                                                        (<em class="parameter"><code><a class="link" href="GstRTSPMediaFactory.html" title="GstRTSPMediaFactory"><span class="type">GstRTSPMediaFactory</span></a> *factory</code></em>);</pre>
+<p>
+Get if media created from this factory will have an EOS event sent to the
+pipeline before shutdown.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>factory</code></em> :</span></p></td>
+<td>a <a class="link" href="GstRTSPMediaFactory.html" title="GstRTSPMediaFactory"><span class="type">GstRTSPMediaFactory</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>
+<a href="/usr/share/gtk-doc/html/glib/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if the media will receive EOS before shutdown.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gst-rtsp-media-factory-set-eos-shutdown"></a><h3>gst_rtsp_media_factory_set_eos_shutdown ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                gst_rtsp_media_factory_set_eos_shutdown
+                                                        (<em class="parameter"><code><a class="link" href="GstRTSPMediaFactory.html" title="GstRTSPMediaFactory"><span class="type">GstRTSPMediaFactory</span></a> *factory</code></em>,
+                                                         <em class="parameter"><code><a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a> eos_shutdown</code></em>);</pre>
+<p>
+Configure if media created from this factory will have an EOS sent to the
+pipeline before shutdown.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>factory</code></em> :</span></p></td>
+<td>a <a class="link" href="GstRTSPMediaFactory.html" title="GstRTSPMediaFactory"><span class="type">GstRTSPMediaFactory</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>eos_shutdown</code></em> :</span></p></td>
+<td>the new value</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gst-rtsp-media-factory-get-protocols"></a><h3>gst_rtsp_media_factory_get_protocols ()</h3>
+<pre class="programlisting"><a href="../gst-plugins-base-libs-1.0/gst-plugins-base-libs-gstrtsptransport.html#GstRTSPLowerTrans"><span class="returnvalue">GstRTSPLowerTrans</span></a>   gst_rtsp_media_factory_get_protocols
+                                                        (<em class="parameter"><code><a class="link" href="GstRTSPMediaFactory.html" title="GstRTSPMediaFactory"><span class="type">GstRTSPMediaFactory</span></a> *factory</code></em>);</pre>
+<p>
+Get the allowed protocols of <em class="parameter"><code>factory</code></em>.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>factory</code></em> :</span></p></td>
+<td>a <a class="link" href="GstRTSPMediaFactory.html" title="GstRTSPMediaFactory"><span class="type">GstRTSPMediaFactory</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>a <a href="../gst-plugins-base-libs-1.0/gst-plugins-base-libs-gstrtsptransport.html#GstRTSPLowerTrans"><span class="type">GstRTSPLowerTrans</span></a>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gst-rtsp-media-factory-set-protocols"></a><h3>gst_rtsp_media_factory_set_protocols ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                gst_rtsp_media_factory_set_protocols
+                                                        (<em class="parameter"><code><a class="link" href="GstRTSPMediaFactory.html" title="GstRTSPMediaFactory"><span class="type">GstRTSPMediaFactory</span></a> *factory</code></em>,
+                                                         <em class="parameter"><code><a href="../gst-plugins-base-libs-1.0/gst-plugins-base-libs-gstrtsptransport.html#GstRTSPLowerTrans"><span class="type">GstRTSPLowerTrans</span></a> protocols</code></em>);</pre>
+<p>
+Configure the allowed lower transport for <em class="parameter"><code>factory</code></em>.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>factory</code></em> :</span></p></td>
+<td>a <a class="link" href="GstRTSPMediaFactory.html" title="GstRTSPMediaFactory"><span class="type">GstRTSPMediaFactory</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>protocols</code></em> :</span></p></td>
+<td>the new flags</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gst-rtsp-media-factory-get-address-pool"></a><h3>gst_rtsp_media_factory_get_address_pool ()</h3>
+<pre class="programlisting"><a class="link" href="gst-rtsp-server-GstRTSPAddressPool.html#GstRTSPAddressPool" title="struct GstRTSPAddressPool"><span class="returnvalue">GstRTSPAddressPool</span></a> * gst_rtsp_media_factory_get_address_pool
+                                                        (<em class="parameter"><code><a class="link" href="GstRTSPMediaFactory.html" title="GstRTSPMediaFactory"><span class="type">GstRTSPMediaFactory</span></a> *factory</code></em>);</pre>
+<p>
+Get the <a class="link" href="gst-rtsp-server-GstRTSPAddressPool.html#GstRTSPAddressPool" title="struct GstRTSPAddressPool"><span class="type">GstRTSPAddressPool</span></a> used as the address pool of <em class="parameter"><code>factory</code></em>.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>factory</code></em> :</span></p></td>
+<td>a <a class="link" href="GstRTSPMediaFactory.html" title="GstRTSPMediaFactory"><span class="type">GstRTSPMediaFactory</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>the <a class="link" href="gst-rtsp-server-GstRTSPAddressPool.html#GstRTSPAddressPool" title="struct GstRTSPAddressPool"><span class="type">GstRTSPAddressPool</span></a> of <em class="parameter"><code>factory</code></em>. <a href="/usr/share/gtk-doc/html/gobject/gobject-The-Base-Object-Type.html#g-object-unref"><code class="function">g_object_unref()</code></a> after
+usage. <span class="annotation">[<acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>]</span>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gst-rtsp-media-factory-set-address-pool"></a><h3>gst_rtsp_media_factory_set_address_pool ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                gst_rtsp_media_factory_set_address_pool
+                                                        (<em class="parameter"><code><a class="link" href="GstRTSPMediaFactory.html" title="GstRTSPMediaFactory"><span class="type">GstRTSPMediaFactory</span></a> *factory</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="gst-rtsp-server-GstRTSPAddressPool.html#GstRTSPAddressPool" title="struct GstRTSPAddressPool"><span class="type">GstRTSPAddressPool</span></a> *pool</code></em>);</pre>
+<p>
+configure <em class="parameter"><code>pool</code></em> to be used as the address pool of <em class="parameter"><code>factory</code></em>.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>factory</code></em> :</span></p></td>
+<td>a <a class="link" href="GstRTSPMediaFactory.html" title="GstRTSPMediaFactory"><span class="type">GstRTSPMediaFactory</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>pool</code></em> :</span></p></td>
+<td>a <a class="link" href="gst-rtsp-server-GstRTSPAddressPool.html#GstRTSPAddressPool" title="struct GstRTSPAddressPool"><span class="type">GstRTSPAddressPool</span></a>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gst-rtsp-media-factory-get-buffer-size"></a><h3>gst_rtsp_media_factory_get_buffer_size ()</h3>
+<pre class="programlisting"><a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#guint"><span class="returnvalue">guint</span></a>               gst_rtsp_media_factory_get_buffer_size
+                                                        (<em class="parameter"><code><a class="link" href="GstRTSPMediaFactory.html" title="GstRTSPMediaFactory"><span class="type">GstRTSPMediaFactory</span></a> *factory</code></em>);</pre>
+<p>
+Get the kernel UDP buffer size.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>factory</code></em> :</span></p></td>
+<td>a <a class="link" href="GstRTSPMedia.html" title="GstRTSPMedia"><span class="type">GstRTSPMedia</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>the kernel UDP buffer size.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gst-rtsp-media-factory-set-buffer-size"></a><h3>gst_rtsp_media_factory_set_buffer_size ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                gst_rtsp_media_factory_set_buffer_size
+                                                        (<em class="parameter"><code><a class="link" href="GstRTSPMediaFactory.html" title="GstRTSPMediaFactory"><span class="type">GstRTSPMediaFactory</span></a> *factory</code></em>,
+                                                         <em class="parameter"><code><a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#guint"><span class="type">guint</span></a> size</code></em>);</pre>
+<p>
+Set the kernel UDP buffer size.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>factory</code></em> :</span></p></td>
+<td>a <a class="link" href="GstRTSPMedia.html" title="GstRTSPMedia"><span class="type">GstRTSPMedia</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>size</code></em> :</span></p></td>
+<td>the new value</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gst-rtsp-media-factory-construct"></a><h3>gst_rtsp_media_factory_construct ()</h3>
+<pre class="programlisting"><a class="link" href="GstRTSPMedia.html" title="GstRTSPMedia"><span class="returnvalue">GstRTSPMedia</span></a> *      gst_rtsp_media_factory_construct    (<em class="parameter"><code><a class="link" href="GstRTSPMediaFactory.html" title="GstRTSPMediaFactory"><span class="type">GstRTSPMediaFactory</span></a> *factory</code></em>,
+                                                         <em class="parameter"><code>const <a href="../gst-plugins-base-libs-1.0/gst-plugins-base-libs-gstrtspurl.html#GstRTSPUrl"><span class="type">GstRTSPUrl</span></a> *url</code></em>);</pre>
+<p>
+Construct the media object and create its streams. Implementations
+should create the needed gstreamer elements and add them to the result
+object. No state changes should be performed on them yet.
+</p>
+<p>
+One or more GstRTSPStream objects should be created from the result
+with <a class="link" href="GstRTSPMedia.html#gst-rtsp-media-create-stream" title="gst_rtsp_media_create_stream ()"><code class="function">gst_rtsp_media_create_stream()</code></a>.
+</p>
+<p>
+After the media is constructed, it can be configured and then prepared
+with <a class="link" href="GstRTSPMedia.html#gst-rtsp-media-prepare" title="gst_rtsp_media_prepare ()"><code class="function">gst_rtsp_media_prepare()</code></a>.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>factory</code></em> :</span></p></td>
+<td>a <a class="link" href="GstRTSPMediaFactory.html" title="GstRTSPMediaFactory"><span class="type">GstRTSPMediaFactory</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>url</code></em> :</span></p></td>
+<td>the url used</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>a new <a class="link" href="GstRTSPMedia.html" title="GstRTSPMedia"><span class="type">GstRTSPMedia</span></a> if the media could be prepared. <span class="annotation">[<acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>]</span>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gst-rtsp-media-factory-create-element"></a><h3>gst_rtsp_media_factory_create_element ()</h3>
+<pre class="programlisting"><a href="../gstreamer-1.0/GstElement.html"><span class="returnvalue">GstElement</span></a> *        gst_rtsp_media_factory_create_element
+                                                        (<em class="parameter"><code><a class="link" href="GstRTSPMediaFactory.html" title="GstRTSPMediaFactory"><span class="type">GstRTSPMediaFactory</span></a> *factory</code></em>,
+                                                         <em class="parameter"><code>const <a href="../gst-plugins-base-libs-1.0/gst-plugins-base-libs-gstrtspurl.html#GstRTSPUrl"><span class="type">GstRTSPUrl</span></a> *url</code></em>);</pre>
+<p>
+Construct and return a <a href="../gstreamer-1.0/GstElement.html"><span class="type">GstElement</span></a> that is a <a href="../gstreamer-1.0/GstBin.html"><span class="type">GstBin</span></a> containing
+the elements to use for streaming the media.
+</p>
+<p>
+The bin should contain payloaders pay%d for each stream. The default
+implementation of this function returns the bin created from the
+launch parameter.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>factory</code></em> :</span></p></td>
+<td>a <a class="link" href="GstRTSPMediaFactory.html" title="GstRTSPMediaFactory"><span class="type">GstRTSPMediaFactory</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>url</code></em> :</span></p></td>
+<td>the url used</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>(transfer floating) a new <a href="../gstreamer-1.0/GstElement.html"><span class="type">GstElement</span></a>.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+<div class="refsect1">
+<a name="GstRTSPMediaFactory.property-details"></a><h2>Property Details</h2>
+<div class="refsect2">
+<a name="GstRTSPMediaFactory--buffer-size"></a><h3>The <code class="literal">"buffer-size"</code> property</h3>
+<pre class="programlisting">  "buffer-size"              <a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#guint"><span class="type">guint</span></a>                 : Read / Write</pre>
+<p>The kernel UDP buffer size to use.</p>
+<p>Default value: 524288</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="GstRTSPMediaFactory--eos-shutdown"></a><h3>The <code class="literal">"eos-shutdown"</code> property</h3>
+<pre class="programlisting">  "eos-shutdown"             <a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a>              : Read / Write</pre>
+<p>Send EOS down the pipeline before shutting down.</p>
+<p>Default value: FALSE</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="GstRTSPMediaFactory--launch"></a><h3>The <code class="literal">"launch"</code> property</h3>
+<pre class="programlisting">  "launch"                   <a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a>*                : Read / Write</pre>
+<p>A launch description of the pipeline.</p>
+<p>Default value: NULL</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="GstRTSPMediaFactory--protocols"></a><h3>The <code class="literal">"protocols"</code> property</h3>
+<pre class="programlisting">  "protocols"                <a href="../gst-plugins-base-libs-1.0/gst-plugins-base-libs-gstrtsptransport.html#GstRTSPLowerTrans"><span class="type">GstRTSPLowerTrans</span></a>     : Read / Write</pre>
+<p>Allowed lower transport protocols.</p>
+<p>Default value: GST_RTSP_LOWER_TRANS_UDP|GST_RTSP_LOWER_TRANS_UDP_MCAST|GST_RTSP_LOWER_TRANS_TCP</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="GstRTSPMediaFactory--shared"></a><h3>The <code class="literal">"shared"</code> property</h3>
+<pre class="programlisting">  "shared"                   <a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a>              : Read / Write</pre>
+<p>If media from this factory is shared.</p>
+<p>Default value: FALSE</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="GstRTSPMediaFactory--suspend-mode"></a><h3>The <code class="literal">"suspend-mode"</code> property</h3>
+<pre class="programlisting">  "suspend-mode"             <span class="type">GstRTSPSuspendMode</span>    : Read / Write</pre>
+<p>Control how media will be suspended.</p>
+<p>Default value: GST_RTSP_SUSPEND_MODE_NONE</p>
+</div>
+</div>
+<div class="refsect1">
+<a name="GstRTSPMediaFactory.signal-details"></a><h2>Signal Details</h2>
+<div class="refsect2">
+<a name="GstRTSPMediaFactory-media-configure"></a><h3>The <code class="literal">"media-configure"</code> signal</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                user_function                      (<a class="link" href="GstRTSPMediaFactory.html" title="GstRTSPMediaFactory"><span class="type">GstRTSPMediaFactory</span></a> *gstrtspmediafactory,
+                                                        <a class="link" href="GstRTSPMedia.html" title="GstRTSPMedia"><span class="type">GstRTSPMedia</span></a>        *arg1,
+                                                        <a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a>             user_data)                : <a href="/usr/share/gtk-doc/html/gobject/gobject-Signals.html#G-SIGNAL-RUN-LAST:CAPS"><code class="literal">Run Last</code></a></pre>
+</div>
+<hr>
+<div class="refsect2">
+<a name="GstRTSPMediaFactory-media-constructed"></a><h3>The <code class="literal">"media-constructed"</code> signal</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                user_function                      (<a class="link" href="GstRTSPMediaFactory.html" title="GstRTSPMediaFactory"><span class="type">GstRTSPMediaFactory</span></a> *gstrtspmediafactory,
+                                                        <a class="link" href="GstRTSPMedia.html" title="GstRTSPMedia"><span class="type">GstRTSPMedia</span></a>        *arg1,
+                                                        <a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a>             user_data)                : <a href="/usr/share/gtk-doc/html/gobject/gobject-Signals.html#G-SIGNAL-RUN-LAST:CAPS"><code class="literal">Run Last</code></a></pre>
+</div>
+</div>
+<div class="refsect1">
+<a name="GstRTSPMediaFactory.see-also"></a><h2>See Also</h2>
+<a class="link" href="GstRTSPMountPoints.html" title="GstRTSPMountPoints"><span class="type">GstRTSPMountPoints</span></a>, <a class="link" href="GstRTSPMedia.html" title="GstRTSPMedia"><span class="type">GstRTSPMedia</span></a>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.18</div>
+</body>
+</html>

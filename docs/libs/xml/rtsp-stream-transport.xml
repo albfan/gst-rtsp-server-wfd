@@ -1,0 +1,331 @@
+<?xml version="1.0"?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
+               "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
+<!ENTITY % version-entities SYSTEM "version.entities">
+%version-entities;
+]>
+
+<refentry id="gst-rtsp-server-GstRTSPStreamTransport">
+<refmeta>
+<refentrytitle role="top_of_page" id="gst-rtsp-server-GstRTSPStreamTransport.top_of_page">GstRTSPStreamTransport</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>
+  GST-RTSP-SERVER Library
+</refmiscinfo>
+</refmeta>
+<refnamediv>
+<refname>GstRTSPStreamTransport</refname>
+<refpurpose>A media stream transport configuration</refpurpose>
+</refnamediv>
+
+<refsynopsisdiv id="gst-rtsp-server-GstRTSPStreamTransport.synopsis" role="synopsis">
+<title role="synopsis.title">Synopsis</title>
+
+<synopsis>struct              <link linkend="GstRTSPStreamTransport">GstRTSPStreamTransport</link>;
+struct              <link linkend="GstRTSPStreamTransportClass">GstRTSPStreamTransportClass</link>;
+<link linkend="GstRTSPStreamTransport"><returnvalue>GstRTSPStreamTransport</returnvalue></link> * <link linkend="gst-rtsp-stream-transport-new">gst_rtsp_stream_transport_new</link>  (<parameter><link linkend="GstRTSPStream"><type>GstRTSPStream</type></link> *stream</parameter>,
+                                                         <parameter><link linkend="GstRTSPTransport"><type>GstRTSPTransport</type></link> *tr</parameter>);
+<link linkend="GstRTSPStream"><returnvalue>GstRTSPStream</returnvalue></link> *     <link linkend="gst-rtsp-stream-transport-get-stream">gst_rtsp_stream_transport_get_stream</link>
+                                                        (<parameter><link linkend="GstRTSPStreamTransport"><type>GstRTSPStreamTransport</type></link> *trans</parameter>);
+const <link linkend="GstRTSPTransport"><returnvalue>GstRTSPTransport</returnvalue></link> * <link linkend="gst-rtsp-stream-transport-get-transport">gst_rtsp_stream_transport_get_transport</link>
+                                                        (<parameter><link linkend="GstRTSPStreamTransport"><type>GstRTSPStreamTransport</type></link> *trans</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="gst-rtsp-stream-transport-set-transport">gst_rtsp_stream_transport_set_transport</link>
+                                                        (<parameter><link linkend="GstRTSPStreamTransport"><type>GstRTSPStreamTransport</type></link> *trans</parameter>,
+                                                         <parameter><link linkend="GstRTSPTransport"><type>GstRTSPTransport</type></link> *tr</parameter>);
+<link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            (<link linkend="GstRTSPSendFunc">*GstRTSPSendFunc</link>)                  (<parameter><link linkend="GstBuffer"><type>GstBuffer</type></link> *buffer</parameter>,
+                                                         <parameter><link linkend="guint8"><type>guint8</type></link> channel</parameter>,
+                                                         <parameter><link linkend="gpointer"><type>gpointer</type></link> user_data</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="gst-rtsp-stream-transport-set-callbacks">gst_rtsp_stream_transport_set_callbacks</link>
+                                                        (<parameter><link linkend="GstRTSPStreamTransport"><type>GstRTSPStreamTransport</type></link> *trans</parameter>,
+                                                         <parameter><link linkend="GstRTSPSendFunc"><type>GstRTSPSendFunc</type></link> send_rtp</parameter>,
+                                                         <parameter><link linkend="GstRTSPSendFunc"><type>GstRTSPSendFunc</type></link> send_rtcp</parameter>,
+                                                         <parameter><link linkend="gpointer"><type>gpointer</type></link> user_data</parameter>,
+                                                         <parameter><link linkend="GDestroyNotify"><type>GDestroyNotify</type></link> notify</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                (<link linkend="GstRTSPKeepAliveFunc">*GstRTSPKeepAliveFunc</link>)             (<parameter><link linkend="gpointer"><type>gpointer</type></link> user_data</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="gst-rtsp-stream-transport-set-keepalive">gst_rtsp_stream_transport_set_keepalive</link>
+                                                        (<parameter><link linkend="GstRTSPStreamTransport"><type>GstRTSPStreamTransport</type></link> *trans</parameter>,
+                                                         <parameter><link linkend="GstRTSPKeepAliveFunc"><type>GstRTSPKeepAliveFunc</type></link> keep_alive</parameter>,
+                                                         <parameter><link linkend="gpointer"><type>gpointer</type></link> user_data</parameter>,
+                                                         <parameter><link linkend="GDestroyNotify"><type>GDestroyNotify</type></link> notify</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="gst-rtsp-stream-transport-keep-alive">gst_rtsp_stream_transport_keep_alive</link>
+                                                        (<parameter><link linkend="GstRTSPStreamTransport"><type>GstRTSPStreamTransport</type></link> *trans</parameter>);
+<link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            <link linkend="gst-rtsp-stream-transport-set-active">gst_rtsp_stream_transport_set_active</link>
+                                                        (<parameter><link linkend="GstRTSPStreamTransport"><type>GstRTSPStreamTransport</type></link> *trans</parameter>,
+                                                         <parameter><link linkend="gboolean"><type>gboolean</type></link> active</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="gst-rtsp-stream-transport-set-timed-out">gst_rtsp_stream_transport_set_timed_out</link>
+                                                        (<parameter><link linkend="GstRTSPStreamTransport"><type>GstRTSPStreamTransport</type></link> *trans</parameter>,
+                                                         <parameter><link linkend="gboolean"><type>gboolean</type></link> timedout</parameter>);
+<link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            <link linkend="gst-rtsp-stream-transport-is-timed-out">gst_rtsp_stream_transport_is_timed_out</link>
+                                                        (<parameter><link linkend="GstRTSPStreamTransport"><type>GstRTSPStreamTransport</type></link> *trans</parameter>);
+<link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            <link linkend="gst-rtsp-stream-transport-send-rtcp">gst_rtsp_stream_transport_send_rtcp</link> (<parameter><link linkend="GstRTSPStreamTransport"><type>GstRTSPStreamTransport</type></link> *trans</parameter>,
+                                                         <parameter><link linkend="GstBuffer"><type>GstBuffer</type></link> *buffer</parameter>);
+<link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            <link linkend="gst-rtsp-stream-transport-send-rtp">gst_rtsp_stream_transport_send_rtp</link>  (<parameter><link linkend="GstRTSPStreamTransport"><type>GstRTSPStreamTransport</type></link> *trans</parameter>,
+                                                         <parameter><link linkend="GstBuffer"><type>GstBuffer</type></link> *buffer</parameter>);
+</synopsis>
+</refsynopsisdiv>
+
+<refsect1 id="gst-rtsp-server-GstRTSPStreamTransport.description" role="desc">
+<title role="desc.title">Description</title>
+<para>
+The <link linkend="GstRTSPStreamTransport"><type>GstRTSPStreamTransport</type></link> configures the transport used by a
+<link linkend="GstRTSPStream"><type>GstRTSPStream</type></link>. It is usually manages by a <link linkend="GstRTSPSessionMedia"><type>GstRTSPSessionMedia</type></link> object.
+</para>
+<para>
+With <link linkend="gst-rtsp-stream-transport-set-callbacks"><function>gst_rtsp_stream_transport_set_callbacks()</function></link>, callbacks can be configured
+to handle the RTP and RTCP packets from the stream, for example when they
+need to be sent over TCP.
+</para>
+<para>
+With  <link linkend="gst-rtsp-stream-transport-set-active"><function>gst_rtsp_stream_transport_set_active()</function></link> the transports are added and
+removed from the stream.
+</para>
+<para>
+A <link linkend="GstRTSPStream"><type>GstRTSPStream</type></link> will call <link linkend="gst-rtsp-stream-transport-keep-alive"><function>gst_rtsp_stream_transport_keep_alive()</function></link> when RTCP
+is received from the client. It will also call
+<link linkend="gst-rtsp-stream-transport-set-timed-out"><function>gst_rtsp_stream_transport_set_timed_out()</function></link> when a receiver has timed out.
+</para>
+<para>
+Last reviewed on 2013-07-16 (1.0.0)
+</para>
+</refsect1>
+<refsect1 id="gst-rtsp-server-GstRTSPStreamTransport.details" role="details">
+<title role="details.title">Details</title>
+<refsect2 id="GstRTSPStreamTransport" role="struct">
+<title>struct GstRTSPStreamTransport</title>
+<indexterm zone="GstRTSPStreamTransport"><primary>GstRTSPStreamTransport</primary></indexterm>
+<programlisting>struct GstRTSPStreamTransport {
+  GObject              parent;
+};
+</programlisting>
+<para>
+A Transport description for a stream
+</para><variablelist role="struct">
+<varlistentry><term><link linkend="GObject"><type>GObject</type></link>&#160;<structfield id="GstRTSPStreamTransport.parent">parent</structfield>;</term>
+<listitem><simpara>parent instance</simpara></listitem>
+</varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GstRTSPStreamTransportClass" role="struct">
+<title>struct GstRTSPStreamTransportClass</title>
+<indexterm zone="GstRTSPStreamTransportClass"><primary>GstRTSPStreamTransportClass</primary></indexterm>
+<programlisting>struct GstRTSPStreamTransportClass {
+  GObjectClass parent_class;
+};
+</programlisting>
+</refsect2>
+<refsect2 id="gst-rtsp-stream-transport-new" role="function">
+<title>gst_rtsp_stream_transport_new ()</title>
+<indexterm zone="gst-rtsp-stream-transport-new"><primary>gst_rtsp_stream_transport_new</primary></indexterm>
+<programlisting><link linkend="GstRTSPStreamTransport"><returnvalue>GstRTSPStreamTransport</returnvalue></link> * gst_rtsp_stream_transport_new  (<parameter><link linkend="GstRTSPStream"><type>GstRTSPStream</type></link> *stream</parameter>,
+                                                         <parameter><link linkend="GstRTSPTransport"><type>GstRTSPTransport</type></link> *tr</parameter>);</programlisting>
+<para>
+Create a new <link linkend="GstRTSPStreamTransport"><type>GstRTSPStreamTransport</type></link> that can be used to manage
+<parameter>stream</parameter> with transport <parameter>tr</parameter>.
+</para><variablelist role="params">
+<varlistentry><term><parameter>stream</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstRTSPStream"><type>GstRTSPStream</type></link></simpara></listitem></varlistentry>
+<varlistentry><term><parameter>tr</parameter>&#160;:</term>
+<listitem><simpara>a GstRTSPTransport. <emphasis role="annotation">[<acronym>transfer full</acronym>]</emphasis></simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>a new <link linkend="GstRTSPStreamTransport"><type>GstRTSPStreamTransport</type></link></simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gst-rtsp-stream-transport-get-stream" role="function">
+<title>gst_rtsp_stream_transport_get_stream ()</title>
+<indexterm zone="gst-rtsp-stream-transport-get-stream"><primary>gst_rtsp_stream_transport_get_stream</primary></indexterm>
+<programlisting><link linkend="GstRTSPStream"><returnvalue>GstRTSPStream</returnvalue></link> *     gst_rtsp_stream_transport_get_stream
+                                                        (<parameter><link linkend="GstRTSPStreamTransport"><type>GstRTSPStreamTransport</type></link> *trans</parameter>);</programlisting>
+<para>
+Get the <link linkend="GstRTSPStream"><type>GstRTSPStream</type></link> used when constructing <parameter>trans</parameter>.
+</para><variablelist role="params">
+<varlistentry><term><parameter>trans</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstRTSPStreamTransport"><type>GstRTSPStreamTransport</type></link></simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>the stream used when constructing <parameter>trans</parameter>. <emphasis role="annotation">[<acronym>transfer none</acronym>]</emphasis></simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gst-rtsp-stream-transport-get-transport" role="function">
+<title>gst_rtsp_stream_transport_get_transport ()</title>
+<indexterm zone="gst-rtsp-stream-transport-get-transport"><primary>gst_rtsp_stream_transport_get_transport</primary></indexterm>
+<programlisting>const <link linkend="GstRTSPTransport"><returnvalue>GstRTSPTransport</returnvalue></link> * gst_rtsp_stream_transport_get_transport
+                                                        (<parameter><link linkend="GstRTSPStreamTransport"><type>GstRTSPStreamTransport</type></link> *trans</parameter>);</programlisting>
+<para>
+Get the transport configured in <parameter>trans</parameter>.
+</para><variablelist role="params">
+<varlistentry><term><parameter>trans</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstRTSPStreamTransport"><type>GstRTSPStreamTransport</type></link></simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>the transport configured in <parameter>trans</parameter>. It remains
+valid for as long as <parameter>trans</parameter> is valid. <emphasis role="annotation">[<acronym>transfer none</acronym>]</emphasis></simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gst-rtsp-stream-transport-set-transport" role="function">
+<title>gst_rtsp_stream_transport_set_transport ()</title>
+<indexterm zone="gst-rtsp-stream-transport-set-transport"><primary>gst_rtsp_stream_transport_set_transport</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                gst_rtsp_stream_transport_set_transport
+                                                        (<parameter><link linkend="GstRTSPStreamTransport"><type>GstRTSPStreamTransport</type></link> *trans</parameter>,
+                                                         <parameter><link linkend="GstRTSPTransport"><type>GstRTSPTransport</type></link> *tr</parameter>);</programlisting>
+<para>
+Set <parameter>tr</parameter> as the client transport. This function takes ownership of the
+passed <parameter>tr</parameter>.
+</para><variablelist role="params">
+<varlistentry><term><parameter>trans</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstRTSPStreamTransport"><type>GstRTSPStreamTransport</type></link></simpara></listitem></varlistentry>
+<varlistentry><term><parameter>tr</parameter>&#160;:</term>
+<listitem><simpara>a client <link linkend="GstRTSPTransport"><type>GstRTSPTransport</type></link>. <emphasis role="annotation">[<acronym>transfer full</acronym>]</emphasis></simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GstRTSPSendFunc" role="function">
+<title>GstRTSPSendFunc ()</title>
+<indexterm zone="GstRTSPSendFunc"><primary>GstRTSPSendFunc</primary></indexterm>
+<programlisting><link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            (*GstRTSPSendFunc)                  (<parameter><link linkend="GstBuffer"><type>GstBuffer</type></link> *buffer</parameter>,
+                                                         <parameter><link linkend="guint8"><type>guint8</type></link> channel</parameter>,
+                                                         <parameter><link linkend="gpointer"><type>gpointer</type></link> user_data</parameter>);</programlisting>
+<para>
+Function registered with <link linkend="gst-rtsp-stream-transport-set-callbacks"><function>gst_rtsp_stream_transport_set_callbacks()</function></link> and
+called when <parameter>buffer</parameter> must be sent on <parameter>channel</parameter>.
+</para><variablelist role="params">
+<varlistentry><term><parameter>buffer</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstBuffer"><type>GstBuffer</type></link></simpara></listitem></varlistentry>
+<varlistentry><term><parameter>channel</parameter>&#160;:</term>
+<listitem><simpara>a channel</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>user_data</parameter>&#160;:</term>
+<listitem><simpara>user data</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara><link linkend="TRUE:CAPS"><literal>TRUE</literal></link> on success</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gst-rtsp-stream-transport-set-callbacks" role="function">
+<title>gst_rtsp_stream_transport_set_callbacks ()</title>
+<indexterm zone="gst-rtsp-stream-transport-set-callbacks"><primary>gst_rtsp_stream_transport_set_callbacks</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                gst_rtsp_stream_transport_set_callbacks
+                                                        (<parameter><link linkend="GstRTSPStreamTransport"><type>GstRTSPStreamTransport</type></link> *trans</parameter>,
+                                                         <parameter><link linkend="GstRTSPSendFunc"><type>GstRTSPSendFunc</type></link> send_rtp</parameter>,
+                                                         <parameter><link linkend="GstRTSPSendFunc"><type>GstRTSPSendFunc</type></link> send_rtcp</parameter>,
+                                                         <parameter><link linkend="gpointer"><type>gpointer</type></link> user_data</parameter>,
+                                                         <parameter><link linkend="GDestroyNotify"><type>GDestroyNotify</type></link> notify</parameter>);</programlisting>
+<para>
+Install callbacks that will be called when data for a stream should be sent
+to a client. This is usually used when sending RTP/RTCP over TCP.
+</para><variablelist role="params">
+<varlistentry><term><parameter>trans</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstRTSPStreamTransport"><type>GstRTSPStreamTransport</type></link></simpara></listitem></varlistentry>
+<varlistentry><term><parameter>send_rtp</parameter>&#160;:</term>
+<listitem><simpara>a callback called when RTP should be sent. <emphasis role="annotation">[<acronym>scope notified</acronym>]</emphasis></simpara></listitem></varlistentry>
+<varlistentry><term><parameter>send_rtcp</parameter>&#160;:</term>
+<listitem><simpara>a callback called when RTCP should be sent. <emphasis role="annotation">[<acronym>scope notified</acronym>]</emphasis></simpara></listitem></varlistentry>
+<varlistentry><term><parameter>user_data</parameter>&#160;:</term>
+<listitem><simpara>user data passed to callbacks</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>notify</parameter>&#160;:</term>
+<listitem><simpara>called with the user_data when no longer needed.</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GstRTSPKeepAliveFunc" role="function">
+<title>GstRTSPKeepAliveFunc ()</title>
+<indexterm zone="GstRTSPKeepAliveFunc"><primary>GstRTSPKeepAliveFunc</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                (*GstRTSPKeepAliveFunc)             (<parameter><link linkend="gpointer"><type>gpointer</type></link> user_data</parameter>);</programlisting>
+<para>
+Function registered with <link linkend="gst-rtsp-stream-transport-set-keepalive"><function>gst_rtsp_stream_transport_set_keepalive()</function></link> and called
+when the stream is active.
+</para><variablelist role="params">
+<varlistentry><term><parameter>user_data</parameter>&#160;:</term>
+<listitem><simpara>user data</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gst-rtsp-stream-transport-set-keepalive" role="function">
+<title>gst_rtsp_stream_transport_set_keepalive ()</title>
+<indexterm zone="gst-rtsp-stream-transport-set-keepalive"><primary>gst_rtsp_stream_transport_set_keepalive</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                gst_rtsp_stream_transport_set_keepalive
+                                                        (<parameter><link linkend="GstRTSPStreamTransport"><type>GstRTSPStreamTransport</type></link> *trans</parameter>,
+                                                         <parameter><link linkend="GstRTSPKeepAliveFunc"><type>GstRTSPKeepAliveFunc</type></link> keep_alive</parameter>,
+                                                         <parameter><link linkend="gpointer"><type>gpointer</type></link> user_data</parameter>,
+                                                         <parameter><link linkend="GDestroyNotify"><type>GDestroyNotify</type></link> notify</parameter>);</programlisting>
+<para>
+Install callbacks that will be called when RTCP packets are received from the
+receiver of <parameter>trans</parameter>.
+</para><variablelist role="params">
+<varlistentry><term><parameter>trans</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstRTSPStreamTransport"><type>GstRTSPStreamTransport</type></link></simpara></listitem></varlistentry>
+<varlistentry><term><parameter>keep_alive</parameter>&#160;:</term>
+<listitem><simpara>a callback called when the receiver is active</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>user_data</parameter>&#160;:</term>
+<listitem><simpara>user data passed to callback</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>notify</parameter>&#160;:</term>
+<listitem><simpara>called with the user_data when no longer needed.</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gst-rtsp-stream-transport-keep-alive" role="function">
+<title>gst_rtsp_stream_transport_keep_alive ()</title>
+<indexterm zone="gst-rtsp-stream-transport-keep-alive"><primary>gst_rtsp_stream_transport_keep_alive</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                gst_rtsp_stream_transport_keep_alive
+                                                        (<parameter><link linkend="GstRTSPStreamTransport"><type>GstRTSPStreamTransport</type></link> *trans</parameter>);</programlisting>
+<para>
+Signal the installed keep_alive callback for <parameter>trans</parameter>.
+</para><variablelist role="params">
+<varlistentry><term><parameter>trans</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstRTSPStreamTransport"><type>GstRTSPStreamTransport</type></link></simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gst-rtsp-stream-transport-set-active" role="function">
+<title>gst_rtsp_stream_transport_set_active ()</title>
+<indexterm zone="gst-rtsp-stream-transport-set-active"><primary>gst_rtsp_stream_transport_set_active</primary></indexterm>
+<programlisting><link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            gst_rtsp_stream_transport_set_active
+                                                        (<parameter><link linkend="GstRTSPStreamTransport"><type>GstRTSPStreamTransport</type></link> *trans</parameter>,
+                                                         <parameter><link linkend="gboolean"><type>gboolean</type></link> active</parameter>);</programlisting>
+<para>
+Activate or deactivate datatransfer configured in <parameter>trans</parameter>.
+</para><variablelist role="params">
+<varlistentry><term><parameter>trans</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstRTSPStreamTransport"><type>GstRTSPStreamTransport</type></link></simpara></listitem></varlistentry>
+<varlistentry><term><parameter>active</parameter>&#160;:</term>
+<listitem><simpara>new state of <parameter>trans</parameter></simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara><link linkend="TRUE:CAPS"><literal>TRUE</literal></link> when the state was changed.</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gst-rtsp-stream-transport-set-timed-out" role="function">
+<title>gst_rtsp_stream_transport_set_timed_out ()</title>
+<indexterm zone="gst-rtsp-stream-transport-set-timed-out"><primary>gst_rtsp_stream_transport_set_timed_out</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                gst_rtsp_stream_transport_set_timed_out
+                                                        (<parameter><link linkend="GstRTSPStreamTransport"><type>GstRTSPStreamTransport</type></link> *trans</parameter>,
+                                                         <parameter><link linkend="gboolean"><type>gboolean</type></link> timedout</parameter>);</programlisting>
+<para>
+Set the timed out state of <parameter>trans</parameter> to <parameter>timedout</parameter>
+</para><variablelist role="params">
+<varlistentry><term><parameter>trans</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstRTSPStreamTransport"><type>GstRTSPStreamTransport</type></link></simpara></listitem></varlistentry>
+<varlistentry><term><parameter>timedout</parameter>&#160;:</term>
+<listitem><simpara>timed out value</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gst-rtsp-stream-transport-is-timed-out" role="function">
+<title>gst_rtsp_stream_transport_is_timed_out ()</title>
+<indexterm zone="gst-rtsp-stream-transport-is-timed-out"><primary>gst_rtsp_stream_transport_is_timed_out</primary></indexterm>
+<programlisting><link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            gst_rtsp_stream_transport_is_timed_out
+                                                        (<parameter><link linkend="GstRTSPStreamTransport"><type>GstRTSPStreamTransport</type></link> *trans</parameter>);</programlisting>
+<para>
+Check if <parameter>trans</parameter> is timed out.
+</para><variablelist role="params">
+<varlistentry><term><parameter>trans</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstRTSPStreamTransport"><type>GstRTSPStreamTransport</type></link></simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara><link linkend="TRUE:CAPS"><literal>TRUE</literal></link> if <parameter>trans</parameter> timed out.</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gst-rtsp-stream-transport-send-rtcp" role="function">
+<title>gst_rtsp_stream_transport_send_rtcp ()</title>
+<indexterm zone="gst-rtsp-stream-transport-send-rtcp"><primary>gst_rtsp_stream_transport_send_rtcp</primary></indexterm>
+<programlisting><link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            gst_rtsp_stream_transport_send_rtcp (<parameter><link linkend="GstRTSPStreamTransport"><type>GstRTSPStreamTransport</type></link> *trans</parameter>,
+                                                         <parameter><link linkend="GstBuffer"><type>GstBuffer</type></link> *buffer</parameter>);</programlisting>
+<para>
+Send <parameter>buffer</parameter> to the installed RTCP callback for <parameter>trans</parameter>.
+</para><variablelist role="params">
+<varlistentry><term><parameter>trans</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstRTSPStreamTransport"><type>GstRTSPStreamTransport</type></link></simpara></listitem></varlistentry>
+<varlistentry><term><parameter>buffer</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstBuffer"><type>GstBuffer</type></link></simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara><link linkend="TRUE:CAPS"><literal>TRUE</literal></link> on success</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gst-rtsp-stream-transport-send-rtp" role="function">
+<title>gst_rtsp_stream_transport_send_rtp ()</title>
+<indexterm zone="gst-rtsp-stream-transport-send-rtp"><primary>gst_rtsp_stream_transport_send_rtp</primary></indexterm>
+<programlisting><link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            gst_rtsp_stream_transport_send_rtp  (<parameter><link linkend="GstRTSPStreamTransport"><type>GstRTSPStreamTransport</type></link> *trans</parameter>,
+                                                         <parameter><link linkend="GstBuffer"><type>GstBuffer</type></link> *buffer</parameter>);</programlisting>
+<para>
+Send <parameter>buffer</parameter> to the installed RTP callback for <parameter>trans</parameter>.
+</para><variablelist role="params">
+<varlistentry><term><parameter>trans</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstRTSPStreamTransport"><type>GstRTSPStreamTransport</type></link></simpara></listitem></varlistentry>
+<varlistentry><term><parameter>buffer</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstBuffer"><type>GstBuffer</type></link></simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara><link linkend="TRUE:CAPS"><literal>TRUE</literal></link> on success</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+
+</refsect1>
+<refsect1 id="gst-rtsp-server-GstRTSPStreamTransport.see-also">
+<title>See Also</title>
+<link linkend="GstRTSPStream"><type>GstRTSPStream</type></link>, <link linkend="GstRTSPSessionMedia"><type>GstRTSPSessionMedia</type></link>
+</refsect1>
+
+</refentry>

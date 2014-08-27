@@ -1,0 +1,207 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>GstRTSPContext</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<link rel="home" href="index.html" title="GStreamer RTSP Server Reference Manual">
+<link rel="up" href="ch01.html" title="">
+<link rel="prev" href="GstRTSPClient.html" title="GstRTSPClient">
+<link rel="next" href="GstRTSPMountPoints.html" title="GstRTSPMountPoints">
+<meta name="generator" content="GTK-Doc V1.18 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
+<tr valign="middle">
+<td><a accesskey="p" href="GstRTSPClient.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="ch01.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">GStreamer RTSP Server Reference Manual</th>
+<td><a accesskey="n" href="GstRTSPMountPoints.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr>
+<tr><td colspan="5" class="shortcuts">
+<a href="#gst-rtsp-server-GstRTSPContext.synopsis" class="shortcut">Top</a>
+                   | 
+                  <a href="#gst-rtsp-server-GstRTSPContext.description" class="shortcut">Description</a>
+</td></tr>
+</table>
+<div class="refentry">
+<a name="gst-rtsp-server-GstRTSPContext"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="gst-rtsp-server-GstRTSPContext.top_of_page"></a>GstRTSPContext</span></h2>
+<p>GstRTSPContext — A client request context</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsynopsisdiv">
+<a name="gst-rtsp-server-GstRTSPContext.synopsis"></a><h2>Synopsis</h2>
+<pre class="synopsis">struct              <a class="link" href="gst-rtsp-server-GstRTSPContext.html#GstRTSPContext" title="struct GstRTSPContext">GstRTSPContext</a>;
+<a class="link" href="gst-rtsp-server-GstRTSPContext.html#GstRTSPContext" title="struct GstRTSPContext"><span class="returnvalue">GstRTSPContext</span></a> *    <a class="link" href="gst-rtsp-server-GstRTSPContext.html#gst-rtsp-context-get-current" title="gst_rtsp_context_get_current ()">gst_rtsp_context_get_current</a>        (<em class="parameter"><code><span class="type">void</span></code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="gst-rtsp-server-GstRTSPContext.html#gst-rtsp-context-push-current" title="gst_rtsp_context_push_current ()">gst_rtsp_context_push_current</a>       (<em class="parameter"><code><a class="link" href="gst-rtsp-server-GstRTSPContext.html#GstRTSPContext" title="struct GstRTSPContext"><span class="type">GstRTSPContext</span></a> *ctx</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="gst-rtsp-server-GstRTSPContext.html#gst-rtsp-context-pop-current" title="gst_rtsp_context_pop_current ()">gst_rtsp_context_pop_current</a>        (<em class="parameter"><code><a class="link" href="gst-rtsp-server-GstRTSPContext.html#GstRTSPContext" title="struct GstRTSPContext"><span class="type">GstRTSPContext</span></a> *ctx</code></em>);
+</pre>
+</div>
+<div class="refsect1">
+<a name="gst-rtsp-server-GstRTSPContext.description"></a><h2>Description</h2>
+<p>
+Last reviewed on 2013-07-11 (1.0.0)
+</p>
+</div>
+<div class="refsect1">
+<a name="gst-rtsp-server-GstRTSPContext.details"></a><h2>Details</h2>
+<div class="refsect2">
+<a name="GstRTSPContext"></a><h3>struct GstRTSPContext</h3>
+<pre class="programlisting">struct GstRTSPContext {
+  GstRTSPServer       *server;
+  GstRTSPConnection   *conn;
+  GstRTSPClient       *client;
+  GstRTSPMessage      *request;
+  GstRTSPUrl          *uri;
+  GstRTSPMethod        method;
+  GstRTSPAuth         *auth;
+  GstRTSPToken        *token;
+  GstRTSPSession      *session;
+  GstRTSPSessionMedia *sessmedia;
+  GstRTSPMediaFactory *factory;
+  GstRTSPMedia        *media;
+  GstRTSPStream       *stream;
+  GstRTSPMessage      *response;
+};
+</pre>
+<p>
+Information passed around containing the context of a request.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><a class="link" href="GstRTSPServer.html" title="GstRTSPServer"><span class="type">GstRTSPServer</span></a> *<em class="structfield"><code><a name="GstRTSPContext.server"></a>server</code></em>;</span></p></td>
+<td>the server</td>
+</tr>
+<tr>
+<td><p><span class="term"><a href="../gst-plugins-base-libs-1.0/gst-plugins-base-libs-gstrtspconnection.html#GstRTSPConnection"><span class="type">GstRTSPConnection</span></a> *<em class="structfield"><code><a name="GstRTSPContext.conn"></a>conn</code></em>;</span></p></td>
+<td>the connection</td>
+</tr>
+<tr>
+<td><p><span class="term"><a class="link" href="GstRTSPClient.html" title="GstRTSPClient"><span class="type">GstRTSPClient</span></a> *<em class="structfield"><code><a name="GstRTSPContext.client"></a>client</code></em>;</span></p></td>
+<td>the client</td>
+</tr>
+<tr>
+<td><p><span class="term"><a href="../gst-plugins-base-libs-1.0/gst-plugins-base-libs-gstrtspmessage.html#GstRTSPMessage"><span class="type">GstRTSPMessage</span></a> *<em class="structfield"><code><a name="GstRTSPContext.request"></a>request</code></em>;</span></p></td>
+<td>the complete request</td>
+</tr>
+<tr>
+<td><p><span class="term"><a href="../gst-plugins-base-libs-1.0/gst-plugins-base-libs-gstrtspurl.html#GstRTSPUrl"><span class="type">GstRTSPUrl</span></a> *<em class="structfield"><code><a name="GstRTSPContext.uri"></a>uri</code></em>;</span></p></td>
+<td>the complete url parsed from <em class="parameter"><code>request</code></em>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a href="../gst-plugins-base-libs-1.0/gst-plugins-base-libs-gstrtspdefs.html#GstRTSPMethod"><span class="type">GstRTSPMethod</span></a> <em class="structfield"><code><a name="GstRTSPContext.method"></a>method</code></em>;</span></p></td>
+<td>the parsed method of <em class="parameter"><code>uri</code></em>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a class="link" href="GstRTSPAuth.html" title="GstRTSPAuth"><span class="type">GstRTSPAuth</span></a> *<em class="structfield"><code><a name="GstRTSPContext.auth"></a>auth</code></em>;</span></p></td>
+<td>the current auth object or <a href="/usr/share/gtk-doc/html/glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a class="link" href="gst-rtsp-server-GstRTSPToken.html#GstRTSPToken" title="struct GstRTSPToken"><span class="type">GstRTSPToken</span></a> *<em class="structfield"><code><a name="GstRTSPContext.token"></a>token</code></em>;</span></p></td>
+<td>authorisation token</td>
+</tr>
+<tr>
+<td><p><span class="term"><a class="link" href="GstRTSPSession.html" title="GstRTSPSession"><span class="type">GstRTSPSession</span></a> *<em class="structfield"><code><a name="GstRTSPContext.session"></a>session</code></em>;</span></p></td>
+<td>the session, can be <a href="/usr/share/gtk-doc/html/glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a class="link" href="gst-rtsp-server-GstRTSPSessionMedia.html#GstRTSPSessionMedia" title="struct GstRTSPSessionMedia"><span class="type">GstRTSPSessionMedia</span></a> *<em class="structfield"><code><a name="GstRTSPContext.sessmedia"></a>sessmedia</code></em>;</span></p></td>
+<td>the session media for the url can be <a href="/usr/share/gtk-doc/html/glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a class="link" href="GstRTSPMediaFactory.html" title="GstRTSPMediaFactory"><span class="type">GstRTSPMediaFactory</span></a> *<em class="structfield"><code><a name="GstRTSPContext.factory"></a>factory</code></em>;</span></p></td>
+<td>the media factory for the url, can be <a href="/usr/share/gtk-doc/html/glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a class="link" href="GstRTSPMedia.html" title="GstRTSPMedia"><span class="type">GstRTSPMedia</span></a> *<em class="structfield"><code><a name="GstRTSPContext.media"></a>media</code></em>;</span></p></td>
+<td>the media for the url can be <a href="/usr/share/gtk-doc/html/glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a class="link" href="GstRTSPStream.html" title="GstRTSPStream"><span class="type">GstRTSPStream</span></a> *<em class="structfield"><code><a name="GstRTSPContext.stream"></a>stream</code></em>;</span></p></td>
+<td>the stream for the url can be <a href="/usr/share/gtk-doc/html/glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a href="../gst-plugins-base-libs-1.0/gst-plugins-base-libs-gstrtspmessage.html#GstRTSPMessage"><span class="type">GstRTSPMessage</span></a> *<em class="structfield"><code><a name="GstRTSPContext.response"></a>response</code></em>;</span></p></td>
+<td>the response</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gst-rtsp-context-get-current"></a><h3>gst_rtsp_context_get_current ()</h3>
+<pre class="programlisting"><a class="link" href="gst-rtsp-server-GstRTSPContext.html#GstRTSPContext" title="struct GstRTSPContext"><span class="returnvalue">GstRTSPContext</span></a> *    gst_rtsp_context_get_current        (<em class="parameter"><code><span class="type">void</span></code></em>);</pre>
+<p>
+Get the current <a class="link" href="gst-rtsp-server-GstRTSPContext.html#GstRTSPContext" title="struct GstRTSPContext"><span class="type">GstRTSPContext</span></a>. This object is retrieved from the
+current thread that is handling the request for a client.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>a <a class="link" href="gst-rtsp-server-GstRTSPContext.html#GstRTSPContext" title="struct GstRTSPContext"><span class="type">GstRTSPContext</span></a>
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gst-rtsp-context-push-current"></a><h3>gst_rtsp_context_push_current ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                gst_rtsp_context_push_current       (<em class="parameter"><code><a class="link" href="gst-rtsp-server-GstRTSPContext.html#GstRTSPContext" title="struct GstRTSPContext"><span class="type">GstRTSPContext</span></a> *ctx</code></em>);</pre>
+<p>
+Pushes <em class="parameter"><code>ctx</code></em> onto the context stack. The current
+context can then be received using <a class="link" href="gst-rtsp-server-GstRTSPContext.html#gst-rtsp-context-get-current" title="gst_rtsp_context_get_current ()"><code class="function">gst_rtsp_context_get_current()</code></a>.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>ctx</code></em> :</span></p></td>
+<td>a #<a class="link" href="gst-rtsp-server-GstRTSPContext.html#GstRTSPContext" title="struct GstRTSPContext"><span class="type">GstRTSPContext</span></a>
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gst-rtsp-context-pop-current"></a><h3>gst_rtsp_context_pop_current ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                gst_rtsp_context_pop_current        (<em class="parameter"><code><a class="link" href="gst-rtsp-server-GstRTSPContext.html#GstRTSPContext" title="struct GstRTSPContext"><span class="type">GstRTSPContext</span></a> *ctx</code></em>);</pre>
+<p>
+Pops <em class="parameter"><code>ctx</code></em> off the context stack (verifying that <em class="parameter"><code>ctx</code></em>
+is on the top of the stack).
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>ctx</code></em> :</span></p></td>
+<td>a <a class="link" href="gst-rtsp-server-GstRTSPContext.html#GstRTSPContext" title="struct GstRTSPContext"><span class="type">GstRTSPContext</span></a>
+</td>
+</tr></tbody>
+</table></div>
+</div>
+</div>
+<div class="refsect1">
+<a name="gst-rtsp-server-GstRTSPContext.see-also"></a><h2>See Also</h2>
+<a class="link" href="GstRTSPServer.html" title="GstRTSPServer"><span class="type">GstRTSPServer</span></a>, <a class="link" href="GstRTSPClient.html" title="GstRTSPClient"><span class="type">GstRTSPClient</span></a>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.18</div>
+</body>
+</html>

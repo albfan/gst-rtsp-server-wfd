@@ -1,0 +1,109 @@
+<?xml version="1.0"?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
+               "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
+<!ENTITY % version-entities SYSTEM "version.entities">
+%version-entities;
+]>
+
+<refentry id="gst-rtsp-server-GstRTSPMediaFactoryURI">
+<refmeta>
+<refentrytitle role="top_of_page" id="gst-rtsp-server-GstRTSPMediaFactoryURI.top_of_page">GstRTSPMediaFactoryURI</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>
+  GST-RTSP-SERVER Library
+</refmiscinfo>
+</refmeta>
+<refnamediv>
+<refname>GstRTSPMediaFactoryURI</refname>
+<refpurpose>A factory for URI sources</refpurpose>
+</refnamediv>
+
+<refsynopsisdiv id="gst-rtsp-server-GstRTSPMediaFactoryURI.synopsis" role="synopsis">
+<title role="synopsis.title">Synopsis</title>
+
+<synopsis>struct              <link linkend="GstRTSPMediaFactoryURI">GstRTSPMediaFactoryURI</link>;
+struct              <link linkend="GstRTSPMediaFactoryURIClass">GstRTSPMediaFactoryURIClass</link>;
+<link linkend="GstRTSPMediaFactoryURI"><returnvalue>GstRTSPMediaFactoryURI</returnvalue></link> * <link linkend="gst-rtsp-media-factory-uri-new">gst_rtsp_media_factory_uri_new</link> (<parameter><type>void</type></parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="gst-rtsp-media-factory-uri-set-uri">gst_rtsp_media_factory_uri_set_uri</link>  (<parameter><link linkend="GstRTSPMediaFactoryURI"><type>GstRTSPMediaFactoryURI</type></link> *factory</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *uri</parameter>);
+<link linkend="gchar"><returnvalue>gchar</returnvalue></link> *             <link linkend="gst-rtsp-media-factory-uri-get-uri">gst_rtsp_media_factory_uri_get_uri</link>  (<parameter><link linkend="GstRTSPMediaFactoryURI"><type>GstRTSPMediaFactoryURI</type></link> *factory</parameter>);
+</synopsis>
+</refsynopsisdiv>
+
+<refsect1 id="gst-rtsp-server-GstRTSPMediaFactoryURI.description" role="desc">
+<title role="desc.title">Description</title>
+<para>
+This specialized <link linkend="GstRTSPMediaFactory"><type>GstRTSPMediaFactory</type></link> constructs media pipelines from a URI,
+given with <link linkend="gst-rtsp-media-factory-uri-set-uri"><function>gst_rtsp_media_factory_uri_set_uri()</function></link>.
+</para>
+<para>
+It will automatically demux and payload the different streams found in the
+media at URL.
+</para>
+<para>
+Last reviewed on 2013-07-11 (1.0.0)
+</para>
+</refsect1>
+<refsect1 id="gst-rtsp-server-GstRTSPMediaFactoryURI.details" role="details">
+<title role="details.title">Details</title>
+<refsect2 id="GstRTSPMediaFactoryURI" role="struct">
+<title>struct GstRTSPMediaFactoryURI</title>
+<indexterm zone="GstRTSPMediaFactoryURI"><primary>GstRTSPMediaFactoryURI</primary></indexterm>
+<programlisting>struct GstRTSPMediaFactoryURI {
+  GstRTSPMediaFactory   parent;
+};
+</programlisting>
+<para>
+A media factory that creates a pipeline to play and uri.
+</para></refsect2>
+<refsect2 id="GstRTSPMediaFactoryURIClass" role="struct">
+<title>struct GstRTSPMediaFactoryURIClass</title>
+<indexterm zone="GstRTSPMediaFactoryURIClass"><primary>GstRTSPMediaFactoryURIClass</primary></indexterm>
+<programlisting>struct GstRTSPMediaFactoryURIClass {
+  GstRTSPMediaFactoryClass  parent_class;
+};
+</programlisting>
+<para>
+The <link linkend="GstRTSPMediaFactoryURI"><type>GstRTSPMediaFactoryURI</type></link> class structure.
+</para></refsect2>
+<refsect2 id="gst-rtsp-media-factory-uri-new" role="function">
+<title>gst_rtsp_media_factory_uri_new ()</title>
+<indexterm zone="gst-rtsp-media-factory-uri-new"><primary>gst_rtsp_media_factory_uri_new</primary></indexterm>
+<programlisting><link linkend="GstRTSPMediaFactoryURI"><returnvalue>GstRTSPMediaFactoryURI</returnvalue></link> * gst_rtsp_media_factory_uri_new (<parameter><type>void</type></parameter>);</programlisting>
+<para>
+Create a new <link linkend="GstRTSPMediaFactoryURI"><type>GstRTSPMediaFactoryURI</type></link> instance.
+</para><variablelist role="params">
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>a new <link linkend="GstRTSPMediaFactoryURI"><type>GstRTSPMediaFactoryURI</type></link> object.</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gst-rtsp-media-factory-uri-set-uri" role="function">
+<title>gst_rtsp_media_factory_uri_set_uri ()</title>
+<indexterm zone="gst-rtsp-media-factory-uri-set-uri"><primary>gst_rtsp_media_factory_uri_set_uri</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                gst_rtsp_media_factory_uri_set_uri  (<parameter><link linkend="GstRTSPMediaFactoryURI"><type>GstRTSPMediaFactoryURI</type></link> *factory</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *uri</parameter>);</programlisting>
+<para>
+Set the URI of the resource that will be streamed by this factory.
+</para><variablelist role="params">
+<varlistentry><term><parameter>factory</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstRTSPMediaFactory"><type>GstRTSPMediaFactory</type></link></simpara></listitem></varlistentry>
+<varlistentry><term><parameter>uri</parameter>&#160;:</term>
+<listitem><simpara>the uri the stream</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gst-rtsp-media-factory-uri-get-uri" role="function">
+<title>gst_rtsp_media_factory_uri_get_uri ()</title>
+<indexterm zone="gst-rtsp-media-factory-uri-get-uri"><primary>gst_rtsp_media_factory_uri_get_uri</primary></indexterm>
+<programlisting><link linkend="gchar"><returnvalue>gchar</returnvalue></link> *             gst_rtsp_media_factory_uri_get_uri  (<parameter><link linkend="GstRTSPMediaFactoryURI"><type>GstRTSPMediaFactoryURI</type></link> *factory</parameter>);</programlisting>
+<para>
+Get the URI that will provide media for this factory.
+</para><variablelist role="params">
+<varlistentry><term><parameter>factory</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstRTSPMediaFactory"><type>GstRTSPMediaFactory</type></link></simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>the configured URI. <link linkend="g-free"><function>g_free()</function></link> after usage.</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+
+</refsect1>
+<refsect1 id="gst-rtsp-server-GstRTSPMediaFactoryURI.see-also">
+<title>See Also</title>
+<link linkend="GstRTSPMediaFactory"><type>GstRTSPMediaFactory</type></link>, <link linkend="GstRTSPMedia"><type>GstRTSPMedia</type></link>
+</refsect1>
+
+</refentry>

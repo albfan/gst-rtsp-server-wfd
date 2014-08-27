@@ -1,0 +1,408 @@
+<?xml version="1.0"?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
+               "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
+<!ENTITY % version-entities SYSTEM "version.entities">
+%version-entities;
+]>
+
+<refentry id="gst-rtsp-server-GstRTSPAddressPool">
+<refmeta>
+<refentrytitle role="top_of_page" id="gst-rtsp-server-GstRTSPAddressPool.top_of_page">GstRTSPAddressPool</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>
+  GST-RTSP-SERVER Library
+</refmiscinfo>
+</refmeta>
+<refnamediv>
+<refname>GstRTSPAddressPool</refname>
+<refpurpose>A pool of network addresses</refpurpose>
+</refnamediv>
+
+<refsynopsisdiv id="gst-rtsp-server-GstRTSPAddressPool.synopsis" role="synopsis">
+<title role="synopsis.title">Synopsis</title>
+
+<synopsis>#define             <link linkend="GST-RTSP-ADDRESS-POOL-ANY-IPV4:CAPS">GST_RTSP_ADDRESS_POOL_ANY_IPV4</link>
+#define             <link linkend="GST-RTSP-ADDRESS-POOL-ANY-IPV6:CAPS">GST_RTSP_ADDRESS_POOL_ANY_IPV6</link>
+struct              <link linkend="GstRTSPAddress">GstRTSPAddress</link>;
+enum                <link linkend="GstRTSPAddressFlags">GstRTSPAddressFlags</link>;
+<link linkend="GstRTSPAddress"><returnvalue>GstRTSPAddress</returnvalue></link> *    <link linkend="gst-rtsp-address-copy">gst_rtsp_address_copy</link>               (<parameter><link linkend="GstRTSPAddress"><type>GstRTSPAddress</type></link> *addr</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="gst-rtsp-address-free">gst_rtsp_address_free</link>               (<parameter><link linkend="GstRTSPAddress"><type>GstRTSPAddress</type></link> *addr</parameter>);
+
+struct              <link linkend="GstRTSPAddressPool">GstRTSPAddressPool</link>;
+struct              <link linkend="GstRTSPAddressPoolClass">GstRTSPAddressPoolClass</link>;
+enum                <link linkend="GstRTSPAddressPoolResult">GstRTSPAddressPoolResult</link>;
+<link linkend="GstRTSPAddressPool"><returnvalue>GstRTSPAddressPool</returnvalue></link> * <link linkend="gst-rtsp-address-pool-new">gst_rtsp_address_pool_new</link>          (<parameter><type>void</type></parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="gst-rtsp-address-pool-clear">gst_rtsp_address_pool_clear</link>         (<parameter><link linkend="GstRTSPAddressPool"><type>GstRTSPAddressPool</type></link> *pool</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="gst-rtsp-address-pool-dump">gst_rtsp_address_pool_dump</link>          (<parameter><link linkend="GstRTSPAddressPool"><type>GstRTSPAddressPool</type></link> *pool</parameter>);
+<link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            <link linkend="gst-rtsp-address-pool-add-range">gst_rtsp_address_pool_add_range</link>     (<parameter><link linkend="GstRTSPAddressPool"><type>GstRTSPAddressPool</type></link> *pool</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *min_address</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *max_address</parameter>,
+                                                         <parameter><link linkend="guint16"><type>guint16</type></link> min_port</parameter>,
+                                                         <parameter><link linkend="guint16"><type>guint16</type></link> max_port</parameter>,
+                                                         <parameter><link linkend="guint8"><type>guint8</type></link> ttl</parameter>);
+<link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            <link linkend="gst-rtsp-address-pool-has-unicast-addresses">gst_rtsp_address_pool_has_unicast_addresses</link>
+                                                        (<parameter><link linkend="GstRTSPAddressPool"><type>GstRTSPAddressPool</type></link> *pool</parameter>);
+<link linkend="GstRTSPAddress"><returnvalue>GstRTSPAddress</returnvalue></link> *    <link linkend="gst-rtsp-address-pool-acquire-address">gst_rtsp_address_pool_acquire_address</link>
+                                                        (<parameter><link linkend="GstRTSPAddressPool"><type>GstRTSPAddressPool</type></link> *pool</parameter>,
+                                                         <parameter><link linkend="GstRTSPAddressFlags"><type>GstRTSPAddressFlags</type></link> flags</parameter>,
+                                                         <parameter><link linkend="gint"><type>gint</type></link> n_ports</parameter>);
+<link linkend="GstRTSPAddressPoolResult"><returnvalue>GstRTSPAddressPoolResult</returnvalue></link> <link linkend="gst-rtsp-address-pool-reserve-address">gst_rtsp_address_pool_reserve_address</link>
+                                                        (<parameter><link linkend="GstRTSPAddressPool"><type>GstRTSPAddressPool</type></link> *pool</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *ip_address</parameter>,
+                                                         <parameter><link linkend="guint"><type>guint</type></link> port</parameter>,
+                                                         <parameter><link linkend="guint"><type>guint</type></link> n_ports</parameter>,
+                                                         <parameter><link linkend="guint"><type>guint</type></link> ttl</parameter>,
+                                                         <parameter><link linkend="GstRTSPAddress"><type>GstRTSPAddress</type></link> **address</parameter>);
+</synopsis>
+</refsynopsisdiv>
+
+<refsect1 id="gst-rtsp-server-GstRTSPAddressPool.description" role="desc">
+<title role="desc.title">Description</title>
+<para>
+The <link linkend="GstRTSPAddressPool"><type>GstRTSPAddressPool</type></link> is an object that maintains a collection of network
+addresses. It is used to allocate server ports and server multicast addresses
+but also to reserve client provided destination addresses.
+</para>
+<para>
+A range of addresses can be added with <link linkend="gst-rtsp-address-pool-add-range"><function>gst_rtsp_address_pool_add_range()</function></link>.
+Both multicast and unicast addresses can be added.
+</para>
+<para>
+With <link linkend="gst-rtsp-address-pool-acquire-address"><function>gst_rtsp_address_pool_acquire_address()</function></link> an unused address and port range
+can be acquired from the pool. With <link linkend="gst-rtsp-address-pool-reserve-address"><function>gst_rtsp_address_pool_reserve_address()</function></link> a
+specific address can be retrieved. Both methods return a boxed
+<link linkend="GstRTSPAddress"><type>GstRTSPAddress</type></link> that should be freed with <link linkend="gst-rtsp-address-free"><function>gst_rtsp_address_free()</function></link> after
+usage, which brings the address back into the pool.
+</para>
+<para>
+Last reviewed on 2013-07-16 (1.0.0)
+</para>
+</refsect1>
+<refsect1 id="gst-rtsp-server-GstRTSPAddressPool.details" role="details">
+<title role="details.title">Details</title>
+<refsect2 id="GST-RTSP-ADDRESS-POOL-ANY-IPV4:CAPS" role="macro">
+<title>GST_RTSP_ADDRESS_POOL_ANY_IPV4</title>
+<indexterm zone="GST-RTSP-ADDRESS-POOL-ANY-IPV4:CAPS"><primary>GST_RTSP_ADDRESS_POOL_ANY_IPV4</primary></indexterm>
+<programlisting>#define GST_RTSP_ADDRESS_POOL_ANY_IPV4  "0.0.0.0"
+</programlisting>
+<para>
+Used with <link linkend="gst-rtsp-address-pool-add-range"><function>gst_rtsp_address_pool_add_range()</function></link> to bind to all
+IPv4 addresses
+</para></refsect2>
+<refsect2 id="GST-RTSP-ADDRESS-POOL-ANY-IPV6:CAPS" role="macro">
+<title>GST_RTSP_ADDRESS_POOL_ANY_IPV6</title>
+<indexterm zone="GST-RTSP-ADDRESS-POOL-ANY-IPV6:CAPS"><primary>GST_RTSP_ADDRESS_POOL_ANY_IPV6</primary></indexterm>
+<programlisting>#define GST_RTSP_ADDRESS_POOL_ANY_IPV6  "::"
+</programlisting>
+<para>
+Used with <link linkend="gst-rtsp-address-pool-add-range"><function>gst_rtsp_address_pool_add_range()</function></link> to bind to all
+IPv6 addresses
+</para></refsect2>
+<refsect2 id="GstRTSPAddress" role="struct">
+<title>struct GstRTSPAddress</title>
+<indexterm zone="GstRTSPAddress"><primary>GstRTSPAddress</primary></indexterm>
+<programlisting>struct GstRTSPAddress {
+  GstRTSPAddressPool *pool;
+
+  gchar *address;
+  guint16 port;
+  gint n_ports;
+  guint8 ttl;
+};
+</programlisting>
+<para>
+An address
+</para><variablelist role="struct">
+<varlistentry><term><link linkend="GstRTSPAddressPool"><type>GstRTSPAddressPool</type></link>&#160;*<structfield id="GstRTSPAddress.pool">pool</structfield>;</term>
+<listitem><simpara>the <link linkend="GstRTSPAddressPool"><type>GstRTSPAddressPool</type></link> owner of this address</simpara></listitem>
+</varlistentry>
+<varlistentry><term><link linkend="gchar"><type>gchar</type></link>&#160;*<structfield id="GstRTSPAddress.address">address</structfield>;</term>
+<listitem><simpara>the address</simpara></listitem>
+</varlistentry>
+<varlistentry><term><link linkend="guint16"><type>guint16</type></link>&#160;<structfield id="GstRTSPAddress.port">port</structfield>;</term>
+<listitem><simpara>the port number</simpara></listitem>
+</varlistentry>
+<varlistentry><term><link linkend="gint"><type>gint</type></link>&#160;<structfield id="GstRTSPAddress.n-ports">n_ports</structfield>;</term>
+<listitem><simpara>number of ports</simpara></listitem>
+</varlistentry>
+<varlistentry><term><link linkend="guint8"><type>guint8</type></link>&#160;<structfield id="GstRTSPAddress.ttl">ttl</structfield>;</term>
+<listitem><simpara>TTL or 0 for unicast addresses</simpara></listitem>
+</varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GstRTSPAddressFlags" role="enum">
+<title>enum GstRTSPAddressFlags</title>
+<indexterm zone="GstRTSPAddressFlags"><primary>GstRTSPAddressFlags</primary></indexterm>
+<programlisting>typedef enum {
+  GST_RTSP_ADDRESS_FLAG_NONE      = 0,
+  GST_RTSP_ADDRESS_FLAG_IPV4      = (1 &lt;&lt; 0),
+  GST_RTSP_ADDRESS_FLAG_IPV6      = (1 &lt;&lt; 1),
+  GST_RTSP_ADDRESS_FLAG_EVEN_PORT = (1 &lt;&lt; 2),
+  GST_RTSP_ADDRESS_FLAG_MULTICAST = (1 &lt;&lt; 3),
+  GST_RTSP_ADDRESS_FLAG_UNICAST   = (1 &lt;&lt; 4),
+} GstRTSPAddressFlags;
+</programlisting>
+<para>
+Flags used to control allocation of addresses
+</para><variablelist role="enum">
+<varlistentry id="GST-RTSP-ADDRESS-FLAG-NONE:CAPS" role="constant">
+<term><literal>GST_RTSP_ADDRESS_FLAG_NONE</literal></term>
+<listitem><simpara>no flags
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="GST-RTSP-ADDRESS-FLAG-IPV4:CAPS" role="constant">
+<term><literal>GST_RTSP_ADDRESS_FLAG_IPV4</literal></term>
+<listitem><simpara>an IPv4 address
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="GST-RTSP-ADDRESS-FLAG-IPV6:CAPS" role="constant">
+<term><literal>GST_RTSP_ADDRESS_FLAG_IPV6</literal></term>
+<listitem><simpara>and IPv6 address
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="GST-RTSP-ADDRESS-FLAG-EVEN-PORT:CAPS" role="constant">
+<term><literal>GST_RTSP_ADDRESS_FLAG_EVEN_PORT</literal></term>
+<listitem><simpara>address with an even port
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="GST-RTSP-ADDRESS-FLAG-MULTICAST:CAPS" role="constant">
+<term><literal>GST_RTSP_ADDRESS_FLAG_MULTICAST</literal></term>
+<listitem><simpara>a multicast address
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="GST-RTSP-ADDRESS-FLAG-UNICAST:CAPS" role="constant">
+<term><literal>GST_RTSP_ADDRESS_FLAG_UNICAST</literal></term>
+<listitem><simpara>a unicast address
+</simpara></listitem>
+</varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gst-rtsp-address-copy" role="function">
+<title>gst_rtsp_address_copy ()</title>
+<indexterm zone="gst-rtsp-address-copy"><primary>gst_rtsp_address_copy</primary></indexterm>
+<programlisting><link linkend="GstRTSPAddress"><returnvalue>GstRTSPAddress</returnvalue></link> *    gst_rtsp_address_copy               (<parameter><link linkend="GstRTSPAddress"><type>GstRTSPAddress</type></link> *addr</parameter>);</programlisting>
+<para>
+Make a copy of <parameter>addr</parameter>.
+</para><variablelist role="params">
+<varlistentry><term><parameter>addr</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstRTSPAddress"><type>GstRTSPAddress</type></link></simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>a copy of <parameter>addr</parameter>.</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gst-rtsp-address-free" role="function">
+<title>gst_rtsp_address_free ()</title>
+<indexterm zone="gst-rtsp-address-free"><primary>gst_rtsp_address_free</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                gst_rtsp_address_free               (<parameter><link linkend="GstRTSPAddress"><type>GstRTSPAddress</type></link> *addr</parameter>);</programlisting>
+<para>
+Free <parameter>addr</parameter> and releasing it back into the pool when owned by a
+pool.
+</para><variablelist role="params">
+<varlistentry><term><parameter>addr</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstRTSPAddress"><type>GstRTSPAddress</type></link></simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GstRTSPAddressPool" role="struct">
+<title>struct GstRTSPAddressPool</title>
+<indexterm zone="GstRTSPAddressPool"><primary>GstRTSPAddressPool</primary></indexterm>
+<programlisting>struct GstRTSPAddressPool {
+  GObject       parent;
+};
+</programlisting>
+<para>
+An address pool, all member are private
+</para><variablelist role="struct">
+<varlistentry><term><link linkend="GObject"><type>GObject</type></link>&#160;<structfield id="GstRTSPAddressPool.parent">parent</structfield>;</term>
+<listitem><simpara>the parent GObject</simpara></listitem>
+</varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GstRTSPAddressPoolClass" role="struct">
+<title>struct GstRTSPAddressPoolClass</title>
+<indexterm zone="GstRTSPAddressPoolClass"><primary>GstRTSPAddressPoolClass</primary></indexterm>
+<programlisting>struct GstRTSPAddressPoolClass {
+  GObjectClass  parent_class;
+};
+</programlisting>
+<para>
+Opaque Address pool class.
+</para></refsect2>
+<refsect2 id="GstRTSPAddressPoolResult" role="enum">
+<title>enum GstRTSPAddressPoolResult</title>
+<indexterm zone="GstRTSPAddressPoolResult"><primary>GstRTSPAddressPoolResult</primary></indexterm>
+<programlisting>typedef enum {
+  GST_RTSP_ADDRESS_POOL_OK         =  0,
+  /* errors */
+  GST_RTSP_ADDRESS_POOL_EINVAL     = -1,
+  GST_RTSP_ADDRESS_POOL_ERESERVED  = -2,
+  GST_RTSP_ADDRESS_POOL_ERANGE     = -3,
+
+  GST_RTSP_ADDRESS_POOL_ELAST      = -4,
+} GstRTSPAddressPoolResult;
+</programlisting>
+<para>
+Result codes from RTSP address pool functions.
+</para><variablelist role="enum">
+<varlistentry id="GST-RTSP-ADDRESS-POOL-OK:CAPS" role="constant">
+<term><literal>GST_RTSP_ADDRESS_POOL_OK</literal></term>
+<listitem><simpara>no error
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="GST-RTSP-ADDRESS-POOL-EINVAL:CAPS" role="constant">
+<term><literal>GST_RTSP_ADDRESS_POOL_EINVAL</literal></term>
+<listitem><simpara>invalid arguments were provided to a function
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="GST-RTSP-ADDRESS-POOL-ERESERVED:CAPS" role="constant">
+<term><literal>GST_RTSP_ADDRESS_POOL_ERESERVED</literal></term>
+<listitem><simpara>the addres has already been reserved
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="GST-RTSP-ADDRESS-POOL-ERANGE:CAPS" role="constant">
+<term><literal>GST_RTSP_ADDRESS_POOL_ERANGE</literal></term>
+<listitem><simpara>the address is not in the pool
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="GST-RTSP-ADDRESS-POOL-ELAST:CAPS" role="constant">
+<term><literal>GST_RTSP_ADDRESS_POOL_ELAST</literal></term>
+<listitem><simpara>last error
+</simpara></listitem>
+</varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gst-rtsp-address-pool-new" role="function">
+<title>gst_rtsp_address_pool_new ()</title>
+<indexterm zone="gst-rtsp-address-pool-new"><primary>gst_rtsp_address_pool_new</primary></indexterm>
+<programlisting><link linkend="GstRTSPAddressPool"><returnvalue>GstRTSPAddressPool</returnvalue></link> * gst_rtsp_address_pool_new          (<parameter><type>void</type></parameter>);</programlisting>
+<para>
+Make a new <link linkend="GstRTSPAddressPool"><type>GstRTSPAddressPool</type></link>.
+</para><variablelist role="params">
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>a new <link linkend="GstRTSPAddressPool"><type>GstRTSPAddressPool</type></link></simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gst-rtsp-address-pool-clear" role="function">
+<title>gst_rtsp_address_pool_clear ()</title>
+<indexterm zone="gst-rtsp-address-pool-clear"><primary>gst_rtsp_address_pool_clear</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                gst_rtsp_address_pool_clear         (<parameter><link linkend="GstRTSPAddressPool"><type>GstRTSPAddressPool</type></link> *pool</parameter>);</programlisting>
+<para>
+Clear all addresses in <parameter>pool</parameter>. There should be no outstanding
+allocations.
+</para><variablelist role="params">
+<varlistentry><term><parameter>pool</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstRTSPAddressPool"><type>GstRTSPAddressPool</type></link></simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gst-rtsp-address-pool-dump" role="function">
+<title>gst_rtsp_address_pool_dump ()</title>
+<indexterm zone="gst-rtsp-address-pool-dump"><primary>gst_rtsp_address_pool_dump</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                gst_rtsp_address_pool_dump          (<parameter><link linkend="GstRTSPAddressPool"><type>GstRTSPAddressPool</type></link> *pool</parameter>);</programlisting>
+<para>
+Dump the free and allocated addresses to stdout.
+</para><variablelist role="params">
+<varlistentry><term><parameter>pool</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstRTSPAddressPool"><type>GstRTSPAddressPool</type></link></simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gst-rtsp-address-pool-add-range" role="function">
+<title>gst_rtsp_address_pool_add_range ()</title>
+<indexterm zone="gst-rtsp-address-pool-add-range"><primary>gst_rtsp_address_pool_add_range</primary></indexterm>
+<programlisting><link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            gst_rtsp_address_pool_add_range     (<parameter><link linkend="GstRTSPAddressPool"><type>GstRTSPAddressPool</type></link> *pool</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *min_address</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *max_address</parameter>,
+                                                         <parameter><link linkend="guint16"><type>guint16</type></link> min_port</parameter>,
+                                                         <parameter><link linkend="guint16"><type>guint16</type></link> max_port</parameter>,
+                                                         <parameter><link linkend="guint8"><type>guint8</type></link> ttl</parameter>);</programlisting>
+<para>
+Adds the addresses from <parameter>min_addess</parameter> to <parameter>max_address</parameter> (inclusive)
+to <parameter>pool</parameter>. The valid port range for the addresses will be from <parameter>min_port</parameter> to
+<parameter>max_port</parameter> inclusive.
+</para>
+<para>
+When <parameter>ttl</parameter> is 0, <parameter>min_address</parameter> and <parameter>max_address</parameter> should be unicast addresses.
+<parameter>min_address</parameter> and <parameter>max_address</parameter> can be set to
+<link linkend="GST-RTSP-ADDRESS-POOL-ANY-IPV4:CAPS"><type>GST_RTSP_ADDRESS_POOL_ANY_IPV4</type></link> or <link linkend="GST-RTSP-ADDRESS-POOL-ANY-IPV6:CAPS"><type>GST_RTSP_ADDRESS_POOL_ANY_IPV6</type></link> to bind
+to all available IPv4 or IPv6 addresses.
+</para>
+<para>
+When <parameter>ttl</parameter> &gt; 0, <parameter>min_address</parameter> and <parameter>max_address</parameter> should be multicast addresses.
+</para><variablelist role="params">
+<varlistentry><term><parameter>pool</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstRTSPAddressPool"><type>GstRTSPAddressPool</type></link></simpara></listitem></varlistentry>
+<varlistentry><term><parameter>min_address</parameter>&#160;:</term>
+<listitem><simpara>a minimum address to add</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>max_address</parameter>&#160;:</term>
+<listitem><simpara>a maximum address to add</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>min_port</parameter>&#160;:</term>
+<listitem><simpara>the minimum port</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>max_port</parameter>&#160;:</term>
+<listitem><simpara>the maximum port</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>ttl</parameter>&#160;:</term>
+<listitem><simpara>a TTL or 0 for unicast addresses</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara><link linkend="TRUE:CAPS"><literal>TRUE</literal></link> if the addresses could be added.</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gst-rtsp-address-pool-has-unicast-addresses" role="function">
+<title>gst_rtsp_address_pool_has_unicast_addresses ()</title>
+<indexterm zone="gst-rtsp-address-pool-has-unicast-addresses"><primary>gst_rtsp_address_pool_has_unicast_addresses</primary></indexterm>
+<programlisting><link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            gst_rtsp_address_pool_has_unicast_addresses
+                                                        (<parameter><link linkend="GstRTSPAddressPool"><type>GstRTSPAddressPool</type></link> *pool</parameter>);</programlisting>
+<para>
+Used to know if the pool includes any unicast addresses.
+</para><variablelist role="params">
+<varlistentry><term><parameter>pool</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstRTSPAddressPool"><type>GstRTSPAddressPool</type></link></simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara><link linkend="TRUE:CAPS"><literal>TRUE</literal></link> if the pool includes any unicast addresses, <link linkend="FALSE:CAPS"><literal>FALSE</literal></link> otherwise</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gst-rtsp-address-pool-acquire-address" role="function">
+<title>gst_rtsp_address_pool_acquire_address ()</title>
+<indexterm zone="gst-rtsp-address-pool-acquire-address"><primary>gst_rtsp_address_pool_acquire_address</primary></indexterm>
+<programlisting><link linkend="GstRTSPAddress"><returnvalue>GstRTSPAddress</returnvalue></link> *    gst_rtsp_address_pool_acquire_address
+                                                        (<parameter><link linkend="GstRTSPAddressPool"><type>GstRTSPAddressPool</type></link> *pool</parameter>,
+                                                         <parameter><link linkend="GstRTSPAddressFlags"><type>GstRTSPAddressFlags</type></link> flags</parameter>,
+                                                         <parameter><link linkend="gint"><type>gint</type></link> n_ports</parameter>);</programlisting>
+<para>
+Take an address and ports from <parameter>pool</parameter>. <parameter>flags</parameter> can be used to control the
+allocation. <parameter>n_ports</parameter> consecutive ports will be allocated of which the first
+one can be found in <parameter>port</parameter>.
+</para><variablelist role="params">
+<varlistentry><term><parameter>pool</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstRTSPAddressPool"><type>GstRTSPAddressPool</type></link></simpara></listitem></varlistentry>
+<varlistentry><term><parameter>flags</parameter>&#160;:</term>
+<listitem><simpara>flags</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>n_ports</parameter>&#160;:</term>
+<listitem><simpara>the amount of ports</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>a <link linkend="GstRTSPAddress"><type>GstRTSPAddress</type></link> that should be freed with gst_rtsp_address_free
+after use or <link linkend="NULL:CAPS"><literal>NULL</literal></link> when no address could be acquired.</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gst-rtsp-address-pool-reserve-address" role="function">
+<title>gst_rtsp_address_pool_reserve_address ()</title>
+<indexterm zone="gst-rtsp-address-pool-reserve-address"><primary>gst_rtsp_address_pool_reserve_address</primary></indexterm>
+<programlisting><link linkend="GstRTSPAddressPoolResult"><returnvalue>GstRTSPAddressPoolResult</returnvalue></link> gst_rtsp_address_pool_reserve_address
+                                                        (<parameter><link linkend="GstRTSPAddressPool"><type>GstRTSPAddressPool</type></link> *pool</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *ip_address</parameter>,
+                                                         <parameter><link linkend="guint"><type>guint</type></link> port</parameter>,
+                                                         <parameter><link linkend="guint"><type>guint</type></link> n_ports</parameter>,
+                                                         <parameter><link linkend="guint"><type>guint</type></link> ttl</parameter>,
+                                                         <parameter><link linkend="GstRTSPAddress"><type>GstRTSPAddress</type></link> **address</parameter>);</programlisting>
+<para>
+Take a specific address and ports from <parameter>pool</parameter>. <parameter>n_ports</parameter> consecutive
+ports will be allocated of which the first one can be found in
+<parameter>port</parameter>.
+</para>
+<para>
+If <parameter>ttl</parameter> is 0, <parameter>address</parameter> should be a unicast address. If <parameter>ttl</parameter> &gt; 0, <parameter>address</parameter>
+should be a valid multicast address.
+</para><variablelist role="params">
+<varlistentry><term><parameter>pool</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstRTSPAddressPool"><type>GstRTSPAddressPool</type></link></simpara></listitem></varlistentry>
+<varlistentry><term><parameter>ip_address</parameter>&#160;:</term>
+<listitem><simpara>The IP address to reserve</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>port</parameter>&#160;:</term>
+<listitem><simpara>The first port to reserve</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>n_ports</parameter>&#160;:</term>
+<listitem><simpara>The number of ports</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>ttl</parameter>&#160;:</term>
+<listitem><simpara>The requested ttl</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>address</parameter>&#160;:</term>
+<listitem><simpara>(out) storage for a <link linkend="GstRTSPAddress"><type>GstRTSPAddress</type></link></simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara><link linkend="GST-RTSP-ADDRESS-POOL-OK:CAPS"><type>GST_RTSP_ADDRESS_POOL_OK</type></link> if an address was reserved. The address
+is returned in <parameter>address</parameter> and should be freed with gst_rtsp_address_free
+after use.</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+
+</refsect1>
+<refsect1 id="gst-rtsp-server-GstRTSPAddressPool.see-also">
+<title>See Also</title>
+<link linkend="GstRTSPStream"><type>GstRTSPStream</type></link>, <link linkend="GstRTSPStreamTransport"><type>GstRTSPStreamTransport</type></link>
+</refsect1>
+
+</refentry>

@@ -1,0 +1,144 @@
+<?xml version="1.0"?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
+               "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
+<!ENTITY % version-entities SYSTEM "version.entities">
+%version-entities;
+]>
+
+<refentry id="gst-rtsp-server-GstRTSPContext">
+<refmeta>
+<refentrytitle role="top_of_page" id="gst-rtsp-server-GstRTSPContext.top_of_page">GstRTSPContext</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>
+  GST-RTSP-SERVER Library
+</refmiscinfo>
+</refmeta>
+<refnamediv>
+<refname>GstRTSPContext</refname>
+<refpurpose>A client request context</refpurpose>
+</refnamediv>
+
+<refsynopsisdiv id="gst-rtsp-server-GstRTSPContext.synopsis" role="synopsis">
+<title role="synopsis.title">Synopsis</title>
+
+<synopsis>struct              <link linkend="GstRTSPContext">GstRTSPContext</link>;
+<link linkend="GstRTSPContext"><returnvalue>GstRTSPContext</returnvalue></link> *    <link linkend="gst-rtsp-context-get-current">gst_rtsp_context_get_current</link>        (<parameter><type>void</type></parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="gst-rtsp-context-push-current">gst_rtsp_context_push_current</link>       (<parameter><link linkend="GstRTSPContext"><type>GstRTSPContext</type></link> *ctx</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="gst-rtsp-context-pop-current">gst_rtsp_context_pop_current</link>        (<parameter><link linkend="GstRTSPContext"><type>GstRTSPContext</type></link> *ctx</parameter>);
+</synopsis>
+</refsynopsisdiv>
+
+<refsect1 id="gst-rtsp-server-GstRTSPContext.description" role="desc">
+<title role="desc.title">Description</title>
+<para>
+Last reviewed on 2013-07-11 (1.0.0)
+</para>
+</refsect1>
+<refsect1 id="gst-rtsp-server-GstRTSPContext.details" role="details">
+<title role="details.title">Details</title>
+<refsect2 id="GstRTSPContext" role="struct">
+<title>struct GstRTSPContext</title>
+<indexterm zone="GstRTSPContext"><primary>GstRTSPContext</primary></indexterm>
+<programlisting>struct GstRTSPContext {
+  GstRTSPServer       *server;
+  GstRTSPConnection   *conn;
+  GstRTSPClient       *client;
+  GstRTSPMessage      *request;
+  GstRTSPUrl          *uri;
+  GstRTSPMethod        method;
+  GstRTSPAuth         *auth;
+  GstRTSPToken        *token;
+  GstRTSPSession      *session;
+  GstRTSPSessionMedia *sessmedia;
+  GstRTSPMediaFactory *factory;
+  GstRTSPMedia        *media;
+  GstRTSPStream       *stream;
+  GstRTSPMessage      *response;
+};
+</programlisting>
+<para>
+Information passed around containing the context of a request.
+</para><variablelist role="struct">
+<varlistentry><term><link linkend="GstRTSPServer"><type>GstRTSPServer</type></link>&#160;*<structfield id="GstRTSPContext.server">server</structfield>;</term>
+<listitem><simpara>the server</simpara></listitem>
+</varlistentry>
+<varlistentry><term><link linkend="GstRTSPConnection"><type>GstRTSPConnection</type></link>&#160;*<structfield id="GstRTSPContext.conn">conn</structfield>;</term>
+<listitem><simpara>the connection</simpara></listitem>
+</varlistentry>
+<varlistentry><term><link linkend="GstRTSPClient"><type>GstRTSPClient</type></link>&#160;*<structfield id="GstRTSPContext.client">client</structfield>;</term>
+<listitem><simpara>the client</simpara></listitem>
+</varlistentry>
+<varlistentry><term><link linkend="GstRTSPMessage"><type>GstRTSPMessage</type></link>&#160;*<structfield id="GstRTSPContext.request">request</structfield>;</term>
+<listitem><simpara>the complete request</simpara></listitem>
+</varlistentry>
+<varlistentry><term><link linkend="GstRTSPUrl"><type>GstRTSPUrl</type></link>&#160;*<structfield id="GstRTSPContext.uri">uri</structfield>;</term>
+<listitem><simpara>the complete url parsed from <parameter>request</parameter></simpara></listitem>
+</varlistentry>
+<varlistentry><term><link linkend="GstRTSPMethod"><type>GstRTSPMethod</type></link>&#160;<structfield id="GstRTSPContext.method">method</structfield>;</term>
+<listitem><simpara>the parsed method of <parameter>uri</parameter></simpara></listitem>
+</varlistentry>
+<varlistentry><term><link linkend="GstRTSPAuth"><type>GstRTSPAuth</type></link>&#160;*<structfield id="GstRTSPContext.auth">auth</structfield>;</term>
+<listitem><simpara>the current auth object or <link linkend="NULL:CAPS"><literal>NULL</literal></link></simpara></listitem>
+</varlistentry>
+<varlistentry><term><link linkend="GstRTSPToken"><type>GstRTSPToken</type></link>&#160;*<structfield id="GstRTSPContext.token">token</structfield>;</term>
+<listitem><simpara>authorisation token</simpara></listitem>
+</varlistentry>
+<varlistentry><term><link linkend="GstRTSPSession"><type>GstRTSPSession</type></link>&#160;*<structfield id="GstRTSPContext.session">session</structfield>;</term>
+<listitem><simpara>the session, can be <link linkend="NULL:CAPS"><literal>NULL</literal></link></simpara></listitem>
+</varlistentry>
+<varlistentry><term><link linkend="GstRTSPSessionMedia"><type>GstRTSPSessionMedia</type></link>&#160;*<structfield id="GstRTSPContext.sessmedia">sessmedia</structfield>;</term>
+<listitem><simpara>the session media for the url can be <link linkend="NULL:CAPS"><literal>NULL</literal></link></simpara></listitem>
+</varlistentry>
+<varlistentry><term><link linkend="GstRTSPMediaFactory"><type>GstRTSPMediaFactory</type></link>&#160;*<structfield id="GstRTSPContext.factory">factory</structfield>;</term>
+<listitem><simpara>the media factory for the url, can be <link linkend="NULL:CAPS"><literal>NULL</literal></link></simpara></listitem>
+</varlistentry>
+<varlistentry><term><link linkend="GstRTSPMedia"><type>GstRTSPMedia</type></link>&#160;*<structfield id="GstRTSPContext.media">media</structfield>;</term>
+<listitem><simpara>the media for the url can be <link linkend="NULL:CAPS"><literal>NULL</literal></link></simpara></listitem>
+</varlistentry>
+<varlistentry><term><link linkend="GstRTSPStream"><type>GstRTSPStream</type></link>&#160;*<structfield id="GstRTSPContext.stream">stream</structfield>;</term>
+<listitem><simpara>the stream for the url can be <link linkend="NULL:CAPS"><literal>NULL</literal></link></simpara></listitem>
+</varlistentry>
+<varlistentry><term><link linkend="GstRTSPMessage"><type>GstRTSPMessage</type></link>&#160;*<structfield id="GstRTSPContext.response">response</structfield>;</term>
+<listitem><simpara>the response</simpara></listitem>
+</varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gst-rtsp-context-get-current" role="function">
+<title>gst_rtsp_context_get_current ()</title>
+<indexterm zone="gst-rtsp-context-get-current"><primary>gst_rtsp_context_get_current</primary></indexterm>
+<programlisting><link linkend="GstRTSPContext"><returnvalue>GstRTSPContext</returnvalue></link> *    gst_rtsp_context_get_current        (<parameter><type>void</type></parameter>);</programlisting>
+<para>
+Get the current <link linkend="GstRTSPContext"><type>GstRTSPContext</type></link>. This object is retrieved from the
+current thread that is handling the request for a client.
+</para><variablelist role="params">
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>a <link linkend="GstRTSPContext"><type>GstRTSPContext</type></link></simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gst-rtsp-context-push-current" role="function">
+<title>gst_rtsp_context_push_current ()</title>
+<indexterm zone="gst-rtsp-context-push-current"><primary>gst_rtsp_context_push_current</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                gst_rtsp_context_push_current       (<parameter><link linkend="GstRTSPContext"><type>GstRTSPContext</type></link> *ctx</parameter>);</programlisting>
+<para>
+Pushes <parameter>ctx</parameter> onto the context stack. The current
+context can then be received using <link linkend="gst-rtsp-context-get-current"><function>gst_rtsp_context_get_current()</function></link>.
+</para><variablelist role="params">
+<varlistentry><term><parameter>ctx</parameter>&#160;:</term>
+<listitem><simpara>a #<link linkend="GstRTSPContext"><type>GstRTSPContext</type></link></simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gst-rtsp-context-pop-current" role="function">
+<title>gst_rtsp_context_pop_current ()</title>
+<indexterm zone="gst-rtsp-context-pop-current"><primary>gst_rtsp_context_pop_current</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                gst_rtsp_context_pop_current        (<parameter><link linkend="GstRTSPContext"><type>GstRTSPContext</type></link> *ctx</parameter>);</programlisting>
+<para>
+Pops <parameter>ctx</parameter> off the context stack (verifying that <parameter>ctx</parameter>
+is on the top of the stack).
+</para><variablelist role="params">
+<varlistentry><term><parameter>ctx</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstRTSPContext"><type>GstRTSPContext</type></link></simpara></listitem></varlistentry>
+</variablelist></refsect2>
+
+</refsect1>
+<refsect1 id="gst-rtsp-server-GstRTSPContext.see-also">
+<title>See Also</title>
+<link linkend="GstRTSPServer"><type>GstRTSPServer</type></link>, <link linkend="GstRTSPClient"><type>GstRTSPClient</type></link>
+</refsect1>
+
+</refentry>

@@ -1,0 +1,316 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>GstRTSPToken</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<link rel="home" href="index.html" title="GStreamer RTSP Server Reference Manual">
+<link rel="up" href="ch01.html" title="">
+<link rel="prev" href="GstRTSPAuth.html" title="GstRTSPAuth">
+<link rel="next" href="gst-rtsp-server-GstRTSPPermissions.html" title="GstRTSPPermissions">
+<meta name="generator" content="GTK-Doc V1.18 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
+<tr valign="middle">
+<td><a accesskey="p" href="GstRTSPAuth.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="ch01.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">GStreamer RTSP Server Reference Manual</th>
+<td><a accesskey="n" href="gst-rtsp-server-GstRTSPPermissions.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr>
+<tr><td colspan="5" class="shortcuts">
+<a href="#gst-rtsp-server-GstRTSPToken.synopsis" class="shortcut">Top</a>
+                   | 
+                  <a href="#gst-rtsp-server-GstRTSPToken.description" class="shortcut">Description</a>
+</td></tr>
+</table>
+<div class="refentry">
+<a name="gst-rtsp-server-GstRTSPToken"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="gst-rtsp-server-GstRTSPToken.top_of_page"></a>GstRTSPToken</span></h2>
+<p>GstRTSPToken — Roles and permissions for a client</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsynopsisdiv">
+<a name="gst-rtsp-server-GstRTSPToken.synopsis"></a><h2>Synopsis</h2>
+<pre class="synopsis">struct              <a class="link" href="gst-rtsp-server-GstRTSPToken.html#GstRTSPToken" title="struct GstRTSPToken">GstRTSPToken</a>;
+<a class="link" href="gst-rtsp-server-GstRTSPToken.html#GstRTSPToken" title="struct GstRTSPToken"><span class="returnvalue">GstRTSPToken</span></a> *      <a class="link" href="gst-rtsp-server-GstRTSPToken.html#gst-rtsp-token-new-empty" title="gst_rtsp_token_new_empty ()">gst_rtsp_token_new_empty</a>            (<em class="parameter"><code><span class="type">void</span></code></em>);
+<a class="link" href="gst-rtsp-server-GstRTSPToken.html#GstRTSPToken" title="struct GstRTSPToken"><span class="returnvalue">GstRTSPToken</span></a> *      <a class="link" href="gst-rtsp-server-GstRTSPToken.html#gst-rtsp-token-new" title="gst_rtsp_token_new ()">gst_rtsp_token_new</a>                  (<em class="parameter"><code>const <a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *firstfield</code></em>,
+                                                         <em class="parameter"><code>...</code></em>);
+<a class="link" href="gst-rtsp-server-GstRTSPToken.html#GstRTSPToken" title="struct GstRTSPToken"><span class="returnvalue">GstRTSPToken</span></a> *      <a class="link" href="gst-rtsp-server-GstRTSPToken.html#gst-rtsp-token-new-valist" title="gst_rtsp_token_new_valist ()">gst_rtsp_token_new_valist</a>           (<em class="parameter"><code>const <a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *firstfield</code></em>,
+                                                         <em class="parameter"><code><span class="type">va_list</span> var_args</code></em>);
+<a class="link" href="gst-rtsp-server-GstRTSPToken.html#GstRTSPToken" title="struct GstRTSPToken"><span class="returnvalue">GstRTSPToken</span></a> *      <a class="link" href="gst-rtsp-server-GstRTSPToken.html#gst-rtsp-token-ref" title="gst_rtsp_token_ref ()">gst_rtsp_token_ref</a>                  (<em class="parameter"><code><a class="link" href="gst-rtsp-server-GstRTSPToken.html#GstRTSPToken" title="struct GstRTSPToken"><span class="type">GstRTSPToken</span></a> *token</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="gst-rtsp-server-GstRTSPToken.html#gst-rtsp-token-unref" title="gst_rtsp_token_unref ()">gst_rtsp_token_unref</a>                (<em class="parameter"><code><a class="link" href="gst-rtsp-server-GstRTSPToken.html#GstRTSPToken" title="struct GstRTSPToken"><span class="type">GstRTSPToken</span></a> *token</code></em>);
+const <a href="../gstreamer-1.0/gstreamer-GstStructure.html#GstStructure"><span class="returnvalue">GstStructure</span></a> * <a class="link" href="gst-rtsp-server-GstRTSPToken.html#gst-rtsp-token-get-structure" title="gst_rtsp_token_get_structure ()">gst_rtsp_token_get_structure</a>       (<em class="parameter"><code><a class="link" href="gst-rtsp-server-GstRTSPToken.html#GstRTSPToken" title="struct GstRTSPToken"><span class="type">GstRTSPToken</span></a> *token</code></em>);
+<a href="../gstreamer-1.0/gstreamer-GstStructure.html#GstStructure"><span class="returnvalue">GstStructure</span></a> *      <a class="link" href="gst-rtsp-server-GstRTSPToken.html#gst-rtsp-token-writable-structure" title="gst_rtsp_token_writable_structure ()">gst_rtsp_token_writable_structure</a>   (<em class="parameter"><code><a class="link" href="gst-rtsp-server-GstRTSPToken.html#GstRTSPToken" title="struct GstRTSPToken"><span class="type">GstRTSPToken</span></a> *token</code></em>);
+const <a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       <a class="link" href="gst-rtsp-server-GstRTSPToken.html#gst-rtsp-token-get-string" title="gst_rtsp_token_get_string ()">gst_rtsp_token_get_string</a>           (<em class="parameter"><code><a class="link" href="gst-rtsp-server-GstRTSPToken.html#GstRTSPToken" title="struct GstRTSPToken"><span class="type">GstRTSPToken</span></a> *token</code></em>,
+                                                         <em class="parameter"><code>const <a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *field</code></em>);
+<a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="gst-rtsp-server-GstRTSPToken.html#gst-rtsp-token-is-allowed" title="gst_rtsp_token_is_allowed ()">gst_rtsp_token_is_allowed</a>           (<em class="parameter"><code><a class="link" href="gst-rtsp-server-GstRTSPToken.html#GstRTSPToken" title="struct GstRTSPToken"><span class="type">GstRTSPToken</span></a> *token</code></em>,
+                                                         <em class="parameter"><code>const <a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *field</code></em>);
+</pre>
+</div>
+<div class="refsect1">
+<a name="gst-rtsp-server-GstRTSPToken.description"></a><h2>Description</h2>
+<p>
+A <a class="link" href="gst-rtsp-server-GstRTSPToken.html#GstRTSPToken" title="struct GstRTSPToken"><span class="type">GstRTSPToken</span></a> contains the permissions and roles of the user
+performing the current request. A token is usually created when a user is
+authenticated by the <a class="link" href="GstRTSPAuth.html" title="GstRTSPAuth"><span class="type">GstRTSPAuth</span></a> object and is then placed as the current
+token for the current request.
+</p>
+<p>
+<a class="link" href="GstRTSPAuth.html" title="GstRTSPAuth"><span class="type">GstRTSPAuth</span></a> can use the token and its contents to check authorization for
+various operations by comparing the token to the <a class="link" href="gst-rtsp-server-GstRTSPPermissions.html#GstRTSPPermissions" title="struct GstRTSPPermissions"><span class="type">GstRTSPPermissions</span></a> of the
+object.
+</p>
+<p>
+The accepted values of the token are entirely defined by the <a class="link" href="GstRTSPAuth.html" title="GstRTSPAuth"><span class="type">GstRTSPAuth</span></a>
+object that implements the security policy.
+</p>
+<p>
+Last reviewed on 2013-07-15 (1.0.0)
+</p>
+</div>
+<div class="refsect1">
+<a name="gst-rtsp-server-GstRTSPToken.details"></a><h2>Details</h2>
+<div class="refsect2">
+<a name="GstRTSPToken"></a><h3>struct GstRTSPToken</h3>
+<pre class="programlisting">struct GstRTSPToken {
+  GstMiniObject mini_object;
+};
+</pre>
+<p>
+An opaque object used for checking authorisations.
+It is generated after successful authentication.
+</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gst-rtsp-token-new-empty"></a><h3>gst_rtsp_token_new_empty ()</h3>
+<pre class="programlisting"><a class="link" href="gst-rtsp-server-GstRTSPToken.html#GstRTSPToken" title="struct GstRTSPToken"><span class="returnvalue">GstRTSPToken</span></a> *      gst_rtsp_token_new_empty            (<em class="parameter"><code><span class="type">void</span></code></em>);</pre>
+<p>
+Create a new empty Authorization token.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>a new empty authorization token. <span class="annotation">[<acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>]</span>
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gst-rtsp-token-new"></a><h3>gst_rtsp_token_new ()</h3>
+<pre class="programlisting"><a class="link" href="gst-rtsp-server-GstRTSPToken.html#GstRTSPToken" title="struct GstRTSPToken"><span class="returnvalue">GstRTSPToken</span></a> *      gst_rtsp_token_new                  (<em class="parameter"><code>const <a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *firstfield</code></em>,
+                                                         <em class="parameter"><code>...</code></em>);</pre>
+<p>
+Create a new Authorization token with the given fieldnames and values.
+Arguments are given similar to <a href="../gstreamer-1.0/gstreamer-GstStructure.html#gst-structure-new"><code class="function">gst_structure_new()</code></a>.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>firstfield</code></em> :</span></p></td>
+<td>the first fieldname</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>...</code></em> :</span></p></td>
+<td>additional arguments</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>a new authorization token. <span class="annotation">[<acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>]</span>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gst-rtsp-token-new-valist"></a><h3>gst_rtsp_token_new_valist ()</h3>
+<pre class="programlisting"><a class="link" href="gst-rtsp-server-GstRTSPToken.html#GstRTSPToken" title="struct GstRTSPToken"><span class="returnvalue">GstRTSPToken</span></a> *      gst_rtsp_token_new_valist           (<em class="parameter"><code>const <a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *firstfield</code></em>,
+                                                         <em class="parameter"><code><span class="type">va_list</span> var_args</code></em>);</pre>
+<p>
+Create a new Authorization token with the given fieldnames and values.
+Arguments are given similar to <a href="../gstreamer-1.0/gstreamer-GstStructure.html#gst-structure-new-valist"><code class="function">gst_structure_new_valist()</code></a>.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>firstfield</code></em> :</span></p></td>
+<td>the first fieldname</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>var_args</code></em> :</span></p></td>
+<td>additional arguments</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>a new authorization token. <span class="annotation">[<acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>]</span>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gst-rtsp-token-ref"></a><h3>gst_rtsp_token_ref ()</h3>
+<pre class="programlisting"><a class="link" href="gst-rtsp-server-GstRTSPToken.html#GstRTSPToken" title="struct GstRTSPToken"><span class="returnvalue">GstRTSPToken</span></a> *      gst_rtsp_token_ref                  (<em class="parameter"><code><a class="link" href="gst-rtsp-server-GstRTSPToken.html#GstRTSPToken" title="struct GstRTSPToken"><span class="type">GstRTSPToken</span></a> *token</code></em>);</pre>
+<p>
+Increase the refcount of this token.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>token</code></em> :</span></p></td>
+<td>The token to refcount</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>
+<em class="parameter"><code>token</code></em> (for convenience when doing assignments). <span class="annotation">[<acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>]</span>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gst-rtsp-token-unref"></a><h3>gst_rtsp_token_unref ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                gst_rtsp_token_unref                (<em class="parameter"><code><a class="link" href="gst-rtsp-server-GstRTSPToken.html#GstRTSPToken" title="struct GstRTSPToken"><span class="type">GstRTSPToken</span></a> *token</code></em>);</pre>
+<p>
+Decrease the refcount of an token, freeing it if the refcount reaches 0.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>token</code></em> :</span></p></td>
+<td>the token to refcount. <span class="annotation">[<acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>]</span>
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gst-rtsp-token-get-structure"></a><h3>gst_rtsp_token_get_structure ()</h3>
+<pre class="programlisting">const <a href="../gstreamer-1.0/gstreamer-GstStructure.html#GstStructure"><span class="returnvalue">GstStructure</span></a> * gst_rtsp_token_get_structure       (<em class="parameter"><code><a class="link" href="gst-rtsp-server-GstRTSPToken.html#GstRTSPToken" title="struct GstRTSPToken"><span class="type">GstRTSPToken</span></a> *token</code></em>);</pre>
+<p>
+Access the structure of the token.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>token</code></em> :</span></p></td>
+<td>The <a class="link" href="gst-rtsp-server-GstRTSPToken.html#GstRTSPToken" title="struct GstRTSPToken"><span class="type">GstRTSPToken</span></a>.</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>The structure of the token. The structure is still
+owned by the token, which means that you should not free it and
+that the pointer becomes invalid when you free the token.
+MT safe.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gst-rtsp-token-writable-structure"></a><h3>gst_rtsp_token_writable_structure ()</h3>
+<pre class="programlisting"><a href="../gstreamer-1.0/gstreamer-GstStructure.html#GstStructure"><span class="returnvalue">GstStructure</span></a> *      gst_rtsp_token_writable_structure   (<em class="parameter"><code><a class="link" href="gst-rtsp-server-GstRTSPToken.html#GstRTSPToken" title="struct GstRTSPToken"><span class="type">GstRTSPToken</span></a> *token</code></em>);</pre>
+<p>
+Get a writable version of the structure.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>token</code></em> :</span></p></td>
+<td>The <a class="link" href="gst-rtsp-server-GstRTSPToken.html#GstRTSPToken" title="struct GstRTSPToken"><span class="type">GstRTSPToken</span></a>.</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>The structure of the token. The structure is still
+owned by the token, which means that you should not free it and
+that the pointer becomes invalid when you free the token.
+This function checks if <em class="parameter"><code>token</code></em> is writable and will never return <a href="/usr/share/gtk-doc/html/glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>.
+MT safe.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gst-rtsp-token-get-string"></a><h3>gst_rtsp_token_get_string ()</h3>
+<pre class="programlisting">const <a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       gst_rtsp_token_get_string           (<em class="parameter"><code><a class="link" href="gst-rtsp-server-GstRTSPToken.html#GstRTSPToken" title="struct GstRTSPToken"><span class="type">GstRTSPToken</span></a> *token</code></em>,
+                                                         <em class="parameter"><code>const <a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *field</code></em>);</pre>
+<p>
+Get the string value of <em class="parameter"><code>field</code></em> in <em class="parameter"><code>token</code></em>.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>token</code></em> :</span></p></td>
+<td>a <a class="link" href="gst-rtsp-server-GstRTSPToken.html#GstRTSPToken" title="struct GstRTSPToken"><span class="type">GstRTSPToken</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>field</code></em> :</span></p></td>
+<td>a field name</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>the string value of <em class="parameter"><code>field</code></em> in <em class="parameter"><code>token</code></em> or <a href="/usr/share/gtk-doc/html/glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> when <em class="parameter"><code>field</code></em> is not
+defined in <em class="parameter"><code>token</code></em>.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gst-rtsp-token-is-allowed"></a><h3>gst_rtsp_token_is_allowed ()</h3>
+<pre class="programlisting"><a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            gst_rtsp_token_is_allowed           (<em class="parameter"><code><a class="link" href="gst-rtsp-server-GstRTSPToken.html#GstRTSPToken" title="struct GstRTSPToken"><span class="type">GstRTSPToken</span></a> *token</code></em>,
+                                                         <em class="parameter"><code>const <a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *field</code></em>);</pre>
+<p>
+Check if <em class="parameter"><code>token</code></em> has a boolean <em class="parameter"><code>field</code></em> and if it is set to <a href="/usr/share/gtk-doc/html/glib/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a>.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>token</code></em> :</span></p></td>
+<td>a <a class="link" href="gst-rtsp-server-GstRTSPToken.html#GstRTSPToken" title="struct GstRTSPToken"><span class="type">GstRTSPToken</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>field</code></em> :</span></p></td>
+<td>a field name</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>
+<a href="/usr/share/gtk-doc/html/glib/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if <em class="parameter"><code>token</code></em> has a boolean field named <em class="parameter"><code>field</code></em> set to <a href="/usr/share/gtk-doc/html/glib/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a>.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+<div class="refsect1">
+<a name="gst-rtsp-server-GstRTSPToken.see-also"></a><h2>See Also</h2>
+<a class="link" href="GstRTSPClient.html" title="GstRTSPClient"><span class="type">GstRTSPClient</span></a>, <a class="link" href="gst-rtsp-server-GstRTSPPermissions.html#GstRTSPPermissions" title="struct GstRTSPPermissions"><span class="type">GstRTSPPermissions</span></a>, <a class="link" href="GstRTSPAuth.html" title="GstRTSPAuth"><span class="type">GstRTSPAuth</span></a>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.18</div>
+</body>
+</html>

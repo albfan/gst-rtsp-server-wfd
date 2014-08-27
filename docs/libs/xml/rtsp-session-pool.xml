@@ -1,0 +1,335 @@
+<?xml version="1.0"?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
+               "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
+<!ENTITY % version-entities SYSTEM "version.entities">
+%version-entities;
+]>
+
+<refentry id="GstRTSPSessionPool">
+<refmeta>
+<refentrytitle role="top_of_page" id="GstRTSPSessionPool.top_of_page">GstRTSPSessionPool</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>
+  GST-RTSP-SERVER Library
+</refmiscinfo>
+</refmeta>
+<refnamediv>
+<refname>GstRTSPSessionPool</refname>
+<refpurpose>An object for managing sessions</refpurpose>
+</refnamediv>
+
+<refsynopsisdiv id="GstRTSPSessionPool.synopsis" role="synopsis">
+<title role="synopsis.title">Synopsis</title>
+
+<synopsis>struct              <link linkend="GstRTSPSessionPool-struct">GstRTSPSessionPool</link>;
+struct              <link linkend="GstRTSPSessionPoolClass">GstRTSPSessionPoolClass</link>;
+<link linkend="GstRTSPSessionPool"><returnvalue>GstRTSPSessionPool</returnvalue></link> * <link linkend="gst-rtsp-session-pool-new">gst_rtsp_session_pool_new</link>          (<parameter><type>void</type></parameter>);
+<link linkend="guint"><returnvalue>guint</returnvalue></link>               <link linkend="gst-rtsp-session-pool-get-max-sessions">gst_rtsp_session_pool_get_max_sessions</link>
+                                                        (<parameter><link linkend="GstRTSPSessionPool"><type>GstRTSPSessionPool</type></link> *pool</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="gst-rtsp-session-pool-set-max-sessions">gst_rtsp_session_pool_set_max_sessions</link>
+                                                        (<parameter><link linkend="GstRTSPSessionPool"><type>GstRTSPSessionPool</type></link> *pool</parameter>,
+                                                         <parameter><link linkend="guint"><type>guint</type></link> max</parameter>);
+<link linkend="guint"><returnvalue>guint</returnvalue></link>               <link linkend="gst-rtsp-session-pool-get-n-sessions">gst_rtsp_session_pool_get_n_sessions</link>
+                                                        (<parameter><link linkend="GstRTSPSessionPool"><type>GstRTSPSessionPool</type></link> *pool</parameter>);
+<link linkend="GstRTSPSession"><returnvalue>GstRTSPSession</returnvalue></link> *    <link linkend="gst-rtsp-session-pool-create">gst_rtsp_session_pool_create</link>        (<parameter><link linkend="GstRTSPSessionPool"><type>GstRTSPSessionPool</type></link> *pool</parameter>);
+<link linkend="GstRTSPSession"><returnvalue>GstRTSPSession</returnvalue></link> *    <link linkend="gst-rtsp-session-pool-find">gst_rtsp_session_pool_find</link>          (<parameter><link linkend="GstRTSPSessionPool"><type>GstRTSPSessionPool</type></link> *pool</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *sessionid</parameter>);
+<link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            <link linkend="gst-rtsp-session-pool-remove">gst_rtsp_session_pool_remove</link>        (<parameter><link linkend="GstRTSPSessionPool"><type>GstRTSPSessionPool</type></link> *pool</parameter>,
+                                                         <parameter><link linkend="GstRTSPSession"><type>GstRTSPSession</type></link> *sess</parameter>);
+<link linkend="guint"><returnvalue>guint</returnvalue></link>               <link linkend="gst-rtsp-session-pool-cleanup">gst_rtsp_session_pool_cleanup</link>       (<parameter><link linkend="GstRTSPSessionPool"><type>GstRTSPSessionPool</type></link> *pool</parameter>);
+<link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            (<link linkend="GstRTSPSessionPoolFunc">*GstRTSPSessionPoolFunc</link>)           (<parameter><link linkend="GstRTSPSessionPool"><type>GstRTSPSessionPool</type></link> *pool</parameter>,
+                                                         <parameter><link linkend="gpointer"><type>gpointer</type></link> user_data</parameter>);
+<link linkend="GSource"><returnvalue>GSource</returnvalue></link> *           <link linkend="gst-rtsp-session-pool-create-watch">gst_rtsp_session_pool_create_watch</link>  (<parameter><link linkend="GstRTSPSessionPool"><type>GstRTSPSessionPool</type></link> *pool</parameter>);
+<link linkend="GstRTSPFilterResult"><returnvalue>GstRTSPFilterResult</returnvalue></link> (<link linkend="GstRTSPSessionPoolFilterFunc">*GstRTSPSessionPoolFilterFunc</link>)     (<parameter><link linkend="GstRTSPSessionPool"><type>GstRTSPSessionPool</type></link> *pool</parameter>,
+                                                         <parameter><link linkend="GstRTSPSession"><type>GstRTSPSession</type></link> *session</parameter>,
+                                                         <parameter><link linkend="gpointer"><type>gpointer</type></link> user_data</parameter>);
+<link linkend="GList"><returnvalue>GList</returnvalue></link> *             <link linkend="gst-rtsp-session-pool-filter">gst_rtsp_session_pool_filter</link>        (<parameter><link linkend="GstRTSPSessionPool"><type>GstRTSPSessionPool</type></link> *pool</parameter>,
+                                                         <parameter><link linkend="GstRTSPSessionPoolFilterFunc"><type>GstRTSPSessionPoolFilterFunc</type></link> func</parameter>,
+                                                         <parameter><link linkend="gpointer"><type>gpointer</type></link> user_data</parameter>);
+</synopsis>
+</refsynopsisdiv>
+<refsect1 id="GstRTSPSessionPool.object-hierarchy" role="object_hierarchy">
+<title role="object_hierarchy.title">Object Hierarchy</title>
+<synopsis>
+  <link linkend="GObject">GObject</link>
+   +----GstRTSPSessionPool
+</synopsis>
+</refsect1>
+<refsect1 id="GstRTSPSessionPool.properties" role="properties">
+<title role="properties.title">Properties</title>
+<synopsis>
+  &quot;<link linkend="GstRTSPSessionPool--max-sessions">max-sessions</link>&quot;             <link linkend="guint"><type>guint</type></link>                 : Read / Write
+</synopsis>
+</refsect1>
+
+<refsect1 id="GstRTSPSessionPool.description" role="desc">
+<title role="desc.title">Description</title>
+<para>
+The <link linkend="GstRTSPSessionPool"><type>GstRTSPSessionPool</type></link> object manages a list of <link linkend="GstRTSPSession"><type>GstRTSPSession</type></link> objects.
+</para>
+<para>
+The maximum number of sessions can be configured with
+<link linkend="gst-rtsp-session-pool-set-max-sessions"><function>gst_rtsp_session_pool_set_max_sessions()</function></link>. The current number of sessions can
+be retrieved with <link linkend="gst-rtsp-session-pool-get-n-sessions"><function>gst_rtsp_session_pool_get_n_sessions()</function></link>.
+</para>
+<para>
+Use <link linkend="gst-rtsp-session-pool-create"><function>gst_rtsp_session_pool_create()</function></link> to create a new <link linkend="GstRTSPSession"><type>GstRTSPSession</type></link> object.
+The session object can be found again with its id and
+<link linkend="gst-rtsp-session-pool-find"><function>gst_rtsp_session_pool_find()</function></link>.
+</para>
+<para>
+All sessions can be iterated with <link linkend="gst-rtsp-session-pool-filter"><function>gst_rtsp_session_pool_filter()</function></link>.
+</para>
+<para>
+Run <link linkend="gst-rtsp-session-pool-cleanup"><function>gst_rtsp_session_pool_cleanup()</function></link> periodically to remove timed out sessions
+or use <link linkend="gst-rtsp-session-pool-create-watch"><function>gst_rtsp_session_pool_create_watch()</function></link> to be notified when session
+cleanup should be performed.
+</para>
+<para>
+Last reviewed on 2013-07-11 (1.0.0)
+</para>
+</refsect1>
+<refsect1 id="GstRTSPSessionPool.details" role="details">
+<title role="details.title">Details</title>
+<refsect2 id="GstRTSPSessionPool-struct" role="struct">
+<title>struct GstRTSPSessionPool</title>
+<indexterm zone="GstRTSPSessionPool-struct"><primary>GstRTSPSessionPool</primary></indexterm>
+<programlisting>struct GstRTSPSessionPool;</programlisting>
+<para>
+An object that keeps track of the active sessions. This object is usually
+attached to a <link linkend="GstRTSPServer"><type>GstRTSPServer</type></link> object to manage the sessions in that server.
+</para></refsect2>
+<refsect2 id="GstRTSPSessionPoolClass" role="struct">
+<title>struct GstRTSPSessionPoolClass</title>
+<indexterm zone="GstRTSPSessionPoolClass"><primary>GstRTSPSessionPoolClass</primary></indexterm>
+<programlisting>struct GstRTSPSessionPoolClass {
+  GObjectClass  parent_class;
+
+  gchar *          (*create_session_id)   (GstRTSPSessionPool *pool);
+  GstRTSPSession * (*create_session)      (GstRTSPSessionPool *pool, const gchar *id);
+};
+</programlisting>
+<variablelist role="struct">
+<varlistentry><term><link linkend="GObjectClass"><type>GObjectClass</type></link>&#160;<structfield id="GstRTSPSessionPoolClass.parent-class">parent_class</structfield>;</term>
+<listitem />
+</varlistentry>
+<varlistentry><term><structfield id="GstRTSPSessionPoolClass.create-session-id">create_session_id</structfield>&#160;()</term>
+<listitem><simpara>create a new random session id. Subclasses can create
+custom session ids and should not check if the session exists.</simpara></listitem>
+</varlistentry>
+<varlistentry><term><structfield id="GstRTSPSessionPoolClass.create-session">create_session</structfield>&#160;()</term>
+<listitem><simpara>make a new session object.</simpara></listitem>
+</varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gst-rtsp-session-pool-new" role="function">
+<title>gst_rtsp_session_pool_new ()</title>
+<indexterm zone="gst-rtsp-session-pool-new"><primary>gst_rtsp_session_pool_new</primary></indexterm>
+<programlisting><link linkend="GstRTSPSessionPool"><returnvalue>GstRTSPSessionPool</returnvalue></link> * gst_rtsp_session_pool_new          (<parameter><type>void</type></parameter>);</programlisting>
+<para>
+Create a new <link linkend="GstRTSPSessionPool"><type>GstRTSPSessionPool</type></link> instance.
+</para><variablelist role="params">
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>A new <link linkend="GstRTSPSessionPool"><type>GstRTSPSessionPool</type></link>. <link linkend="g-object-unref"><function>g_object_unref()</function></link> after usage.</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gst-rtsp-session-pool-get-max-sessions" role="function">
+<title>gst_rtsp_session_pool_get_max_sessions ()</title>
+<indexterm zone="gst-rtsp-session-pool-get-max-sessions"><primary>gst_rtsp_session_pool_get_max_sessions</primary></indexterm>
+<programlisting><link linkend="guint"><returnvalue>guint</returnvalue></link>               gst_rtsp_session_pool_get_max_sessions
+                                                        (<parameter><link linkend="GstRTSPSessionPool"><type>GstRTSPSessionPool</type></link> *pool</parameter>);</programlisting>
+<para>
+Get the maximum allowed number of sessions in <parameter>pool</parameter>. 0 means an unlimited
+amount of sessions.
+</para><variablelist role="params">
+<varlistentry><term><parameter>pool</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstRTSPSessionPool"><type>GstRTSPSessionPool</type></link></simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>the maximum allowed number of sessions.</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gst-rtsp-session-pool-set-max-sessions" role="function">
+<title>gst_rtsp_session_pool_set_max_sessions ()</title>
+<indexterm zone="gst-rtsp-session-pool-set-max-sessions"><primary>gst_rtsp_session_pool_set_max_sessions</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                gst_rtsp_session_pool_set_max_sessions
+                                                        (<parameter><link linkend="GstRTSPSessionPool"><type>GstRTSPSessionPool</type></link> *pool</parameter>,
+                                                         <parameter><link linkend="guint"><type>guint</type></link> max</parameter>);</programlisting>
+<para>
+Configure the maximum allowed number of sessions in <parameter>pool</parameter> to <parameter>max</parameter>.
+A value of 0 means an unlimited amount of sessions.
+</para><variablelist role="params">
+<varlistentry><term><parameter>pool</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstRTSPSessionPool"><type>GstRTSPSessionPool</type></link></simpara></listitem></varlistentry>
+<varlistentry><term><parameter>max</parameter>&#160;:</term>
+<listitem><simpara>the maximum number of sessions</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gst-rtsp-session-pool-get-n-sessions" role="function">
+<title>gst_rtsp_session_pool_get_n_sessions ()</title>
+<indexterm zone="gst-rtsp-session-pool-get-n-sessions"><primary>gst_rtsp_session_pool_get_n_sessions</primary></indexterm>
+<programlisting><link linkend="guint"><returnvalue>guint</returnvalue></link>               gst_rtsp_session_pool_get_n_sessions
+                                                        (<parameter><link linkend="GstRTSPSessionPool"><type>GstRTSPSessionPool</type></link> *pool</parameter>);</programlisting>
+<para>
+Get the amount of active sessions in <parameter>pool</parameter>.
+</para><variablelist role="params">
+<varlistentry><term><parameter>pool</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstRTSPSessionPool"><type>GstRTSPSessionPool</type></link></simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>the amount of active sessions in <parameter>pool</parameter>.</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gst-rtsp-session-pool-create" role="function">
+<title>gst_rtsp_session_pool_create ()</title>
+<indexterm zone="gst-rtsp-session-pool-create"><primary>gst_rtsp_session_pool_create</primary></indexterm>
+<programlisting><link linkend="GstRTSPSession"><returnvalue>GstRTSPSession</returnvalue></link> *    gst_rtsp_session_pool_create        (<parameter><link linkend="GstRTSPSessionPool"><type>GstRTSPSessionPool</type></link> *pool</parameter>);</programlisting>
+<para>
+Create a new <link linkend="GstRTSPSession"><type>GstRTSPSession</type></link> object in <parameter>pool</parameter>.
+</para><variablelist role="params">
+<varlistentry><term><parameter>pool</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstRTSPSessionPool"><type>GstRTSPSessionPool</type></link></simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>a new <link linkend="GstRTSPSession"><type>GstRTSPSession</type></link>. <emphasis role="annotation">[<acronym>transfer none</acronym>]</emphasis></simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gst-rtsp-session-pool-find" role="function">
+<title>gst_rtsp_session_pool_find ()</title>
+<indexterm zone="gst-rtsp-session-pool-find"><primary>gst_rtsp_session_pool_find</primary></indexterm>
+<programlisting><link linkend="GstRTSPSession"><returnvalue>GstRTSPSession</returnvalue></link> *    gst_rtsp_session_pool_find          (<parameter><link linkend="GstRTSPSessionPool"><type>GstRTSPSessionPool</type></link> *pool</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *sessionid</parameter>);</programlisting>
+<para>
+Find the session with <parameter>sessionid</parameter> in <parameter>pool</parameter>. The access time of the session
+will be updated with <link linkend="gst-rtsp-session-touch"><function>gst_rtsp_session_touch()</function></link>.
+</para><variablelist role="params">
+<varlistentry><term><parameter>pool</parameter>&#160;:</term>
+<listitem><simpara>the pool to search</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>sessionid</parameter>&#160;:</term>
+<listitem><simpara>the session id</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>the <link linkend="GstRTSPSession"><type>GstRTSPSession</type></link> with <parameter>sessionid</parameter> or <link linkend="NULL:CAPS"><literal>NULL</literal></link> when the session did
+not exist. <link linkend="g-object-unref"><function>g_object_unref()</function></link> after usage. <emphasis role="annotation">[<acronym>transfer full</acronym>]</emphasis></simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gst-rtsp-session-pool-remove" role="function">
+<title>gst_rtsp_session_pool_remove ()</title>
+<indexterm zone="gst-rtsp-session-pool-remove"><primary>gst_rtsp_session_pool_remove</primary></indexterm>
+<programlisting><link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            gst_rtsp_session_pool_remove        (<parameter><link linkend="GstRTSPSessionPool"><type>GstRTSPSessionPool</type></link> *pool</parameter>,
+                                                         <parameter><link linkend="GstRTSPSession"><type>GstRTSPSession</type></link> *sess</parameter>);</programlisting>
+<para>
+Remove <parameter>sess</parameter> from <parameter>pool</parameter>, releasing the ref that the pool has on <parameter>sess</parameter>.
+</para><variablelist role="params">
+<varlistentry><term><parameter>pool</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstRTSPSessionPool"><type>GstRTSPSessionPool</type></link></simpara></listitem></varlistentry>
+<varlistentry><term><parameter>sess</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstRTSPSession"><type>GstRTSPSession</type></link></simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara><link linkend="TRUE:CAPS"><literal>TRUE</literal></link> if the session was found and removed.</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gst-rtsp-session-pool-cleanup" role="function">
+<title>gst_rtsp_session_pool_cleanup ()</title>
+<indexterm zone="gst-rtsp-session-pool-cleanup"><primary>gst_rtsp_session_pool_cleanup</primary></indexterm>
+<programlisting><link linkend="guint"><returnvalue>guint</returnvalue></link>               gst_rtsp_session_pool_cleanup       (<parameter><link linkend="GstRTSPSessionPool"><type>GstRTSPSessionPool</type></link> *pool</parameter>);</programlisting>
+<para>
+Inspect all the sessions in <parameter>pool</parameter> and remove the sessions that are inactive
+for more than their timeout.
+</para><variablelist role="params">
+<varlistentry><term><parameter>pool</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstRTSPSessionPool"><type>GstRTSPSessionPool</type></link></simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>the amount of sessions that got removed.</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GstRTSPSessionPoolFunc" role="function">
+<title>GstRTSPSessionPoolFunc ()</title>
+<indexterm zone="GstRTSPSessionPoolFunc"><primary>GstRTSPSessionPoolFunc</primary></indexterm>
+<programlisting><link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            (*GstRTSPSessionPoolFunc)           (<parameter><link linkend="GstRTSPSessionPool"><type>GstRTSPSessionPool</type></link> *pool</parameter>,
+                                                         <parameter><link linkend="gpointer"><type>gpointer</type></link> user_data</parameter>);</programlisting>
+<para>
+The function that will be called from the GSource watch on the session pool.
+</para>
+<para>
+The function will be called when the pool must be cleaned up because one or
+more sessions timed out.
+</para><variablelist role="params">
+<varlistentry><term><parameter>pool</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstRTSPSessionPool"><type>GstRTSPSessionPool</type></link> object</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>user_data</parameter>&#160;:</term>
+<listitem><simpara>user data that has been given when registering the handler</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara><link linkend="FALSE:CAPS"><literal>FALSE</literal></link> if the source should be removed.</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gst-rtsp-session-pool-create-watch" role="function">
+<title>gst_rtsp_session_pool_create_watch ()</title>
+<indexterm zone="gst-rtsp-session-pool-create-watch"><primary>gst_rtsp_session_pool_create_watch</primary></indexterm>
+<programlisting><link linkend="GSource"><returnvalue>GSource</returnvalue></link> *           gst_rtsp_session_pool_create_watch  (<parameter><link linkend="GstRTSPSessionPool"><type>GstRTSPSessionPool</type></link> *pool</parameter>);</programlisting>
+<para>
+A GSource that will be dispatched when the session should be cleaned up.
+</para><variablelist role="params">
+<varlistentry><term><parameter>pool</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstRTSPSessionPool"><type>GstRTSPSessionPool</type></link></simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GstRTSPSessionPoolFilterFunc" role="function">
+<title>GstRTSPSessionPoolFilterFunc ()</title>
+<indexterm zone="GstRTSPSessionPoolFilterFunc"><primary>GstRTSPSessionPoolFilterFunc</primary></indexterm>
+<programlisting><link linkend="GstRTSPFilterResult"><returnvalue>GstRTSPFilterResult</returnvalue></link> (*GstRTSPSessionPoolFilterFunc)     (<parameter><link linkend="GstRTSPSessionPool"><type>GstRTSPSessionPool</type></link> *pool</parameter>,
+                                                         <parameter><link linkend="GstRTSPSession"><type>GstRTSPSession</type></link> *session</parameter>,
+                                                         <parameter><link linkend="gpointer"><type>gpointer</type></link> user_data</parameter>);</programlisting>
+<para>
+This function will be called by the <link linkend="gst-rtsp-session-pool-filter"><function>gst_rtsp_session_pool_filter()</function></link>. An
+implementation should return a value of <link linkend="GstRTSPFilterResult"><type>GstRTSPFilterResult</type></link>.
+</para>
+<para>
+When this function returns <link linkend="GST-RTSP-FILTER-REMOVE:CAPS"><type>GST_RTSP_FILTER_REMOVE</type></link>, <parameter>session</parameter> will be removed
+from <parameter>pool</parameter>.
+</para>
+<para>
+A return value of <link linkend="GST-RTSP-FILTER-KEEP:CAPS"><type>GST_RTSP_FILTER_KEEP</type></link> will leave <parameter>session</parameter> untouched in
+<parameter>pool</parameter>.
+</para>
+<para>
+A value of GST_RTSP_FILTER_REF will add <parameter>session</parameter> to the result <link linkend="GList"><type>GList</type></link> of
+<link linkend="gst-rtsp-session-pool-filter"><function>gst_rtsp_session_pool_filter()</function></link>.
+</para><variablelist role="params">
+<varlistentry><term><parameter>pool</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstRTSPSessionPool"><type>GstRTSPSessionPool</type></link> object</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>session</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstRTSPSession"><type>GstRTSPSession</type></link> in <parameter>pool</parameter></simpara></listitem></varlistentry>
+<varlistentry><term><parameter>user_data</parameter>&#160;:</term>
+<listitem><simpara>user data that has been given to <link linkend="gst-rtsp-session-pool-filter"><function>gst_rtsp_session_pool_filter()</function></link></simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>a <link linkend="GstRTSPFilterResult"><type>GstRTSPFilterResult</type></link>.</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gst-rtsp-session-pool-filter" role="function">
+<title>gst_rtsp_session_pool_filter ()</title>
+<indexterm zone="gst-rtsp-session-pool-filter"><primary>gst_rtsp_session_pool_filter</primary></indexterm>
+<programlisting><link linkend="GList"><returnvalue>GList</returnvalue></link> *             gst_rtsp_session_pool_filter        (<parameter><link linkend="GstRTSPSessionPool"><type>GstRTSPSessionPool</type></link> *pool</parameter>,
+                                                         <parameter><link linkend="GstRTSPSessionPoolFilterFunc"><type>GstRTSPSessionPoolFilterFunc</type></link> func</parameter>,
+                                                         <parameter><link linkend="gpointer"><type>gpointer</type></link> user_data</parameter>);</programlisting>
+<para>
+Call <parameter>func</parameter> for each session in <parameter>pool</parameter>. The result value of <parameter>func</parameter> determines
+what happens to the session. <parameter>func</parameter> will be called with the session pool
+locked so no further actions on <parameter>pool</parameter> can be performed from <parameter>func</parameter>.
+</para>
+<para>
+If <parameter>func</parameter> returns <link linkend="GST-RTSP-FILTER-REMOVE:CAPS"><type>GST_RTSP_FILTER_REMOVE</type></link>, the session will be removed from
+<parameter>pool</parameter>.
+</para>
+<para>
+If <parameter>func</parameter> returns <link linkend="GST-RTSP-FILTER-KEEP:CAPS"><type>GST_RTSP_FILTER_KEEP</type></link>, the session will remain in <parameter>pool</parameter>.
+</para>
+<para>
+If <parameter>func</parameter> returns <link linkend="GST-RTSP-FILTER-REF:CAPS"><type>GST_RTSP_FILTER_REF</type></link>, the session will remain in <parameter>pool</parameter> but
+will also be added with an additional ref to the result GList of this
+function..
+</para>
+<para>
+When <parameter>func</parameter> is <link linkend="NULL:CAPS"><literal>NULL</literal></link>, <link linkend="GST-RTSP-FILTER-REF:CAPS"><type>GST_RTSP_FILTER_REF</type></link> will be assumed for all sessions.
+</para><variablelist role="params">
+<varlistentry><term><parameter>pool</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstRTSPSessionPool"><type>GstRTSPSessionPool</type></link></simpara></listitem></varlistentry>
+<varlistentry><term><parameter>func</parameter>&#160;:</term>
+<listitem><simpara>a callback. <emphasis role="annotation">[<acronym>scope call</acronym>][<acronym>allow-none</acronym>]</emphasis></simpara></listitem></varlistentry>
+<varlistentry><term><parameter>user_data</parameter>&#160;:</term>
+<listitem><simpara>user data passed to <parameter>func</parameter></simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>a GList with all
+sessions for which <parameter>func</parameter> returned <link linkend="GST-RTSP-FILTER-REF:CAPS"><type>GST_RTSP_FILTER_REF</type></link>. After usage, each
+element in the GList should be unreffed before the list is freed. <emphasis role="annotation">[<acronym>element-type</acronym> GstRTSPSession][<acronym>transfer full</acronym>]</emphasis></simpara></listitem></varlistentry>
+</variablelist></refsect2>
+
+</refsect1>
+<refsect1 id="GstRTSPSessionPool.property-details" role="property_details">
+<title role="property_details.title">Property Details</title>
+<refsect2 id="GstRTSPSessionPool--max-sessions" role="property"><title>The <literal>&quot;max-sessions&quot;</literal> property</title>
+<indexterm zone="GstRTSPSessionPool--max-sessions"><primary>GstRTSPSessionPool:max-sessions</primary></indexterm>
+<programlisting>  &quot;max-sessions&quot;             <link linkend="guint"><type>guint</type></link>                 : Read / Write</programlisting>
+<para>the maximum amount of sessions (0 = unlimited).</para><para>Default value: 0</para>
+</refsect2>
+</refsect1>
+<refsect1 id="GstRTSPSessionPool.see-also">
+<title>See Also</title>
+<link linkend="GstRTSPSession"><type>GstRTSPSession</type></link>
+</refsect1>
+
+</refentry>

@@ -1,0 +1,345 @@
+<?xml version="1.0"?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
+               "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
+<!ENTITY % version-entities SYSTEM "version.entities">
+%version-entities;
+]>
+
+<refentry id="GstRTSPAuth">
+<refmeta>
+<refentrytitle role="top_of_page" id="GstRTSPAuth.top_of_page">GstRTSPAuth</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>
+  GST-RTSP-SERVER Library
+</refmiscinfo>
+</refmeta>
+<refnamediv>
+<refname>GstRTSPAuth</refname>
+<refpurpose>Authentication and authorization</refpurpose>
+</refnamediv>
+
+<refsynopsisdiv id="GstRTSPAuth.synopsis" role="synopsis">
+<title role="synopsis.title">Synopsis</title>
+
+<synopsis>struct              <link linkend="GstRTSPAuth-struct">GstRTSPAuth</link>;
+struct              <link linkend="GstRTSPAuthClass">GstRTSPAuthClass</link>;
+<link linkend="GstRTSPAuth"><returnvalue>GstRTSPAuth</returnvalue></link> *       <link linkend="gst-rtsp-auth-new">gst_rtsp_auth_new</link>                   (<parameter><type>void</type></parameter>);
+<link linkend="GTlsCertificate"><returnvalue>GTlsCertificate</returnvalue></link> *   <link linkend="gst-rtsp-auth-get-tls-certificate">gst_rtsp_auth_get_tls_certificate</link>   (<parameter><link linkend="GstRTSPAuth"><type>GstRTSPAuth</type></link> *auth</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="gst-rtsp-auth-set-tls-certificate">gst_rtsp_auth_set_tls_certificate</link>   (<parameter><link linkend="GstRTSPAuth"><type>GstRTSPAuth</type></link> *auth</parameter>,
+                                                         <parameter><link linkend="GTlsCertificate"><type>GTlsCertificate</type></link> *cert</parameter>);
+<link linkend="gchar"><returnvalue>gchar</returnvalue></link> *             <link linkend="gst-rtsp-auth-make-basic">gst_rtsp_auth_make_basic</link>            (<parameter>const <link linkend="gchar"><type>gchar</type></link> *user</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *pass</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="gst-rtsp-auth-add-basic">gst_rtsp_auth_add_basic</link>             (<parameter><link linkend="GstRTSPAuth"><type>GstRTSPAuth</type></link> *auth</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *basic</parameter>,
+                                                         <parameter><link linkend="GstRTSPToken"><type>GstRTSPToken</type></link> *token</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="gst-rtsp-auth-remove-basic">gst_rtsp_auth_remove_basic</link>          (<parameter><link linkend="GstRTSPAuth"><type>GstRTSPAuth</type></link> *auth</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *basic</parameter>);
+<link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            <link linkend="gst-rtsp-auth-check">gst_rtsp_auth_check</link>                 (<parameter>const <link linkend="gchar"><type>gchar</type></link> *check</parameter>);
+<link linkend="GstRTSPToken"><returnvalue>GstRTSPToken</returnvalue></link> *      <link linkend="gst-rtsp-auth-get-default-token">gst_rtsp_auth_get_default_token</link>     (<parameter><link linkend="GstRTSPAuth"><type>GstRTSPAuth</type></link> *auth</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="gst-rtsp-auth-set-default-token">gst_rtsp_auth_set_default_token</link>     (<parameter><link linkend="GstRTSPAuth"><type>GstRTSPAuth</type></link> *auth</parameter>,
+                                                         <parameter><link linkend="GstRTSPToken"><type>GstRTSPToken</type></link> *token</parameter>);
+
+#define             <link linkend="GST-RTSP-AUTH-CHECK-CONNECT:CAPS">GST_RTSP_AUTH_CHECK_CONNECT</link>
+#define             <link linkend="GST-RTSP-AUTH-CHECK-URL:CAPS">GST_RTSP_AUTH_CHECK_URL</link>
+#define             <link linkend="GST-RTSP-AUTH-CHECK-MEDIA-FACTORY-ACCESS:CAPS">GST_RTSP_AUTH_CHECK_MEDIA_FACTORY_ACCESS</link>
+#define             <link linkend="GST-RTSP-AUTH-CHECK-MEDIA-FACTORY-CONSTRUCT:CAPS">GST_RTSP_AUTH_CHECK_MEDIA_FACTORY_CONSTRUCT</link>
+#define             <link linkend="GST-RTSP-AUTH-CHECK-TRANSPORT-CLIENT-SETTINGS:CAPS">GST_RTSP_AUTH_CHECK_TRANSPORT_CLIENT_SETTINGS</link>
+
+#define             <link linkend="GST-RTSP-TOKEN-MEDIA-FACTORY-ROLE:CAPS">GST_RTSP_TOKEN_MEDIA_FACTORY_ROLE</link>
+#define             <link linkend="GST-RTSP-TOKEN-TRANSPORT-CLIENT-SETTINGS:CAPS">GST_RTSP_TOKEN_TRANSPORT_CLIENT_SETTINGS</link>
+
+#define             <link linkend="GST-RTSP-PERM-MEDIA-FACTORY-ACCESS:CAPS">GST_RTSP_PERM_MEDIA_FACTORY_ACCESS</link>
+#define             <link linkend="GST-RTSP-PERM-MEDIA-FACTORY-CONSTRUCT:CAPS">GST_RTSP_PERM_MEDIA_FACTORY_CONSTRUCT</link>
+</synopsis>
+</refsynopsisdiv>
+<refsect1 id="GstRTSPAuth.object-hierarchy" role="object_hierarchy">
+<title role="object_hierarchy.title">Object Hierarchy</title>
+<synopsis>
+  <link linkend="GObject">GObject</link>
+   +----GstRTSPAuth
+</synopsis>
+</refsect1>
+
+<refsect1 id="GstRTSPAuth.description" role="desc">
+<title role="desc.title">Description</title>
+<para>
+The <link linkend="GstRTSPAuth"><type>GstRTSPAuth</type></link> object is responsible for checking if the current user is
+allowed to perform requested actions. The default implementation has some
+reasonable checks but subclasses can implement custom security policies.
+</para>
+<para>
+A new auth object is made with <link linkend="gst-rtsp-auth-new"><function>gst_rtsp_auth_new()</function></link>. It is usually configured
+on the <link linkend="GstRTSPServer"><type>GstRTSPServer</type></link> object.
+</para>
+<para>
+The RTSP server will call <link linkend="gst-rtsp-auth-check"><function>gst_rtsp_auth_check()</function></link> with a string describing the
+check to perform. The possible checks are prefixed with
+GST_RTSP_AUTH_CHECK_*. Depending on the check, the default implementation
+will use the current <link linkend="GstRTSPToken"><type>GstRTSPToken</type></link>, <link linkend="GstRTSPContext"><type>GstRTSPContext</type></link> and
+<link linkend="GstRTSPPermissions"><type>GstRTSPPermissions</type></link> on the object to check if an operation is allowed.
+</para>
+<para>
+The default <link linkend="GstRTSPAuth"><type>GstRTSPAuth</type></link> object has support for basic authentication. With
+<link linkend="gst-rtsp-auth-add-basic"><function>gst_rtsp_auth_add_basic()</function></link> you can add a basic authentication string together
+with the <link linkend="GstRTSPToken"><type>GstRTSPToken</type></link> that will become active when successfully
+authenticated.
+</para>
+<para>
+When a TLS certificate has been set with <link linkend="gst-rtsp-auth-set-tls-certificate"><function>gst_rtsp_auth_set_tls_certificate()</function></link>,
+the default auth object will require the client to connect with a TLS
+connection.
+</para>
+<para>
+Last reviewed on 2013-07-16 (1.0.0)
+</para>
+</refsect1>
+<refsect1 id="GstRTSPAuth.details" role="details">
+<title role="details.title">Details</title>
+<refsect2 id="GstRTSPAuth-struct" role="struct">
+<title>struct GstRTSPAuth</title>
+<indexterm zone="GstRTSPAuth-struct"><primary>GstRTSPAuth</primary></indexterm>
+<programlisting>struct GstRTSPAuth;</programlisting>
+<para>
+The authentication structure.
+</para></refsect2>
+<refsect2 id="GstRTSPAuthClass" role="struct">
+<title>struct GstRTSPAuthClass</title>
+<indexterm zone="GstRTSPAuthClass"><primary>GstRTSPAuthClass</primary></indexterm>
+<programlisting>struct GstRTSPAuthClass {
+  GObjectClass  parent_class;
+
+  gboolean           (*authenticate) (GstRTSPAuth *auth, GstRTSPContext *ctx);
+  gboolean           (*check)        (GstRTSPAuth *auth, GstRTSPContext *ctx,
+                                      const gchar *check);
+};
+</programlisting>
+<para>
+The authentication class.
+</para><variablelist role="struct">
+<varlistentry><term><link linkend="GObjectClass"><type>GObjectClass</type></link>&#160;<structfield id="GstRTSPAuthClass.parent-class">parent_class</structfield>;</term>
+<listitem />
+</varlistentry>
+<varlistentry><term><structfield id="GstRTSPAuthClass.authenticate">authenticate</structfield>&#160;()</term>
+<listitem><simpara>check the authentication of a client. The default implementation
+checks if the authentication in the header matches one of the basic
+authentication tokens. This function should set the authgroup field
+in the context.</simpara></listitem>
+</varlistentry>
+<varlistentry><term><structfield id="GstRTSPAuthClass.check">check</structfield>&#160;()</term>
+<listitem><simpara>check if a resource can be accessed. this function should
+call authenticate to authenticate the client when needed. The method
+should also construct and send an appropriate response message on
+error.</simpara></listitem>
+</varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gst-rtsp-auth-new" role="function">
+<title>gst_rtsp_auth_new ()</title>
+<indexterm zone="gst-rtsp-auth-new"><primary>gst_rtsp_auth_new</primary></indexterm>
+<programlisting><link linkend="GstRTSPAuth"><returnvalue>GstRTSPAuth</returnvalue></link> *       gst_rtsp_auth_new                   (<parameter><type>void</type></parameter>);</programlisting>
+<para>
+Create a new <link linkend="GstRTSPAuth"><type>GstRTSPAuth</type></link> instance.
+</para><variablelist role="params">
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>a new <link linkend="GstRTSPAuth"><type>GstRTSPAuth</type></link></simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gst-rtsp-auth-get-tls-certificate" role="function">
+<title>gst_rtsp_auth_get_tls_certificate ()</title>
+<indexterm zone="gst-rtsp-auth-get-tls-certificate"><primary>gst_rtsp_auth_get_tls_certificate</primary></indexterm>
+<programlisting><link linkend="GTlsCertificate"><returnvalue>GTlsCertificate</returnvalue></link> *   gst_rtsp_auth_get_tls_certificate   (<parameter><link linkend="GstRTSPAuth"><type>GstRTSPAuth</type></link> *auth</parameter>);</programlisting>
+<para>
+Get the <link linkend="GTlsCertificate"><type>GTlsCertificate</type></link> used for negotiating TLS <parameter>auth</parameter>.
+</para><variablelist role="params">
+<varlistentry><term><parameter>auth</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstRTSPAuth"><type>GstRTSPAuth</type></link></simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>the <link linkend="GTlsCertificate"><type>GTlsCertificate</type></link> of <parameter>auth</parameter>. <link linkend="g-object-unref"><function>g_object_unref()</function></link> after
+usage. <emphasis role="annotation">[<acronym>transfer full</acronym>]</emphasis></simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gst-rtsp-auth-set-tls-certificate" role="function">
+<title>gst_rtsp_auth_set_tls_certificate ()</title>
+<indexterm zone="gst-rtsp-auth-set-tls-certificate"><primary>gst_rtsp_auth_set_tls_certificate</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                gst_rtsp_auth_set_tls_certificate   (<parameter><link linkend="GstRTSPAuth"><type>GstRTSPAuth</type></link> *auth</parameter>,
+                                                         <parameter><link linkend="GTlsCertificate"><type>GTlsCertificate</type></link> *cert</parameter>);</programlisting>
+<para>
+Set the TLS certificate for the auth. Client connections will only
+be accepted when TLS is negotiated.
+</para><variablelist role="params">
+<varlistentry><term><parameter>auth</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstRTSPAuth"><type>GstRTSPAuth</type></link></simpara></listitem></varlistentry>
+<varlistentry><term><parameter>cert</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GTlsCertificate"><type>GTlsCertificate</type></link>. <emphasis role="annotation">[<acronym>allow-none</acronym>]</emphasis></simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gst-rtsp-auth-make-basic" role="function">
+<title>gst_rtsp_auth_make_basic ()</title>
+<indexterm zone="gst-rtsp-auth-make-basic"><primary>gst_rtsp_auth_make_basic</primary></indexterm>
+<programlisting><link linkend="gchar"><returnvalue>gchar</returnvalue></link> *             gst_rtsp_auth_make_basic            (<parameter>const <link linkend="gchar"><type>gchar</type></link> *user</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *pass</parameter>);</programlisting>
+<para>
+Construct a Basic authorisation token from <parameter>user</parameter> and <parameter>pass</parameter>.
+</para><variablelist role="params">
+<varlistentry><term><parameter>user</parameter>&#160;:</term>
+<listitem><simpara>a userid</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>pass</parameter>&#160;:</term>
+<listitem><simpara>a password</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>the base64 encoding of the string <parameter>user</parameter>:<parameter>pass</parameter>. <link linkend="g-free"><function>g_free()</function></link>
+after usage.</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gst-rtsp-auth-add-basic" role="function">
+<title>gst_rtsp_auth_add_basic ()</title>
+<indexterm zone="gst-rtsp-auth-add-basic"><primary>gst_rtsp_auth_add_basic</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                gst_rtsp_auth_add_basic             (<parameter><link linkend="GstRTSPAuth"><type>GstRTSPAuth</type></link> *auth</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *basic</parameter>,
+                                                         <parameter><link linkend="GstRTSPToken"><type>GstRTSPToken</type></link> *token</parameter>);</programlisting>
+<para>
+Add a basic token for the default authentication algorithm that
+enables the client with privileges listed in <parameter>token</parameter>.
+</para><variablelist role="params">
+<varlistentry><term><parameter>auth</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstRTSPAuth"><type>GstRTSPAuth</type></link></simpara></listitem></varlistentry>
+<varlistentry><term><parameter>basic</parameter>&#160;:</term>
+<listitem><simpara>the basic token</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>token</parameter>&#160;:</term>
+<listitem><simpara>authorisation token</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gst-rtsp-auth-remove-basic" role="function">
+<title>gst_rtsp_auth_remove_basic ()</title>
+<indexterm zone="gst-rtsp-auth-remove-basic"><primary>gst_rtsp_auth_remove_basic</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                gst_rtsp_auth_remove_basic          (<parameter><link linkend="GstRTSPAuth"><type>GstRTSPAuth</type></link> *auth</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *basic</parameter>);</programlisting>
+<para>
+Add a basic token for the default authentication algorithm that
+enables the client with privileges from <parameter>authgroup</parameter>.
+</para><variablelist role="params">
+<varlistentry><term><parameter>auth</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstRTSPAuth"><type>GstRTSPAuth</type></link></simpara></listitem></varlistentry>
+<varlistentry><term><parameter>basic</parameter>&#160;:</term>
+<listitem><simpara>the basic token. <emphasis role="annotation">[<acronym>transfer none</acronym>]</emphasis></simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gst-rtsp-auth-check" role="function">
+<title>gst_rtsp_auth_check ()</title>
+<indexterm zone="gst-rtsp-auth-check"><primary>gst_rtsp_auth_check</primary></indexterm>
+<programlisting><link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            gst_rtsp_auth_check                 (<parameter>const <link linkend="gchar"><type>gchar</type></link> *check</parameter>);</programlisting>
+<para>
+Check if <parameter>check</parameter> is allowed in the current context.
+</para><variablelist role="params">
+<varlistentry><term><parameter>check</parameter>&#160;:</term>
+<listitem><simpara>the item to check</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>FALSE if check failed.</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gst-rtsp-auth-get-default-token" role="function">
+<title>gst_rtsp_auth_get_default_token ()</title>
+<indexterm zone="gst-rtsp-auth-get-default-token"><primary>gst_rtsp_auth_get_default_token</primary></indexterm>
+<programlisting><link linkend="GstRTSPToken"><returnvalue>GstRTSPToken</returnvalue></link> *      gst_rtsp_auth_get_default_token     (<parameter><link linkend="GstRTSPAuth"><type>GstRTSPAuth</type></link> *auth</parameter>);</programlisting>
+<para>
+Get the default token for <parameter>auth</parameter>. This token will be used for unauthenticated
+users.
+</para><variablelist role="params">
+<varlistentry><term><parameter>auth</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstRTSPAuth"><type>GstRTSPAuth</type></link></simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>the <link linkend="GstRTSPToken"><type>GstRTSPToken</type></link> of <parameter>auth</parameter>. <link linkend="gst-rtsp-token-unref"><function>gst_rtsp_token_unref()</function></link> after
+usage. <emphasis role="annotation">[<acronym>transfer full</acronym>]</emphasis></simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gst-rtsp-auth-set-default-token" role="function">
+<title>gst_rtsp_auth_set_default_token ()</title>
+<indexterm zone="gst-rtsp-auth-set-default-token"><primary>gst_rtsp_auth_set_default_token</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                gst_rtsp_auth_set_default_token     (<parameter><link linkend="GstRTSPAuth"><type>GstRTSPAuth</type></link> *auth</parameter>,
+                                                         <parameter><link linkend="GstRTSPToken"><type>GstRTSPToken</type></link> *token</parameter>);</programlisting>
+<para>
+Set the default <link linkend="GstRTSPToken"><type>GstRTSPToken</type></link> to <parameter>token</parameter> in <parameter>auth</parameter>. The default token will
+be used for unauthenticated users.
+</para><variablelist role="params">
+<varlistentry><term><parameter>auth</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstRTSPAuth"><type>GstRTSPAuth</type></link></simpara></listitem></varlistentry>
+<varlistentry><term><parameter>token</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstRTSPToken"><type>GstRTSPToken</type></link>. <emphasis role="annotation">[<acronym>allow-none</acronym>]</emphasis></simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="GST-RTSP-AUTH-CHECK-CONNECT:CAPS" role="macro">
+<title>GST_RTSP_AUTH_CHECK_CONNECT</title>
+<indexterm zone="GST-RTSP-AUTH-CHECK-CONNECT:CAPS"><primary>GST_RTSP_AUTH_CHECK_CONNECT</primary></indexterm>
+<programlisting>#define GST_RTSP_AUTH_CHECK_CONNECT                  "auth.check.connect"
+</programlisting>
+<para>
+Check a new connection
+</para></refsect2>
+<refsect2 id="GST-RTSP-AUTH-CHECK-URL:CAPS" role="macro">
+<title>GST_RTSP_AUTH_CHECK_URL</title>
+<indexterm zone="GST-RTSP-AUTH-CHECK-URL:CAPS"><primary>GST_RTSP_AUTH_CHECK_URL</primary></indexterm>
+<programlisting>#define GST_RTSP_AUTH_CHECK_URL                      "auth.check.url"
+</programlisting>
+<para>
+Check the URL and methods
+</para></refsect2>
+<refsect2 id="GST-RTSP-AUTH-CHECK-MEDIA-FACTORY-ACCESS:CAPS" role="macro">
+<title>GST_RTSP_AUTH_CHECK_MEDIA_FACTORY_ACCESS</title>
+<indexterm zone="GST-RTSP-AUTH-CHECK-MEDIA-FACTORY-ACCESS:CAPS"><primary>GST_RTSP_AUTH_CHECK_MEDIA_FACTORY_ACCESS</primary></indexterm>
+<programlisting>#define GST_RTSP_AUTH_CHECK_MEDIA_FACTORY_ACCESS     "auth.check.media.factory.access"
+</programlisting>
+<para>
+Check if access is allowed to a factory.
+When access is not allowed an 404 Not Found is sent in the response.
+</para></refsect2>
+<refsect2 id="GST-RTSP-AUTH-CHECK-MEDIA-FACTORY-CONSTRUCT:CAPS" role="macro">
+<title>GST_RTSP_AUTH_CHECK_MEDIA_FACTORY_CONSTRUCT</title>
+<indexterm zone="GST-RTSP-AUTH-CHECK-MEDIA-FACTORY-CONSTRUCT:CAPS"><primary>GST_RTSP_AUTH_CHECK_MEDIA_FACTORY_CONSTRUCT</primary></indexterm>
+<programlisting>#define GST_RTSP_AUTH_CHECK_MEDIA_FACTORY_CONSTRUCT  "auth.check.media.factory.construct"
+</programlisting>
+<para>
+Check if media can be constructed from a media factory
+A response should be sent on error.
+</para></refsect2>
+<refsect2 id="GST-RTSP-AUTH-CHECK-TRANSPORT-CLIENT-SETTINGS:CAPS" role="macro">
+<title>GST_RTSP_AUTH_CHECK_TRANSPORT_CLIENT_SETTINGS</title>
+<indexterm zone="GST-RTSP-AUTH-CHECK-TRANSPORT-CLIENT-SETTINGS:CAPS"><primary>GST_RTSP_AUTH_CHECK_TRANSPORT_CLIENT_SETTINGS</primary></indexterm>
+<programlisting>#define GST_RTSP_AUTH_CHECK_TRANSPORT_CLIENT_SETTINGS  "auth.check.transport.client-settings"
+</programlisting>
+<para>
+Check if the client can specify TTL, destination and
+port pair in multicast. No response is sent when the check returns
+<link linkend="FALSE:CAPS"><literal>FALSE</literal></link>.
+</para></refsect2>
+<refsect2 id="GST-RTSP-TOKEN-MEDIA-FACTORY-ROLE:CAPS" role="macro">
+<title>GST_RTSP_TOKEN_MEDIA_FACTORY_ROLE</title>
+<indexterm zone="GST-RTSP-TOKEN-MEDIA-FACTORY-ROLE:CAPS"><primary>GST_RTSP_TOKEN_MEDIA_FACTORY_ROLE</primary></indexterm>
+<programlisting>#define GST_RTSP_TOKEN_MEDIA_FACTORY_ROLE      "media.factory.role"
+</programlisting>
+<para>
+G_TYPE_STRING, the role to use when dealing with media factories
+</para>
+<para>
+The default <link linkend="GstRTSPAuth"><type>GstRTSPAuth</type></link> object uses this string in the token to find the
+role of the media factory. It will then retrieve the <link linkend="GstRTSPPermissions"><type>GstRTSPPermissions</type></link> of
+the media factory and retrieve the role with the same name.
+</para></refsect2>
+<refsect2 id="GST-RTSP-TOKEN-TRANSPORT-CLIENT-SETTINGS:CAPS" role="macro">
+<title>GST_RTSP_TOKEN_TRANSPORT_CLIENT_SETTINGS</title>
+<indexterm zone="GST-RTSP-TOKEN-TRANSPORT-CLIENT-SETTINGS:CAPS"><primary>GST_RTSP_TOKEN_TRANSPORT_CLIENT_SETTINGS</primary></indexterm>
+<programlisting>#define GST_RTSP_TOKEN_TRANSPORT_CLIENT_SETTINGS   "transport.client-settings"
+</programlisting>
+<para>
+G_TYPE_BOOLEAN, <link linkend="TRUE:CAPS"><literal>TRUE</literal></link> if the client can specify TTL, destination and
+    port pair in multicast.
+</para></refsect2>
+<refsect2 id="GST-RTSP-PERM-MEDIA-FACTORY-ACCESS:CAPS" role="macro">
+<title>GST_RTSP_PERM_MEDIA_FACTORY_ACCESS</title>
+<indexterm zone="GST-RTSP-PERM-MEDIA-FACTORY-ACCESS:CAPS"><primary>GST_RTSP_PERM_MEDIA_FACTORY_ACCESS</primary></indexterm>
+<programlisting>#define GST_RTSP_PERM_MEDIA_FACTORY_ACCESS      "media.factory.access"
+</programlisting>
+<para>
+G_TYPE_BOOLEAN, <link linkend="TRUE:CAPS"><literal>TRUE</literal></link> if the media can be accessed, <link linkend="FALSE:CAPS"><literal>FALSE</literal></link> will
+return a 404 Not Found error when trying to access the media.
+</para></refsect2>
+<refsect2 id="GST-RTSP-PERM-MEDIA-FACTORY-CONSTRUCT:CAPS" role="macro">
+<title>GST_RTSP_PERM_MEDIA_FACTORY_CONSTRUCT</title>
+<indexterm zone="GST-RTSP-PERM-MEDIA-FACTORY-CONSTRUCT:CAPS"><primary>GST_RTSP_PERM_MEDIA_FACTORY_CONSTRUCT</primary></indexterm>
+<programlisting>#define GST_RTSP_PERM_MEDIA_FACTORY_CONSTRUCT   "media.factory.construct"
+</programlisting>
+<para>
+G_TYPE_BOOLEAN, <link linkend="TRUE:CAPS"><literal>TRUE</literal></link> if the media can be constructed, <link linkend="FALSE:CAPS"><literal>FALSE</literal></link> will
+return a 404 Not Found error when trying to access the media.
+</para></refsect2>
+
+</refsect1>
+<refsect1 id="GstRTSPAuth.see-also">
+<title>See Also</title>
+<link linkend="GstRTSPPermissions"><type>GstRTSPPermissions</type></link>, <link linkend="GstRTSPToken"><type>GstRTSPToken</type></link>
+</refsect1>
+
+</refentry>

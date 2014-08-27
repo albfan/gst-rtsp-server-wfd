@@ -1,0 +1,503 @@
+<?xml version="1.0"?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
+               "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
+<!ENTITY % version-entities SYSTEM "version.entities">
+%version-entities;
+]>
+
+<refentry id="GstRTSPMediaFactory">
+<refmeta>
+<refentrytitle role="top_of_page" id="GstRTSPMediaFactory.top_of_page">GstRTSPMediaFactory</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>
+  GST-RTSP-SERVER Library
+</refmiscinfo>
+</refmeta>
+<refnamediv>
+<refname>GstRTSPMediaFactory</refname>
+<refpurpose>A factory for media pipelines</refpurpose>
+</refnamediv>
+
+<refsynopsisdiv id="GstRTSPMediaFactory.synopsis" role="synopsis">
+<title role="synopsis.title">Synopsis</title>
+
+<synopsis>struct              <link linkend="GstRTSPMediaFactory-struct">GstRTSPMediaFactory</link>;
+struct              <link linkend="GstRTSPMediaFactoryClass">GstRTSPMediaFactoryClass</link>;
+<link linkend="GstRTSPMediaFactory"><returnvalue>GstRTSPMediaFactory</returnvalue></link> * <link linkend="gst-rtsp-media-factory-new">gst_rtsp_media_factory_new</link>        (<parameter><type>void</type></parameter>);
+<link linkend="gchar"><returnvalue>gchar</returnvalue></link> *             <link linkend="gst-rtsp-media-factory-get-launch">gst_rtsp_media_factory_get_launch</link>   (<parameter><link linkend="GstRTSPMediaFactory"><type>GstRTSPMediaFactory</type></link> *factory</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="gst-rtsp-media-factory-set-launch">gst_rtsp_media_factory_set_launch</link>   (<parameter><link linkend="GstRTSPMediaFactory"><type>GstRTSPMediaFactory</type></link> *factory</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *launch</parameter>);
+<link linkend="GstRTSPPermissions"><returnvalue>GstRTSPPermissions</returnvalue></link> * <link linkend="gst-rtsp-media-factory-get-permissions">gst_rtsp_media_factory_get_permissions</link>
+                                                        (<parameter><link linkend="GstRTSPMediaFactory"><type>GstRTSPMediaFactory</type></link> *factory</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="gst-rtsp-media-factory-set-permissions">gst_rtsp_media_factory_set_permissions</link>
+                                                        (<parameter><link linkend="GstRTSPMediaFactory"><type>GstRTSPMediaFactory</type></link> *factory</parameter>,
+                                                         <parameter><link linkend="GstRTSPPermissions"><type>GstRTSPPermissions</type></link> *permissions</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="gst-rtsp-media-factory-add-role">gst_rtsp_media_factory_add_role</link>     (<parameter><link linkend="GstRTSPMediaFactory"><type>GstRTSPMediaFactory</type></link> *factory</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *role</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *fieldname</parameter>,
+                                                         <parameter>...</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="gst-rtsp-media-factory-set-shared">gst_rtsp_media_factory_set_shared</link>   (<parameter><link linkend="GstRTSPMediaFactory"><type>GstRTSPMediaFactory</type></link> *factory</parameter>,
+                                                         <parameter><link linkend="gboolean"><type>gboolean</type></link> shared</parameter>);
+<link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            <link linkend="gst-rtsp-media-factory-is-shared">gst_rtsp_media_factory_is_shared</link>    (<parameter><link linkend="GstRTSPMediaFactory"><type>GstRTSPMediaFactory</type></link> *factory</parameter>);
+<link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            <link linkend="gst-rtsp-media-factory-is-eos-shutdown">gst_rtsp_media_factory_is_eos_shutdown</link>
+                                                        (<parameter><link linkend="GstRTSPMediaFactory"><type>GstRTSPMediaFactory</type></link> *factory</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="gst-rtsp-media-factory-set-eos-shutdown">gst_rtsp_media_factory_set_eos_shutdown</link>
+                                                        (<parameter><link linkend="GstRTSPMediaFactory"><type>GstRTSPMediaFactory</type></link> *factory</parameter>,
+                                                         <parameter><link linkend="gboolean"><type>gboolean</type></link> eos_shutdown</parameter>);
+<link linkend="GstRTSPLowerTrans"><returnvalue>GstRTSPLowerTrans</returnvalue></link>   <link linkend="gst-rtsp-media-factory-get-protocols">gst_rtsp_media_factory_get_protocols</link>
+                                                        (<parameter><link linkend="GstRTSPMediaFactory"><type>GstRTSPMediaFactory</type></link> *factory</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="gst-rtsp-media-factory-set-protocols">gst_rtsp_media_factory_set_protocols</link>
+                                                        (<parameter><link linkend="GstRTSPMediaFactory"><type>GstRTSPMediaFactory</type></link> *factory</parameter>,
+                                                         <parameter><link linkend="GstRTSPLowerTrans"><type>GstRTSPLowerTrans</type></link> protocols</parameter>);
+<link linkend="GstRTSPAddressPool"><returnvalue>GstRTSPAddressPool</returnvalue></link> * <link linkend="gst-rtsp-media-factory-get-address-pool">gst_rtsp_media_factory_get_address_pool</link>
+                                                        (<parameter><link linkend="GstRTSPMediaFactory"><type>GstRTSPMediaFactory</type></link> *factory</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="gst-rtsp-media-factory-set-address-pool">gst_rtsp_media_factory_set_address_pool</link>
+                                                        (<parameter><link linkend="GstRTSPMediaFactory"><type>GstRTSPMediaFactory</type></link> *factory</parameter>,
+                                                         <parameter><link linkend="GstRTSPAddressPool"><type>GstRTSPAddressPool</type></link> *pool</parameter>);
+<link linkend="guint"><returnvalue>guint</returnvalue></link>               <link linkend="gst-rtsp-media-factory-get-buffer-size">gst_rtsp_media_factory_get_buffer_size</link>
+                                                        (<parameter><link linkend="GstRTSPMediaFactory"><type>GstRTSPMediaFactory</type></link> *factory</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="gst-rtsp-media-factory-set-buffer-size">gst_rtsp_media_factory_set_buffer_size</link>
+                                                        (<parameter><link linkend="GstRTSPMediaFactory"><type>GstRTSPMediaFactory</type></link> *factory</parameter>,
+                                                         <parameter><link linkend="guint"><type>guint</type></link> size</parameter>);
+<link linkend="GstRTSPMedia"><returnvalue>GstRTSPMedia</returnvalue></link> *      <link linkend="gst-rtsp-media-factory-construct">gst_rtsp_media_factory_construct</link>    (<parameter><link linkend="GstRTSPMediaFactory"><type>GstRTSPMediaFactory</type></link> *factory</parameter>,
+                                                         <parameter>const <link linkend="GstRTSPUrl"><type>GstRTSPUrl</type></link> *url</parameter>);
+<link linkend="GstElement"><returnvalue>GstElement</returnvalue></link> *        <link linkend="gst-rtsp-media-factory-create-element">gst_rtsp_media_factory_create_element</link>
+                                                        (<parameter><link linkend="GstRTSPMediaFactory"><type>GstRTSPMediaFactory</type></link> *factory</parameter>,
+                                                         <parameter>const <link linkend="GstRTSPUrl"><type>GstRTSPUrl</type></link> *url</parameter>);
+</synopsis>
+</refsynopsisdiv>
+<refsect1 id="GstRTSPMediaFactory.object-hierarchy" role="object_hierarchy">
+<title role="object_hierarchy.title">Object Hierarchy</title>
+<synopsis>
+  <link linkend="GObject">GObject</link>
+   +----GstRTSPMediaFactory
+</synopsis>
+</refsect1>
+<refsect1 id="GstRTSPMediaFactory.properties" role="properties">
+<title role="properties.title">Properties</title>
+<synopsis>
+  &quot;<link linkend="GstRTSPMediaFactory--buffer-size">buffer-size</link>&quot;              <link linkend="guint"><type>guint</type></link>                 : Read / Write
+  &quot;<link linkend="GstRTSPMediaFactory--eos-shutdown">eos-shutdown</link>&quot;             <link linkend="gboolean"><type>gboolean</type></link>              : Read / Write
+  &quot;<link linkend="GstRTSPMediaFactory--launch">launch</link>&quot;                   <link linkend="gchar"><type>gchar</type></link>*                : Read / Write
+  &quot;<link linkend="GstRTSPMediaFactory--protocols">protocols</link>&quot;                <link linkend="GstRTSPLowerTrans"><type>GstRTSPLowerTrans</type></link>     : Read / Write
+  &quot;<link linkend="GstRTSPMediaFactory--shared">shared</link>&quot;                   <link linkend="gboolean"><type>gboolean</type></link>              : Read / Write
+  &quot;<link linkend="GstRTSPMediaFactory--suspend-mode">suspend-mode</link>&quot;             <link linkend="GstRTSPSuspendMode"><type>GstRTSPSuspendMode</type></link>    : Read / Write
+</synopsis>
+</refsect1>
+<refsect1 id="GstRTSPMediaFactory.signals" role="signal_proto">
+<title role="signal_proto.title">Signals</title>
+<synopsis>
+  &quot;<link linkend="GstRTSPMediaFactory-media-configure">media-configure</link>&quot;                                : <link linkend="G-SIGNAL-RUN-LAST:CAPS"><literal>Run Last</literal></link>
+  &quot;<link linkend="GstRTSPMediaFactory-media-constructed">media-constructed</link>&quot;                              : <link linkend="G-SIGNAL-RUN-LAST:CAPS"><literal>Run Last</literal></link>
+</synopsis>
+</refsect1>
+
+<refsect1 id="GstRTSPMediaFactory.description" role="desc">
+<title role="desc.title">Description</title>
+<para>
+The <link linkend="GstRTSPMediaFactory"><type>GstRTSPMediaFactory</type></link> is responsible for creating or recycling
+<link linkend="GstRTSPMedia"><type>GstRTSPMedia</type></link> objects based on the passed URL.
+</para>
+<para>
+The default implementation of the object can create <link linkend="GstRTSPMedia"><type>GstRTSPMedia</type></link> objects
+containing a pipeline created from a launch description set with
+<link linkend="gst-rtsp-media-factory-set-launch"><function>gst_rtsp_media_factory_set_launch()</function></link>.
+</para>
+<para>
+Media from a factory can be shared by setting the shared flag with
+<link linkend="gst-rtsp-media-factory-set-shared"><function>gst_rtsp_media_factory_set_shared()</function></link>. When a factory is shared,
+<link linkend="gst-rtsp-media-factory-construct"><function>gst_rtsp_media_factory_construct()</function></link> will return the same <link linkend="GstRTSPMedia"><type>GstRTSPMedia</type></link> when
+the url matches.
+</para>
+<para>
+Last reviewed on 2013-07-11 (1.0.0)
+</para>
+</refsect1>
+<refsect1 id="GstRTSPMediaFactory.details" role="details">
+<title role="details.title">Details</title>
+<refsect2 id="GstRTSPMediaFactory-struct" role="struct">
+<title>struct GstRTSPMediaFactory</title>
+<indexterm zone="GstRTSPMediaFactory-struct"><primary>GstRTSPMediaFactory</primary></indexterm>
+<programlisting>struct GstRTSPMediaFactory;</programlisting>
+<para>
+The definition and logic for constructing the pipeline for a media. The media
+can contain multiple streams like audio and video.
+</para></refsect2>
+<refsect2 id="GstRTSPMediaFactoryClass" role="struct">
+<title>struct GstRTSPMediaFactoryClass</title>
+<indexterm zone="GstRTSPMediaFactoryClass"><primary>GstRTSPMediaFactoryClass</primary></indexterm>
+<programlisting>struct GstRTSPMediaFactoryClass {
+  GObjectClass  parent_class;
+
+  gchar *         (*gen_key)            (GstRTSPMediaFactory *factory, const GstRTSPUrl *url);
+
+  GstElement *    (*create_element)     (GstRTSPMediaFactory *factory, const GstRTSPUrl *url);
+  GstRTSPMedia *  (*construct)          (GstRTSPMediaFactory *factory, const GstRTSPUrl *url);
+  GstElement *    (*create_pipeline)    (GstRTSPMediaFactory *factory, GstRTSPMedia *media);
+  void            (*configure)          (GstRTSPMediaFactory *factory, GstRTSPMedia *media);
+
+  /* signals */
+  void            (*media_constructed)  (GstRTSPMediaFactory *factory, GstRTSPMedia *media);
+  void            (*media_configure)    (GstRTSPMediaFactory *factory, GstRTSPMedia *media);
+};
+</programlisting>
+<para>
+The <link linkend="GstRTSPMediaFactory"><type>GstRTSPMediaFactory</type></link> class structure.
+</para><variablelist role="struct">
+<varlistentry><term><link linkend="GObjectClass"><type>GObjectClass</type></link>&#160;<structfield id="GstRTSPMediaFactoryClass.parent-class">parent_class</structfield>;</term>
+<listitem />
+</varlistentry>
+<varlistentry><term><structfield id="GstRTSPMediaFactoryClass.gen-key">gen_key</structfield>&#160;()</term>
+<listitem><simpara>convert <parameter>url</parameter> to a key for caching shared <link linkend="GstRTSPMedia"><type>GstRTSPMedia</type></link> objects.
+The default implementation of this function will use the complete URL
+including the query parameters to return a key.</simpara></listitem>
+</varlistentry>
+<varlistentry><term><structfield id="GstRTSPMediaFactoryClass.create-element">create_element</structfield>&#160;()</term>
+<listitem><simpara>Construct and return a <link linkend="GstElement"><type>GstElement</type></link> that is a <link linkend="GstBin"><type>GstBin</type></link> containing
+the elements to use for streaming the media. The bin should contain
+payloaders pay%d for each stream. The default implementation of this
+function returns the bin created from the launch parameter.</simpara></listitem>
+</varlistentry>
+<varlistentry><term><structfield id="GstRTSPMediaFactoryClass.construct">construct</structfield>&#160;()</term>
+<listitem><simpara>the vmethod that will be called when the factory has to create the
+<link linkend="GstRTSPMedia"><type>GstRTSPMedia</type></link> for <parameter>url</parameter>. The default implementation of this
+function calls create_element to retrieve an element and then looks for
+pay%d to create the streams.</simpara></listitem>
+</varlistentry>
+<varlistentry><term><structfield id="GstRTSPMediaFactoryClass.create-pipeline">create_pipeline</structfield>&#160;()</term>
+<listitem><simpara>create a new pipeline or re-use an existing one and
+add the <link linkend="GstRTSPMedia"><type>GstRTSPMedia</type></link>'s element created by <parameter>construct</parameter> to the pipeline.</simpara></listitem>
+</varlistentry>
+<varlistentry><term><structfield id="GstRTSPMediaFactoryClass.configure">configure</structfield>&#160;()</term>
+<listitem><simpara>configure the media created with <parameter>construct</parameter>. The default
+implementation will configure the 'shared' property of the media.</simpara></listitem>
+</varlistentry>
+<varlistentry><term><structfield id="GstRTSPMediaFactoryClass.media-constructed">media_constructed</structfield>&#160;()</term>
+<listitem><simpara>signal emited when a media was constructed</simpara></listitem>
+</varlistentry>
+<varlistentry><term><structfield id="GstRTSPMediaFactoryClass.media-configure">media_configure</structfield>&#160;()</term>
+<listitem><simpara>signal emited when a media should be configured</simpara></listitem>
+</varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gst-rtsp-media-factory-new" role="function">
+<title>gst_rtsp_media_factory_new ()</title>
+<indexterm zone="gst-rtsp-media-factory-new"><primary>gst_rtsp_media_factory_new</primary></indexterm>
+<programlisting><link linkend="GstRTSPMediaFactory"><returnvalue>GstRTSPMediaFactory</returnvalue></link> * gst_rtsp_media_factory_new        (<parameter><type>void</type></parameter>);</programlisting>
+<para>
+Create a new <link linkend="GstRTSPMediaFactory"><type>GstRTSPMediaFactory</type></link> instance.
+</para><variablelist role="params">
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>a new <link linkend="GstRTSPMediaFactory"><type>GstRTSPMediaFactory</type></link> object.</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gst-rtsp-media-factory-get-launch" role="function">
+<title>gst_rtsp_media_factory_get_launch ()</title>
+<indexterm zone="gst-rtsp-media-factory-get-launch"><primary>gst_rtsp_media_factory_get_launch</primary></indexterm>
+<programlisting><link linkend="gchar"><returnvalue>gchar</returnvalue></link> *             gst_rtsp_media_factory_get_launch   (<parameter><link linkend="GstRTSPMediaFactory"><type>GstRTSPMediaFactory</type></link> *factory</parameter>);</programlisting>
+<para>
+Get the <link linkend="gst-parse-launch"><function>gst_parse_launch()</function></link> pipeline description that will be used in the
+default prepare vmethod.
+</para><variablelist role="params">
+<varlistentry><term><parameter>factory</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstRTSPMediaFactory"><type>GstRTSPMediaFactory</type></link></simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>the configured launch description. <link linkend="g-free"><function>g_free()</function></link> after usage.</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gst-rtsp-media-factory-set-launch" role="function">
+<title>gst_rtsp_media_factory_set_launch ()</title>
+<indexterm zone="gst-rtsp-media-factory-set-launch"><primary>gst_rtsp_media_factory_set_launch</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                gst_rtsp_media_factory_set_launch   (<parameter><link linkend="GstRTSPMediaFactory"><type>GstRTSPMediaFactory</type></link> *factory</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *launch</parameter>);</programlisting>
+<para>
+The <link linkend="gst-parse-launch"><function>gst_parse_launch()</function></link> line to use for constructing the pipeline in the
+default prepare vmethod.
+</para>
+<para>
+The pipeline description should return a GstBin as the toplevel element
+which can be accomplished by enclosing the dscription with brackets '('
+')'.
+</para>
+<para>
+The description should return a pipeline with payloaders named pay0, pay1,
+etc.. Each of the payloaders will result in a stream.
+</para><variablelist role="params">
+<varlistentry><term><parameter>factory</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstRTSPMediaFactory"><type>GstRTSPMediaFactory</type></link></simpara></listitem></varlistentry>
+<varlistentry><term><parameter>launch</parameter>&#160;:</term>
+<listitem><simpara>the launch description</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gst-rtsp-media-factory-get-permissions" role="function">
+<title>gst_rtsp_media_factory_get_permissions ()</title>
+<indexterm zone="gst-rtsp-media-factory-get-permissions"><primary>gst_rtsp_media_factory_get_permissions</primary></indexterm>
+<programlisting><link linkend="GstRTSPPermissions"><returnvalue>GstRTSPPermissions</returnvalue></link> * gst_rtsp_media_factory_get_permissions
+                                                        (<parameter><link linkend="GstRTSPMediaFactory"><type>GstRTSPMediaFactory</type></link> *factory</parameter>);</programlisting>
+<para>
+Get the permissions object from <parameter>factory</parameter>.
+</para><variablelist role="params">
+<varlistentry><term><parameter>factory</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstRTSPMediaFactory"><type>GstRTSPMediaFactory</type></link></simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>a <link linkend="GstRTSPPermissions"><type>GstRTSPPermissions</type></link> object, unref after usage. <emphasis role="annotation">[<acronym>transfer full</acronym>]</emphasis></simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gst-rtsp-media-factory-set-permissions" role="function">
+<title>gst_rtsp_media_factory_set_permissions ()</title>
+<indexterm zone="gst-rtsp-media-factory-set-permissions"><primary>gst_rtsp_media_factory_set_permissions</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                gst_rtsp_media_factory_set_permissions
+                                                        (<parameter><link linkend="GstRTSPMediaFactory"><type>GstRTSPMediaFactory</type></link> *factory</parameter>,
+                                                         <parameter><link linkend="GstRTSPPermissions"><type>GstRTSPPermissions</type></link> *permissions</parameter>);</programlisting>
+<para>
+Set <parameter>permissions</parameter> on <parameter>factory</parameter>.
+</para><variablelist role="params">
+<varlistentry><term><parameter>factory</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstRTSPMediaFactory"><type>GstRTSPMediaFactory</type></link></simpara></listitem></varlistentry>
+<varlistentry><term><parameter>permissions</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstRTSPPermissions"><type>GstRTSPPermissions</type></link></simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gst-rtsp-media-factory-add-role" role="function">
+<title>gst_rtsp_media_factory_add_role ()</title>
+<indexterm zone="gst-rtsp-media-factory-add-role"><primary>gst_rtsp_media_factory_add_role</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                gst_rtsp_media_factory_add_role     (<parameter><link linkend="GstRTSPMediaFactory"><type>GstRTSPMediaFactory</type></link> *factory</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *role</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *fieldname</parameter>,
+                                                         <parameter>...</parameter>);</programlisting>
+<para>
+A convenience method to add <parameter>role</parameter> with <parameter>fieldname</parameter> and additional arguments to
+the permissions of <parameter>factory</parameter>. If <parameter>factory</parameter> had no permissions, new permissions
+will be created and the role will be added to it.
+</para><variablelist role="params">
+<varlistentry><term><parameter>factory</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstRTSPMediaFactory"><type>GstRTSPMediaFactory</type></link></simpara></listitem></varlistentry>
+<varlistentry><term><parameter>role</parameter>&#160;:</term>
+<listitem><simpara>a role</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>fieldname</parameter>&#160;:</term>
+<listitem><simpara>the first field name</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>...</parameter>&#160;:</term>
+<listitem><simpara>additional arguments</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gst-rtsp-media-factory-set-shared" role="function">
+<title>gst_rtsp_media_factory_set_shared ()</title>
+<indexterm zone="gst-rtsp-media-factory-set-shared"><primary>gst_rtsp_media_factory_set_shared</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                gst_rtsp_media_factory_set_shared   (<parameter><link linkend="GstRTSPMediaFactory"><type>GstRTSPMediaFactory</type></link> *factory</parameter>,
+                                                         <parameter><link linkend="gboolean"><type>gboolean</type></link> shared</parameter>);</programlisting>
+<para>
+Configure if media created from this factory can be shared between clients.
+</para><variablelist role="params">
+<varlistentry><term><parameter>factory</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstRTSPMediaFactory"><type>GstRTSPMediaFactory</type></link></simpara></listitem></varlistentry>
+<varlistentry><term><parameter>shared</parameter>&#160;:</term>
+<listitem><simpara>the new value</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gst-rtsp-media-factory-is-shared" role="function">
+<title>gst_rtsp_media_factory_is_shared ()</title>
+<indexterm zone="gst-rtsp-media-factory-is-shared"><primary>gst_rtsp_media_factory_is_shared</primary></indexterm>
+<programlisting><link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            gst_rtsp_media_factory_is_shared    (<parameter><link linkend="GstRTSPMediaFactory"><type>GstRTSPMediaFactory</type></link> *factory</parameter>);</programlisting>
+<para>
+Get if media created from this factory can be shared between clients.
+</para><variablelist role="params">
+<varlistentry><term><parameter>factory</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstRTSPMediaFactory"><type>GstRTSPMediaFactory</type></link></simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara><link linkend="TRUE:CAPS"><literal>TRUE</literal></link> if the media will be shared between clients.</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gst-rtsp-media-factory-is-eos-shutdown" role="function">
+<title>gst_rtsp_media_factory_is_eos_shutdown ()</title>
+<indexterm zone="gst-rtsp-media-factory-is-eos-shutdown"><primary>gst_rtsp_media_factory_is_eos_shutdown</primary></indexterm>
+<programlisting><link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            gst_rtsp_media_factory_is_eos_shutdown
+                                                        (<parameter><link linkend="GstRTSPMediaFactory"><type>GstRTSPMediaFactory</type></link> *factory</parameter>);</programlisting>
+<para>
+Get if media created from this factory will have an EOS event sent to the
+pipeline before shutdown.
+</para><variablelist role="params">
+<varlistentry><term><parameter>factory</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstRTSPMediaFactory"><type>GstRTSPMediaFactory</type></link></simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara><link linkend="TRUE:CAPS"><literal>TRUE</literal></link> if the media will receive EOS before shutdown.</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gst-rtsp-media-factory-set-eos-shutdown" role="function">
+<title>gst_rtsp_media_factory_set_eos_shutdown ()</title>
+<indexterm zone="gst-rtsp-media-factory-set-eos-shutdown"><primary>gst_rtsp_media_factory_set_eos_shutdown</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                gst_rtsp_media_factory_set_eos_shutdown
+                                                        (<parameter><link linkend="GstRTSPMediaFactory"><type>GstRTSPMediaFactory</type></link> *factory</parameter>,
+                                                         <parameter><link linkend="gboolean"><type>gboolean</type></link> eos_shutdown</parameter>);</programlisting>
+<para>
+Configure if media created from this factory will have an EOS sent to the
+pipeline before shutdown.
+</para><variablelist role="params">
+<varlistentry><term><parameter>factory</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstRTSPMediaFactory"><type>GstRTSPMediaFactory</type></link></simpara></listitem></varlistentry>
+<varlistentry><term><parameter>eos_shutdown</parameter>&#160;:</term>
+<listitem><simpara>the new value</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gst-rtsp-media-factory-get-protocols" role="function">
+<title>gst_rtsp_media_factory_get_protocols ()</title>
+<indexterm zone="gst-rtsp-media-factory-get-protocols"><primary>gst_rtsp_media_factory_get_protocols</primary></indexterm>
+<programlisting><link linkend="GstRTSPLowerTrans"><returnvalue>GstRTSPLowerTrans</returnvalue></link>   gst_rtsp_media_factory_get_protocols
+                                                        (<parameter><link linkend="GstRTSPMediaFactory"><type>GstRTSPMediaFactory</type></link> *factory</parameter>);</programlisting>
+<para>
+Get the allowed protocols of <parameter>factory</parameter>.
+</para><variablelist role="params">
+<varlistentry><term><parameter>factory</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstRTSPMediaFactory"><type>GstRTSPMediaFactory</type></link></simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>a <link linkend="GstRTSPLowerTrans"><type>GstRTSPLowerTrans</type></link></simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gst-rtsp-media-factory-set-protocols" role="function">
+<title>gst_rtsp_media_factory_set_protocols ()</title>
+<indexterm zone="gst-rtsp-media-factory-set-protocols"><primary>gst_rtsp_media_factory_set_protocols</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                gst_rtsp_media_factory_set_protocols
+                                                        (<parameter><link linkend="GstRTSPMediaFactory"><type>GstRTSPMediaFactory</type></link> *factory</parameter>,
+                                                         <parameter><link linkend="GstRTSPLowerTrans"><type>GstRTSPLowerTrans</type></link> protocols</parameter>);</programlisting>
+<para>
+Configure the allowed lower transport for <parameter>factory</parameter>.
+</para><variablelist role="params">
+<varlistentry><term><parameter>factory</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstRTSPMediaFactory"><type>GstRTSPMediaFactory</type></link></simpara></listitem></varlistentry>
+<varlistentry><term><parameter>protocols</parameter>&#160;:</term>
+<listitem><simpara>the new flags</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gst-rtsp-media-factory-get-address-pool" role="function">
+<title>gst_rtsp_media_factory_get_address_pool ()</title>
+<indexterm zone="gst-rtsp-media-factory-get-address-pool"><primary>gst_rtsp_media_factory_get_address_pool</primary></indexterm>
+<programlisting><link linkend="GstRTSPAddressPool"><returnvalue>GstRTSPAddressPool</returnvalue></link> * gst_rtsp_media_factory_get_address_pool
+                                                        (<parameter><link linkend="GstRTSPMediaFactory"><type>GstRTSPMediaFactory</type></link> *factory</parameter>);</programlisting>
+<para>
+Get the <link linkend="GstRTSPAddressPool"><type>GstRTSPAddressPool</type></link> used as the address pool of <parameter>factory</parameter>.
+</para><variablelist role="params">
+<varlistentry><term><parameter>factory</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstRTSPMediaFactory"><type>GstRTSPMediaFactory</type></link></simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>the <link linkend="GstRTSPAddressPool"><type>GstRTSPAddressPool</type></link> of <parameter>factory</parameter>. <link linkend="g-object-unref"><function>g_object_unref()</function></link> after
+usage. <emphasis role="annotation">[<acronym>transfer full</acronym>]</emphasis></simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gst-rtsp-media-factory-set-address-pool" role="function">
+<title>gst_rtsp_media_factory_set_address_pool ()</title>
+<indexterm zone="gst-rtsp-media-factory-set-address-pool"><primary>gst_rtsp_media_factory_set_address_pool</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                gst_rtsp_media_factory_set_address_pool
+                                                        (<parameter><link linkend="GstRTSPMediaFactory"><type>GstRTSPMediaFactory</type></link> *factory</parameter>,
+                                                         <parameter><link linkend="GstRTSPAddressPool"><type>GstRTSPAddressPool</type></link> *pool</parameter>);</programlisting>
+<para>
+configure <parameter>pool</parameter> to be used as the address pool of <parameter>factory</parameter>.
+</para><variablelist role="params">
+<varlistentry><term><parameter>factory</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstRTSPMediaFactory"><type>GstRTSPMediaFactory</type></link></simpara></listitem></varlistentry>
+<varlistentry><term><parameter>pool</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstRTSPAddressPool"><type>GstRTSPAddressPool</type></link></simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gst-rtsp-media-factory-get-buffer-size" role="function">
+<title>gst_rtsp_media_factory_get_buffer_size ()</title>
+<indexterm zone="gst-rtsp-media-factory-get-buffer-size"><primary>gst_rtsp_media_factory_get_buffer_size</primary></indexterm>
+<programlisting><link linkend="guint"><returnvalue>guint</returnvalue></link>               gst_rtsp_media_factory_get_buffer_size
+                                                        (<parameter><link linkend="GstRTSPMediaFactory"><type>GstRTSPMediaFactory</type></link> *factory</parameter>);</programlisting>
+<para>
+Get the kernel UDP buffer size.
+</para><variablelist role="params">
+<varlistentry><term><parameter>factory</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstRTSPMedia"><type>GstRTSPMedia</type></link></simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>the kernel UDP buffer size.</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gst-rtsp-media-factory-set-buffer-size" role="function">
+<title>gst_rtsp_media_factory_set_buffer_size ()</title>
+<indexterm zone="gst-rtsp-media-factory-set-buffer-size"><primary>gst_rtsp_media_factory_set_buffer_size</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                gst_rtsp_media_factory_set_buffer_size
+                                                        (<parameter><link linkend="GstRTSPMediaFactory"><type>GstRTSPMediaFactory</type></link> *factory</parameter>,
+                                                         <parameter><link linkend="guint"><type>guint</type></link> size</parameter>);</programlisting>
+<para>
+Set the kernel UDP buffer size.
+</para><variablelist role="params">
+<varlistentry><term><parameter>factory</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstRTSPMedia"><type>GstRTSPMedia</type></link></simpara></listitem></varlistentry>
+<varlistentry><term><parameter>size</parameter>&#160;:</term>
+<listitem><simpara>the new value</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gst-rtsp-media-factory-construct" role="function">
+<title>gst_rtsp_media_factory_construct ()</title>
+<indexterm zone="gst-rtsp-media-factory-construct"><primary>gst_rtsp_media_factory_construct</primary></indexterm>
+<programlisting><link linkend="GstRTSPMedia"><returnvalue>GstRTSPMedia</returnvalue></link> *      gst_rtsp_media_factory_construct    (<parameter><link linkend="GstRTSPMediaFactory"><type>GstRTSPMediaFactory</type></link> *factory</parameter>,
+                                                         <parameter>const <link linkend="GstRTSPUrl"><type>GstRTSPUrl</type></link> *url</parameter>);</programlisting>
+<para>
+Construct the media object and create its streams. Implementations
+should create the needed gstreamer elements and add them to the result
+object. No state changes should be performed on them yet.
+</para>
+<para>
+One or more GstRTSPStream objects should be created from the result
+with <link linkend="gst-rtsp-media-create-stream"><function>gst_rtsp_media_create_stream()</function></link>.
+</para>
+<para>
+After the media is constructed, it can be configured and then prepared
+with <link linkend="gst-rtsp-media-prepare"><function>gst_rtsp_media_prepare()</function></link>.
+</para><variablelist role="params">
+<varlistentry><term><parameter>factory</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstRTSPMediaFactory"><type>GstRTSPMediaFactory</type></link></simpara></listitem></varlistentry>
+<varlistentry><term><parameter>url</parameter>&#160;:</term>
+<listitem><simpara>the url used</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>a new <link linkend="GstRTSPMedia"><type>GstRTSPMedia</type></link> if the media could be prepared. <emphasis role="annotation">[<acronym>transfer full</acronym>]</emphasis></simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gst-rtsp-media-factory-create-element" role="function">
+<title>gst_rtsp_media_factory_create_element ()</title>
+<indexterm zone="gst-rtsp-media-factory-create-element"><primary>gst_rtsp_media_factory_create_element</primary></indexterm>
+<programlisting><link linkend="GstElement"><returnvalue>GstElement</returnvalue></link> *        gst_rtsp_media_factory_create_element
+                                                        (<parameter><link linkend="GstRTSPMediaFactory"><type>GstRTSPMediaFactory</type></link> *factory</parameter>,
+                                                         <parameter>const <link linkend="GstRTSPUrl"><type>GstRTSPUrl</type></link> *url</parameter>);</programlisting>
+<para>
+Construct and return a <link linkend="GstElement"><type>GstElement</type></link> that is a <link linkend="GstBin"><type>GstBin</type></link> containing
+the elements to use for streaming the media.
+</para>
+<para>
+The bin should contain payloaders pay%d for each stream. The default
+implementation of this function returns the bin created from the
+launch parameter.
+</para><variablelist role="params">
+<varlistentry><term><parameter>factory</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstRTSPMediaFactory"><type>GstRTSPMediaFactory</type></link></simpara></listitem></varlistentry>
+<varlistentry><term><parameter>url</parameter>&#160;:</term>
+<listitem><simpara>the url used</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>(transfer floating) a new <link linkend="GstElement"><type>GstElement</type></link>.</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+
+</refsect1>
+<refsect1 id="GstRTSPMediaFactory.property-details" role="property_details">
+<title role="property_details.title">Property Details</title>
+<refsect2 id="GstRTSPMediaFactory--buffer-size" role="property"><title>The <literal>&quot;buffer-size&quot;</literal> property</title>
+<indexterm zone="GstRTSPMediaFactory--buffer-size"><primary>GstRTSPMediaFactory:buffer-size</primary></indexterm>
+<programlisting>  &quot;buffer-size&quot;              <link linkend="guint"><type>guint</type></link>                 : Read / Write</programlisting>
+<para>The kernel UDP buffer size to use.</para><para>Default value: 524288</para>
+</refsect2>
+<refsect2 id="GstRTSPMediaFactory--eos-shutdown" role="property"><title>The <literal>&quot;eos-shutdown&quot;</literal> property</title>
+<indexterm zone="GstRTSPMediaFactory--eos-shutdown"><primary>GstRTSPMediaFactory:eos-shutdown</primary></indexterm>
+<programlisting>  &quot;eos-shutdown&quot;             <link linkend="gboolean"><type>gboolean</type></link>              : Read / Write</programlisting>
+<para>Send EOS down the pipeline before shutting down.</para><para>Default value: FALSE</para>
+</refsect2>
+<refsect2 id="GstRTSPMediaFactory--launch" role="property"><title>The <literal>&quot;launch&quot;</literal> property</title>
+<indexterm zone="GstRTSPMediaFactory--launch"><primary>GstRTSPMediaFactory:launch</primary></indexterm>
+<programlisting>  &quot;launch&quot;                   <link linkend="gchar"><type>gchar</type></link>*                : Read / Write</programlisting>
+<para>A launch description of the pipeline.</para><para>Default value: NULL</para>
+</refsect2>
+<refsect2 id="GstRTSPMediaFactory--protocols" role="property"><title>The <literal>&quot;protocols&quot;</literal> property</title>
+<indexterm zone="GstRTSPMediaFactory--protocols"><primary>GstRTSPMediaFactory:protocols</primary></indexterm>
+<programlisting>  &quot;protocols&quot;                <link linkend="GstRTSPLowerTrans"><type>GstRTSPLowerTrans</type></link>     : Read / Write</programlisting>
+<para>Allowed lower transport protocols.</para><para>Default value: GST_RTSP_LOWER_TRANS_UDP|GST_RTSP_LOWER_TRANS_UDP_MCAST|GST_RTSP_LOWER_TRANS_TCP</para>
+</refsect2>
+<refsect2 id="GstRTSPMediaFactory--shared" role="property"><title>The <literal>&quot;shared&quot;</literal> property</title>
+<indexterm zone="GstRTSPMediaFactory--shared"><primary>GstRTSPMediaFactory:shared</primary></indexterm>
+<programlisting>  &quot;shared&quot;                   <link linkend="gboolean"><type>gboolean</type></link>              : Read / Write</programlisting>
+<para>If media from this factory is shared.</para><para>Default value: FALSE</para>
+</refsect2>
+<refsect2 id="GstRTSPMediaFactory--suspend-mode" role="property"><title>The <literal>&quot;suspend-mode&quot;</literal> property</title>
+<indexterm zone="GstRTSPMediaFactory--suspend-mode"><primary>GstRTSPMediaFactory:suspend-mode</primary></indexterm>
+<programlisting>  &quot;suspend-mode&quot;             <link linkend="GstRTSPSuspendMode"><type>GstRTSPSuspendMode</type></link>    : Read / Write</programlisting>
+<para>Control how media will be suspended.</para><para>Default value: GST_RTSP_SUSPEND_MODE_NONE</para>
+</refsect2>
+</refsect1>
+<refsect1 id="GstRTSPMediaFactory.signal-details" role="signals">
+<title role="signals.title">Signal Details</title>
+<refsect2 id="GstRTSPMediaFactory-media-configure" role="signal"><title>The <literal>&quot;media-configure&quot;</literal> signal</title>
+<indexterm zone="GstRTSPMediaFactory-media-configure"><primary>GstRTSPMediaFactory::media-configure</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                user_function                      (<link linkend="GstRTSPMediaFactory"><type>GstRTSPMediaFactory</type></link> *gstrtspmediafactory,
+                                                        <link linkend="GstRTSPMedia"><type>GstRTSPMedia</type></link>        *arg1,
+                                                        <link linkend="gpointer"><type>gpointer</type></link>             user_data)                : <link linkend="G-SIGNAL-RUN-LAST:CAPS"><literal>Run Last</literal></link></programlisting>
+</refsect2><refsect2 id="GstRTSPMediaFactory-media-constructed" role="signal"><title>The <literal>&quot;media-constructed&quot;</literal> signal</title>
+<indexterm zone="GstRTSPMediaFactory-media-constructed"><primary>GstRTSPMediaFactory::media-constructed</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                user_function                      (<link linkend="GstRTSPMediaFactory"><type>GstRTSPMediaFactory</type></link> *gstrtspmediafactory,
+                                                        <link linkend="GstRTSPMedia"><type>GstRTSPMedia</type></link>        *arg1,
+                                                        <link linkend="gpointer"><type>gpointer</type></link>             user_data)                : <link linkend="G-SIGNAL-RUN-LAST:CAPS"><literal>Run Last</literal></link></programlisting>
+</refsect2>
+</refsect1>
+<refsect1 id="GstRTSPMediaFactory.see-also">
+<title>See Also</title>
+<link linkend="GstRTSPMountPoints"><type>GstRTSPMountPoints</type></link>, <link linkend="GstRTSPMedia"><type>GstRTSPMedia</type></link>
+</refsect1>
+
+</refentry>

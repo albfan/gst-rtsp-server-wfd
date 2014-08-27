@@ -1,0 +1,249 @@
+<?xml version="1.0"?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
+               "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
+<!ENTITY % version-entities SYSTEM "version.entities">
+%version-entities;
+]>
+
+<refentry id="gst-rtsp-server-GstRTSPSessionMedia">
+<refmeta>
+<refentrytitle role="top_of_page" id="gst-rtsp-server-GstRTSPSessionMedia.top_of_page">GstRTSPSessionMedia</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>
+  GST-RTSP-SERVER Library
+</refmiscinfo>
+</refmeta>
+<refnamediv>
+<refname>GstRTSPSessionMedia</refname>
+<refpurpose>Media managed in a session</refpurpose>
+</refnamediv>
+
+<refsynopsisdiv id="gst-rtsp-server-GstRTSPSessionMedia.synopsis" role="synopsis">
+<title role="synopsis.title">Synopsis</title>
+
+<synopsis>struct              <link linkend="GstRTSPSessionMedia">GstRTSPSessionMedia</link>;
+struct              <link linkend="GstRTSPSessionMediaClass">GstRTSPSessionMediaClass</link>;
+<link linkend="GstRTSPSessionMedia"><returnvalue>GstRTSPSessionMedia</returnvalue></link> * <link linkend="gst-rtsp-session-media-new">gst_rtsp_session_media_new</link>        (<parameter>const <link linkend="gchar"><type>gchar</type></link> *path</parameter>,
+                                                         <parameter><link linkend="GstRTSPMedia"><type>GstRTSPMedia</type></link> *media</parameter>);
+<link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            <link linkend="gst-rtsp-session-media-matches">gst_rtsp_session_media_matches</link>      (<parameter><link linkend="GstRTSPSessionMedia"><type>GstRTSPSessionMedia</type></link> *media</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *path</parameter>,
+                                                         <parameter><link linkend="gint"><type>gint</type></link> *matched</parameter>);
+<link linkend="GstRTSPMedia"><returnvalue>GstRTSPMedia</returnvalue></link> *      <link linkend="gst-rtsp-session-media-get-media">gst_rtsp_session_media_get_media</link>    (<parameter><link linkend="GstRTSPSessionMedia"><type>GstRTSPSessionMedia</type></link> *media</parameter>);
+<link linkend="GstClockTime"><returnvalue>GstClockTime</returnvalue></link>        <link linkend="gst-rtsp-session-media-get-base-time">gst_rtsp_session_media_get_base_time</link>
+                                                        (<parameter><link linkend="GstRTSPSessionMedia"><type>GstRTSPSessionMedia</type></link> *media</parameter>);
+<link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            <link linkend="gst-rtsp-session-media-set-state">gst_rtsp_session_media_set_state</link>    (<parameter><link linkend="GstRTSPSessionMedia"><type>GstRTSPSessionMedia</type></link> *media</parameter>,
+                                                         <parameter><link linkend="GstState"><type>GstState</type></link> state</parameter>);
+<link linkend="GstRTSPState"><returnvalue>GstRTSPState</returnvalue></link>        <link linkend="gst-rtsp-session-media-get-rtsp-state">gst_rtsp_session_media_get_rtsp_state</link>
+                                                        (<parameter><link linkend="GstRTSPSessionMedia"><type>GstRTSPSessionMedia</type></link> *media</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="gst-rtsp-session-media-set-rtsp-state">gst_rtsp_session_media_set_rtsp_state</link>
+                                                        (<parameter><link linkend="GstRTSPSessionMedia"><type>GstRTSPSessionMedia</type></link> *media</parameter>,
+                                                         <parameter><link linkend="GstRTSPState"><type>GstRTSPState</type></link> state</parameter>);
+<link linkend="GstRTSPStreamTransport"><returnvalue>GstRTSPStreamTransport</returnvalue></link> * <link linkend="gst-rtsp-session-media-get-transport">gst_rtsp_session_media_get_transport</link>
+                                                        (<parameter><link linkend="GstRTSPSessionMedia"><type>GstRTSPSessionMedia</type></link> *media</parameter>,
+                                                         <parameter><link linkend="guint"><type>guint</type></link> idx</parameter>);
+<link linkend="GstRTSPStreamTransport"><returnvalue>GstRTSPStreamTransport</returnvalue></link> * <link linkend="gst-rtsp-session-media-set-transport">gst_rtsp_session_media_set_transport</link>
+                                                        (<parameter><link linkend="GstRTSPSessionMedia"><type>GstRTSPSessionMedia</type></link> *media</parameter>,
+                                                         <parameter><link linkend="GstRTSPStream"><type>GstRTSPStream</type></link> *stream</parameter>,
+                                                         <parameter><link linkend="GstRTSPTransport"><type>GstRTSPTransport</type></link> *tr</parameter>);
+<link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            <link linkend="gst-rtsp-session-media-alloc-channels">gst_rtsp_session_media_alloc_channels</link>
+                                                        (<parameter><link linkend="GstRTSPSessionMedia"><type>GstRTSPSessionMedia</type></link> *media</parameter>,
+                                                         <parameter><link linkend="GstRTSPRange"><type>GstRTSPRange</type></link> *range</parameter>);
+</synopsis>
+</refsynopsisdiv>
+
+<refsect1 id="gst-rtsp-server-GstRTSPSessionMedia.description" role="desc">
+<title role="desc.title">Description</title>
+<para>
+The <link linkend="GstRTSPSessionMedia"><type>GstRTSPSessionMedia</type></link> object manages a <link linkend="GstRTSPMedia"><type>GstRTSPMedia</type></link> with a given path.
+</para>
+<para>
+With <link linkend="gst-rtsp-session-media-get-transport"><function>gst_rtsp_session_media_get_transport()</function></link> and
+<link linkend="gst-rtsp-session-media-set-transport"><function>gst_rtsp_session_media_set_transport()</function></link> the transports of a <link linkend="GstRTSPStream"><type>GstRTSPStream</type></link> of
+the managed <link linkend="GstRTSPMedia"><type>GstRTSPMedia</type></link> can be retrieved and configured.
+</para>
+<para>
+Use <link linkend="gst-rtsp-session-media-set-state"><function>gst_rtsp_session_media_set_state()</function></link> to control the media state and
+transports.
+</para>
+<para>
+Last reviewed on 2013-07-16 (1.0.0)
+</para>
+</refsect1>
+<refsect1 id="gst-rtsp-server-GstRTSPSessionMedia.details" role="details">
+<title role="details.title">Details</title>
+<refsect2 id="GstRTSPSessionMedia" role="struct">
+<title>struct GstRTSPSessionMedia</title>
+<indexterm zone="GstRTSPSessionMedia"><primary>GstRTSPSessionMedia</primary></indexterm>
+<programlisting>struct GstRTSPSessionMedia {
+  GObject  parent;
+};
+</programlisting>
+<para>
+State of a client session regarding a specific media identified by path.
+</para></refsect2>
+<refsect2 id="GstRTSPSessionMediaClass" role="struct">
+<title>struct GstRTSPSessionMediaClass</title>
+<indexterm zone="GstRTSPSessionMediaClass"><primary>GstRTSPSessionMediaClass</primary></indexterm>
+<programlisting>struct GstRTSPSessionMediaClass {
+  GObjectClass  parent_class;
+};
+</programlisting>
+</refsect2>
+<refsect2 id="gst-rtsp-session-media-new" role="function">
+<title>gst_rtsp_session_media_new ()</title>
+<indexterm zone="gst-rtsp-session-media-new"><primary>gst_rtsp_session_media_new</primary></indexterm>
+<programlisting><link linkend="GstRTSPSessionMedia"><returnvalue>GstRTSPSessionMedia</returnvalue></link> * gst_rtsp_session_media_new        (<parameter>const <link linkend="gchar"><type>gchar</type></link> *path</parameter>,
+                                                         <parameter><link linkend="GstRTSPMedia"><type>GstRTSPMedia</type></link> *media</parameter>);</programlisting>
+<para>
+Create a new <link linkend="GstRTSPSessionMedia"><type>GstRTSPSessionMedia</type></link> that manages the streams
+in <parameter>media</parameter> for <parameter>path</parameter>. <parameter>media</parameter> should be prepared.
+</para>
+<para>
+Ownership is taken of <parameter>media</parameter>.
+</para><variablelist role="params">
+<varlistentry><term><parameter>path</parameter>&#160;:</term>
+<listitem><simpara>the path</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>media</parameter>&#160;:</term>
+<listitem><simpara>the <link linkend="GstRTSPMedia"><type>GstRTSPMedia</type></link></simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>a new <link linkend="GstRTSPSessionMedia"><type>GstRTSPSessionMedia</type></link>.</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gst-rtsp-session-media-matches" role="function">
+<title>gst_rtsp_session_media_matches ()</title>
+<indexterm zone="gst-rtsp-session-media-matches"><primary>gst_rtsp_session_media_matches</primary></indexterm>
+<programlisting><link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            gst_rtsp_session_media_matches      (<parameter><link linkend="GstRTSPSessionMedia"><type>GstRTSPSessionMedia</type></link> *media</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *path</parameter>,
+                                                         <parameter><link linkend="gint"><type>gint</type></link> *matched</parameter>);</programlisting>
+<para>
+Check if the path of <parameter>media</parameter> matches <parameter>path</parameter>. It <parameter>path</parameter> matches, the amount of
+matched characters is returned in <parameter>matched</parameter>.
+</para><variablelist role="params">
+<varlistentry><term><parameter>media</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstRTSPSessionMedia"><type>GstRTSPSessionMedia</type></link></simpara></listitem></varlistentry>
+<varlistentry><term><parameter>path</parameter>&#160;:</term>
+<listitem><simpara>a path</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>matched</parameter>&#160;:</term>
+<listitem><simpara>the amount of matched characters of <parameter>path</parameter>. <emphasis role="annotation">[<acronym>out</acronym>]</emphasis></simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara><link linkend="TRUE:CAPS"><literal>TRUE</literal></link> when <parameter>path</parameter> matches the path of <parameter>media</parameter>.</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gst-rtsp-session-media-get-media" role="function">
+<title>gst_rtsp_session_media_get_media ()</title>
+<indexterm zone="gst-rtsp-session-media-get-media"><primary>gst_rtsp_session_media_get_media</primary></indexterm>
+<programlisting><link linkend="GstRTSPMedia"><returnvalue>GstRTSPMedia</returnvalue></link> *      gst_rtsp_session_media_get_media    (<parameter><link linkend="GstRTSPSessionMedia"><type>GstRTSPSessionMedia</type></link> *media</parameter>);</programlisting>
+<para>
+Get the <link linkend="GstRTSPMedia"><type>GstRTSPMedia</type></link> that was used when constructing <parameter>media</parameter>
+</para><variablelist role="params">
+<varlistentry><term><parameter>media</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstRTSPSessionMedia"><type>GstRTSPSessionMedia</type></link></simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>the <link linkend="GstRTSPMedia"><type>GstRTSPMedia</type></link> of <parameter>media</parameter>. Remains valid as long
+as <parameter>media</parameter> is valid. <emphasis role="annotation">[<acronym>transfer none</acronym>]</emphasis></simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gst-rtsp-session-media-get-base-time" role="function">
+<title>gst_rtsp_session_media_get_base_time ()</title>
+<indexterm zone="gst-rtsp-session-media-get-base-time"><primary>gst_rtsp_session_media_get_base_time</primary></indexterm>
+<programlisting><link linkend="GstClockTime"><returnvalue>GstClockTime</returnvalue></link>        gst_rtsp_session_media_get_base_time
+                                                        (<parameter><link linkend="GstRTSPSessionMedia"><type>GstRTSPSessionMedia</type></link> *media</parameter>);</programlisting>
+<para>
+Get the base_time of the <link linkend="GstRTSPMedia"><type>GstRTSPMedia</type></link> in <parameter>media</parameter>
+</para><variablelist role="params">
+<varlistentry><term><parameter>media</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstRTSPSessionMedia"><type>GstRTSPSessionMedia</type></link></simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>the base_time of the media.</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gst-rtsp-session-media-set-state" role="function">
+<title>gst_rtsp_session_media_set_state ()</title>
+<indexterm zone="gst-rtsp-session-media-set-state"><primary>gst_rtsp_session_media_set_state</primary></indexterm>
+<programlisting><link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            gst_rtsp_session_media_set_state    (<parameter><link linkend="GstRTSPSessionMedia"><type>GstRTSPSessionMedia</type></link> *media</parameter>,
+                                                         <parameter><link linkend="GstState"><type>GstState</type></link> state</parameter>);</programlisting>
+<para>
+Tell the media object <parameter>media</parameter> to change to <parameter>state</parameter>.
+</para><variablelist role="params">
+<varlistentry><term><parameter>media</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstRTSPSessionMedia"><type>GstRTSPSessionMedia</type></link></simpara></listitem></varlistentry>
+<varlistentry><term><parameter>state</parameter>&#160;:</term>
+<listitem><simpara>the new state</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara><link linkend="TRUE:CAPS"><literal>TRUE</literal></link> on success.</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gst-rtsp-session-media-get-rtsp-state" role="function">
+<title>gst_rtsp_session_media_get_rtsp_state ()</title>
+<indexterm zone="gst-rtsp-session-media-get-rtsp-state"><primary>gst_rtsp_session_media_get_rtsp_state</primary></indexterm>
+<programlisting><link linkend="GstRTSPState"><returnvalue>GstRTSPState</returnvalue></link>        gst_rtsp_session_media_get_rtsp_state
+                                                        (<parameter><link linkend="GstRTSPSessionMedia"><type>GstRTSPSessionMedia</type></link> *media</parameter>);</programlisting>
+<para>
+Get the current RTSP state of <parameter>media</parameter>.
+</para><variablelist role="params">
+<varlistentry><term><parameter>media</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstRTSPSessionMedia"><type>GstRTSPSessionMedia</type></link></simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>the current RTSP state of <parameter>media</parameter>.</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gst-rtsp-session-media-set-rtsp-state" role="function">
+<title>gst_rtsp_session_media_set_rtsp_state ()</title>
+<indexterm zone="gst-rtsp-session-media-set-rtsp-state"><primary>gst_rtsp_session_media_set_rtsp_state</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                gst_rtsp_session_media_set_rtsp_state
+                                                        (<parameter><link linkend="GstRTSPSessionMedia"><type>GstRTSPSessionMedia</type></link> *media</parameter>,
+                                                         <parameter><link linkend="GstRTSPState"><type>GstRTSPState</type></link> state</parameter>);</programlisting>
+<para>
+Set the RTSP state of <parameter>media</parameter> to <parameter>state</parameter>.
+</para><variablelist role="params">
+<varlistentry><term><parameter>media</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstRTSPSessionMedia"><type>GstRTSPSessionMedia</type></link></simpara></listitem></varlistentry>
+<varlistentry><term><parameter>state</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstRTSPState"><type>GstRTSPState</type></link></simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gst-rtsp-session-media-get-transport" role="function">
+<title>gst_rtsp_session_media_get_transport ()</title>
+<indexterm zone="gst-rtsp-session-media-get-transport"><primary>gst_rtsp_session_media_get_transport</primary></indexterm>
+<programlisting><link linkend="GstRTSPStreamTransport"><returnvalue>GstRTSPStreamTransport</returnvalue></link> * gst_rtsp_session_media_get_transport
+                                                        (<parameter><link linkend="GstRTSPSessionMedia"><type>GstRTSPSessionMedia</type></link> *media</parameter>,
+                                                         <parameter><link linkend="guint"><type>guint</type></link> idx</parameter>);</programlisting>
+<para>
+Get a previously created <link linkend="GstRTSPStreamTransport"><type>GstRTSPStreamTransport</type></link> for the stream at <parameter>idx</parameter>.
+</para><variablelist role="params">
+<varlistentry><term><parameter>media</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstRTSPSessionMedia"><type>GstRTSPSessionMedia</type></link></simpara></listitem></varlistentry>
+<varlistentry><term><parameter>idx</parameter>&#160;:</term>
+<listitem><simpara>the stream index</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>a <link linkend="GstRTSPStreamTransport"><type>GstRTSPStreamTransport</type></link> that is valid until the
+session of <parameter>media</parameter> is unreffed. <emphasis role="annotation">[<acronym>transfer none</acronym>]</emphasis></simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gst-rtsp-session-media-set-transport" role="function">
+<title>gst_rtsp_session_media_set_transport ()</title>
+<indexterm zone="gst-rtsp-session-media-set-transport"><primary>gst_rtsp_session_media_set_transport</primary></indexterm>
+<programlisting><link linkend="GstRTSPStreamTransport"><returnvalue>GstRTSPStreamTransport</returnvalue></link> * gst_rtsp_session_media_set_transport
+                                                        (<parameter><link linkend="GstRTSPSessionMedia"><type>GstRTSPSessionMedia</type></link> *media</parameter>,
+                                                         <parameter><link linkend="GstRTSPStream"><type>GstRTSPStream</type></link> *stream</parameter>,
+                                                         <parameter><link linkend="GstRTSPTransport"><type>GstRTSPTransport</type></link> *tr</parameter>);</programlisting>
+<para>
+Configure the transport for <parameter>stream</parameter> to <parameter>tr</parameter> in <parameter>media</parameter>.
+</para><variablelist role="params">
+<varlistentry><term><parameter>media</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstRTSPSessionMedia"><type>GstRTSPSessionMedia</type></link></simpara></listitem></varlistentry>
+<varlistentry><term><parameter>stream</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstRTSPStream"><type>GstRTSPStream</type></link></simpara></listitem></varlistentry>
+<varlistentry><term><parameter>tr</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstRTSPTransport"><type>GstRTSPTransport</type></link></simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>the new or updated <link linkend="GstRTSPStreamTransport"><type>GstRTSPStreamTransport</type></link> for <parameter>stream</parameter>. <emphasis role="annotation">[<acronym>transfer none</acronym>]</emphasis></simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gst-rtsp-session-media-alloc-channels" role="function">
+<title>gst_rtsp_session_media_alloc_channels ()</title>
+<indexterm zone="gst-rtsp-session-media-alloc-channels"><primary>gst_rtsp_session_media_alloc_channels</primary></indexterm>
+<programlisting><link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            gst_rtsp_session_media_alloc_channels
+                                                        (<parameter><link linkend="GstRTSPSessionMedia"><type>GstRTSPSessionMedia</type></link> *media</parameter>,
+                                                         <parameter><link linkend="GstRTSPRange"><type>GstRTSPRange</type></link> *range</parameter>);</programlisting>
+<para>
+Fill <parameter>range</parameter> with the next available min and max channels for
+interleaved transport.
+</para><variablelist role="params">
+<varlistentry><term><parameter>media</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstRTSPSessionMedia"><type>GstRTSPSessionMedia</type></link></simpara></listitem></varlistentry>
+<varlistentry><term><parameter>range</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstRTSPRange"><type>GstRTSPRange</type></link></simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara><link linkend="TRUE:CAPS"><literal>TRUE</literal></link> on success.</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+
+</refsect1>
+<refsect1 id="gst-rtsp-server-GstRTSPSessionMedia.see-also">
+<title>See Also</title>
+<link linkend="GstRTSPMedia"><type>GstRTSPMedia</type></link>, <link linkend="GstRTSPSession"><type>GstRTSPSession</type></link>
+</refsect1>
+
+</refentry>

@@ -1,0 +1,507 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>GstRTSPSessionPool</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<link rel="home" href="index.html" title="GStreamer RTSP Server Reference Manual">
+<link rel="up" href="ch01.html" title="">
+<link rel="prev" href="GstRTSPStream.html" title="GstRTSPStream">
+<link rel="next" href="GstRTSPSession.html" title="GstRTSPSession">
+<meta name="generator" content="GTK-Doc V1.18 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
+<tr valign="middle">
+<td><a accesskey="p" href="GstRTSPStream.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="ch01.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">GStreamer RTSP Server Reference Manual</th>
+<td><a accesskey="n" href="GstRTSPSession.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr>
+<tr><td colspan="5" class="shortcuts">
+<a href="#GstRTSPSessionPool.synopsis" class="shortcut">Top</a>
+                   | 
+                  <a href="#GstRTSPSessionPool.description" class="shortcut">Description</a>
+                   | 
+                  <a href="#GstRTSPSessionPool.object-hierarchy" class="shortcut">Object Hierarchy</a>
+                   | 
+                  <a href="#GstRTSPSessionPool.properties" class="shortcut">Properties</a>
+</td></tr>
+</table>
+<div class="refentry">
+<a name="GstRTSPSessionPool"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="GstRTSPSessionPool.top_of_page"></a>GstRTSPSessionPool</span></h2>
+<p>GstRTSPSessionPool — An object for managing sessions</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsynopsisdiv">
+<a name="GstRTSPSessionPool.synopsis"></a><h2>Synopsis</h2>
+<pre class="synopsis">struct              <a class="link" href="GstRTSPSessionPool.html#GstRTSPSessionPool-struct" title="struct GstRTSPSessionPool">GstRTSPSessionPool</a>;
+struct              <a class="link" href="GstRTSPSessionPool.html#GstRTSPSessionPoolClass" title="struct GstRTSPSessionPoolClass">GstRTSPSessionPoolClass</a>;
+<a class="link" href="GstRTSPSessionPool.html" title="GstRTSPSessionPool"><span class="returnvalue">GstRTSPSessionPool</span></a> * <a class="link" href="GstRTSPSessionPool.html#gst-rtsp-session-pool-new" title="gst_rtsp_session_pool_new ()">gst_rtsp_session_pool_new</a>          (<em class="parameter"><code><span class="type">void</span></code></em>);
+<a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#guint"><span class="returnvalue">guint</span></a>               <a class="link" href="GstRTSPSessionPool.html#gst-rtsp-session-pool-get-max-sessions" title="gst_rtsp_session_pool_get_max_sessions ()">gst_rtsp_session_pool_get_max_sessions</a>
+                                                        (<em class="parameter"><code><a class="link" href="GstRTSPSessionPool.html" title="GstRTSPSessionPool"><span class="type">GstRTSPSessionPool</span></a> *pool</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="GstRTSPSessionPool.html#gst-rtsp-session-pool-set-max-sessions" title="gst_rtsp_session_pool_set_max_sessions ()">gst_rtsp_session_pool_set_max_sessions</a>
+                                                        (<em class="parameter"><code><a class="link" href="GstRTSPSessionPool.html" title="GstRTSPSessionPool"><span class="type">GstRTSPSessionPool</span></a> *pool</code></em>,
+                                                         <em class="parameter"><code><a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#guint"><span class="type">guint</span></a> max</code></em>);
+<a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#guint"><span class="returnvalue">guint</span></a>               <a class="link" href="GstRTSPSessionPool.html#gst-rtsp-session-pool-get-n-sessions" title="gst_rtsp_session_pool_get_n_sessions ()">gst_rtsp_session_pool_get_n_sessions</a>
+                                                        (<em class="parameter"><code><a class="link" href="GstRTSPSessionPool.html" title="GstRTSPSessionPool"><span class="type">GstRTSPSessionPool</span></a> *pool</code></em>);
+<a class="link" href="GstRTSPSession.html" title="GstRTSPSession"><span class="returnvalue">GstRTSPSession</span></a> *    <a class="link" href="GstRTSPSessionPool.html#gst-rtsp-session-pool-create" title="gst_rtsp_session_pool_create ()">gst_rtsp_session_pool_create</a>        (<em class="parameter"><code><a class="link" href="GstRTSPSessionPool.html" title="GstRTSPSessionPool"><span class="type">GstRTSPSessionPool</span></a> *pool</code></em>);
+<a class="link" href="GstRTSPSession.html" title="GstRTSPSession"><span class="returnvalue">GstRTSPSession</span></a> *    <a class="link" href="GstRTSPSessionPool.html#gst-rtsp-session-pool-find" title="gst_rtsp_session_pool_find ()">gst_rtsp_session_pool_find</a>          (<em class="parameter"><code><a class="link" href="GstRTSPSessionPool.html" title="GstRTSPSessionPool"><span class="type">GstRTSPSessionPool</span></a> *pool</code></em>,
+                                                         <em class="parameter"><code>const <a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *sessionid</code></em>);
+<a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="GstRTSPSessionPool.html#gst-rtsp-session-pool-remove" title="gst_rtsp_session_pool_remove ()">gst_rtsp_session_pool_remove</a>        (<em class="parameter"><code><a class="link" href="GstRTSPSessionPool.html" title="GstRTSPSessionPool"><span class="type">GstRTSPSessionPool</span></a> *pool</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GstRTSPSession.html" title="GstRTSPSession"><span class="type">GstRTSPSession</span></a> *sess</code></em>);
+<a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#guint"><span class="returnvalue">guint</span></a>               <a class="link" href="GstRTSPSessionPool.html#gst-rtsp-session-pool-cleanup" title="gst_rtsp_session_pool_cleanup ()">gst_rtsp_session_pool_cleanup</a>       (<em class="parameter"><code><a class="link" href="GstRTSPSessionPool.html" title="GstRTSPSessionPool"><span class="type">GstRTSPSessionPool</span></a> *pool</code></em>);
+<a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            (<a class="link" href="GstRTSPSessionPool.html#GstRTSPSessionPoolFunc" title="GstRTSPSessionPoolFunc ()">*GstRTSPSessionPoolFunc</a>)           (<em class="parameter"><code><a class="link" href="GstRTSPSessionPool.html" title="GstRTSPSessionPool"><span class="type">GstRTSPSessionPool</span></a> *pool</code></em>,
+                                                         <em class="parameter"><code><a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> user_data</code></em>);
+<a href="/usr/share/gtk-doc/html/glib/glib-The-Main-Event-Loop.html#GSource"><span class="returnvalue">GSource</span></a> *           <a class="link" href="GstRTSPSessionPool.html#gst-rtsp-session-pool-create-watch" title="gst_rtsp_session_pool_create_watch ()">gst_rtsp_session_pool_create_watch</a>  (<em class="parameter"><code><a class="link" href="GstRTSPSessionPool.html" title="GstRTSPSessionPool"><span class="type">GstRTSPSessionPool</span></a> *pool</code></em>);
+<a class="link" href="GstRTSPSession.html#GstRTSPFilterResult" title="enum GstRTSPFilterResult"><span class="returnvalue">GstRTSPFilterResult</span></a> (<a class="link" href="GstRTSPSessionPool.html#GstRTSPSessionPoolFilterFunc" title="GstRTSPSessionPoolFilterFunc ()">*GstRTSPSessionPoolFilterFunc</a>)     (<em class="parameter"><code><a class="link" href="GstRTSPSessionPool.html" title="GstRTSPSessionPool"><span class="type">GstRTSPSessionPool</span></a> *pool</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GstRTSPSession.html" title="GstRTSPSession"><span class="type">GstRTSPSession</span></a> *session</code></em>,
+                                                         <em class="parameter"><code><a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> user_data</code></em>);
+<a href="/usr/share/gtk-doc/html/glib/glib-Doubly-Linked-Lists.html#GList"><span class="returnvalue">GList</span></a> *             <a class="link" href="GstRTSPSessionPool.html#gst-rtsp-session-pool-filter" title="gst_rtsp_session_pool_filter ()">gst_rtsp_session_pool_filter</a>        (<em class="parameter"><code><a class="link" href="GstRTSPSessionPool.html" title="GstRTSPSessionPool"><span class="type">GstRTSPSessionPool</span></a> *pool</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GstRTSPSessionPool.html#GstRTSPSessionPoolFilterFunc" title="GstRTSPSessionPoolFilterFunc ()"><span class="type">GstRTSPSessionPoolFilterFunc</span></a> func</code></em>,
+                                                         <em class="parameter"><code><a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> user_data</code></em>);
+</pre>
+</div>
+<div class="refsect1">
+<a name="GstRTSPSessionPool.object-hierarchy"></a><h2>Object Hierarchy</h2>
+<pre class="synopsis">
+  <a href="/usr/share/gtk-doc/html/gobject/gobject-The-Base-Object-Type.html#GObject">GObject</a>
+   +----GstRTSPSessionPool
+</pre>
+</div>
+<div class="refsect1">
+<a name="GstRTSPSessionPool.properties"></a><h2>Properties</h2>
+<pre class="synopsis">
+  "<a class="link" href="GstRTSPSessionPool.html#GstRTSPSessionPool--max-sessions" title='The "max-sessions" property'>max-sessions</a>"             <a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#guint"><span class="type">guint</span></a>                 : Read / Write
+</pre>
+</div>
+<div class="refsect1">
+<a name="GstRTSPSessionPool.description"></a><h2>Description</h2>
+<p>
+The <a class="link" href="GstRTSPSessionPool.html" title="GstRTSPSessionPool"><span class="type">GstRTSPSessionPool</span></a> object manages a list of <a class="link" href="GstRTSPSession.html" title="GstRTSPSession"><span class="type">GstRTSPSession</span></a> objects.
+</p>
+<p>
+The maximum number of sessions can be configured with
+<a class="link" href="GstRTSPSessionPool.html#gst-rtsp-session-pool-set-max-sessions" title="gst_rtsp_session_pool_set_max_sessions ()"><code class="function">gst_rtsp_session_pool_set_max_sessions()</code></a>. The current number of sessions can
+be retrieved with <a class="link" href="GstRTSPSessionPool.html#gst-rtsp-session-pool-get-n-sessions" title="gst_rtsp_session_pool_get_n_sessions ()"><code class="function">gst_rtsp_session_pool_get_n_sessions()</code></a>.
+</p>
+<p>
+Use <a class="link" href="GstRTSPSessionPool.html#gst-rtsp-session-pool-create" title="gst_rtsp_session_pool_create ()"><code class="function">gst_rtsp_session_pool_create()</code></a> to create a new <a class="link" href="GstRTSPSession.html" title="GstRTSPSession"><span class="type">GstRTSPSession</span></a> object.
+The session object can be found again with its id and
+<a class="link" href="GstRTSPSessionPool.html#gst-rtsp-session-pool-find" title="gst_rtsp_session_pool_find ()"><code class="function">gst_rtsp_session_pool_find()</code></a>.
+</p>
+<p>
+All sessions can be iterated with <a class="link" href="GstRTSPSessionPool.html#gst-rtsp-session-pool-filter" title="gst_rtsp_session_pool_filter ()"><code class="function">gst_rtsp_session_pool_filter()</code></a>.
+</p>
+<p>
+Run <a class="link" href="GstRTSPSessionPool.html#gst-rtsp-session-pool-cleanup" title="gst_rtsp_session_pool_cleanup ()"><code class="function">gst_rtsp_session_pool_cleanup()</code></a> periodically to remove timed out sessions
+or use <a class="link" href="GstRTSPSessionPool.html#gst-rtsp-session-pool-create-watch" title="gst_rtsp_session_pool_create_watch ()"><code class="function">gst_rtsp_session_pool_create_watch()</code></a> to be notified when session
+cleanup should be performed.
+</p>
+<p>
+Last reviewed on 2013-07-11 (1.0.0)
+</p>
+</div>
+<div class="refsect1">
+<a name="GstRTSPSessionPool.details"></a><h2>Details</h2>
+<div class="refsect2">
+<a name="GstRTSPSessionPool-struct"></a><h3>struct GstRTSPSessionPool</h3>
+<pre class="programlisting">struct GstRTSPSessionPool;</pre>
+<p>
+An object that keeps track of the active sessions. This object is usually
+attached to a <a class="link" href="GstRTSPServer.html" title="GstRTSPServer"><span class="type">GstRTSPServer</span></a> object to manage the sessions in that server.
+</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="GstRTSPSessionPoolClass"></a><h3>struct GstRTSPSessionPoolClass</h3>
+<pre class="programlisting">struct GstRTSPSessionPoolClass {
+  GObjectClass  parent_class;
+
+  gchar *          (*create_session_id)   (GstRTSPSessionPool *pool);
+  GstRTSPSession * (*create_session)      (GstRTSPSessionPool *pool, const gchar *id);
+};
+</pre>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><a href="/usr/share/gtk-doc/html/gobject/gobject-The-Base-Object-Type.html#GObjectClass"><span class="type">GObjectClass</span></a> <em class="structfield"><code><a name="GstRTSPSessionPoolClass.parent-class"></a>parent_class</code></em>;</span></p></td>
+<td></td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="structfield"><code><a name="GstRTSPSessionPoolClass.create-session-id"></a>create_session_id</code></em> ()</span></p></td>
+<td>create a new random session id. Subclasses can create
+custom session ids and should not check if the session exists.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="structfield"><code><a name="GstRTSPSessionPoolClass.create-session"></a>create_session</code></em> ()</span></p></td>
+<td>make a new session object.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gst-rtsp-session-pool-new"></a><h3>gst_rtsp_session_pool_new ()</h3>
+<pre class="programlisting"><a class="link" href="GstRTSPSessionPool.html" title="GstRTSPSessionPool"><span class="returnvalue">GstRTSPSessionPool</span></a> * gst_rtsp_session_pool_new          (<em class="parameter"><code><span class="type">void</span></code></em>);</pre>
+<p>
+Create a new <a class="link" href="GstRTSPSessionPool.html" title="GstRTSPSessionPool"><span class="type">GstRTSPSessionPool</span></a> instance.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>A new <a class="link" href="GstRTSPSessionPool.html" title="GstRTSPSessionPool"><span class="type">GstRTSPSessionPool</span></a>. <a href="/usr/share/gtk-doc/html/gobject/gobject-The-Base-Object-Type.html#g-object-unref"><code class="function">g_object_unref()</code></a> after usage.</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gst-rtsp-session-pool-get-max-sessions"></a><h3>gst_rtsp_session_pool_get_max_sessions ()</h3>
+<pre class="programlisting"><a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#guint"><span class="returnvalue">guint</span></a>               gst_rtsp_session_pool_get_max_sessions
+                                                        (<em class="parameter"><code><a class="link" href="GstRTSPSessionPool.html" title="GstRTSPSessionPool"><span class="type">GstRTSPSessionPool</span></a> *pool</code></em>);</pre>
+<p>
+Get the maximum allowed number of sessions in <em class="parameter"><code>pool</code></em>. 0 means an unlimited
+amount of sessions.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>pool</code></em> :</span></p></td>
+<td>a <a class="link" href="GstRTSPSessionPool.html" title="GstRTSPSessionPool"><span class="type">GstRTSPSessionPool</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>the maximum allowed number of sessions.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gst-rtsp-session-pool-set-max-sessions"></a><h3>gst_rtsp_session_pool_set_max_sessions ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                gst_rtsp_session_pool_set_max_sessions
+                                                        (<em class="parameter"><code><a class="link" href="GstRTSPSessionPool.html" title="GstRTSPSessionPool"><span class="type">GstRTSPSessionPool</span></a> *pool</code></em>,
+                                                         <em class="parameter"><code><a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#guint"><span class="type">guint</span></a> max</code></em>);</pre>
+<p>
+Configure the maximum allowed number of sessions in <em class="parameter"><code>pool</code></em> to <em class="parameter"><code>max</code></em>.
+A value of 0 means an unlimited amount of sessions.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>pool</code></em> :</span></p></td>
+<td>a <a class="link" href="GstRTSPSessionPool.html" title="GstRTSPSessionPool"><span class="type">GstRTSPSessionPool</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>max</code></em> :</span></p></td>
+<td>the maximum number of sessions</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gst-rtsp-session-pool-get-n-sessions"></a><h3>gst_rtsp_session_pool_get_n_sessions ()</h3>
+<pre class="programlisting"><a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#guint"><span class="returnvalue">guint</span></a>               gst_rtsp_session_pool_get_n_sessions
+                                                        (<em class="parameter"><code><a class="link" href="GstRTSPSessionPool.html" title="GstRTSPSessionPool"><span class="type">GstRTSPSessionPool</span></a> *pool</code></em>);</pre>
+<p>
+Get the amount of active sessions in <em class="parameter"><code>pool</code></em>.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>pool</code></em> :</span></p></td>
+<td>a <a class="link" href="GstRTSPSessionPool.html" title="GstRTSPSessionPool"><span class="type">GstRTSPSessionPool</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>the amount of active sessions in <em class="parameter"><code>pool</code></em>.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gst-rtsp-session-pool-create"></a><h3>gst_rtsp_session_pool_create ()</h3>
+<pre class="programlisting"><a class="link" href="GstRTSPSession.html" title="GstRTSPSession"><span class="returnvalue">GstRTSPSession</span></a> *    gst_rtsp_session_pool_create        (<em class="parameter"><code><a class="link" href="GstRTSPSessionPool.html" title="GstRTSPSessionPool"><span class="type">GstRTSPSessionPool</span></a> *pool</code></em>);</pre>
+<p>
+Create a new <a class="link" href="GstRTSPSession.html" title="GstRTSPSession"><span class="type">GstRTSPSession</span></a> object in <em class="parameter"><code>pool</code></em>.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>pool</code></em> :</span></p></td>
+<td>a <a class="link" href="GstRTSPSessionPool.html" title="GstRTSPSessionPool"><span class="type">GstRTSPSessionPool</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>a new <a class="link" href="GstRTSPSession.html" title="GstRTSPSession"><span class="type">GstRTSPSession</span></a>. <span class="annotation">[<acronym title="Don't free data after the code is done."><span class="acronym">transfer none</span></acronym>]</span>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gst-rtsp-session-pool-find"></a><h3>gst_rtsp_session_pool_find ()</h3>
+<pre class="programlisting"><a class="link" href="GstRTSPSession.html" title="GstRTSPSession"><span class="returnvalue">GstRTSPSession</span></a> *    gst_rtsp_session_pool_find          (<em class="parameter"><code><a class="link" href="GstRTSPSessionPool.html" title="GstRTSPSessionPool"><span class="type">GstRTSPSessionPool</span></a> *pool</code></em>,
+                                                         <em class="parameter"><code>const <a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *sessionid</code></em>);</pre>
+<p>
+Find the session with <em class="parameter"><code>sessionid</code></em> in <em class="parameter"><code>pool</code></em>. The access time of the session
+will be updated with <a class="link" href="GstRTSPSession.html#gst-rtsp-session-touch" title="gst_rtsp_session_touch ()"><code class="function">gst_rtsp_session_touch()</code></a>.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>pool</code></em> :</span></p></td>
+<td>the pool to search</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>sessionid</code></em> :</span></p></td>
+<td>the session id</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>the <a class="link" href="GstRTSPSession.html" title="GstRTSPSession"><span class="type">GstRTSPSession</span></a> with <em class="parameter"><code>sessionid</code></em> or <a href="/usr/share/gtk-doc/html/glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> when the session did
+not exist. <a href="/usr/share/gtk-doc/html/gobject/gobject-The-Base-Object-Type.html#g-object-unref"><code class="function">g_object_unref()</code></a> after usage. <span class="annotation">[<acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>]</span>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gst-rtsp-session-pool-remove"></a><h3>gst_rtsp_session_pool_remove ()</h3>
+<pre class="programlisting"><a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            gst_rtsp_session_pool_remove        (<em class="parameter"><code><a class="link" href="GstRTSPSessionPool.html" title="GstRTSPSessionPool"><span class="type">GstRTSPSessionPool</span></a> *pool</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GstRTSPSession.html" title="GstRTSPSession"><span class="type">GstRTSPSession</span></a> *sess</code></em>);</pre>
+<p>
+Remove <em class="parameter"><code>sess</code></em> from <em class="parameter"><code>pool</code></em>, releasing the ref that the pool has on <em class="parameter"><code>sess</code></em>.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>pool</code></em> :</span></p></td>
+<td>a <a class="link" href="GstRTSPSessionPool.html" title="GstRTSPSessionPool"><span class="type">GstRTSPSessionPool</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>sess</code></em> :</span></p></td>
+<td>a <a class="link" href="GstRTSPSession.html" title="GstRTSPSession"><span class="type">GstRTSPSession</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>
+<a href="/usr/share/gtk-doc/html/glib/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if the session was found and removed.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gst-rtsp-session-pool-cleanup"></a><h3>gst_rtsp_session_pool_cleanup ()</h3>
+<pre class="programlisting"><a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#guint"><span class="returnvalue">guint</span></a>               gst_rtsp_session_pool_cleanup       (<em class="parameter"><code><a class="link" href="GstRTSPSessionPool.html" title="GstRTSPSessionPool"><span class="type">GstRTSPSessionPool</span></a> *pool</code></em>);</pre>
+<p>
+Inspect all the sessions in <em class="parameter"><code>pool</code></em> and remove the sessions that are inactive
+for more than their timeout.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>pool</code></em> :</span></p></td>
+<td>a <a class="link" href="GstRTSPSessionPool.html" title="GstRTSPSessionPool"><span class="type">GstRTSPSessionPool</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>the amount of sessions that got removed.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="GstRTSPSessionPoolFunc"></a><h3>GstRTSPSessionPoolFunc ()</h3>
+<pre class="programlisting"><a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            (*GstRTSPSessionPoolFunc)           (<em class="parameter"><code><a class="link" href="GstRTSPSessionPool.html" title="GstRTSPSessionPool"><span class="type">GstRTSPSessionPool</span></a> *pool</code></em>,
+                                                         <em class="parameter"><code><a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> user_data</code></em>);</pre>
+<p>
+The function that will be called from the GSource watch on the session pool.
+</p>
+<p>
+The function will be called when the pool must be cleaned up because one or
+more sessions timed out.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>pool</code></em> :</span></p></td>
+<td>a <a class="link" href="GstRTSPSessionPool.html" title="GstRTSPSessionPool"><span class="type">GstRTSPSessionPool</span></a> object</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>user_data</code></em> :</span></p></td>
+<td>user data that has been given when registering the handler</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>
+<a href="/usr/share/gtk-doc/html/glib/glib-Standard-Macros.html#FALSE:CAPS"><code class="literal">FALSE</code></a> if the source should be removed.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gst-rtsp-session-pool-create-watch"></a><h3>gst_rtsp_session_pool_create_watch ()</h3>
+<pre class="programlisting"><a href="/usr/share/gtk-doc/html/glib/glib-The-Main-Event-Loop.html#GSource"><span class="returnvalue">GSource</span></a> *           gst_rtsp_session_pool_create_watch  (<em class="parameter"><code><a class="link" href="GstRTSPSessionPool.html" title="GstRTSPSessionPool"><span class="type">GstRTSPSessionPool</span></a> *pool</code></em>);</pre>
+<p>
+A GSource that will be dispatched when the session should be cleaned up.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>pool</code></em> :</span></p></td>
+<td>a <a class="link" href="GstRTSPSessionPool.html" title="GstRTSPSessionPool"><span class="type">GstRTSPSessionPool</span></a>
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="GstRTSPSessionPoolFilterFunc"></a><h3>GstRTSPSessionPoolFilterFunc ()</h3>
+<pre class="programlisting"><a class="link" href="GstRTSPSession.html#GstRTSPFilterResult" title="enum GstRTSPFilterResult"><span class="returnvalue">GstRTSPFilterResult</span></a> (*GstRTSPSessionPoolFilterFunc)     (<em class="parameter"><code><a class="link" href="GstRTSPSessionPool.html" title="GstRTSPSessionPool"><span class="type">GstRTSPSessionPool</span></a> *pool</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GstRTSPSession.html" title="GstRTSPSession"><span class="type">GstRTSPSession</span></a> *session</code></em>,
+                                                         <em class="parameter"><code><a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> user_data</code></em>);</pre>
+<p>
+This function will be called by the <a class="link" href="GstRTSPSessionPool.html#gst-rtsp-session-pool-filter" title="gst_rtsp_session_pool_filter ()"><code class="function">gst_rtsp_session_pool_filter()</code></a>. An
+implementation should return a value of <a class="link" href="GstRTSPSession.html#GstRTSPFilterResult" title="enum GstRTSPFilterResult"><span class="type">GstRTSPFilterResult</span></a>.
+</p>
+<p>
+When this function returns <a class="link" href="GstRTSPSession.html#GST-RTSP-FILTER-REMOVE:CAPS"><span class="type">GST_RTSP_FILTER_REMOVE</span></a>, <em class="parameter"><code>session</code></em> will be removed
+from <em class="parameter"><code>pool</code></em>.
+</p>
+<p>
+A return value of <a class="link" href="GstRTSPSession.html#GST-RTSP-FILTER-KEEP:CAPS"><span class="type">GST_RTSP_FILTER_KEEP</span></a> will leave <em class="parameter"><code>session</code></em> untouched in
+<em class="parameter"><code>pool</code></em>.
+</p>
+<p>
+A value of GST_RTSP_FILTER_REF will add <em class="parameter"><code>session</code></em> to the result <a href="/usr/share/gtk-doc/html/glib/glib-Doubly-Linked-Lists.html#GList"><span class="type">GList</span></a> of
+<a class="link" href="GstRTSPSessionPool.html#gst-rtsp-session-pool-filter" title="gst_rtsp_session_pool_filter ()"><code class="function">gst_rtsp_session_pool_filter()</code></a>.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>pool</code></em> :</span></p></td>
+<td>a <a class="link" href="GstRTSPSessionPool.html" title="GstRTSPSessionPool"><span class="type">GstRTSPSessionPool</span></a> object</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>session</code></em> :</span></p></td>
+<td>a <a class="link" href="GstRTSPSession.html" title="GstRTSPSession"><span class="type">GstRTSPSession</span></a> in <em class="parameter"><code>pool</code></em>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>user_data</code></em> :</span></p></td>
+<td>user data that has been given to <a class="link" href="GstRTSPSessionPool.html#gst-rtsp-session-pool-filter" title="gst_rtsp_session_pool_filter ()"><code class="function">gst_rtsp_session_pool_filter()</code></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>a <a class="link" href="GstRTSPSession.html#GstRTSPFilterResult" title="enum GstRTSPFilterResult"><span class="type">GstRTSPFilterResult</span></a>.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gst-rtsp-session-pool-filter"></a><h3>gst_rtsp_session_pool_filter ()</h3>
+<pre class="programlisting"><a href="/usr/share/gtk-doc/html/glib/glib-Doubly-Linked-Lists.html#GList"><span class="returnvalue">GList</span></a> *             gst_rtsp_session_pool_filter        (<em class="parameter"><code><a class="link" href="GstRTSPSessionPool.html" title="GstRTSPSessionPool"><span class="type">GstRTSPSessionPool</span></a> *pool</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GstRTSPSessionPool.html#GstRTSPSessionPoolFilterFunc" title="GstRTSPSessionPoolFilterFunc ()"><span class="type">GstRTSPSessionPoolFilterFunc</span></a> func</code></em>,
+                                                         <em class="parameter"><code><a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> user_data</code></em>);</pre>
+<p>
+Call <em class="parameter"><code>func</code></em> for each session in <em class="parameter"><code>pool</code></em>. The result value of <em class="parameter"><code>func</code></em> determines
+what happens to the session. <em class="parameter"><code>func</code></em> will be called with the session pool
+locked so no further actions on <em class="parameter"><code>pool</code></em> can be performed from <em class="parameter"><code>func</code></em>.
+</p>
+<p>
+If <em class="parameter"><code>func</code></em> returns <a class="link" href="GstRTSPSession.html#GST-RTSP-FILTER-REMOVE:CAPS"><span class="type">GST_RTSP_FILTER_REMOVE</span></a>, the session will be removed from
+<em class="parameter"><code>pool</code></em>.
+</p>
+<p>
+If <em class="parameter"><code>func</code></em> returns <a class="link" href="GstRTSPSession.html#GST-RTSP-FILTER-KEEP:CAPS"><span class="type">GST_RTSP_FILTER_KEEP</span></a>, the session will remain in <em class="parameter"><code>pool</code></em>.
+</p>
+<p>
+If <em class="parameter"><code>func</code></em> returns <a class="link" href="GstRTSPSession.html#GST-RTSP-FILTER-REF:CAPS"><span class="type">GST_RTSP_FILTER_REF</span></a>, the session will remain in <em class="parameter"><code>pool</code></em> but
+will also be added with an additional ref to the result GList of this
+function..
+</p>
+<p>
+When <em class="parameter"><code>func</code></em> is <a href="/usr/share/gtk-doc/html/glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>, <a class="link" href="GstRTSPSession.html#GST-RTSP-FILTER-REF:CAPS"><span class="type">GST_RTSP_FILTER_REF</span></a> will be assumed for all sessions.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>pool</code></em> :</span></p></td>
+<td>a <a class="link" href="GstRTSPSessionPool.html" title="GstRTSPSessionPool"><span class="type">GstRTSPSessionPool</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>func</code></em> :</span></p></td>
+<td>a callback. <span class="annotation">[<acronym title="The callback is valid only during the call to the method."><span class="acronym">scope call</span></acronym>][<acronym title="NULL is ok, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>user_data</code></em> :</span></p></td>
+<td>user data passed to <em class="parameter"><code>func</code></em>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>a GList with all
+sessions for which <em class="parameter"><code>func</code></em> returned <a class="link" href="GstRTSPSession.html#GST-RTSP-FILTER-REF:CAPS"><span class="type">GST_RTSP_FILTER_REF</span></a>. After usage, each
+element in the GList should be unreffed before the list is freed. <span class="annotation">[<acronym title="Generics and defining elements of containers and arrays."><span class="acronym">element-type</span></acronym> GstRTSPSession][<acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>]</span>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+<div class="refsect1">
+<a name="GstRTSPSessionPool.property-details"></a><h2>Property Details</h2>
+<div class="refsect2">
+<a name="GstRTSPSessionPool--max-sessions"></a><h3>The <code class="literal">"max-sessions"</code> property</h3>
+<pre class="programlisting">  "max-sessions"             <a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#guint"><span class="type">guint</span></a>                 : Read / Write</pre>
+<p>the maximum amount of sessions (0 = unlimited).</p>
+<p>Default value: 0</p>
+</div>
+</div>
+<div class="refsect1">
+<a name="GstRTSPSessionPool.see-also"></a><h2>See Also</h2>
+<a class="link" href="GstRTSPSession.html" title="GstRTSPSession"><span class="type">GstRTSPSession</span></a>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.18</div>
+</body>
+</html>

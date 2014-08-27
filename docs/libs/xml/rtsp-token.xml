@@ -1,0 +1,200 @@
+<?xml version="1.0"?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
+               "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
+<!ENTITY % version-entities SYSTEM "version.entities">
+%version-entities;
+]>
+
+<refentry id="gst-rtsp-server-GstRTSPToken">
+<refmeta>
+<refentrytitle role="top_of_page" id="gst-rtsp-server-GstRTSPToken.top_of_page">GstRTSPToken</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>
+  GST-RTSP-SERVER Library
+</refmiscinfo>
+</refmeta>
+<refnamediv>
+<refname>GstRTSPToken</refname>
+<refpurpose>Roles and permissions for a client</refpurpose>
+</refnamediv>
+
+<refsynopsisdiv id="gst-rtsp-server-GstRTSPToken.synopsis" role="synopsis">
+<title role="synopsis.title">Synopsis</title>
+
+<synopsis>struct              <link linkend="GstRTSPToken">GstRTSPToken</link>;
+<link linkend="GstRTSPToken"><returnvalue>GstRTSPToken</returnvalue></link> *      <link linkend="gst-rtsp-token-new-empty">gst_rtsp_token_new_empty</link>            (<parameter><type>void</type></parameter>);
+<link linkend="GstRTSPToken"><returnvalue>GstRTSPToken</returnvalue></link> *      <link linkend="gst-rtsp-token-new">gst_rtsp_token_new</link>                  (<parameter>const <link linkend="gchar"><type>gchar</type></link> *firstfield</parameter>,
+                                                         <parameter>...</parameter>);
+<link linkend="GstRTSPToken"><returnvalue>GstRTSPToken</returnvalue></link> *      <link linkend="gst-rtsp-token-new-valist">gst_rtsp_token_new_valist</link>           (<parameter>const <link linkend="gchar"><type>gchar</type></link> *firstfield</parameter>,
+                                                         <parameter><link linkend="va-list"><type>va_list</type></link> var_args</parameter>);
+<link linkend="GstRTSPToken"><returnvalue>GstRTSPToken</returnvalue></link> *      <link linkend="gst-rtsp-token-ref">gst_rtsp_token_ref</link>                  (<parameter><link linkend="GstRTSPToken"><type>GstRTSPToken</type></link> *token</parameter>);
+<link linkend="void"><returnvalue>void</returnvalue></link>                <link linkend="gst-rtsp-token-unref">gst_rtsp_token_unref</link>                (<parameter><link linkend="GstRTSPToken"><type>GstRTSPToken</type></link> *token</parameter>);
+const <link linkend="GstStructure"><returnvalue>GstStructure</returnvalue></link> * <link linkend="gst-rtsp-token-get-structure">gst_rtsp_token_get_structure</link>       (<parameter><link linkend="GstRTSPToken"><type>GstRTSPToken</type></link> *token</parameter>);
+<link linkend="GstStructure"><returnvalue>GstStructure</returnvalue></link> *      <link linkend="gst-rtsp-token-writable-structure">gst_rtsp_token_writable_structure</link>   (<parameter><link linkend="GstRTSPToken"><type>GstRTSPToken</type></link> *token</parameter>);
+const <link linkend="gchar"><returnvalue>gchar</returnvalue></link> *       <link linkend="gst-rtsp-token-get-string">gst_rtsp_token_get_string</link>           (<parameter><link linkend="GstRTSPToken"><type>GstRTSPToken</type></link> *token</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *field</parameter>);
+<link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            <link linkend="gst-rtsp-token-is-allowed">gst_rtsp_token_is_allowed</link>           (<parameter><link linkend="GstRTSPToken"><type>GstRTSPToken</type></link> *token</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *field</parameter>);
+</synopsis>
+</refsynopsisdiv>
+
+<refsect1 id="gst-rtsp-server-GstRTSPToken.description" role="desc">
+<title role="desc.title">Description</title>
+<para>
+A <link linkend="GstRTSPToken"><type>GstRTSPToken</type></link> contains the permissions and roles of the user
+performing the current request. A token is usually created when a user is
+authenticated by the <link linkend="GstRTSPAuth"><type>GstRTSPAuth</type></link> object and is then placed as the current
+token for the current request.
+</para>
+<para>
+<link linkend="GstRTSPAuth"><type>GstRTSPAuth</type></link> can use the token and its contents to check authorization for
+various operations by comparing the token to the <link linkend="GstRTSPPermissions"><type>GstRTSPPermissions</type></link> of the
+object.
+</para>
+<para>
+The accepted values of the token are entirely defined by the <link linkend="GstRTSPAuth"><type>GstRTSPAuth</type></link>
+object that implements the security policy.
+</para>
+<para>
+Last reviewed on 2013-07-15 (1.0.0)
+</para>
+</refsect1>
+<refsect1 id="gst-rtsp-server-GstRTSPToken.details" role="details">
+<title role="details.title">Details</title>
+<refsect2 id="GstRTSPToken" role="struct">
+<title>struct GstRTSPToken</title>
+<indexterm zone="GstRTSPToken"><primary>GstRTSPToken</primary></indexterm>
+<programlisting>struct GstRTSPToken {
+  GstMiniObject mini_object;
+};
+</programlisting>
+<para>
+An opaque object used for checking authorisations.
+It is generated after successful authentication.
+</para></refsect2>
+<refsect2 id="gst-rtsp-token-new-empty" role="function">
+<title>gst_rtsp_token_new_empty ()</title>
+<indexterm zone="gst-rtsp-token-new-empty"><primary>gst_rtsp_token_new_empty</primary></indexterm>
+<programlisting><link linkend="GstRTSPToken"><returnvalue>GstRTSPToken</returnvalue></link> *      gst_rtsp_token_new_empty            (<parameter><type>void</type></parameter>);</programlisting>
+<para>
+Create a new empty Authorization token.
+</para><variablelist role="params">
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>a new empty authorization token. <emphasis role="annotation">[<acronym>transfer full</acronym>]</emphasis></simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gst-rtsp-token-new" role="function">
+<title>gst_rtsp_token_new ()</title>
+<indexterm zone="gst-rtsp-token-new"><primary>gst_rtsp_token_new</primary></indexterm>
+<programlisting><link linkend="GstRTSPToken"><returnvalue>GstRTSPToken</returnvalue></link> *      gst_rtsp_token_new                  (<parameter>const <link linkend="gchar"><type>gchar</type></link> *firstfield</parameter>,
+                                                         <parameter>...</parameter>);</programlisting>
+<para>
+Create a new Authorization token with the given fieldnames and values.
+Arguments are given similar to <link linkend="gst-structure-new"><function>gst_structure_new()</function></link>.
+</para><variablelist role="params">
+<varlistentry><term><parameter>firstfield</parameter>&#160;:</term>
+<listitem><simpara>the first fieldname</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>...</parameter>&#160;:</term>
+<listitem><simpara>additional arguments</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>a new authorization token. <emphasis role="annotation">[<acronym>transfer full</acronym>]</emphasis></simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gst-rtsp-token-new-valist" role="function">
+<title>gst_rtsp_token_new_valist ()</title>
+<indexterm zone="gst-rtsp-token-new-valist"><primary>gst_rtsp_token_new_valist</primary></indexterm>
+<programlisting><link linkend="GstRTSPToken"><returnvalue>GstRTSPToken</returnvalue></link> *      gst_rtsp_token_new_valist           (<parameter>const <link linkend="gchar"><type>gchar</type></link> *firstfield</parameter>,
+                                                         <parameter><link linkend="va-list"><type>va_list</type></link> var_args</parameter>);</programlisting>
+<para>
+Create a new Authorization token with the given fieldnames and values.
+Arguments are given similar to <link linkend="gst-structure-new-valist"><function>gst_structure_new_valist()</function></link>.
+</para><variablelist role="params">
+<varlistentry><term><parameter>firstfield</parameter>&#160;:</term>
+<listitem><simpara>the first fieldname</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>var_args</parameter>&#160;:</term>
+<listitem><simpara>additional arguments</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>a new authorization token. <emphasis role="annotation">[<acronym>transfer full</acronym>]</emphasis></simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gst-rtsp-token-ref" role="function">
+<title>gst_rtsp_token_ref ()</title>
+<indexterm zone="gst-rtsp-token-ref"><primary>gst_rtsp_token_ref</primary></indexterm>
+<programlisting><link linkend="GstRTSPToken"><returnvalue>GstRTSPToken</returnvalue></link> *      gst_rtsp_token_ref                  (<parameter><link linkend="GstRTSPToken"><type>GstRTSPToken</type></link> *token</parameter>);</programlisting>
+<para>
+Increase the refcount of this token.
+</para><variablelist role="params">
+<varlistentry><term><parameter>token</parameter>&#160;:</term>
+<listitem><simpara>The token to refcount</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara><parameter>token</parameter> (for convenience when doing assignments). <emphasis role="annotation">[<acronym>transfer full</acronym>]</emphasis></simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gst-rtsp-token-unref" role="function">
+<title>gst_rtsp_token_unref ()</title>
+<indexterm zone="gst-rtsp-token-unref"><primary>gst_rtsp_token_unref</primary></indexterm>
+<programlisting><link linkend="void"><returnvalue>void</returnvalue></link>                gst_rtsp_token_unref                (<parameter><link linkend="GstRTSPToken"><type>GstRTSPToken</type></link> *token</parameter>);</programlisting>
+<para>
+Decrease the refcount of an token, freeing it if the refcount reaches 0.
+</para><variablelist role="params">
+<varlistentry><term><parameter>token</parameter>&#160;:</term>
+<listitem><simpara>the token to refcount. <emphasis role="annotation">[<acronym>transfer full</acronym>]</emphasis></simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gst-rtsp-token-get-structure" role="function">
+<title>gst_rtsp_token_get_structure ()</title>
+<indexterm zone="gst-rtsp-token-get-structure"><primary>gst_rtsp_token_get_structure</primary></indexterm>
+<programlisting>const <link linkend="GstStructure"><returnvalue>GstStructure</returnvalue></link> * gst_rtsp_token_get_structure       (<parameter><link linkend="GstRTSPToken"><type>GstRTSPToken</type></link> *token</parameter>);</programlisting>
+<para>
+Access the structure of the token.
+</para><variablelist role="params">
+<varlistentry><term><parameter>token</parameter>&#160;:</term>
+<listitem><simpara>The <link linkend="GstRTSPToken"><type>GstRTSPToken</type></link>.</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>The structure of the token. The structure is still
+owned by the token, which means that you should not free it and
+that the pointer becomes invalid when you free the token.
+MT safe.</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gst-rtsp-token-writable-structure" role="function">
+<title>gst_rtsp_token_writable_structure ()</title>
+<indexterm zone="gst-rtsp-token-writable-structure"><primary>gst_rtsp_token_writable_structure</primary></indexterm>
+<programlisting><link linkend="GstStructure"><returnvalue>GstStructure</returnvalue></link> *      gst_rtsp_token_writable_structure   (<parameter><link linkend="GstRTSPToken"><type>GstRTSPToken</type></link> *token</parameter>);</programlisting>
+<para>
+Get a writable version of the structure.
+</para><variablelist role="params">
+<varlistentry><term><parameter>token</parameter>&#160;:</term>
+<listitem><simpara>The <link linkend="GstRTSPToken"><type>GstRTSPToken</type></link>.</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>The structure of the token. The structure is still
+owned by the token, which means that you should not free it and
+that the pointer becomes invalid when you free the token.
+This function checks if <parameter>token</parameter> is writable and will never return <link linkend="NULL:CAPS"><literal>NULL</literal></link>.
+MT safe.</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gst-rtsp-token-get-string" role="function">
+<title>gst_rtsp_token_get_string ()</title>
+<indexterm zone="gst-rtsp-token-get-string"><primary>gst_rtsp_token_get_string</primary></indexterm>
+<programlisting>const <link linkend="gchar"><returnvalue>gchar</returnvalue></link> *       gst_rtsp_token_get_string           (<parameter><link linkend="GstRTSPToken"><type>GstRTSPToken</type></link> *token</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *field</parameter>);</programlisting>
+<para>
+Get the string value of <parameter>field</parameter> in <parameter>token</parameter>.
+</para><variablelist role="params">
+<varlistentry><term><parameter>token</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstRTSPToken"><type>GstRTSPToken</type></link></simpara></listitem></varlistentry>
+<varlistentry><term><parameter>field</parameter>&#160;:</term>
+<listitem><simpara>a field name</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>the string value of <parameter>field</parameter> in <parameter>token</parameter> or <link linkend="NULL:CAPS"><literal>NULL</literal></link> when <parameter>field</parameter> is not
+defined in <parameter>token</parameter>.</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="gst-rtsp-token-is-allowed" role="function">
+<title>gst_rtsp_token_is_allowed ()</title>
+<indexterm zone="gst-rtsp-token-is-allowed"><primary>gst_rtsp_token_is_allowed</primary></indexterm>
+<programlisting><link linkend="gboolean"><returnvalue>gboolean</returnvalue></link>            gst_rtsp_token_is_allowed           (<parameter><link linkend="GstRTSPToken"><type>GstRTSPToken</type></link> *token</parameter>,
+                                                         <parameter>const <link linkend="gchar"><type>gchar</type></link> *field</parameter>);</programlisting>
+<para>
+Check if <parameter>token</parameter> has a boolean <parameter>field</parameter> and if it is set to <link linkend="TRUE:CAPS"><literal>TRUE</literal></link>.
+</para><variablelist role="params">
+<varlistentry><term><parameter>token</parameter>&#160;:</term>
+<listitem><simpara>a <link linkend="GstRTSPToken"><type>GstRTSPToken</type></link></simpara></listitem></varlistentry>
+<varlistentry><term><parameter>field</parameter>&#160;:</term>
+<listitem><simpara>a field name</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara><link linkend="TRUE:CAPS"><literal>TRUE</literal></link> if <parameter>token</parameter> has a boolean field named <parameter>field</parameter> set to <link linkend="TRUE:CAPS"><literal>TRUE</literal></link>.</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+
+</refsect1>
+<refsect1 id="gst-rtsp-server-GstRTSPToken.see-also">
+<title>See Also</title>
+<link linkend="GstRTSPClient"><type>GstRTSPClient</type></link>, <link linkend="GstRTSPPermissions"><type>GstRTSPPermissions</type></link>, <link linkend="GstRTSPAuth"><type>GstRTSPAuth</type></link>
+</refsect1>
+
+</refentry>
