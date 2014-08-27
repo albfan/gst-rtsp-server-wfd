@@ -4,7 +4,6 @@ SUBDIRS = 		\
 	gst \
 	common \
 	pkgconfig \
-	docs \
 	examples \
 	tests
 
