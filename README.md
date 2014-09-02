@@ -37,5 +37,5 @@ ximagesrc ! videoscale ! videoconvert ! "video/x-raw,width=640,height=480,framer
 ### TODO:
 - Define WFD rtsp message.
 - Add logic to make decision spec with WFD rtsp message in M3 stage.
-- Fix FIXME code.
+- Fix FIXME code. (check FIXME-WFD, TODO-WFD)
 - Tuning each plugin to improve performance.
