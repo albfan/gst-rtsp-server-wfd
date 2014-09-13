@@ -94,8 +94,6 @@ int main (int argc, char *argv[])
   if ((id = gst_rtsp_server_attach (GST_RTSP_SERVER_CAST(server), NULL)) == 0)
     goto failed;
 
-  g_timeout_add_seconds (1000, (GSourceFunc) timeout, loop);
-
   /* start serving */
   g_main_loop_run (loop);
 
