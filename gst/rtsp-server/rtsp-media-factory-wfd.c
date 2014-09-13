@@ -215,7 +215,7 @@ gst_rtsp_media_factory_wfd_create_element (GstRTSPMediaFactoryWFD * factory,
     const GstRTSPUrl * url)
 {
   //GstRTSPMediaFactoryWFDClass *klass;
-  GstElement *result;
+  GstElement *result = NULL;
 
   g_return_val_if_fail (GST_IS_RTSP_MEDIA_FACTORY_WFD (factory), NULL);
   g_return_val_if_fail (url != NULL, NULL);
