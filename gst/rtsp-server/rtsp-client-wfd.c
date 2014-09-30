@@ -110,13 +110,18 @@ struct _GstRTSPWFDClientPrivate
 
 #define DEFAULT_WFD_TIMEOUT 60
 
-
-enum
-{
+enum {
   SIGNAL_WFD_OPTIONS_REQUEST,
   SIGNAL_WFD_GET_PARAMETER_REQUEST,
   SIGNAL_WFD_LAST
 };
+
+typedef enum {
+  TRIGGER_SETUP,
+  TRIGGER_PAUSE,
+  TRIGGER_TEARDOWN,
+  TRIGGER_PLAY
+} WFDTriggerType;
 
 GST_DEBUG_CATEGORY_STATIC (rtsp_wfd_client_debug);
 #define GST_CAT_DEFAULT rtsp_wfd_client_debug
@@ -145,7 +150,7 @@ static void wfd_get_param_request_done(GstRTSPWFDClient * client);
 static void handle_wfd_response (GstRTSPClient *client, GstRTSPContext *ctx);
 
 GstRTSPResult prepare_trigger_request (GstRTSPWFDClient *client,
-                GstRTSPMessage *request, int trigger_type, gchar *url);
+                GstRTSPMessage *request, WFDTriggerType trigger_type, gchar *url);
 
 GstRTSPResult prepare_request (GstRTSPWFDClient *client,
                 GstRTSPMessage *request, GstRTSPMethod method, gchar *url);
@@ -800,7 +805,7 @@ error:
 
 GstRTSPResult
 prepare_trigger_request (GstRTSPWFDClient *client, GstRTSPMessage *request,
-                 int trigger_type, gchar *url)
+                 WFDTriggerType trigger_type, gchar *url)
 {
   GstRTSPResult res = GST_RTSP_OK;
 
@@ -812,8 +817,7 @@ prepare_trigger_request (GstRTSPWFDClient *client, GstRTSPMessage *request,
   }
 
   switch (trigger_type) {
-    /* SETUP, TODO-WFD: define trigger type */
-    case 1: {
+    case TRIGGER_SETUP: {
       gchar *msg;
       guint msglen = 0;
       GString *msglength;
@@ -846,6 +850,7 @@ prepare_trigger_request (GstRTSPWFDClient *client, GstRTSPMessage *request,
       g_free(msg);
       break;
     }
+    /* TODO-WFD: implement to handle other trigger type */
     default: {
     }
   }
@@ -1111,7 +1116,7 @@ handle_M5_message (GstRTSPWFDClient * client)
     goto error;
   }
 
-  res = prepare_trigger_request (client, &request, 1, url_str);
+  res = prepare_trigger_request (client, &request, TRIGGER_SETUP, url_str);
   if (GST_RTSP_OK != res) {
     GST_ERROR_OBJECT (client, "Failed to prepare M5 request....\n");
     goto error;
