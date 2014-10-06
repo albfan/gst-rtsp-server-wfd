@@ -221,3 +221,33 @@ create_client_wfd (GstRTSPServer * server)
   return GST_RTSP_CLIENT(client);
 }
 
+GstRTSPResult
+gst_rtsp_wfd_server_trigger_request (GstRTSPServer *server,
+                                      GstWFDTriggerType type)
+{
+  GstRTSPResult res = GST_RTSP_OK;
+  GList *clients, *walk, *next;
+
+  g_return_val_if_fail (GST_IS_RTSP_SERVER (server), GST_RTSP_ERROR);
+
+  clients = gst_rtsp_server_client_filter(server, NULL, NULL);
+  if (clients == NULL) {
+    GST_ERROR_OBJECT(server, "There is no client in this server");
+  }
+
+  for (walk = clients; walk; walk = next) {
+    GstRTSPClient *client = walk->data;
+
+    next = g_list_next (walk);
+
+    res = gst_rtsp_wfd_client_trigger_request(GST_RTSP_WFD_CLIENT(client), type);
+    if (res != GST_RTSP_OK) {
+      GST_ERROR_OBJECT(server, "Failed to send trigger request %d", type);
+    }
+    g_object_unref(client);
+  }
+
+  return res;
+
+}
+

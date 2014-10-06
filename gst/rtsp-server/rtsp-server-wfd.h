@@ -76,6 +76,7 @@ struct _GstRTSPWFDServerClass {
 
 GType                 gst_rtsp_wfd_server_get_type             (void);
 GstRTSPWFDServer *    gst_rtsp_wfd_server_new                  (void);
+GstRTSPResult         gst_rtsp_wfd_server_trigger_request      (GstRTSPServer *server, GstWFDTriggerType type);
 
 #if 0
 void                  gst_rtsp_server_set_address          (GstRTSPServer *server, const gchar *address);

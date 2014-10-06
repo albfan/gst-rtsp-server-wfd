@@ -116,13 +116,6 @@ enum {
   SIGNAL_WFD_LAST
 };
 
-typedef enum {
-  TRIGGER_SETUP,
-  TRIGGER_PAUSE,
-  TRIGGER_TEARDOWN,
-  TRIGGER_PLAY
-} WFDTriggerType;
-
 GST_DEBUG_CATEGORY_STATIC (rtsp_wfd_client_debug);
 #define GST_CAT_DEFAULT rtsp_wfd_client_debug
 
@@ -150,7 +143,7 @@ static void wfd_get_param_request_done(GstRTSPWFDClient * client);
 static void handle_wfd_response (GstRTSPClient *client, GstRTSPContext *ctx);
 
 GstRTSPResult prepare_trigger_request (GstRTSPWFDClient *client,
-                GstRTSPMessage *request, WFDTriggerType trigger_type, gchar *url);
+                GstRTSPMessage *request, GstWFDTriggerType trigger_type, gchar *url);
 
 GstRTSPResult prepare_request (GstRTSPWFDClient *client,
                 GstRTSPMessage *request, GstRTSPMethod method, gchar *url);
@@ -360,7 +353,8 @@ handle_wfd_response (GstRTSPClient *client, GstRTSPContext *ctx)
       GST_INFO_OBJECT(_client, "M4 response is done");
       priv->m4_done = TRUE;
 
-      handle_M5_message(_client);
+      //handle_M5_message(_client);
+      gst_rtsp_wfd_client_trigger_request(_client, WFD_TRIGGER_SETUP);
     }
   }
 }
@@ -540,6 +534,7 @@ typedef enum {
   M4_REQ_MSG,
   M4_RES_MSG,
   M5_REQ_MSG,
+  TEARDOWN_TRIGGER,
 } GstWFDMessageType;
 
 static void
@@ -591,6 +586,9 @@ set_wfd_message_body(GstRTSPWFDClient *client, GstWFDMessageType msg, gchar **da
     g_string_append(buf, "\r\n");
   } else if (msg == M5_REQ_MSG) {
     g_string_append(buf, "wfd_trigger_method: SETUP");
+    g_string_append(buf, "\r\n");
+  } else if (msg == TEARDOWN_TRIGGER) {
+    g_string_append(buf, "wfd_trigger_method: TEARDOWN");
     g_string_append(buf, "\r\n");
   } else {
     return;
@@ -805,7 +803,7 @@ error:
 
 GstRTSPResult
 prepare_trigger_request (GstRTSPWFDClient *client, GstRTSPMessage *request,
-                 WFDTriggerType trigger_type, gchar *url)
+                 GstWFDTriggerType trigger_type, gchar *url)
 {
   GstRTSPResult res = GST_RTSP_OK;
 
@@ -817,7 +815,7 @@ prepare_trigger_request (GstRTSPWFDClient *client, GstRTSPMessage *request,
   }
 
   switch (trigger_type) {
-    case TRIGGER_SETUP: {
+    case WFD_TRIGGER_SETUP: {
       gchar *msg;
       guint msglen = 0;
       GString *msglength;
@@ -833,6 +831,39 @@ prepare_trigger_request (GstRTSPWFDClient *client, GstRTSPMessage *request,
       msglength = g_string_new ("");
       g_string_append_printf (msglength,"%d",msglen);
       GST_DEBUG("M5 server side message body: %s", msg);
+
+      /* add content-length type */
+      res = gst_rtsp_message_add_header (request, GST_RTSP_HDR_CONTENT_LENGTH, g_string_free (msglength, FALSE));
+      if (res != GST_RTSP_OK) {
+        GST_ERROR_OBJECT (client, "Failed to add header to rtsp message...");
+        goto error;
+      }
+
+      res = gst_rtsp_message_set_body (request, (guint8*)msg, msglen);
+      if (res != GST_RTSP_OK) {
+        GST_ERROR_OBJECT (client, "Failed to add header to rtsp message...");
+        goto error;
+      }
+
+      g_free(msg);
+      break;
+    }
+    case WFD_TRIGGER_TEARDOWN: {
+      gchar *msg;
+      guint msglen = 0;
+      GString *msglength;
+
+      /* add content type */
+      res = gst_rtsp_message_add_header (request, GST_RTSP_HDR_CONTENT_TYPE, "text/parameters");
+      if (res != GST_RTSP_OK) {
+        GST_ERROR_OBJECT (client, "Failed to add header to rtsp request...");
+        goto error;
+      }
+
+      set_wfd_message_body(client, TEARDOWN_TRIGGER, &msg, &msglen);
+      msglength = g_string_new ("");
+      g_string_append_printf (msglength,"%d",msglen);
+      GST_DEBUG("Trigger TEARDOWN server side message body: %s", msg);
 
       /* add content-length type */
       res = gst_rtsp_message_add_header (request, GST_RTSP_HDR_CONTENT_LENGTH, g_string_free (msglength, FALSE));
@@ -1116,13 +1147,54 @@ handle_M5_message (GstRTSPWFDClient * client)
     goto error;
   }
 
-  res = prepare_trigger_request (client, &request, TRIGGER_SETUP, url_str);
+  res = prepare_trigger_request (client, &request, WFD_TRIGGER_SETUP, url_str);
   if (GST_RTSP_OK != res) {
     GST_ERROR_OBJECT (client, "Failed to prepare M5 request....\n");
     goto error;
   }
 
   GST_DEBUG_OBJECT (client, "Sending GET_PARAMETER request message (M5)...");
+
+  send_request (client, NULL, &request);
+
+  return res;
+
+error:
+  return res;
+}
+
+GstRTSPResult
+gst_rtsp_wfd_client_trigger_request (GstRTSPWFDClient * client, GstWFDTriggerType type)
+{
+  GstRTSPResult res = GST_RTSP_OK;
+  GstRTSPMessage request = { 0 };
+  GstRTSPUrl *url = NULL;
+  gchar *url_str = NULL;
+
+  GstRTSPClient *parent_client = GST_RTSP_CLIENT_CAST(client);
+  GstRTSPConnection *connection = gst_rtsp_client_get_connection(parent_client);
+
+  url = gst_rtsp_connection_get_url (connection);
+  if (url == NULL) {
+    GST_ERROR_OBJECT (client, "Failed to get connection URL");
+    res = GST_RTSP_ERROR;
+    goto error;
+  }
+
+  url_str = gst_rtsp_url_get_request_uri (url);
+  if (url_str == NULL) {
+    GST_ERROR_OBJECT (client, "Failed to get connection URL");
+    res = GST_RTSP_ERROR;
+    goto error;
+  }
+
+  res = prepare_trigger_request (client, &request, type, url_str);
+  if (GST_RTSP_OK != res) {
+    GST_ERROR_OBJECT (client, "Failed to prepare M5 request....\n");
+    goto error;
+  }
+
+  GST_DEBUG_OBJECT (client, "Sending trigger request message...: %d", type);
 
   send_request (client, NULL, &request);
 

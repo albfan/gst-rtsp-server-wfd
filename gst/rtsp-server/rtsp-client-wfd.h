@@ -44,6 +44,17 @@ typedef struct _GstRTSPWFDClientPrivate GstRTSPWFDClientPrivate;
 #define GST_RTSP_WFD_CLIENT_CAST(obj)         ((GstRTSPWFDClient*)(obj))
 #define GST_RTSP_WFD_CLIENT_CLASS_CAST(klass) ((GstRTSPWFDClientClass*)(klass))
 
+
+/**
+ *
+ */
+typedef enum {
+  WFD_TRIGGER_SETUP,
+  WFD_TRIGGER_PAUSE,
+  WFD_TRIGGER_TEARDOWN,
+  WFD_TRIGGER_PLAY
+} GstWFDTriggerType;
+
 /**
  * GstRTSPWFDClientSendFunc:
  * @client: a #GstRTSPWFDClient
@@ -106,6 +117,8 @@ GType                 gst_rtsp_wfd_client_get_type          (void);
 GstRTSPWFDClient *       gst_rtsp_wfd_client_new               (void);
 
 void                  gst_rtsp_wfd_client_start_wfd(GstRTSPWFDClient *client);
+GstRTSPResult         gst_rtsp_wfd_client_trigger_request (
+                          GstRTSPWFDClient * client, GstWFDTriggerType type);
 
 /**
  * GstRTSPWFDClientSessionFilterFunc:

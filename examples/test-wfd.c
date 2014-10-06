@@ -17,6 +17,7 @@
  * Boston, MA 02110-1301, USA.
  */
 
+#include <glib-unix.h>
 #include <gst/gst.h>
 
 #include <gst/rtsp-server/rtsp-server-wfd.h>
@@ -56,30 +57,43 @@
 #define WFD_RTSP_PORT "2022"
 #define TEST_MOUNT_POINT  "/wfd1.0/streamid=0"
 
+GMainLoop *loop;
+
 static gboolean
-timeout (GMainLoop * loop, gboolean ignored)
+teardown(gpointer data)
 {
-  g_main_loop_quit (loop);
+  GstRTSPWFDServer *server = NULL;
+  server = (GstRTSPWFDServer *) data;
+
+  g_print("teardown\n");
+
+  if (server == NULL) return FALSE;
+
+  gst_rtsp_wfd_server_trigger_request (GST_RTSP_SERVER(server), WFD_TRIGGER_TEARDOWN);
+
   return FALSE;
 }
 
 int main (int argc, char *argv[])
 {
-  GMainLoop *loop;
   GstRTSPWFDServer *server;
   guint id;
   GstRTSPMountPoints *mounts;
   GstRTSPMediaFactoryWFD *factory;
-
+  GMainContext *context = NULL;
+  GSource * signal_handler_src = NULL;
 
   gst_init (&argc, &argv);
 
   loop = g_main_loop_new (NULL, FALSE);
+  context = g_main_loop_get_context(loop);
 
   /* create a server instance */
   server = gst_rtsp_wfd_server_new ();
 
   gst_rtsp_server_set_address(GST_RTSP_SERVER(server), "192.168.3.100"); 
+  //gst_rtsp_server_set_address(GST_RTSP_SERVER(server), "192.168.49.194"); 
+  //gst_rtsp_server_set_address(GST_RTSP_SERVER(server), "192.168.49.20"); 
   gst_rtsp_server_set_service(GST_RTSP_SERVER(server), WFD_RTSP_PORT);
   mounts = gst_rtsp_server_get_mount_points (GST_RTSP_SERVER(server));
 
@@ -87,12 +101,18 @@ int main (int argc, char *argv[])
 
   gst_rtsp_media_factory_set_launch (GST_RTSP_MEDIA_FACTORY(factory),
       "( " VIDEO_PIPELINE " )");
+  g_object_ref (factory);
   gst_rtsp_mount_points_add_factory (mounts, TEST_MOUNT_POINT, GST_RTSP_MEDIA_FACTORY(factory));
   g_object_unref (mounts);
 
   /* attach the server to the default maincontext */
   if ((id = gst_rtsp_server_attach (GST_RTSP_SERVER_CAST(server), NULL)) == 0)
     goto failed;
+
+  signal_handler_src = (GSource *)g_unix_signal_source_new (SIGINT);
+  /* Set callback to be called when socket is readable */
+  g_source_set_callback(signal_handler_src, teardown, server, NULL);
+  g_source_attach(signal_handler_src, context);
 
   /* start serving */
   g_main_loop_run (loop);
