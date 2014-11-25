@@ -45,6 +45,7 @@
 #include "rtsp-client-wfd.h"
 #include "rtsp-sdp.h"
 #include "rtsp-params.h"
+#include "gstwfdmessage.h"
 
 #define GST_RTSP_WFD_CLIENT_GET_PRIVATE(obj)  \
    (G_TYPE_INSTANCE_GET_PRIVATE ((obj), GST_TYPE_RTSP_WFD_CLIENT, GstRTSPWFDClientPrivate))

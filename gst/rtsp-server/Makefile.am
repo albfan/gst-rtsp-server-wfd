@@ -20,7 +20,8 @@ public_headers = \
 		rtsp-client-wfd.h \
 		rtsp-client.h \
 		rtsp-server-wfd.h \
-		rtsp-server.h
+		rtsp-server.h \
+		gstwfdmessage.h
 
 c_sources = \
 	rtsp-auth.c \
@@ -44,7 +45,8 @@ c_sources = \
 	rtsp-client-wfd.c \
 	rtsp-client.c \
 	rtsp-server-wfd.c \
-	rtsp-server.c
+	rtsp-server.c \
+	gstwfdmessage.c
 
 noinst_HEADERS = 
 

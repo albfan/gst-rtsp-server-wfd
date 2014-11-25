@@ -126,7 +126,8 @@ am__objects_1 = libgstrtspserver_@GST_API_VERSION@_la-rtsp-auth.lo \
 	libgstrtspserver_@GST_API_VERSION@_la-rtsp-client-wfd.lo \
 	libgstrtspserver_@GST_API_VERSION@_la-rtsp-client.lo \
 	libgstrtspserver_@GST_API_VERSION@_la-rtsp-server-wfd.lo \
-	libgstrtspserver_@GST_API_VERSION@_la-rtsp-server.lo
+	libgstrtspserver_@GST_API_VERSION@_la-rtsp-server.lo \
+	libgstrtspserver_@GST_API_VERSION@_la-gstwfdmessage.lo
 am_libgstrtspserver_@GST_API_VERSION@_la_OBJECTS = $(am__objects_1)
 libgstrtspserver_@GST_API_VERSION@_la_OBJECTS =  \
 	$(am_libgstrtspserver_@GST_API_VERSION@_la_OBJECTS)
@@ -417,7 +418,8 @@ public_headers = \
 		rtsp-client-wfd.h \
 		rtsp-client.h \
 		rtsp-server-wfd.h \
-		rtsp-server.h
+		rtsp-server.h \
+		gstwfdmessage.h
 
 c_sources = \
 	rtsp-auth.c \
@@ -441,7 +443,8 @@ c_sources = \
 	rtsp-client-wfd.c \
 	rtsp-client.c \
 	rtsp-server-wfd.c \
-	rtsp-server.c
+	rtsp-server.c \
+	gstwfdmessage.c
 
 noinst_HEADERS = 
 lib_LTLIBRARIES = \
@@ -548,6 +551,7 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libgstrtspserver_@GST_API_VERSION@_la-gstwfdmessage.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libgstrtspserver_@GST_API_VERSION@_la-rtsp-address-pool.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libgstrtspserver_@GST_API_VERSION@_la-rtsp-auth.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libgstrtspserver_@GST_API_VERSION@_la-rtsp-client-wfd.Plo@am__quote@
@@ -748,6 +752,13 @@ libgstrtspserver_@GST_API_VERSION@_la-rtsp-server.lo: rtsp-server.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='rtsp-server.c' object='libgstrtspserver_@GST_API_VERSION@_la-rtsp-server.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libgstrtspserver_@GST_API_VERSION@_la_CFLAGS) $(CFLAGS) -c -o libgstrtspserver_@GST_API_VERSION@_la-rtsp-server.lo `test -f 'rtsp-server.c' || echo '$(srcdir)/'`rtsp-server.c
+
+libgstrtspserver_@GST_API_VERSION@_la-gstwfdmessage.lo: gstwfdmessage.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libgstrtspserver_@GST_API_VERSION@_la_CFLAGS) $(CFLAGS) -MT libgstrtspserver_@GST_API_VERSION@_la-gstwfdmessage.lo -MD -MP -MF $(DEPDIR)/libgstrtspserver_@GST_API_VERSION@_la-gstwfdmessage.Tpo -c -o libgstrtspserver_@GST_API_VERSION@_la-gstwfdmessage.lo `test -f 'gstwfdmessage.c' || echo '$(srcdir)/'`gstwfdmessage.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libgstrtspserver_@GST_API_VERSION@_la-gstwfdmessage.Tpo $(DEPDIR)/libgstrtspserver_@GST_API_VERSION@_la-gstwfdmessage.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='gstwfdmessage.c' object='libgstrtspserver_@GST_API_VERSION@_la-gstwfdmessage.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libgstrtspserver_@GST_API_VERSION@_la_CFLAGS) $(CFLAGS) -c -o libgstrtspserver_@GST_API_VERSION@_la-gstwfdmessage.lo `test -f 'gstwfdmessage.c' || echo '$(srcdir)/'`gstwfdmessage.c
 
 mostlyclean-libtool:
 	-rm -f *.lo
