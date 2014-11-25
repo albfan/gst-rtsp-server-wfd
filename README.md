@@ -35,7 +35,7 @@ ximagesrc ! videoscale ! videoconvert ! "video/x-raw,width=640,height=480,framer
 2. tested sinks : samsung cavium dongle, samsung homesync.
 
 ### TODO:
-- Define WFD rtsp message.
+- Define WFD rtsp message - ongoing
 - Add logic to make decision spec with WFD rtsp message in M3 stage.
 - Fix FIXME code. (check FIXME-WFD, TODO-WFD)
 - Tuning each plugin to improve performance.
