@@ -85,7 +85,8 @@ static void gst_rtsp_wfd_server_set_property (GObject * object, guint propid,
 static void gst_rtsp_wfd_server_finalize (GObject * object);
 
 static GstRTSPClient *create_client_wfd (GstRTSPServer * server);
-static void client_connected_wfd (GstRTSPServer * server, GstRTSPClient *client);
+static void client_connected_wfd (GstRTSPServer * server,
+    GstRTSPClient * client);
 
 static void
 gst_rtsp_wfd_server_class_init (GstRTSPWFDServerClass * klass)
@@ -96,7 +97,7 @@ gst_rtsp_wfd_server_class_init (GstRTSPWFDServerClass * klass)
   g_type_class_add_private (klass, sizeof (GstRTSPWFDServerPrivate));
 
   gobject_class = G_OBJECT_CLASS (klass);
-  rtsp_server_class = GST_RTSP_SERVER_CLASS(klass);
+  rtsp_server_class = GST_RTSP_SERVER_CLASS (klass);
 
   gobject_class->get_property = gst_rtsp_wfd_server_get_property;
   gobject_class->set_property = gst_rtsp_wfd_server_set_property;
@@ -106,7 +107,8 @@ gst_rtsp_wfd_server_class_init (GstRTSPWFDServerClass * klass)
   rtsp_server_class->client_connected = client_connected_wfd;
 
 
-  GST_DEBUG_CATEGORY_INIT (rtsp_wfd_server_debug, "rtspwfdserver", 0, "GstRTSPWFDServer");
+  GST_DEBUG_CATEGORY_INIT (rtsp_wfd_server_debug, "rtspwfdserver", 0,
+      "GstRTSPWFDServer");
 }
 
 static void
@@ -115,7 +117,7 @@ gst_rtsp_wfd_server_init (GstRTSPWFDServer * server)
   GstRTSPWFDServerPrivate *priv = GST_RTSP_WFD_SERVER_GET_PRIVATE (server);
 
   server->priv = priv;
-  GST_INFO_OBJECT(server, "New server is initialized");
+  GST_INFO_OBJECT (server, "New server is initialized");
 }
 
 static void
@@ -169,22 +171,22 @@ gst_rtsp_wfd_server_set_property (GObject * object, guint propid,
 }
 
 static gboolean
-_start_wfd(gpointer data)
+_start_wfd (gpointer data)
 {
-  GstRTSPWFDClient *client = (GstRTSPWFDClient *)data;
+  GstRTSPWFDClient *client = (GstRTSPWFDClient *) data;
 
-  GST_INFO_OBJECT(client, "WFD client is STARTing");
+  GST_INFO_OBJECT (client, "WFD client is STARTing");
 
-  gst_rtsp_wfd_client_start_wfd(client);
+  gst_rtsp_wfd_client_start_wfd (client);
   return FALSE;
 }
 
 static void
-client_connected_wfd (GstRTSPServer * server, GstRTSPClient *client)
+client_connected_wfd (GstRTSPServer * server, GstRTSPClient * client)
 {
-  GST_INFO_OBJECT(server, "Client is connected");
+  GST_INFO_OBJECT (server, "Client is connected");
 
-  g_idle_add(_start_wfd, client);
+  g_idle_add (_start_wfd, client);
   return;
 }
 
@@ -197,42 +199,44 @@ create_client_wfd (GstRTSPServer * server)
   GstRTSPMountPoints *mount_points = NULL;
   GstRTSPAuth *auth = NULL;
 
-  GST_INFO_OBJECT(server, "New Client is being created");
+  GST_INFO_OBJECT (server, "New Client is being created");
 
   /* a new client connected, create a session to handle the client. */
   client = gst_rtsp_wfd_client_new ();
 
-  thread_pool = gst_rtsp_server_get_thread_pool(server);
-  session_pool = gst_rtsp_server_get_session_pool(server);
-  mount_points = gst_rtsp_server_get_mount_points(server);
-  auth = gst_rtsp_server_get_auth(server);
+  thread_pool = gst_rtsp_server_get_thread_pool (server);
+  session_pool = gst_rtsp_server_get_session_pool (server);
+  mount_points = gst_rtsp_server_get_mount_points (server);
+  auth = gst_rtsp_server_get_auth (server);
 
   /* set the session pool that this client should use */
   GST_RTSP_WFD_SERVER_LOCK (server);
-  gst_rtsp_client_set_session_pool (GST_RTSP_CLIENT_CAST(client), session_pool);
+  gst_rtsp_client_set_session_pool (GST_RTSP_CLIENT_CAST (client),
+      session_pool);
   /* set the mount points that this client should use */
-  gst_rtsp_client_set_mount_points (GST_RTSP_CLIENT_CAST(client), mount_points);
+  gst_rtsp_client_set_mount_points (GST_RTSP_CLIENT_CAST (client),
+      mount_points);
   /* set authentication manager */
-  gst_rtsp_client_set_auth (GST_RTSP_CLIENT_CAST(client), auth);
+  gst_rtsp_client_set_auth (GST_RTSP_CLIENT_CAST (client), auth);
   /* set threadpool */
-  gst_rtsp_client_set_thread_pool (GST_RTSP_CLIENT_CAST(client), thread_pool);
+  gst_rtsp_client_set_thread_pool (GST_RTSP_CLIENT_CAST (client), thread_pool);
   GST_RTSP_WFD_SERVER_UNLOCK (server);
 
-  return GST_RTSP_CLIENT(client);
+  return GST_RTSP_CLIENT (client);
 }
 
 GstRTSPResult
-gst_rtsp_wfd_server_trigger_request (GstRTSPServer *server,
-                                      GstWFDTriggerType type)
+gst_rtsp_wfd_server_trigger_request (GstRTSPServer * server,
+    GstWFDTriggerType type)
 {
   GstRTSPResult res = GST_RTSP_OK;
   GList *clients, *walk, *next;
 
   g_return_val_if_fail (GST_IS_RTSP_SERVER (server), GST_RTSP_ERROR);
 
-  clients = gst_rtsp_server_client_filter(server, NULL, NULL);
+  clients = gst_rtsp_server_client_filter (server, NULL, NULL);
   if (clients == NULL) {
-    GST_ERROR_OBJECT(server, "There is no client in this server");
+    GST_ERROR_OBJECT (server, "There is no client in this server");
   }
 
   for (walk = clients; walk; walk = next) {
@@ -240,14 +244,15 @@ gst_rtsp_wfd_server_trigger_request (GstRTSPServer *server,
 
     next = g_list_next (walk);
 
-    res = gst_rtsp_wfd_client_trigger_request(GST_RTSP_WFD_CLIENT(client), type);
+    res =
+        gst_rtsp_wfd_client_trigger_request (GST_RTSP_WFD_CLIENT (client),
+        type);
     if (res != GST_RTSP_OK) {
-      GST_ERROR_OBJECT(server, "Failed to send trigger request %d", type);
+      GST_ERROR_OBJECT (server, "Failed to send trigger request %d", type);
     }
-    g_object_unref(client);
+    g_object_unref (client);
   }
 
   return res;
 
 }
-

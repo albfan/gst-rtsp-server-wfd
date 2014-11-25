@@ -181,7 +181,7 @@ typedef GstRTSPFilterResult (*GstRTSPClientSessionFilterFunc)  (GstRTSPClient *c
                                                                 GstRTSPSession *sess,
                                                                 gpointer user_data);
 
-GList *                gst_rtsp_client_session_filter    (GstRTSPClient *client,
+GList *               gst_rtsp_client_session_filter    (GstRTSPClient *client,
                                                           GstRTSPClientSessionFilterFunc func,
                                                           gpointer user_data);
 

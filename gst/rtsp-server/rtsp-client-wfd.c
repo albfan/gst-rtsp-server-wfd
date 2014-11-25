@@ -56,7 +56,7 @@
 
 struct _GstRTSPWFDClientPrivate
 {
-  GstRTSPWFDClientSendFunc send_func;      /* protected by send_lock */
+  GstRTSPWFDClientSendFunc send_func;   /* protected by send_lock */
   gpointer send_data;           /* protected by send_lock */
   GDestroyNotify send_notify;   /* protected by send_lock */
 
@@ -111,7 +111,8 @@ struct _GstRTSPWFDClientPrivate
 
 #define DEFAULT_WFD_TIMEOUT 60
 
-enum {
+enum
+{
   SIGNAL_WFD_OPTIONS_REQUEST,
   SIGNAL_WFD_GET_PARAMETER_REQUEST,
   SIGNAL_WFD_LAST
@@ -137,28 +138,28 @@ static gboolean handle_wfd_get_param_request (GstRTSPClient * client,
 
 static void send_generic_wfd_response (GstRTSPWFDClient * client,
     GstRTSPStatusCode code, GstRTSPContext * ctx);
-static gchar *wfd_make_path_from_uri(GstRTSPClient * client,
+static gchar *wfd_make_path_from_uri (GstRTSPClient * client,
     const GstRTSPUrl * uri);
-static void wfd_options_request_done(GstRTSPWFDClient * client);
-static void wfd_get_param_request_done(GstRTSPWFDClient * client);
-static void handle_wfd_response (GstRTSPClient *client, GstRTSPContext *ctx);
+static void wfd_options_request_done (GstRTSPWFDClient * client);
+static void wfd_get_param_request_done (GstRTSPWFDClient * client);
+static void handle_wfd_response (GstRTSPClient * client, GstRTSPContext * ctx);
 
-GstRTSPResult prepare_trigger_request (GstRTSPWFDClient *client,
-                GstRTSPMessage *request, GstWFDTriggerType trigger_type, gchar *url);
+GstRTSPResult prepare_trigger_request (GstRTSPWFDClient * client,
+    GstRTSPMessage * request, GstWFDTriggerType trigger_type, gchar * url);
 
-GstRTSPResult prepare_request (GstRTSPWFDClient *client,
-                GstRTSPMessage *request, GstRTSPMethod method, gchar *url);
+GstRTSPResult prepare_request (GstRTSPWFDClient * client,
+    GstRTSPMessage * request, GstRTSPMethod method, gchar * url);
 
 void
 send_request (GstRTSPWFDClient * client, GstRTSPSession * session,
-  GstRTSPMessage * request);
+    GstRTSPMessage * request);
 
 GstRTSPResult
-prepare_response (GstRTSPWFDClient *client, GstRTSPMessage *request,
-  GstRTSPMessage *response, GstRTSPMethod method);
+prepare_response (GstRTSPWFDClient * client, GstRTSPMessage * request,
+    GstRTSPMessage * response, GstRTSPMethod method);
 
-static void parse_wfd_message_body(GstRTSPWFDClient *client,
-   gchar *data, guint len);
+static void parse_wfd_message_body (GstRTSPWFDClient * client,
+    gchar * data, guint len);
 
 static GstRTSPResult handle_M1_message (GstRTSPWFDClient * client);
 static GstRTSPResult handle_M3_message (GstRTSPWFDClient * client);
@@ -197,9 +198,9 @@ gst_rtsp_wfd_client_class_init (GstRTSPWFDClientClass * klass)
 
   gst_rtsp_client_wfd_signals[SIGNAL_WFD_OPTIONS_REQUEST] =
       g_signal_new ("wfd-options-request", G_TYPE_FROM_CLASS (klass),
-      G_SIGNAL_RUN_LAST, G_STRUCT_OFFSET (GstRTSPWFDClientClass, wfd_options_request),
-      NULL, NULL, g_cclosure_marshal_VOID__POINTER, G_TYPE_NONE, 1,
-      G_TYPE_POINTER);
+      G_SIGNAL_RUN_LAST, G_STRUCT_OFFSET (GstRTSPWFDClientClass,
+          wfd_options_request), NULL, NULL, g_cclosure_marshal_VOID__POINTER,
+      G_TYPE_NONE, 1, G_TYPE_POINTER);
 
   gst_rtsp_client_wfd_signals[SIGNAL_WFD_GET_PARAMETER_REQUEST] =
       g_signal_new ("wfd-get-parameter-request", G_TYPE_FROM_CLASS (klass),
@@ -210,7 +211,8 @@ gst_rtsp_wfd_client_class_init (GstRTSPWFDClientClass * klass)
   klass->wfd_options_request = wfd_options_request_done;
   klass->wfd_get_param_request = wfd_get_param_request_done;
 
-  GST_DEBUG_CATEGORY_INIT (rtsp_wfd_client_debug, "rtspwfdclient", 0, "GstRTSPWFDClient");
+  GST_DEBUG_CATEGORY_INIT (rtsp_wfd_client_debug, "rtspwfdclient", 0,
+      "GstRTSPWFDClient");
 }
 
 static void
@@ -219,7 +221,7 @@ gst_rtsp_wfd_client_init (GstRTSPWFDClient * client)
   GstRTSPWFDClientPrivate *priv = GST_RTSP_WFD_CLIENT_GET_PRIVATE (client);
 
   client->priv = priv;
-  GST_INFO_OBJECT(client, "Client is initialized");
+  GST_INFO_OBJECT (client, "Client is initialized");
 }
 
 /* A client is finalized when the connection is broken */
@@ -276,14 +278,14 @@ gst_rtsp_wfd_client_new (void)
 }
 
 void
-gst_rtsp_wfd_client_start_wfd(GstRTSPWFDClient *client)
+gst_rtsp_wfd_client_start_wfd (GstRTSPWFDClient * client)
 {
   GstRTSPResult res = GST_RTSP_OK;
-  GST_INFO_OBJECT(client, "gst_rtsp_wfd_client_start_wfd");
+  GST_INFO_OBJECT (client, "gst_rtsp_wfd_client_start_wfd");
 
-  res = handle_M1_message(client);
+  res = handle_M1_message (client);
   if (res < GST_RTSP_OK) {
-    GST_ERROR_OBJECT(client, "handle_M1_message failed : %d", res);
+    GST_ERROR_OBJECT (client, "handle_M1_message failed : %d", res);
     goto error;
   }
 
@@ -295,67 +297,70 @@ gboolean g_m1_done = FALSE;
 gboolean g_m4_done = FALSE;
 
 static void
-wfd_options_request_done(GstRTSPWFDClient * client)
+wfd_options_request_done (GstRTSPWFDClient * client)
 {
-  GST_INFO_OBJECT(client, "M2 done..");
+  GST_INFO_OBJECT (client, "M2 done..");
 
-  handle_M3_message(client);
+  handle_M3_message (client);
 }
 
 static void
-wfd_get_param_request_done(GstRTSPWFDClient * client)
+wfd_get_param_request_done (GstRTSPWFDClient * client)
 {
-  GST_INFO_OBJECT(client, "M3 done..");
-  handle_M4_message(client);
+  GST_INFO_OBJECT (client, "M3 done..");
+  handle_M4_message (client);
 }
 
-static gchar *wfd_make_path_from_uri(GstRTSPClient * client, const GstRTSPUrl * uri)
+static gchar *
+wfd_make_path_from_uri (GstRTSPClient * client, const GstRTSPUrl * uri)
 {
   gchar *path;
 
-  GST_DEBUG_OBJECT(client, "Got URI abspath : %s", uri->abspath);
-  path = g_strdup("/wfd1.0/streamid=0");
+  GST_DEBUG_OBJECT (client, "Got URI abspath : %s", uri->abspath);
+  path = g_strdup ("/wfd1.0/streamid=0");
 
   return path;
 }
 
 static void
-handle_wfd_response (GstRTSPClient *client, GstRTSPContext *ctx)
+handle_wfd_response (GstRTSPClient * client, GstRTSPContext * ctx)
 {
   GstRTSPResult res = GST_RTSP_OK;
   gchar *data = NULL;
-  guint size=0;
+  guint size = 0;
 
-  GstRTSPWFDClient *_client = GST_RTSP_WFD_CLIENT(client);
+  GstRTSPWFDClient *_client = GST_RTSP_WFD_CLIENT (client);
   GstRTSPWFDClientPrivate *priv = GST_RTSP_WFD_CLIENT_GET_PRIVATE (client);
 
-  GST_INFO_OBJECT(_client, "Handling response..");
+  GST_INFO_OBJECT (_client, "Handling response..");
 
-  if (!ctx) GST_ERROR_OBJECT(_client, "Context is NULL");
-  if (!ctx->response) GST_ERROR_OBJECT(_client, "Response is NULL");
+  if (!ctx)
+    GST_ERROR_OBJECT (_client, "Context is NULL");
+  if (!ctx->response)
+    GST_ERROR_OBJECT (_client, "Response is NULL");
 
   /* parsing the GET_PARAMTER response */
-  res = gst_rtsp_message_get_body (ctx->response, (guint8**)&data, &size);
+  res = gst_rtsp_message_get_body (ctx->response, (guint8 **) & data, &size);
   if (res != GST_RTSP_OK) {
     GST_ERROR_OBJECT (_client, "Failed to get body of response...");
     return;
   }
 
-  GST_INFO_OBJECT(_client, "Response body is %d", size);
+  GST_INFO_OBJECT (_client, "Response body is %d", size);
   if (size > 0) {
-    parse_wfd_message_body(_client, data, size);
-    g_signal_emit (_client, gst_rtsp_client_wfd_signals[SIGNAL_WFD_GET_PARAMETER_REQUEST],
-      0, ctx);
+    parse_wfd_message_body (_client, data, size);
+    g_signal_emit (_client,
+        gst_rtsp_client_wfd_signals[SIGNAL_WFD_GET_PARAMETER_REQUEST], 0, ctx);
   } else if (size == 0) {
     if (!priv->m1_done) {
-      GST_INFO_OBJECT(_client, "M1 response is done");
+      GST_INFO_OBJECT (_client, "M1 response is done");
       priv->m1_done = TRUE;
     } else if (!priv->m4_done) {
-      GST_INFO_OBJECT(_client, "M4 response is done");
+      GST_INFO_OBJECT (_client, "M4 response is done");
       priv->m4_done = TRUE;
 
       //handle_M5_message(_client);
-      gst_rtsp_wfd_client_trigger_request(_client, WFD_TRIGGER_SETUP);
+      gst_rtsp_wfd_client_trigger_request (_client, WFD_TRIGGER_SETUP);
     }
   }
 }
@@ -388,23 +393,26 @@ handle_wfd_options_request (GstRTSPClient * client, GstRTSPContext * ctx)
   g_free (str);
   str = NULL;
 
-  res = gst_rtsp_message_get_header (ctx->request, GST_RTSP_HDR_USER_AGENT, &user_agent, 0);
+  res =
+      gst_rtsp_message_get_header (ctx->request, GST_RTSP_HDR_USER_AGENT,
+      &user_agent, 0);
   if (res == GST_RTSP_OK) {
-    gst_rtsp_message_add_header (ctx->response, GST_RTSP_HDR_USER_AGENT, user_agent);
+    gst_rtsp_message_add_header (ctx->response, GST_RTSP_HDR_USER_AGENT,
+        user_agent);
   } else {
     return FALSE;
   }
 
-  res = gst_rtsp_client_send_message(client, NULL, ctx->response);
+  res = gst_rtsp_client_send_message (client, NULL, ctx->response);
   if (res != GST_RTSP_OK) {
-    GST_ERROR_OBJECT(client, "gst_rtsp_client_send_message failed : %d", res);
+    GST_ERROR_OBJECT (client, "gst_rtsp_client_send_message failed : %d", res);
     return FALSE;
   }
 
   GST_DEBUG_OBJECT (client, "Sent M2 response...");
 
-  g_signal_emit (client, gst_rtsp_client_wfd_signals[SIGNAL_WFD_OPTIONS_REQUEST],
-      0, ctx);
+  g_signal_emit (client,
+      gst_rtsp_client_wfd_signals[SIGNAL_WFD_OPTIONS_REQUEST], 0, ctx);
 
   return TRUE;
 }
@@ -414,21 +422,21 @@ handle_wfd_get_param_request (GstRTSPClient * client, GstRTSPContext * ctx)
 {
   GstRTSPResult res = GST_RTSP_OK;
   gchar *data = NULL;
-  guint size=0;
+  guint size = 0;
 
-  GstRTSPWFDClient *_client = GST_RTSP_WFD_CLIENT(client);
+  GstRTSPWFDClient *_client = GST_RTSP_WFD_CLIENT (client);
 
   /* parsing the GET_PARAMTER request */
-  res = gst_rtsp_message_get_body (ctx->request, (guint8**)&data, &size);
+  res = gst_rtsp_message_get_body (ctx->request, (guint8 **) & data, &size);
   if (res != GST_RTSP_OK) {
     GST_ERROR_OBJECT (_client, "Failed to get body of request...");
     return FALSE;
   }
 
   if (size == 0) {
-    send_generic_wfd_response(_client, GST_RTSP_STS_OK, ctx);
+    send_generic_wfd_response (_client, GST_RTSP_STS_OK, ctx);
   } else {
-    parse_wfd_message_body(_client, data, size);
+    parse_wfd_message_body (_client, data, size);
   }
 
   return TRUE;
@@ -441,7 +449,8 @@ handle_wfd_set_param_request (GstRTSPClient * client, GstRTSPContext * ctx)
 }
 
 static gboolean
-gst_rtsp_wfd_client_parse_methods (GstRTSPWFDClient * client, GstRTSPMessage * response)
+gst_rtsp_wfd_client_parse_methods (GstRTSPWFDClient * client,
+    GstRTSPMessage * response)
 {
   GstRTSPHeaderField field;
   gchar *respoptions;
@@ -493,19 +502,22 @@ gst_rtsp_wfd_client_parse_methods (GstRTSPWFDClient * client, GstRTSPMessage * r
   }
 
   if (!found_wfd_method) {
-    GST_ERROR_OBJECT (client, "WFD client is not supporting WFD mandatory message : org.wfa.wfd1.0...");
+    GST_ERROR_OBJECT (client,
+        "WFD client is not supporting WFD mandatory message : org.wfa.wfd1.0...");
     goto no_required_methods;
   }
 
   /* Checking mandatory method */
   if (!(client->supported_methods & GST_RTSP_SET_PARAMETER)) {
-    GST_ERROR_OBJECT (client, "WFD client is not supporting WFD mandatory message : SET_PARAMETER...");
+    GST_ERROR_OBJECT (client,
+        "WFD client is not supporting WFD mandatory message : SET_PARAMETER...");
     goto no_required_methods;
   }
 
   /* Checking mandatory method */
   if (!(client->supported_methods & GST_RTSP_GET_PARAMETER)) {
-    GST_ERROR_OBJECT (client, "WFD client is not supporting WFD mandatory message : GET_PARAMETER...");
+    GST_ERROR_OBJECT (client,
+        "WFD client is not supporting WFD mandatory message : GET_PARAMETER...");
     goto no_required_methods;
   }
 
@@ -525,7 +537,8 @@ no_required_methods:
   }
 }
 
-typedef enum {
+typedef enum
+{
   M1_REQ_MSG,
   M1_RES_MSG,
   M2_REQ_MSG,
@@ -539,28 +552,30 @@ typedef enum {
 } GstWFDMessageType;
 
 static void
-set_wfd_message_body(GstRTSPWFDClient *client, GstWFDMessageType msg, gchar **data, guint *len)
+set_wfd_message_body (GstRTSPWFDClient * client, GstWFDMessageType msg,
+    gchar ** data, guint * len)
 {
   GString *buf = NULL;
 
-  buf = g_string_new("");
+  buf = g_string_new ("");
 
   if (msg == M3_REQ_MSG) {
-    g_string_append(buf, "wfd_audio_codecs");
-    g_string_append(buf, "\r\n");
-    g_string_append(buf, "wfd_video_formats");
-    g_string_append(buf, "\r\n");
-    g_string_append(buf, "wfd_content_protection");
-    g_string_append(buf, "\r\n");
-    g_string_append(buf, "wfd_display_edid");
-    g_string_append(buf, "\r\n");
-    g_string_append(buf, "wfd_client_rtp_ports");
-    g_string_append(buf, "\r\n");
+    g_string_append (buf, "wfd_audio_codecs");
+    g_string_append (buf, "\r\n");
+    g_string_append (buf, "wfd_video_formats");
+    g_string_append (buf, "\r\n");
+    g_string_append (buf, "wfd_content_protection");
+    g_string_append (buf, "\r\n");
+    g_string_append (buf, "wfd_display_edid");
+    g_string_append (buf, "\r\n");
+    g_string_append (buf, "wfd_client_rtp_ports");
+    g_string_append (buf, "\r\n");
   } else if (msg == M4_REQ_MSG) {
     GstRTSPUrl *url = NULL;
 
-    GstRTSPClient *parent_client = GST_RTSP_CLIENT_CAST(client);
-    GstRTSPConnection *connection = gst_rtsp_client_get_connection(parent_client);
+    GstRTSPClient *parent_client = GST_RTSP_CLIENT_CAST (client);
+    GstRTSPConnection *connection =
+        gst_rtsp_client_get_connection (parent_client);
 
     url = gst_rtsp_connection_get_url (connection);
     if (url == NULL) {
@@ -569,40 +584,43 @@ set_wfd_message_body(GstRTSPWFDClient *client, GstWFDMessageType msg, gchar **da
     }
 
     /* TODO-WFD
-     1. Define WFD message as a structure just like GstSDPMessage
-     2. Logic to negotiate with M3 response
-    */
-    g_string_append(buf, "wfd_audio_codecs: AAC 00000001 00");
-    g_string_append(buf, "\r\n");
+       1. Define WFD message as a structure just like GstSDPMessage
+       2. Logic to negotiate with M3 response
+     */
+    g_string_append (buf, "wfd_audio_codecs: AAC 00000001 00");
+    g_string_append (buf, "\r\n");
     //g_string_append(buf, "wfd_video_formats: 00 00 01 01 000000ab 00000000 00000000 00 0000 0000 00 02d0 0500");
     //g_string_append(buf, "wfd_video_formats: 00 00 01 01 0000002b 00000000 00000000 00 0000 0000 00 02d0 0500");
-    g_string_append(buf, "wfd_video_formats: 00 00 01 01 00000001 00000000 00000000 00 0000 0000 00 02d0 0500");
-    g_string_append(buf, "\r\n");
-    g_string_append(buf, "wfd_presentation_URL: ");
-    g_string_append_printf(buf, "rtsp://%s/wfd/streamid=0 none", url->host);
-    g_string_append(buf, "\r\n");
-    g_string_append(buf, "wfd_content_protection: none");
-    g_string_append(buf, "\r\n");
-    g_string_append(buf, "wfd_client_rtp_ports: RTP/AVP/UDP;unicast 19000 0 mode=play");
-    g_string_append(buf, "\r\n");
+    g_string_append (buf,
+        "wfd_video_formats: 00 00 01 01 00000001 00000000 00000000 00 0000 0000 00 02d0 0500");
+    g_string_append (buf, "\r\n");
+    g_string_append (buf, "wfd_presentation_URL: ");
+    g_string_append_printf (buf, "rtsp://%s/wfd/streamid=0 none", url->host);
+    g_string_append (buf, "\r\n");
+    g_string_append (buf, "wfd_content_protection: none");
+    g_string_append (buf, "\r\n");
+    g_string_append (buf,
+        "wfd_client_rtp_ports: RTP/AVP/UDP;unicast 19000 0 mode=play");
+    g_string_append (buf, "\r\n");
   } else if (msg == M5_REQ_MSG) {
-    g_string_append(buf, "wfd_trigger_method: SETUP");
-    g_string_append(buf, "\r\n");
+    g_string_append (buf, "wfd_trigger_method: SETUP");
+    g_string_append (buf, "\r\n");
   } else if (msg == TEARDOWN_TRIGGER) {
-    g_string_append(buf, "wfd_trigger_method: TEARDOWN");
-    g_string_append(buf, "\r\n");
+    g_string_append (buf, "wfd_trigger_method: TEARDOWN");
+    g_string_append (buf, "\r\n");
   } else {
     return;
   }
 
   *len = buf->len;
-  *data = g_string_free(buf, FALSE);
+  *data = g_string_free (buf, FALSE);
 
   return;
 }
 
 static void
-_read_string_attr_and_value (gchar * attr, gchar * value, guint tsize, guint vsize, gchar del, gchar * src)
+_read_string_attr_and_value (gchar * attr, gchar * value, guint tsize,
+    guint vsize, gchar del, gchar * src)
 {
   guint idx;
 
@@ -628,22 +646,23 @@ _read_string_attr_and_value (gchar * attr, gchar * value, guint tsize, guint vsi
 }
 
 static void
-_parse_attribute (gchar *buffer)
+_parse_attribute (gchar * buffer)
 {
-  gchar attr[8192] = {0};
-  gchar value[8192] = {0};
+  gchar attr[8192] = { 0 };
+  gchar value[8192] = { 0 };
   gchar *p = buffer;
 
-  _read_string_attr_and_value (attr, value, sizeof(attr), sizeof(value), ':', p);
+  _read_string_attr_and_value (attr, value, sizeof (attr), sizeof (value), ':',
+      p);
 
-  GST_DEBUG("Attr: %s, Value: %s", attr, value);
+  GST_DEBUG ("Attr: %s, Value: %s", attr, value);
 }
 
 static void
-parse_wfd_message_body(GstRTSPWFDClient *client, gchar *data, guint len)
+parse_wfd_message_body (GstRTSPWFDClient * client, gchar * data, guint len)
 {
   gchar *p;
-  gchar buffer[255] = {0};
+  gchar buffer[255] = { 0 };
   guint idx = 0;
 
   g_return_if_fail (len != 0);
@@ -652,7 +671,7 @@ parse_wfd_message_body(GstRTSPWFDClient *client, gchar *data, guint len)
   while (TRUE) {
 
     if (*p == '\0')
-    break;
+      break;
 
     idx = 0;
     while (*p != '\n' && *p != '\r' && *p != '\0') {
@@ -665,7 +684,7 @@ parse_wfd_message_body(GstRTSPWFDClient *client, gchar *data, guint len)
 
     if (*p == '\0')
       break;
-    p+=2;
+    p += 2;
   }
 
   return;
@@ -686,15 +705,15 @@ parse_wfd_message_body(GstRTSPWFDClient *client, gchar *data, guint len)
 * Returns: a #GstRTSPResult.
 */
 GstRTSPResult
-prepare_request (GstRTSPWFDClient *client, GstRTSPMessage *request,
-  GstRTSPMethod method, gchar *url)
+prepare_request (GstRTSPWFDClient * client, GstRTSPMessage * request,
+    GstRTSPMethod method, gchar * url)
 {
   GstRTSPResult res = GST_RTSP_OK;
   gchar *str = NULL;
 
   if (method == GST_RTSP_GET_PARAMETER || method == GST_RTSP_SET_PARAMETER) {
-    g_free(url);
-    url = g_strdup("rtsp://localhost/wfd1.0");
+    g_free (url);
+    url = g_strdup ("rtsp://localhost/wfd1.0");
   }
 
   GST_DEBUG_OBJECT (client, "Preparing request: %d", method);
@@ -707,8 +726,8 @@ prepare_request (GstRTSPWFDClient *client, GstRTSPMessage *request,
   }
 
   switch (method) {
-    /* Prepare OPTIONS request to send */
-    case GST_RTSP_OPTIONS: {
+      /* Prepare OPTIONS request to send */
+    case GST_RTSP_OPTIONS:{
       /* add wfd specific require filed "org.wfa.wfd1.0" */
       str = g_strdup ("org.wfa.wfd1.0");
       res = gst_rtsp_message_add_header (request, GST_RTSP_HDR_REQUIRE, str);
@@ -722,77 +741,85 @@ prepare_request (GstRTSPWFDClient *client, GstRTSPMessage *request,
       break;
     }
 
-    /* Prepare GET_PARAMETER request */
-    case GST_RTSP_GET_PARAMETER: {
+      /* Prepare GET_PARAMETER request */
+    case GST_RTSP_GET_PARAMETER:{
       gchar *msg = NULL;
       guint msglen = 0;
       GString *msglength;
 
       /* add content type */
-      res = gst_rtsp_message_add_header (request, GST_RTSP_HDR_CONTENT_TYPE, "text/parameters");
+      res =
+          gst_rtsp_message_add_header (request, GST_RTSP_HDR_CONTENT_TYPE,
+          "text/parameters");
       if (res < 0) {
         GST_ERROR ("Failed to add header");
         return res;
       }
 
-      set_wfd_message_body(client, M3_REQ_MSG, &msg, &msglen);
+      set_wfd_message_body (client, M3_REQ_MSG, &msg, &msglen);
       msglength = g_string_new ("");
-      g_string_append_printf (msglength,"%d",msglen);
-      GST_DEBUG("M3 server side message body: %s", msg);
+      g_string_append_printf (msglength, "%d", msglen);
+      GST_DEBUG ("M3 server side message body: %s", msg);
 
       /* add content-length type */
-      res = gst_rtsp_message_add_header (request, GST_RTSP_HDR_CONTENT_LENGTH, g_string_free (msglength, FALSE));
+      res =
+          gst_rtsp_message_add_header (request, GST_RTSP_HDR_CONTENT_LENGTH,
+          g_string_free (msglength, FALSE));
       if (res != GST_RTSP_OK) {
         GST_ERROR_OBJECT (client, "Failed to add header to rtsp message...");
         goto error;
       }
 
-      res = gst_rtsp_message_set_body (request, (guint8*)msg, msglen);
+      res = gst_rtsp_message_set_body (request, (guint8 *) msg, msglen);
       if (res != GST_RTSP_OK) {
         GST_ERROR_OBJECT (client, "Failed to add header to rtsp message...");
         goto error;
       }
 
-      g_free(msg);
+      g_free (msg);
       break;
     }
 
-    /* Prepare SET_PARAMETER request */
-    case GST_RTSP_SET_PARAMETER: {
+      /* Prepare SET_PARAMETER request */
+    case GST_RTSP_SET_PARAMETER:{
       gchar *msg;
       guint msglen = 0;
       GString *msglength;
 
       /* add content type */
-      res = gst_rtsp_message_add_header (request, GST_RTSP_HDR_CONTENT_TYPE, "text/parameters");
+      res =
+          gst_rtsp_message_add_header (request, GST_RTSP_HDR_CONTENT_TYPE,
+          "text/parameters");
       if (res != GST_RTSP_OK) {
         GST_ERROR_OBJECT (client, "Failed to add header to rtsp request...");
         goto error;
       }
 
-      set_wfd_message_body(client, M4_REQ_MSG, &msg, &msglen);
+      set_wfd_message_body (client, M4_REQ_MSG, &msg, &msglen);
       msglength = g_string_new ("");
-      g_string_append_printf (msglength,"%d",msglen);
-      GST_DEBUG("M4 server side message body: %s", msg);
+      g_string_append_printf (msglength, "%d", msglen);
+      GST_DEBUG ("M4 server side message body: %s", msg);
 
       /* add content-length type */
-      res = gst_rtsp_message_add_header (request, GST_RTSP_HDR_CONTENT_LENGTH, g_string_free (msglength, FALSE));
+      res =
+          gst_rtsp_message_add_header (request, GST_RTSP_HDR_CONTENT_LENGTH,
+          g_string_free (msglength, FALSE));
       if (res != GST_RTSP_OK) {
         GST_ERROR_OBJECT (client, "Failed to add header to rtsp message...");
         goto error;
       }
 
-      res = gst_rtsp_message_set_body (request, (guint8*)msg, msglen);
+      res = gst_rtsp_message_set_body (request, (guint8 *) msg, msglen);
       if (res != GST_RTSP_OK) {
         GST_ERROR_OBJECT (client, "Failed to add header to rtsp message...");
         goto error;
       }
 
-      g_free(msg);
+      g_free (msg);
       break;
     }
 
-    default: {
+    default:{
     }
   }
 
@@ -803,8 +830,8 @@ error:
 }
 
 GstRTSPResult
-prepare_trigger_request (GstRTSPWFDClient *client, GstRTSPMessage *request,
-                 GstWFDTriggerType trigger_type, gchar *url)
+prepare_trigger_request (GstRTSPWFDClient * client, GstRTSPMessage * request,
+    GstWFDTriggerType trigger_type, gchar * url)
 {
   GstRTSPResult res = GST_RTSP_OK;
 
@@ -816,77 +843,85 @@ prepare_trigger_request (GstRTSPWFDClient *client, GstRTSPMessage *request,
   }
 
   switch (trigger_type) {
-    case WFD_TRIGGER_SETUP: {
+    case WFD_TRIGGER_SETUP:{
       gchar *msg;
       guint msglen = 0;
       GString *msglength;
 
       /* add content type */
-      res = gst_rtsp_message_add_header (request, GST_RTSP_HDR_CONTENT_TYPE, "text/parameters");
+      res =
+          gst_rtsp_message_add_header (request, GST_RTSP_HDR_CONTENT_TYPE,
+          "text/parameters");
       if (res != GST_RTSP_OK) {
         GST_ERROR_OBJECT (client, "Failed to add header to rtsp request...");
         goto error;
       }
 
-      set_wfd_message_body(client, M5_REQ_MSG, &msg, &msglen);
+      set_wfd_message_body (client, M5_REQ_MSG, &msg, &msglen);
       msglength = g_string_new ("");
-      g_string_append_printf (msglength,"%d",msglen);
-      GST_DEBUG("M5 server side message body: %s", msg);
+      g_string_append_printf (msglength, "%d", msglen);
+      GST_DEBUG ("M5 server side message body: %s", msg);
 
       /* add content-length type */
-      res = gst_rtsp_message_add_header (request, GST_RTSP_HDR_CONTENT_LENGTH, g_string_free (msglength, FALSE));
+      res =
+          gst_rtsp_message_add_header (request, GST_RTSP_HDR_CONTENT_LENGTH,
+          g_string_free (msglength, FALSE));
       if (res != GST_RTSP_OK) {
         GST_ERROR_OBJECT (client, "Failed to add header to rtsp message...");
         goto error;
       }
 
-      res = gst_rtsp_message_set_body (request, (guint8*)msg, msglen);
+      res = gst_rtsp_message_set_body (request, (guint8 *) msg, msglen);
       if (res != GST_RTSP_OK) {
         GST_ERROR_OBJECT (client, "Failed to add header to rtsp message...");
         goto error;
       }
 
-      g_free(msg);
+      g_free (msg);
       break;
     }
-    case WFD_TRIGGER_TEARDOWN: {
+    case WFD_TRIGGER_TEARDOWN:{
       gchar *msg;
       guint msglen = 0;
       GString *msglength;
 
       /* add content type */
-      res = gst_rtsp_message_add_header (request, GST_RTSP_HDR_CONTENT_TYPE, "text/parameters");
+      res =
+          gst_rtsp_message_add_header (request, GST_RTSP_HDR_CONTENT_TYPE,
+          "text/parameters");
       if (res != GST_RTSP_OK) {
         GST_ERROR_OBJECT (client, "Failed to add header to rtsp request...");
         goto error;
       }
 
-      set_wfd_message_body(client, TEARDOWN_TRIGGER, &msg, &msglen);
+      set_wfd_message_body (client, TEARDOWN_TRIGGER, &msg, &msglen);
       msglength = g_string_new ("");
-      g_string_append_printf (msglength,"%d",msglen);
-      GST_DEBUG("Trigger TEARDOWN server side message body: %s", msg);
+      g_string_append_printf (msglength, "%d", msglen);
+      GST_DEBUG ("Trigger TEARDOWN server side message body: %s", msg);
 
       /* add content-length type */
-      res = gst_rtsp_message_add_header (request, GST_RTSP_HDR_CONTENT_LENGTH, g_string_free (msglength, FALSE));
+      res =
+          gst_rtsp_message_add_header (request, GST_RTSP_HDR_CONTENT_LENGTH,
+          g_string_free (msglength, FALSE));
       if (res != GST_RTSP_OK) {
         GST_ERROR_OBJECT (client, "Failed to add header to rtsp message...");
         goto error;
       }
 
-      res = gst_rtsp_message_set_body (request, (guint8*)msg, msglen);
+      res = gst_rtsp_message_set_body (request, (guint8 *) msg, msglen);
       if (res != GST_RTSP_OK) {
         GST_ERROR_OBJECT (client, "Failed to add header to rtsp message...");
         goto error;
       }
 
-      g_free(msg);
+      g_free (msg);
       break;
     }
-    /* TODO-WFD: implement to handle other trigger type */
-    default: {
+      /* TODO-WFD: implement to handle other trigger type */
+    default:{
     }
   }
-  
+
   return res;
 
 error:
@@ -896,10 +931,10 @@ error:
 
 void
 send_request (GstRTSPWFDClient * client, GstRTSPSession * session,
-  GstRTSPMessage * request)
+    GstRTSPMessage * request)
 {
   GstRTSPResult res = GST_RTSP_OK;
-  GstRTSPClient *parent_client = GST_RTSP_CLIENT_CAST(client);
+  GstRTSPClient *parent_client = GST_RTSP_CLIENT_CAST (client);
 
   /* remove any previous header */
   gst_rtsp_message_remove_header (request, GST_RTSP_HDR_SESSION, -1);
@@ -910,13 +945,12 @@ send_request (GstRTSPWFDClient * client, GstRTSPSession * session,
     const gchar *sessionid = NULL;
     gchar *str;
 
-    sessionid = gst_rtsp_session_get_sessionid(session);
-    GST_INFO_OBJECT(client, "Session id : %s", sessionid);
+    sessionid = gst_rtsp_session_get_sessionid (session);
+    GST_INFO_OBJECT (client, "Session id : %s", sessionid);
 
-    timeout = gst_rtsp_session_get_timeout(session);
+    timeout = gst_rtsp_session_get_timeout (session);
     if (timeout != DEFAULT_WFD_TIMEOUT)
-      str =
-          g_strdup_printf ("%s; timeout=%d", sessionid, timeout);
+      str = g_strdup_printf ("%s; timeout=%d", sessionid, timeout);
     else
       str = g_strdup (sessionid);
 
@@ -927,9 +961,9 @@ send_request (GstRTSPWFDClient * client, GstRTSPSession * session,
     gst_rtsp_message_dump (request);
   }
 #endif
-  res = gst_rtsp_client_send_message(parent_client, session, request);
+  res = gst_rtsp_client_send_message (parent_client, session, request);
   if (res != GST_RTSP_OK) {
-    GST_ERROR_OBJECT(client, "gst_rtsp_client_send_message failed : %d", res);
+    GST_ERROR_OBJECT (client, "gst_rtsp_client_send_message failed : %d", res);
   }
 
   gst_rtsp_message_unset (request);
@@ -947,14 +981,14 @@ send_request (GstRTSPWFDClient * client, GstRTSPSession * session,
 * Returns: a #GstRTSPResult.
 */
 GstRTSPResult
-prepare_response (GstRTSPWFDClient *client, GstRTSPMessage *request,
-  GstRTSPMessage *response, GstRTSPMethod method)
+prepare_response (GstRTSPWFDClient * client, GstRTSPMessage * request,
+    GstRTSPMessage * response, GstRTSPMethod method)
 {
   GstRTSPResult res = GST_RTSP_OK;
 
   switch (method) {
-    /* prepare OPTIONS response */
-    case GST_RTSP_OPTIONS: {
+      /* prepare OPTIONS response */
+    case GST_RTSP_OPTIONS:{
       GstRTSPMethod options;
       gchar *tmp = NULL;
       gchar *str = NULL;
@@ -978,12 +1012,14 @@ prepare_response (GstRTSPWFDClient *client, GstRTSPMessage *request,
       gst_rtsp_message_add_header (response, GST_RTSP_HDR_PUBLIC, str);
       g_free (str);
       str = NULL;
-      res = gst_rtsp_message_get_header (request, GST_RTSP_HDR_USER_AGENT, &user_agent, 0);
-      if (res == GST_RTSP_OK)
-      {
-        gst_rtsp_message_add_header (response, GST_RTSP_HDR_USER_AGENT, user_agent);
-      }
-      else res = GST_RTSP_OK;
+      res =
+          gst_rtsp_message_get_header (request, GST_RTSP_HDR_USER_AGENT,
+          &user_agent, 0);
+      if (res == GST_RTSP_OK) {
+        gst_rtsp_message_add_header (response, GST_RTSP_HDR_USER_AGENT,
+            user_agent);
+      } else
+        res = GST_RTSP_OK;
       break;
     }
     default:
@@ -1000,14 +1036,14 @@ send_generic_wfd_response (GstRTSPWFDClient * client, GstRTSPStatusCode code,
     GstRTSPContext * ctx)
 {
   GstRTSPResult res = GST_RTSP_OK;
-  GstRTSPClient *parent_client = GST_RTSP_CLIENT_CAST(client);
+  GstRTSPClient *parent_client = GST_RTSP_CLIENT_CAST (client);
 
   gst_rtsp_message_init_response (ctx->response, code,
       gst_rtsp_status_as_text (code), ctx->request);
 
-  res = gst_rtsp_client_send_message(parent_client, NULL, ctx->response);
+  res = gst_rtsp_client_send_message (parent_client, NULL, ctx->response);
   if (res != GST_RTSP_OK) {
-    GST_ERROR_OBJECT(client, "gst_rtsp_client_send_message failed : %d", res);
+    GST_ERROR_OBJECT (client, "gst_rtsp_client_send_message failed : %d", res);
   }
 }
 
@@ -1018,7 +1054,7 @@ handle_M1_message (GstRTSPWFDClient * client)
   GstRTSPResult res = GST_RTSP_OK;
   GstRTSPMessage request = { 0 };
 
-  res = prepare_request (client, &request, GST_RTSP_OPTIONS, (gchar *)"*");
+  res = prepare_request (client, &request, GST_RTSP_OPTIONS, (gchar *) "*");
   if (GST_RTSP_OK != res) {
     GST_ERROR_OBJECT (client, "Failed to prepare M1 request....\n");
     return res;
@@ -1049,8 +1085,9 @@ handle_M3_message (GstRTSPWFDClient * client)
   GstRTSPUrl *url = NULL;
   gchar *url_str = NULL;
 
-  GstRTSPClient *parent_client = GST_RTSP_CLIENT_CAST(client);
-  GstRTSPConnection *connection = gst_rtsp_client_get_connection(parent_client);
+  GstRTSPClient *parent_client = GST_RTSP_CLIENT_CAST (client);
+  GstRTSPConnection *connection =
+      gst_rtsp_client_get_connection (parent_client);
 
   url = gst_rtsp_connection_get_url (connection);
   if (url == NULL) {
@@ -1090,8 +1127,9 @@ handle_M4_message (GstRTSPWFDClient * client)
   GstRTSPUrl *url = NULL;
   gchar *url_str = NULL;
 
-  GstRTSPClient *parent_client = GST_RTSP_CLIENT_CAST(client);
-  GstRTSPConnection *connection = gst_rtsp_client_get_connection(parent_client);
+  GstRTSPClient *parent_client = GST_RTSP_CLIENT_CAST (client);
+  GstRTSPConnection *connection =
+      gst_rtsp_client_get_connection (parent_client);
 
   url = gst_rtsp_connection_get_url (connection);
   if (url == NULL) {
@@ -1131,8 +1169,9 @@ handle_M5_message (GstRTSPWFDClient * client)
   GstRTSPUrl *url = NULL;
   gchar *url_str = NULL;
 
-  GstRTSPClient *parent_client = GST_RTSP_CLIENT_CAST(client);
-  GstRTSPConnection *connection = gst_rtsp_client_get_connection(parent_client);
+  GstRTSPClient *parent_client = GST_RTSP_CLIENT_CAST (client);
+  GstRTSPConnection *connection =
+      gst_rtsp_client_get_connection (parent_client);
 
   url = gst_rtsp_connection_get_url (connection);
   if (url == NULL) {
@@ -1165,15 +1204,17 @@ error:
 }
 
 GstRTSPResult
-gst_rtsp_wfd_client_trigger_request (GstRTSPWFDClient * client, GstWFDTriggerType type)
+gst_rtsp_wfd_client_trigger_request (GstRTSPWFDClient * client,
+    GstWFDTriggerType type)
 {
   GstRTSPResult res = GST_RTSP_OK;
   GstRTSPMessage request = { 0 };
   GstRTSPUrl *url = NULL;
   gchar *url_str = NULL;
 
-  GstRTSPClient *parent_client = GST_RTSP_CLIENT_CAST(client);
-  GstRTSPConnection *connection = gst_rtsp_client_get_connection(parent_client);
+  GstRTSPClient *parent_client = GST_RTSP_CLIENT_CAST (client);
+  GstRTSPConnection *connection =
+      gst_rtsp_client_get_connection (parent_client);
 
   url = gst_rtsp_connection_get_url (connection);
   if (url == NULL) {
@@ -1204,4 +1245,3 @@ gst_rtsp_wfd_client_trigger_request (GstRTSPWFDClient * client, GstWFDTriggerTyp
 error:
   return res;
 }
-

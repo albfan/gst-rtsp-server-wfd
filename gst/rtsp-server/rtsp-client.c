@@ -1481,7 +1481,7 @@ handle_setup_request (GstRTSPClient * client, GstRTSPContext * ctx)
   /* control is remainder */
   control = &path[matched + 1];
 #else
-  control = g_strdup("stream=0");
+  control = g_strdup ("stream=0");
 #endif
 
   /* find the stream now using the control part */
@@ -1550,7 +1550,7 @@ handle_setup_request (GstRTSPClient * client, GstRTSPContext * ctx)
   trans_str = gst_rtsp_transport_as_text (st);
 
   /* FIXME-WFD : Temporarily force to set profile string */
-  trans_str = g_strjoinv("RTP/AVP/UDP", g_strsplit(trans_str, "RTP/AVP", -1));
+  trans_str = g_strjoinv ("RTP/AVP/UDP", g_strsplit (trans_str, "RTP/AVP", -1));
 
   gst_rtsp_transport_free (st);
 
