@@ -56,12 +56,15 @@
 #include "config.h"
 #endif
 
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
 #include <gio/gio.h>
 
 #include "gstwfdmessage.h"
+
+#define EDID_BLOCK_SIZE 128
 
 #define FREE_STRING(field)              g_free (field); (field) = NULL
 #define REPLACE_STRING(field, val)      FREE_STRING(field); (field) = g_strdup (val)
@@ -1008,3 +1011,473 @@ gst_wfd_message_dump (const GstWFDMessage * msg)
 
   return GST_WFD_OK;
 }
+
+GstWFDResult gst_wfd_message_set_supported_audio_format(GstWFDMessage *msg,
+                                              GstWFDAudioFormats a_codec,
+                                              guint a_freq, guint a_channels,
+                                              guint a_bitwidth, guint32 a_latency)
+{
+  guint temp = a_codec;
+  guint i = 0;
+  guint pcm = 0, aac = 0, ac3 = 0;
+
+  g_return_val_if_fail (msg != NULL, GST_WFD_EINVAL);
+
+  if(!msg->audio_codecs)
+    msg->audio_codecs = g_new0 (GstWFDAudioCodeclist, 1);
+
+  if(a_codec != GST_WFD_AUDIO_UNKNOWN) {
+    while(temp) {
+      msg->audio_codecs->count++;
+      temp >>= 1;
+    }
+    msg->audio_codecs->list = g_new0 (GstWFDAudioCodec, msg->audio_codecs->count);
+    for(; i<msg->audio_codecs->count; i++) {
+      if((a_codec & GST_WFD_AUDIO_LPCM) && (!pcm)) {
+        msg->audio_codecs->list[i].audio_format = g_strdup("LPCM");
+        msg->audio_codecs->list[i].modes = a_freq;
+        msg->audio_codecs->list[i].latency = a_latency;
+        pcm = 1;
+      } else if((a_codec & GST_WFD_AUDIO_AAC) && (!aac)) {
+        msg->audio_codecs->list[i].audio_format = g_strdup("AAC");
+        msg->audio_codecs->list[i].modes = a_channels;
+        msg->audio_codecs->list[i].latency = a_latency;
+        aac = 1;
+      } else if((a_codec & GST_WFD_AUDIO_AC3) && (!ac3)) {
+        msg->audio_codecs->list[i].audio_format = g_strdup("AC3");
+        msg->audio_codecs->list[i].modes = a_channels;
+        msg->audio_codecs->list[i].latency = a_latency;
+        ac3 = 1;
+      }
+    }
+  }
+  return GST_WFD_OK;
+}
+
+GstWFDResult gst_wfd_message_set_prefered_audio_format(GstWFDMessage *msg,
+                                             GstWFDAudioFormats a_codec,
+                                             GstWFDAudioFreq a_freq,
+                                             GstWFDAudioChannels a_channels,
+                                             guint a_bitwidth, guint32 a_latency)
+{
+
+  g_return_val_if_fail (msg != NULL, GST_WFD_EINVAL);
+
+  if(!msg->audio_codecs)
+    msg->audio_codecs = g_new0 (GstWFDAudioCodeclist, 1);
+
+  msg->audio_codecs->list = g_new0 (GstWFDAudioCodec, 1);
+  msg->audio_codecs->count = 1;
+  if(a_codec == GST_WFD_AUDIO_LPCM) {
+    msg->audio_codecs->list->audio_format = g_strdup("LPCM");
+    msg->audio_codecs->list->modes = a_freq;
+    msg->audio_codecs->list->latency = a_latency;
+  } else if(a_codec == GST_WFD_AUDIO_AAC) {
+    msg->audio_codecs->list->audio_format = g_strdup("AAC");
+    msg->audio_codecs->list->modes = a_channels;
+    msg->audio_codecs->list->latency = a_latency;
+  } else if(a_codec == GST_WFD_AUDIO_AC3) {
+    msg->audio_codecs->list->audio_format = g_strdup("AC3");
+    msg->audio_codecs->list->modes = a_channels;
+    msg->audio_codecs->list->latency = a_latency;
+  }
+  return GST_WFD_OK;
+}
+
+GstWFDResult gst_wfd_message_get_supported_audio_format (GstWFDMessage *msg,
+                                                 guint *a_codec,
+                                                 guint *a_freq,
+                                                 guint *a_channels,
+                                                 guint *a_bitwidth,
+                                                 guint32 *a_latency)
+{
+  guint i = 0;
+  g_return_val_if_fail (msg != NULL, GST_WFD_EINVAL);
+  g_return_val_if_fail (msg->audio_codecs != NULL, GST_WFD_EINVAL);
+
+  for(; i<msg->audio_codecs->count; i++) {
+    if(!g_strcmp0(msg->audio_codecs->list[i].audio_format,"LPCM")) {
+      *a_codec |= GST_WFD_AUDIO_LPCM;
+      *a_freq |= msg->audio_codecs->list[i].modes;
+      *a_channels |= GST_WFD_CHANNEL_2;
+      *a_bitwidth = 16;
+      *a_latency = msg->audio_codecs->list[i].latency;
+    } else if(!g_strcmp0(msg->audio_codecs->list[i].audio_format,"AAC")) {
+      *a_codec |= GST_WFD_AUDIO_AAC;
+      *a_freq |= GST_WFD_FREQ_48000;
+      *a_channels |= msg->audio_codecs->list[i].modes;
+      *a_bitwidth = 16;
+      *a_latency = msg->audio_codecs->list[i].latency;
+    } else if(!g_strcmp0(msg->audio_codecs->list[i].audio_format,"AC3")) {
+      *a_codec |= GST_WFD_AUDIO_AC3;
+      *a_freq |= GST_WFD_FREQ_48000;
+      *a_channels |= msg->audio_codecs->list[i].modes;
+      *a_bitwidth = 16;
+      *a_latency = msg->audio_codecs->list[i].latency;
+    }
+  }
+  return GST_WFD_OK;
+}
+
+GstWFDResult gst_wfd_message_get_prefered_audio_format (GstWFDMessage *msg,
+                                           GstWFDAudioFormats *a_codec,
+                                           GstWFDAudioFreq *a_freq,
+                                           GstWFDAudioChannels *a_channels,
+                                           guint *a_bitwidth, guint32 *a_latency)
+{
+  g_return_val_if_fail (msg != NULL, GST_WFD_EINVAL);
+
+  if(!g_strcmp0(msg->audio_codecs->list->audio_format,"LPCM")) {
+    *a_codec = GST_WFD_AUDIO_LPCM;
+    *a_freq = msg->audio_codecs->list->modes;
+    *a_channels = GST_WFD_CHANNEL_2;
+    *a_bitwidth = 16;
+    *a_latency = msg->audio_codecs->list->latency;
+  } else if(!g_strcmp0(msg->audio_codecs->list->audio_format,"AAC")) {
+    *a_codec = GST_WFD_AUDIO_AAC;
+    *a_freq = GST_WFD_FREQ_48000;
+    *a_channels = msg->audio_codecs->list->modes;
+    *a_bitwidth = 16;
+    *a_latency = msg->audio_codecs->list->latency;
+  } else if(!g_strcmp0(msg->audio_codecs->list->audio_format,"AC3")) {
+    *a_codec = GST_WFD_AUDIO_AC3;
+    *a_freq = GST_WFD_FREQ_48000;
+    *a_channels = msg->audio_codecs->list->modes;
+    *a_bitwidth = 16;
+    *a_latency = msg->audio_codecs->list->latency;
+  }
+  return GST_WFD_OK;
+}
+
+GstWFDResult gst_wfd_message_set_supported_video_format (GstWFDMessage *msg,
+                                       GstWFDVideoCodecs v_codec,
+                                       GstWFDVideoNativeResolution v_native,
+                                       guint64 v_native_resolution,
+                                       guint64 v_cea_resolution,
+                                       guint64 v_vesa_resolution,
+                                       guint64 v_hh_resolution,
+                                       guint v_profile,
+                                       guint v_level,
+                                       guint32 v_latency,
+                                       guint32 v_max_height,
+                                       guint32 v_max_width,
+                                       guint32 min_slice_size,
+                                       guint32 slice_enc_params,
+                                       guint frame_rate_control)
+{
+  guint nativeindex = 0;
+  guint64 temp = v_native_resolution;
+
+  g_return_val_if_fail (msg != NULL, GST_WFD_EINVAL);
+
+  if(!msg->video_formats)
+  msg->video_formats = g_new0 (GstWFDVideoCodeclist, 1);
+
+  if(v_codec != GST_WFD_VIDEO_UNKNOWN) {
+    msg->video_formats->list = g_new0 (GstWFDVideoCodec, 1);
+    while(temp) {
+      nativeindex++;
+      temp >>= 1;
+    }
+
+    msg->video_formats->list->native = nativeindex-1;
+    msg->video_formats->list->native <<= 3;
+
+    if(v_native == GST_WFD_VIDEO_VESA_RESOLUTION)
+      msg->video_formats->list->native |= 1;
+    else if(v_native == GST_WFD_VIDEO_HH_RESOLUTION)
+      msg->video_formats->list->native |= 2;
+
+    msg->video_formats->list->preferred_display_mode_supported = 1;
+    msg->video_formats->list->H264_codec.profile = v_profile;
+    msg->video_formats->list->H264_codec.level = v_level;
+    msg->video_formats->list->H264_codec.max_hres = v_max_height;
+    msg->video_formats->list->H264_codec.max_vres = v_max_width;
+    msg->video_formats->list->H264_codec.misc_params.CEA_Support = v_cea_resolution;
+    msg->video_formats->list->H264_codec.misc_params.VESA_Support = v_vesa_resolution;
+    msg->video_formats->list->H264_codec.misc_params.HH_Support = v_hh_resolution;
+    msg->video_formats->list->H264_codec.misc_params.latency = v_latency;
+    msg->video_formats->list->H264_codec.misc_params.min_slice_size = min_slice_size;
+    msg->video_formats->list->H264_codec.misc_params.slice_enc_params = slice_enc_params;
+    msg->video_formats->list->H264_codec.misc_params.frame_rate_control_support = frame_rate_control;
+  }
+  return GST_WFD_OK;
+}
+
+GstWFDResult gst_wfd_message_set_prefered_video_format(GstWFDMessage *msg,
+                                          GstWFDVideoCodecs v_codec,
+                                          GstWFDVideoNativeResolution v_native,
+                                          guint64 v_native_resolution,
+                                          GstWFDVideoCEAResolution v_cea_resolution,
+                                          GstWFDVideoVESAResolution v_vesa_resolution,
+                                          GstWFDVideoHHResolution v_hh_resolution,
+                                          GstWFDVideoH264Profile v_profile,
+                                          GstWFDVideoH264Level v_level,
+                                          guint32 v_latency,
+                                          guint32 v_max_height,
+                                          guint32 v_max_width,
+                                          guint32 min_slice_size,
+                                          guint32 slice_enc_params,
+                                          guint frame_rate_control)
+{
+  guint nativeindex = 0;
+  guint64 temp = v_native_resolution;
+
+  g_return_val_if_fail (msg != NULL, GST_WFD_EINVAL);
+
+  if(!msg->video_formats)
+    msg->video_formats = g_new0 (GstWFDVideoCodeclist, 1);
+  msg->video_formats->list = g_new0 (GstWFDVideoCodec, 1);
+
+  while(temp) {
+    nativeindex++;
+    temp >>= 1;
+  }
+
+  if(nativeindex) msg->video_formats->list->native = nativeindex-1;
+  msg->video_formats->list->native <<= 3;
+
+  if(v_native == GST_WFD_VIDEO_VESA_RESOLUTION)
+    msg->video_formats->list->native |= 1;
+  else if(v_native == GST_WFD_VIDEO_HH_RESOLUTION)
+    msg->video_formats->list->native |= 2;
+
+  msg->video_formats->list->preferred_display_mode_supported = 0;
+  msg->video_formats->list->H264_codec.profile = v_profile;
+  msg->video_formats->list->H264_codec.level = v_level;
+  msg->video_formats->list->H264_codec.max_hres = v_max_height;
+  msg->video_formats->list->H264_codec.max_vres = v_max_width;
+  msg->video_formats->list->H264_codec.misc_params.CEA_Support = v_cea_resolution;
+  msg->video_formats->list->H264_codec.misc_params.VESA_Support = v_vesa_resolution;
+  msg->video_formats->list->H264_codec.misc_params.HH_Support = v_hh_resolution;
+  msg->video_formats->list->H264_codec.misc_params.latency = v_latency;
+  msg->video_formats->list->H264_codec.misc_params.min_slice_size = min_slice_size;
+  msg->video_formats->list->H264_codec.misc_params.slice_enc_params = slice_enc_params;
+  msg->video_formats->list->H264_codec.misc_params.frame_rate_control_support = frame_rate_control;
+  return GST_WFD_OK;
+}
+
+GstWFDResult gst_wfd_message_get_supported_video_format(GstWFDMessage *msg,
+                                             GstWFDVideoCodecs *v_codec,
+                                             GstWFDVideoNativeResolution *v_native,
+                                             guint64 *v_native_resolution,
+                                             guint64 *v_cea_resolution,
+                                             guint64 *v_vesa_resolution,
+                                             guint64 *v_hh_resolution,
+                                             guint *v_profile,
+                                             guint *v_level,
+                                             guint32 *v_latency,
+                                             guint32 *v_max_height,
+                                             guint32 *v_max_width,
+                                             guint32 *min_slice_size,
+                                             guint32 *slice_enc_params,
+                                             guint *frame_rate_control)
+{
+  guint nativeindex = 0;
+
+  g_return_val_if_fail (msg != NULL, GST_WFD_EINVAL);
+  *v_codec = GST_WFD_VIDEO_H264;
+  *v_native = msg->video_formats->list->native & 0x7;
+  nativeindex = msg->video_formats->list->native >> 3;
+  *v_native_resolution = 1 << nativeindex;
+  *v_profile = msg->video_formats->list->H264_codec.profile;
+  *v_level = msg->video_formats->list->H264_codec.level;
+  *v_max_height = msg->video_formats->list->H264_codec.max_hres;
+  *v_max_width = msg->video_formats->list->H264_codec.max_vres;
+  *v_cea_resolution = msg->video_formats->list->H264_codec.misc_params.CEA_Support;
+  *v_vesa_resolution = msg->video_formats->list->H264_codec.misc_params.VESA_Support;
+  *v_hh_resolution = msg->video_formats->list->H264_codec.misc_params.HH_Support;
+  *v_latency = msg->video_formats->list->H264_codec.misc_params.latency;
+  *min_slice_size = msg->video_formats->list->H264_codec.misc_params.min_slice_size;
+  *slice_enc_params = msg->video_formats->list->H264_codec.misc_params.slice_enc_params;
+  *frame_rate_control = msg->video_formats->list->H264_codec.misc_params.frame_rate_control_support;
+  return GST_WFD_OK;
+}
+
+GstWFDResult gst_wfd_message_get_prefered_video_format(GstWFDMessage *msg,
+                                         GstWFDVideoCodecs *v_codec,
+                                         GstWFDVideoNativeResolution *v_native,
+                                         guint64 *v_native_resolution,
+                                         GstWFDVideoCEAResolution *v_cea_resolution,
+                                         GstWFDVideoVESAResolution *v_vesa_resolution,
+                                         GstWFDVideoHHResolution *v_hh_resolution,
+                                         GstWFDVideoH264Profile *v_profile,
+                                         GstWFDVideoH264Level *v_level,
+                                         guint32 *v_latency,
+                                         guint32 *v_max_height,
+                                         guint32 *v_max_width,
+                                         guint32 *min_slice_size,
+                                         guint32 *slice_enc_params,
+                                         guint *frame_rate_control)
+{
+  guint nativeindex = 0;
+  g_return_val_if_fail (msg != NULL, GST_WFD_EINVAL);
+
+  *v_codec = GST_WFD_VIDEO_H264;
+  *v_native = msg->video_formats->list->native & 0x7;
+  nativeindex = msg->video_formats->list->native >> 3;
+  *v_native_resolution = 1 << nativeindex;
+  *v_profile = msg->video_formats->list->H264_codec.profile;
+  *v_level = msg->video_formats->list->H264_codec.level;
+  *v_max_height = msg->video_formats->list->H264_codec.max_hres;
+  *v_max_width = msg->video_formats->list->H264_codec.max_vres;
+  *v_cea_resolution = msg->video_formats->list->H264_codec.misc_params.CEA_Support;
+  *v_vesa_resolution = msg->video_formats->list->H264_codec.misc_params.VESA_Support;
+  *v_hh_resolution = msg->video_formats->list->H264_codec.misc_params.HH_Support;
+  *v_latency = msg->video_formats->list->H264_codec.misc_params.latency;
+  *min_slice_size = msg->video_formats->list->H264_codec.misc_params.min_slice_size;
+  *slice_enc_params = msg->video_formats->list->H264_codec.misc_params.slice_enc_params;
+  *frame_rate_control = msg->video_formats->list->H264_codec.misc_params.frame_rate_control_support;
+  return GST_WFD_OK;
+}
+
+GstWFDResult gst_wfd_message_set_display_edid (GstWFDMessage *msg,
+                                           gboolean edid_supported,
+                                           guint32 edid_blockcount,
+                                           gchar *edid_playload)
+{
+  g_return_val_if_fail (msg != NULL, GST_WFD_EINVAL);
+  if(!msg->display_edid) msg->display_edid = g_new0 (GstWFDDisplayEdid, 1);
+  msg->display_edid->edid_supported = edid_supported;
+  if(!edid_supported) return GST_WFD_OK;
+  msg->display_edid->edid_block_count = edid_blockcount;
+  if(edid_blockcount) {
+    msg->display_edid->edid_payload = g_malloc(128 * edid_blockcount);
+    if(!msg->display_edid->edid_payload)
+      memcpy(msg->display_edid->edid_payload, edid_playload, 128 * edid_blockcount);
+  } else msg->display_edid->edid_payload = g_strdup("none");
+  return GST_WFD_OK;
+}
+
+GstWFDResult gst_wfd_message_get_display_edid (GstWFDMessage *msg,
+                                        gboolean *edid_supported,
+                                        guint32 *edid_blockcount,
+                                        gchar **edid_playload)
+{
+  g_return_val_if_fail (msg != NULL, GST_WFD_EINVAL);
+  if(msg->display_edid ) {
+    if(msg->display_edid->edid_supported) {
+      *edid_blockcount = msg->display_edid->edid_block_count;
+      if(msg->display_edid->edid_block_count) {
+        char * temp;
+        temp = g_malloc(EDID_BLOCK_SIZE * msg->display_edid->edid_block_count);
+        if(temp) {
+	   memset(temp, 0, EDID_BLOCK_SIZE * msg->display_edid->edid_block_count);
+          memcpy(temp, msg->display_edid->edid_payload, EDID_BLOCK_SIZE * msg->display_edid->edid_block_count);
+	   *edid_playload = temp;
+          *edid_supported = TRUE;
+        }
+      } else *edid_playload = g_strdup("none");
+    }
+  } else *edid_supported = FALSE;
+  return GST_WFD_OK;
+}
+
+
+GstWFDResult gst_wfd_message_set_contentprotection_type (GstWFDMessage *msg,
+                                                 GstWFDHDCPProtection hdcpversion,
+                                                 guint32 TCPPort)
+{
+  char str[11] = {0,};
+  g_return_val_if_fail (msg != NULL, GST_WFD_EINVAL);
+
+  if(!msg->content_protection) msg->content_protection = g_new0 (GstWFDContentProtection, 1);
+  if(hdcpversion == GST_WFD_HDCP_NONE) return GST_WFD_OK;
+  msg->content_protection->hdcp2_spec = g_new0 (GstWFDHdcp2Spec, 1);
+  if(hdcpversion == GST_WFD_HDCP_2_0) msg->content_protection->hdcp2_spec->hdcpversion = g_strdup("HDCP2.0");
+  else if(hdcpversion == GST_WFD_HDCP_2_1) msg->content_protection->hdcp2_spec->hdcpversion = g_strdup("HDCP2.1");
+  snprintf(str, sizeof(str), "port=%d", TCPPort);
+  msg->content_protection->hdcp2_spec->TCPPort = g_strdup(str);
+  return GST_WFD_OK;
+}
+
+GstWFDResult gst_wfd_message_get_contentprotection_type (GstWFDMessage *msg,
+                                                GstWFDHDCPProtection *hdcpversion,
+                                                guint32 *TCPPort)
+{
+  g_return_val_if_fail (msg != NULL, GST_WFD_EINVAL);
+  if(msg->content_protection && msg->content_protection->hdcp2_spec) {
+    char *result = NULL;
+    if(!g_strcmp0(msg->content_protection->hdcp2_spec->hdcpversion,"none")) {
+	  *hdcpversion = GST_WFD_HDCP_NONE;
+	  *TCPPort = 0;
+	  return GST_WFD_OK;
+    }
+    if(!g_strcmp0(msg->content_protection->hdcp2_spec->hdcpversion,"HDCP2.0")) *hdcpversion = GST_WFD_HDCP_2_0;
+    else if(!g_strcmp0(msg->content_protection->hdcp2_spec->hdcpversion,"HDCP2.1")) *hdcpversion = GST_WFD_HDCP_2_1;
+    else {
+	  *hdcpversion = GST_WFD_HDCP_NONE;
+	  *TCPPort = 0;
+	  return GST_WFD_OK;
+    }
+
+    result = strtok(msg->content_protection->hdcp2_spec->TCPPort, "=");
+    while (result !=NULL) {
+	  result = strtok(NULL, "=");
+	  *TCPPort = atoi (result);
+	  break;
+    }
+  } else *hdcpversion = GST_WFD_HDCP_NONE;
+  return GST_WFD_OK;
+}
+
+
+GstWFDResult gst_wfd_messge_set_prefered_RTP_ports (GstWFDMessage *msg,
+                                           GstWFDRTSPTransMode trans,
+                                           GstWFDRTSPProfile profile,
+                                           GstWFDRTSPLowerTrans lowertrans,
+                                           guint32 rtp_port0,
+                                           guint32 rtp_port1)
+{
+  GString *lines;
+  g_return_val_if_fail (msg != NULL, GST_WFD_EINVAL);
+
+  if(!msg->client_rtp_ports)
+    msg->client_rtp_ports = g_new0 (GstWFDClientRtpPorts, 1);
+
+  if(trans != GST_WFD_RTSP_TRANS_UNKNOWN) {
+    lines = g_string_new ("");
+    if(trans == GST_WFD_RTSP_TRANS_RTP)	g_string_append_printf (lines,"RTP");
+    else if(trans == GST_WFD_RTSP_TRANS_RDT) g_string_append_printf (lines,"RDT");
+
+    if(profile == GST_WFD_RTSP_PROFILE_AVP) g_string_append_printf (lines,"/AVP");
+    else if(profile == GST_WFD_RTSP_PROFILE_SAVP) g_string_append_printf (lines,"/SAVP");
+
+    if(lowertrans == GST_WFD_RTSP_LOWER_TRANS_UDP) g_string_append_printf (lines,"/UDP;unicast");
+    else if(lowertrans == GST_WFD_RTSP_LOWER_TRANS_UDP_MCAST) g_string_append_printf (lines,"/UDP;multicast");
+    else if(lowertrans == GST_WFD_RTSP_LOWER_TRANS_TCP) g_string_append_printf (lines,"/TCP;unicast");
+    else if(lowertrans == GST_WFD_RTSP_LOWER_TRANS_HTTP) g_string_append_printf (lines,"/HTTP");
+
+    msg->client_rtp_ports->profile = g_string_free (lines, FALSE);
+    msg->client_rtp_ports->rtp_port0 = rtp_port0;
+    msg->client_rtp_ports->rtp_port1 = rtp_port1;
+    msg->client_rtp_ports->mode = g_strdup("mode=play");
+  }
+  return GST_WFD_OK;
+}
+
+GstWFDResult gst_wfd_message_get_prefered_RTP_ports (GstWFDMessage *msg,
+                                    GstWFDRTSPTransMode *trans,
+                                    GstWFDRTSPProfile *profile,
+                                    GstWFDRTSPLowerTrans *lowertrans,
+                                    guint32 *rtp_port0,
+                                    guint32 *rtp_port1)
+{
+  g_return_val_if_fail (msg != NULL, GST_WFD_EINVAL);
+  g_return_val_if_fail (msg->client_rtp_ports != NULL, GST_WFD_EINVAL);
+
+  if(g_strrstr(msg->client_rtp_ports->profile, "RTP")) *trans = GST_WFD_RTSP_TRANS_RTP;
+  if(g_strrstr(msg->client_rtp_ports->profile, "RDT")) *trans = GST_WFD_RTSP_TRANS_RDT;
+  if(g_strrstr(msg->client_rtp_ports->profile, "AVP")) *profile = GST_WFD_RTSP_PROFILE_AVP;
+  if(g_strrstr(msg->client_rtp_ports->profile, "SAVP")) *profile = GST_WFD_RTSP_PROFILE_SAVP;
+  if(g_strrstr(msg->client_rtp_ports->profile, "UDP;unicast")) *lowertrans = GST_WFD_RTSP_LOWER_TRANS_UDP;
+  if(g_strrstr(msg->client_rtp_ports->profile, "UDP;multicast")) *lowertrans = GST_WFD_RTSP_LOWER_TRANS_UDP_MCAST;
+  if(g_strrstr(msg->client_rtp_ports->profile, "TCP;unicast")) *lowertrans = GST_WFD_RTSP_LOWER_TRANS_TCP;
+  if(g_strrstr(msg->client_rtp_ports->profile, "HTTP")) *lowertrans = GST_WFD_RTSP_LOWER_TRANS_HTTP;
+
+  *rtp_port0 = msg->client_rtp_ports->rtp_port0;
+  *rtp_port1 = msg->client_rtp_ports->rtp_port1;
+
+  return GST_WFD_OK;
+}
+
