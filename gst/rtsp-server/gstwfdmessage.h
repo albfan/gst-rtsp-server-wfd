@@ -635,14 +635,14 @@ GstWFDResult gst_wfd_message_get_contentprotection_type (GstWFDMessage *msg,
                                         GstWFDHDCPProtection *hdcpversion,
                                         guint32 *TCPPort);
 
-GstWFDResult gst_wfd_messge_set_prefered_RTP_ports (GstWFDMessage *msg,
+GstWFDResult gst_wfd_messge_set_prefered_rtp_ports (GstWFDMessage *msg,
                                         GstWFDRTSPTransMode trans,
                                         GstWFDRTSPProfile profile,
                                         GstWFDRTSPLowerTrans lowertrans,
                                         guint32 rtp_port0,
                                         guint32 rtp_port1);
 
-GstWFDResult gst_wfd_message_get_prefered_RTP_ports (GstWFDMessage *msg,
+GstWFDResult gst_wfd_message_get_prefered_rtp_ports (GstWFDMessage *msg,
                                         GstWFDRTSPTransMode *trans,
                                         GstWFDRTSPProfile *profile,
                                         GstWFDRTSPLowerTrans *lowertrans,

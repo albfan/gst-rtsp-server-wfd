@@ -278,6 +278,585 @@ gst_wfd_message_copy (const GstWFDMessage * msg, GstWFDMessage ** copy)
   return GST_WFD_OK;
 }
 
+
+static void
+_read_string_space_ended (gchar * dest, guint size, gchar * src)
+{
+  guint idx = 0;
+
+  while (!g_ascii_isspace (*src) && *src != '\0') {
+    if (idx < size - 1)
+      dest[idx++] = *src;
+    src++;
+  }
+
+  if (size > 0)
+    dest[idx] = '\0';
+
+  return;
+}
+
+static void
+_read_string_char_ended (gchar * dest, guint size, gchar del, gchar * src)
+{
+  guint idx = 0;
+
+  while (*src != del && *src != '\0') {
+    if (idx < size - 1)
+      dest[idx++] = *src;
+    src++;
+  }
+
+  if (size > 0)
+    dest[idx] = '\0';
+
+  return;
+}
+
+static void
+_read_string_attr_and_value (gchar * attr, gchar * value, guint tsize,
+    guint vsize, gchar del, gchar * src)
+{
+  guint idx;
+
+  idx = 0;
+
+  while (*src != del && *src != '\0') {
+    if (idx < tsize - 1)
+      attr[idx++] = *src;
+    src++;
+  }
+
+  if (tsize > 0)
+    attr[idx] = '\0';
+
+  src++;
+  idx = 0;
+
+  while (*src != '\0') {
+    if (idx < vsize - 1)
+      value[idx++] = *src;
+    src++;
+  }
+
+  if (vsize > 0)
+    value[idx] = '\0';
+
+  return;
+}
+
+static void
+gst_wfd_parse_attribute (gchar * buffer, GstWFDMessage * msg)
+{
+  gchar attr[8192] = { 0 };
+  gchar value[8192] = { 0 };
+  gchar temp[8192] = { 0 };
+  gchar *p = buffer;
+  gchar *v = value;
+
+#define WFD_SKIP_SPACE(q) if (*q && g_ascii_isspace (*q)) q++
+#define WFD_SKIP_EQUAL(q) if (*q && *q == '=') q++
+#define WFD_SKIP_COMMA(q) if (*q && g_ascii_ispunct (*q)) q++
+#define WFD_READ_STRING(field) _read_string_space_ended (temp, sizeof (temp), v); v+=strlen(temp); REPLACE_STRING (field, temp)
+#define WFD_READ_CHAR_END_STRING(field, del) _read_string_char_ended (temp, sizeof (temp), del, v); v+=strlen(temp); REPLACE_STRING (field, temp)
+#define WFD_READ_UINT32(field) _read_string_space_ended (temp, sizeof (temp), v); v+=strlen(temp); field = strtoul (temp, NULL, 16)
+#define WFD_READ_UINT32_DIGIT(field) _read_string_space_ended (temp, sizeof (temp), v); v+=strlen(temp); field = strtoul (temp, NULL, 10)
+
+  _read_string_attr_and_value (attr, value, sizeof (attr), sizeof (value), ':',
+      p);
+
+  if (!g_strcmp0 (attr, "wfd_audio_codecs")) {
+    msg->audio_codecs = g_new0 (GstWFDAudioCodeclist, 1);
+    if (strlen (v)) {
+      guint i = 0;
+      msg->audio_codecs->count = strlen (v) / 16;
+      msg->audio_codecs->list =
+          g_new0 (GstWFDAudioCodec, msg->audio_codecs->count);
+      for (; i < msg->audio_codecs->count; i++) {
+        WFD_SKIP_SPACE (v);
+        WFD_READ_STRING (msg->audio_codecs->list[i].audio_format);
+        WFD_SKIP_SPACE (v);
+        WFD_READ_UINT32 (msg->audio_codecs->list[i].modes);
+        WFD_SKIP_SPACE (v);
+        WFD_READ_UINT32 (msg->audio_codecs->list[i].latency);
+        WFD_SKIP_COMMA (v);
+      }
+    }
+  } else if (!g_strcmp0 (attr, "wfd_video_formats")) {
+    msg->video_formats = g_new0 (GstWFDVideoCodeclist, 1);
+    if (strlen (v)) {
+      msg->video_formats->count = 1;
+      msg->video_formats->list = g_new0 (GstWFDVideoCodec, 1);
+      WFD_SKIP_SPACE (v);
+      WFD_READ_UINT32 (msg->video_formats->list->native);
+      WFD_SKIP_SPACE (v);
+      WFD_READ_UINT32 (msg->video_formats->
+          list->preferred_display_mode_supported);
+      WFD_SKIP_SPACE (v);
+      WFD_READ_UINT32 (msg->video_formats->list->H264_codec.profile);
+      WFD_SKIP_SPACE (v);
+      WFD_READ_UINT32 (msg->video_formats->list->H264_codec.level);
+      WFD_SKIP_SPACE (v);
+      WFD_READ_UINT32 (msg->video_formats->list->H264_codec.
+          misc_params.CEA_Support);
+      WFD_SKIP_SPACE (v);
+      WFD_READ_UINT32 (msg->video_formats->list->H264_codec.
+          misc_params.VESA_Support);
+      WFD_SKIP_SPACE (v);
+      WFD_READ_UINT32 (msg->video_formats->list->H264_codec.
+          misc_params.HH_Support);
+      WFD_SKIP_SPACE (v);
+      WFD_READ_UINT32 (msg->video_formats->list->H264_codec.
+          misc_params.latency);
+      WFD_SKIP_SPACE (v);
+      WFD_READ_UINT32 (msg->video_formats->list->H264_codec.
+          misc_params.min_slice_size);
+      WFD_SKIP_SPACE (v);
+      WFD_READ_UINT32 (msg->video_formats->list->H264_codec.
+          misc_params.slice_enc_params);
+      WFD_SKIP_SPACE (v);
+      WFD_READ_UINT32 (msg->video_formats->list->H264_codec.
+          misc_params.frame_rate_control_support);
+      WFD_SKIP_SPACE (v);
+      if (msg->video_formats->list->preferred_display_mode_supported == 1) {
+        WFD_READ_UINT32 (msg->video_formats->list->H264_codec.max_hres);
+        WFD_SKIP_SPACE (v);
+        WFD_READ_UINT32 (msg->video_formats->list->H264_codec.max_vres);
+        WFD_SKIP_SPACE (v);
+      }
+    }
+  } else if (!g_strcmp0 (attr, "wfd_3d_formats")) {
+    msg->video_3d_formats = g_new0 (GstWFD3DFormats, 1);
+    if (strlen (v)) {
+      msg->video_3d_formats->count = 1;
+      msg->video_3d_formats->list = g_new0 (GstWFD3dCapList, 1);
+      WFD_SKIP_SPACE (v);
+      WFD_READ_UINT32 (msg->video_3d_formats->list->native);
+      WFD_SKIP_SPACE (v);
+      WFD_READ_UINT32 (msg->video_3d_formats->
+          list->preferred_display_mode_supported);
+      WFD_SKIP_SPACE (v);
+      WFD_READ_UINT32 (msg->video_3d_formats->list->H264_codec.profile);
+      WFD_SKIP_SPACE (v);
+      WFD_READ_UINT32 (msg->video_3d_formats->list->H264_codec.level);
+      WFD_SKIP_SPACE (v);
+      WFD_READ_UINT32 (msg->video_3d_formats->list->H264_codec.
+          misc_params.video_3d_capability);
+      WFD_SKIP_SPACE (v);
+      WFD_READ_UINT32 (msg->video_3d_formats->list->H264_codec.
+          misc_params.latency);
+      WFD_SKIP_SPACE (v);
+      WFD_READ_UINT32 (msg->video_3d_formats->list->H264_codec.
+          misc_params.min_slice_size);
+      WFD_SKIP_SPACE (v);
+      WFD_READ_UINT32 (msg->video_3d_formats->list->H264_codec.
+          misc_params.slice_enc_params);
+      WFD_SKIP_SPACE (v);
+      WFD_READ_UINT32 (msg->video_3d_formats->list->H264_codec.
+          misc_params.frame_rate_control_support);
+      WFD_SKIP_SPACE (v);
+      if (msg->video_formats->list->preferred_display_mode_supported == 1) {
+        WFD_READ_UINT32 (msg->video_formats->list->H264_codec.max_hres);
+        WFD_SKIP_SPACE (v);
+        WFD_READ_UINT32 (msg->video_formats->list->H264_codec.max_vres);
+        WFD_SKIP_SPACE (v);
+      }
+    }
+  } else if (!g_strcmp0 (attr, "wfd_content_protection")) {
+    msg->content_protection = g_new0 (GstWFDContentProtection, 1);
+    if (strlen (v)) {
+      WFD_SKIP_SPACE (v);
+      msg->content_protection->hdcp2_spec = g_new0 (GstWFDHdcp2Spec, 1);
+      if (strstr (v, "none")) {
+        msg->content_protection->hdcp2_spec->hdcpversion = g_strdup ("none");
+      } else {
+        WFD_READ_STRING (msg->content_protection->hdcp2_spec->hdcpversion);
+        WFD_SKIP_SPACE (v);
+        WFD_READ_STRING (msg->content_protection->hdcp2_spec->TCPPort);
+      }
+    }
+  } else if (!g_strcmp0 (attr, "wfd_display_edid")) {
+    msg->display_edid = g_new0 (GstWFDDisplayEdid, 1);
+    if (strlen (v)) {
+      WFD_SKIP_SPACE (v);
+      if (strstr (v, "none")) {
+        msg->display_edid->edid_supported = 0;
+      } else {
+        msg->display_edid->edid_supported = 1;
+        WFD_READ_UINT32 (msg->display_edid->edid_block_count);
+        WFD_SKIP_SPACE (v);
+        if (msg->display_edid->edid_block_count) {
+          gchar *edid_string = v;
+          int i = 0, j = 0;
+          guint32 payload_size =
+              EDID_BLOCK_SIZE * msg->display_edid->edid_block_count;
+          msg->display_edid->edid_payload = g_malloc (payload_size);
+          for (;
+              i < (EDID_BLOCK_SIZE * msg->display_edid->edid_block_count * 2);
+              j++) {
+            int k = 0, kk = 0;
+            if (edid_string[i] > 0x29 && edid_string[i] < 0x40)
+              k = edid_string[i] - 48;
+            else if (edid_string[i] > 0x60 && edid_string[i] < 0x67)
+              k = edid_string[i] - 87;
+            else if (edid_string[i] > 0x40 && edid_string[i] < 0x47)
+              k = edid_string[i] - 55;
+
+            if (edid_string[i + 1] > 0x29 && edid_string[i + 1] < 0x40)
+              kk = edid_string[i + 1] - 48;
+            else if (edid_string[i + 1] > 0x60 && edid_string[i + 1] < 0x67)
+              kk = edid_string[i + 1] - 87;
+            else if (edid_string[i + 1] > 0x40 && edid_string[i + 1] < 0x47)
+              kk = edid_string[i + 1] - 55;
+
+            msg->display_edid->edid_payload[j] = (k << 4) | kk;
+            i += 2;
+          }
+          //memcpy(msg->display_edid->edid_payload, v, payload_size);
+          v += (payload_size * 2);
+        } else
+          v += strlen (v);
+      }
+    }
+  } else if (!g_strcmp0 (attr, "wfd_coupled_sink")) {
+    msg->coupled_sink = g_new0 (GstWFDCoupledSink, 1);
+    if (strlen (v)) {
+      msg->coupled_sink->coupled_sink_cap = g_new0 (GstWFDCoupled_sink_cap, 1);
+      WFD_SKIP_SPACE (v);
+      WFD_READ_UINT32 (msg->coupled_sink->coupled_sink_cap->status);
+      WFD_SKIP_SPACE (v);
+      WFD_READ_STRING (msg->coupled_sink->coupled_sink_cap->sink_address);
+    }
+  } else if (!g_strcmp0 (attr, "wfd_trigger_method")) {
+    msg->trigger_method = g_new0 (GstWFDTriggerMethod, 1);
+    if (strlen (v)) {
+      WFD_SKIP_SPACE (v);
+      WFD_READ_STRING (msg->trigger_method->wfd_trigger_method);
+    }
+  } else if (!g_strcmp0 (attr, "wfd_presentation_URL")) {
+    msg->presentation_url = g_new0 (GstWFDPresentationUrl, 1);
+    if (strlen (v)) {
+      WFD_SKIP_SPACE (v);
+      WFD_READ_STRING (msg->presentation_url->wfd_url0);
+      WFD_SKIP_SPACE (v);
+      WFD_READ_STRING (msg->presentation_url->wfd_url1);
+    }
+  } else if (!g_strcmp0 (attr, "wfd_client_rtp_ports")) {
+    msg->client_rtp_ports = g_new0 (GstWFDClientRtpPorts, 1);
+    if (strlen (v)) {
+      WFD_SKIP_SPACE (v);
+      WFD_READ_STRING (msg->client_rtp_ports->profile);
+      WFD_SKIP_SPACE (v);
+      WFD_READ_UINT32_DIGIT (msg->client_rtp_ports->rtp_port0);
+      WFD_SKIP_SPACE (v);
+      WFD_READ_UINT32_DIGIT (msg->client_rtp_ports->rtp_port1);
+      WFD_SKIP_SPACE (v);
+      WFD_READ_STRING (msg->client_rtp_ports->mode);
+    }
+  } else if (!g_strcmp0 (attr, "wfd_route")) {
+    msg->route = g_new0 (GstWFDRoute, 1);
+    if (strlen (v)) {
+      WFD_SKIP_SPACE (v);
+      WFD_READ_STRING (msg->route->destination);
+    }
+  } else if (!g_strcmp0 (attr, "wfd_I2C")) {
+    msg->I2C = g_new0 (GstWFDI2C, 1);
+    if (strlen (v)) {
+      msg->I2C->I2CPresent = TRUE;
+      WFD_SKIP_SPACE (v);
+      WFD_READ_UINT32_DIGIT (msg->I2C->I2C_port);
+      if (msg->I2C->I2C_port)
+        msg->I2C->I2CPresent = TRUE;
+    }
+  } else if (!g_strcmp0 (attr, "wfd_av_format_change_timing")) {
+    msg->av_format_change_timing = g_new0 (GstWFDAVFormatChangeTiming, 1);
+    if (strlen (v)) {
+      WFD_SKIP_SPACE (v);
+      WFD_READ_UINT32 (msg->av_format_change_timing->PTS);
+      WFD_SKIP_SPACE (v);
+      WFD_READ_UINT32 (msg->av_format_change_timing->DTS);
+    }
+  } else if (!g_strcmp0 (attr, "wfd_preferred_display_mode")) {
+    msg->preferred_display_mode = g_new0 (GstWFDPreferredDisplayMode, 1);
+    if (strlen (v)) {
+      WFD_SKIP_SPACE (v);
+      if (!strstr (v, "none")) {
+        msg->preferred_display_mode->displaymodesupported = FALSE;
+      } else {
+        WFD_READ_UINT32 (msg->preferred_display_mode->p_clock);
+        WFD_SKIP_SPACE (v);
+        WFD_READ_UINT32 (msg->preferred_display_mode->H);
+        WFD_SKIP_SPACE (v);
+        WFD_READ_UINT32 (msg->preferred_display_mode->HB);
+        WFD_SKIP_SPACE (v);
+        WFD_READ_UINT32 (msg->preferred_display_mode->HSPOL_HSOFF);
+        WFD_SKIP_SPACE (v);
+        WFD_READ_UINT32 (msg->preferred_display_mode->HSW);
+        WFD_SKIP_SPACE (v);
+        WFD_READ_UINT32 (msg->preferred_display_mode->V);
+        WFD_SKIP_SPACE (v);
+        WFD_READ_UINT32 (msg->preferred_display_mode->VB);
+        WFD_SKIP_SPACE (v);
+        WFD_READ_UINT32 (msg->preferred_display_mode->VSPOL_VSOFF);
+        WFD_SKIP_SPACE (v);
+        WFD_READ_UINT32 (msg->preferred_display_mode->VSW);
+        WFD_SKIP_SPACE (v);
+        WFD_READ_UINT32 (msg->preferred_display_mode->VBS3D);
+        WFD_SKIP_SPACE (v);
+        WFD_READ_UINT32 (msg->preferred_display_mode->V2d_s3d_modes);
+        WFD_SKIP_SPACE (v);
+        WFD_READ_UINT32 (msg->preferred_display_mode->P_depth);
+        WFD_SKIP_SPACE (v);
+        WFD_READ_UINT32 (msg->preferred_display_mode->H264_codec.profile);
+        WFD_SKIP_SPACE (v);
+        WFD_READ_UINT32 (msg->preferred_display_mode->H264_codec.level);
+        WFD_SKIP_SPACE (v);
+        WFD_READ_UINT32 (msg->preferred_display_mode->H264_codec.
+            misc_params.CEA_Support);
+        WFD_SKIP_SPACE (v);
+        WFD_READ_UINT32 (msg->preferred_display_mode->H264_codec.
+            misc_params.VESA_Support);
+        WFD_SKIP_SPACE (v);
+        WFD_READ_UINT32 (msg->preferred_display_mode->H264_codec.
+            misc_params.HH_Support);
+        WFD_SKIP_SPACE (v);
+        WFD_READ_UINT32 (msg->preferred_display_mode->H264_codec.
+            misc_params.latency);
+        WFD_SKIP_SPACE (v);
+        WFD_READ_UINT32 (msg->preferred_display_mode->H264_codec.
+            misc_params.min_slice_size);
+        WFD_SKIP_SPACE (v);
+        WFD_READ_UINT32 (msg->preferred_display_mode->H264_codec.
+            misc_params.slice_enc_params);
+        WFD_SKIP_SPACE (v);
+        WFD_READ_UINT32 (msg->preferred_display_mode->H264_codec.
+            misc_params.frame_rate_control_support);
+        WFD_SKIP_SPACE (v);
+        WFD_READ_UINT32 (msg->preferred_display_mode->H264_codec.max_hres);
+        WFD_SKIP_SPACE (v);
+        WFD_READ_UINT32 (msg->preferred_display_mode->H264_codec.max_vres);
+        WFD_SKIP_SPACE (v);
+      }
+    }
+  } else if (!g_strcmp0 (attr, "wfd_uibc_capability")) {
+    msg->uibc_capability = g_new0 (GstWFDUibcCapability, 1);
+    if (strstr (v, "input_category_list")) {
+      gchar *tstring = NULL;
+      msg->uibc_capability->uibcsupported = TRUE;
+      WFD_SKIP_SPACE (v);
+      WFD_READ_CHAR_END_STRING (tstring, '=');
+      if (!g_strcmp0 (tstring, "input_category_list")) {
+        gchar temp[8192];
+        guint rem_len, read_len = 0;
+        WFD_READ_CHAR_END_STRING (tstring, ';');
+        rem_len = strlen (tstring);
+        do {
+          WFD_SKIP_SPACE (v);
+          _read_string_char_ended (temp, 8192, ',', tstring + read_len);
+          read_len += (strlen (temp) + 1);
+          if (strstr (temp, "GENERIC"))
+            msg->uibc_capability->input_category_list.input_cat |=
+                GST_WFD_UIBC_INPUT_CAT_GENERIC;
+          else if (strstr (temp, "HIDC"))
+            msg->uibc_capability->input_category_list.input_cat |=
+                GST_WFD_UIBC_INPUT_CAT_HIDC;
+          else
+            msg->uibc_capability->input_category_list.input_cat |=
+                GST_WFD_UIBC_INPUT_CAT_UNKNOWN;
+        } while (read_len < rem_len);
+        v = strstr (v, "generic_cap_list");
+        WFD_READ_CHAR_END_STRING (tstring, '=');
+        if (!g_strcmp0 (tstring, "generic_cap_list")) {
+          gchar temp[8192];
+          guint rem_len, read_len = 0;
+          WFD_SKIP_SPACE (v);
+          WFD_READ_CHAR_END_STRING (tstring, ';');
+          rem_len = strlen (tstring);
+          do {
+            _read_string_char_ended (temp, 8192, ',', tstring + read_len);
+            read_len += (strlen (temp) + 1);
+            if (strstr (temp, "Keyboard"))
+              msg->uibc_capability->generic_cap_list.inp_type |=
+                  GST_WFD_UIBC_INPUT_TYPE_KEYBOARD;
+            else if (strstr (temp, "Mouse"))
+              msg->uibc_capability->generic_cap_list.inp_type |=
+                  GST_WFD_UIBC_INPUT_TYPE_MOUSE;
+            else if (strstr (temp, "SingleTouch"))
+              msg->uibc_capability->generic_cap_list.inp_type |=
+                  GST_WFD_UIBC_INPUT_TYPE_SINGLETOUCH;
+            else if (strstr (temp, "MultiTouch"))
+              msg->uibc_capability->generic_cap_list.inp_type |=
+                  GST_WFD_UIBC_INPUT_TYPE_MULTITOUCH;
+            else if (strstr (temp, "Joystick"))
+              msg->uibc_capability->generic_cap_list.inp_type |=
+                  GST_WFD_UIBC_INPUT_TYPE_JOYSTICK;
+            else if (strstr (temp, "Camera"))
+              msg->uibc_capability->generic_cap_list.inp_type |=
+                  GST_WFD_UIBC_INPUT_TYPE_CAMERA;
+            else if (strstr (temp, "Gesture"))
+              msg->uibc_capability->generic_cap_list.inp_type |=
+                  GST_WFD_UIBC_INPUT_TYPE_GESTURE;
+            else if (strstr (temp, "RemoteControl"))
+              msg->uibc_capability->generic_cap_list.inp_type |=
+                  GST_WFD_UIBC_INPUT_TYPE_REMOTECONTROL;
+            else
+              msg->uibc_capability->generic_cap_list.inp_type |=
+                  GST_WFD_UIBC_INPUT_TYPE_UNKNOWN;
+          } while (read_len < rem_len);
+        }
+        v = strstr (v, "hidc_cap_list");
+        WFD_SKIP_SPACE (v);
+        WFD_READ_CHAR_END_STRING (tstring, '=');
+        if (!g_strcmp0 (tstring, "hidc_cap_list")) {
+          gchar temp[8192];
+          gchar inp_type[8192];
+          gchar inp_path[8192];
+          guint rem_len, read_len = 0;
+          detailed_cap *temp_cap;
+          WFD_READ_CHAR_END_STRING (tstring, ';');
+          rem_len = strlen (tstring);
+          msg->uibc_capability->hidc_cap_list.next = g_new0 (detailed_cap, 1);
+          temp_cap = msg->uibc_capability->hidc_cap_list.next;
+          do {
+            msg->uibc_capability->hidc_cap_list.cap_count++;
+            _read_string_char_ended (temp, 8192, ',', tstring + read_len);
+            read_len += (strlen (temp) + 1);
+            _read_string_attr_and_value (inp_type, inp_path, sizeof (inp_type),
+                sizeof (inp_path), '/', temp);
+            if (strstr (inp_type, "Keyboard"))
+              temp_cap->p.inp_type = GST_WFD_UIBC_INPUT_TYPE_KEYBOARD;
+            else if (strstr (inp_type, "Mouse"))
+              temp_cap->p.inp_type = GST_WFD_UIBC_INPUT_TYPE_MOUSE;
+            else if (strstr (inp_type, "SingleTouch"))
+              temp_cap->p.inp_type = GST_WFD_UIBC_INPUT_TYPE_SINGLETOUCH;
+            else if (strstr (inp_type, "MultiTouch"))
+              temp_cap->p.inp_type = GST_WFD_UIBC_INPUT_TYPE_MULTITOUCH;
+            else if (strstr (inp_type, "Joystick"))
+              temp_cap->p.inp_type = GST_WFD_UIBC_INPUT_TYPE_JOYSTICK;
+            else if (strstr (inp_type, "Camera"))
+              temp_cap->p.inp_type = GST_WFD_UIBC_INPUT_TYPE_CAMERA;
+            else if (strstr (inp_type, "Gesture"))
+              temp_cap->p.inp_type = GST_WFD_UIBC_INPUT_TYPE_GESTURE;
+            else if (strstr (inp_type, "RemoteControl"))
+              temp_cap->p.inp_type = GST_WFD_UIBC_INPUT_TYPE_REMOTECONTROL;
+            else
+              temp_cap->p.inp_type = GST_WFD_UIBC_INPUT_TYPE_UNKNOWN;
+
+            if (strstr (inp_path, "Infrared"))
+              temp_cap->p.inp_path = GST_WFD_UIBC_INPUT_PATH_INFRARED;
+            else if (strstr (inp_path, "USB"))
+              temp_cap->p.inp_path = GST_WFD_UIBC_INPUT_PATH_USB;
+            else if (strstr (inp_path, "BT"))
+              temp_cap->p.inp_path = GST_WFD_UIBC_INPUT_PATH_BT;
+            else if (strstr (inp_path, "Zigbee"))
+              temp_cap->p.inp_path = GST_WFD_UIBC_INPUT_PATH_ZIGBEE;
+            else if (strstr (inp_path, "Wi-Fi"))
+              temp_cap->p.inp_path = GST_WFD_UIBC_INPUT_PATH_WIFI;
+            else if (strstr (inp_path, "No-SP"))
+              temp_cap->p.inp_path = GST_WFD_UIBC_INPUT_PATH_NOSP;
+            else
+              temp_cap->p.inp_path = GST_WFD_UIBC_INPUT_PATH_UNKNOWN;
+            if (read_len < rem_len) {
+              temp_cap->next = g_new0 (detailed_cap, 1);
+              temp_cap = temp_cap->next;
+            }
+          } while (read_len < rem_len);
+        }
+        if (strstr (v, "port")) {
+          v = strstr (v, "port");
+          WFD_READ_CHAR_END_STRING (tstring, '=');
+          if (!g_strcmp0 (tstring, "port")) {
+            WFD_SKIP_EQUAL (v);
+            WFD_READ_CHAR_END_STRING (tstring, ';');
+            if (!strstr (tstring, "none")) {
+              msg->uibc_capability->tcp_port = strtoul (tstring, NULL, 10);
+            }
+          }
+        }
+      }
+    } else if (strstr (v, "none")) {
+      msg->uibc_capability->uibcsupported = FALSE;
+    }
+  } else if (!g_strcmp0 (attr, "wfd_uibc_setting")) {
+    msg->uibc_setting = g_new0 (GstWFDUibcSetting, 1);
+    if (strlen (v)) {
+      WFD_SKIP_SPACE (v);
+      if (!g_strcmp0 (v, "enable"))
+        msg->uibc_setting->uibc_setting = TRUE;
+      else
+        msg->uibc_setting->uibc_setting = FALSE;
+    }
+  } else if (!g_strcmp0 (attr, "wfd_standby_resume_capability")) {
+    msg->standby_resume_capability = g_new0 (GstWFDStandbyResumeCapability, 1);
+    if (strlen (v)) {
+      WFD_SKIP_SPACE (v);
+      if (!g_strcmp0 (v, "supported"))
+        msg->standby_resume_capability->standby_resume_cap = TRUE;
+      else
+        msg->standby_resume_capability->standby_resume_cap = FALSE;
+    }
+  } else if (!g_strcmp0 (attr, "wfd_standby")) {
+    msg->standby = g_new0 (GstWFDStandby, 1);
+    msg->standby->wfd_standby = TRUE;
+  } else if (!g_strcmp0 (attr, "wfd_connector_type")) {
+    msg->connector_type = g_new0 (GstWFDConnectorType, 1);
+    if (strlen (v)) {
+      msg->connector_type->supported = TRUE;
+      WFD_SKIP_SPACE (v);
+      WFD_READ_UINT32 (msg->connector_type->connector_type);
+    }
+  } else if (!g_strcmp0 (attr, "wfd_idr_request")) {
+    msg->idr_request = g_new0 (GstWFDIdrRequest, 1);
+    msg->idr_request->idr_request = TRUE;
+  }
+  return;
+}
+
+/**
+ * gst_wfd_message_parse_buffer:
+ * @data: the start of the buffer
+ * @size: the size of the buffer
+ * @msg: the result #GstSDPMessage
+ *
+ * Parse the contents of @size bytes pointed to by @data and store the result in
+ * @msg.
+ *
+ * Returns: #GST_SDP_OK on success.
+ */
+GstWFDResult
+gst_wfd_message_parse_buffer (const guint8 * data, guint size,
+    GstWFDMessage * msg)
+{
+  gchar *p;
+  gchar buffer[255] = { 0 };
+  guint idx = 0;
+
+  g_return_val_if_fail (msg != NULL, GST_WFD_EINVAL);
+  g_return_val_if_fail (data != NULL, GST_WFD_EINVAL);
+  g_return_val_if_fail (size != 0, GST_WFD_EINVAL);
+
+  p = (gchar *) data;
+  while (TRUE) {
+
+    if (*p == '\0')
+      break;
+
+    idx = 0;
+    while (*p != '\n' && *p != '\r' && *p != '\0') {
+      if (idx < sizeof (buffer) - 1)
+        buffer[idx++] = *p;
+      p++;
+    }
+    buffer[idx] = '\0';
+    gst_wfd_parse_attribute (buffer, msg);
+
+    if (*p == '\0')
+      break;
+    p += 2;
+  }
+  return GST_WFD_OK;
+}
+
 /**
  * gst_wfd_message_free:
  * @msg: a #GstWFDMessage
@@ -1578,7 +2157,7 @@ gst_wfd_message_get_contentprotection_type (GstWFDMessage * msg,
 
 
 GstWFDResult
-gst_wfd_messge_set_prefered_RTP_ports (GstWFDMessage * msg,
+gst_wfd_messge_set_prefered_rtp_ports (GstWFDMessage * msg,
     GstWFDRTSPTransMode trans,
     GstWFDRTSPProfile profile,
     GstWFDRTSPLowerTrans lowertrans, guint32 rtp_port0, guint32 rtp_port1)
@@ -1619,7 +2198,7 @@ gst_wfd_messge_set_prefered_RTP_ports (GstWFDMessage * msg,
 }
 
 GstWFDResult
-gst_wfd_message_get_prefered_RTP_ports (GstWFDMessage * msg,
+gst_wfd_message_get_prefered_rtp_ports (GstWFDMessage * msg,
     GstWFDRTSPTransMode * trans,
     GstWFDRTSPProfile * profile,
     GstWFDRTSPLowerTrans * lowertrans, guint32 * rtp_port0, guint32 * rtp_port1)
