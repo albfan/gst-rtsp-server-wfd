@@ -1201,30 +1201,9 @@ _set_wfd_message_body (GstRTSPWFDClient * client, GstWFDMessageType msg_type,
       GST_ERROR_OBJECT (client, "Failed to get connection URL");
       return;
     }
-#if 0
-    /* TODO-WFD
-       1. Define WFD message as a structure just like GstSDPMessage
-       2. Logic to negotiate with M3 response
-     */
-    g_string_append (buf, "wfd_audio_codecs: AAC 00000001 00");
-    g_string_append (buf, "\r\n");
-    //g_string_append(buf, "wfd_video_formats: 00 00 01 01 000000ab 00000000 00000000 00 0000 0000 00 02d0 0500");
-    //g_string_append(buf, "wfd_video_formats: 00 00 01 01 0000002b 00000000 00000000 00 0000 0000 00 02d0 0500");
-    g_string_append (buf,
-        "wfd_video_formats: 00 00 01 01 00000001 00000000 00000000 00 0000 0000 00 02d0 0500");
-    g_string_append (buf, "\r\n");
-    g_string_append (buf, "wfd_presentation_URL: ");
-    g_string_append_printf (buf, "rtsp://%s/wfd/streamid=0 none", url->host);
-    g_string_append (buf, "\r\n");
-    g_string_append (buf, "wfd_content_protection: none");
-    g_string_append (buf, "\r\n");
-    g_string_append (buf,
-        "wfd_client_rtp_ports: RTP/AVP/UDP;unicast 19000 0 mode=play");
-    g_string_append (buf, "\r\n");
-    *len = buf->len;
-    *data = g_string_free (buf, FALSE);
-#else
-    /* create M3 request to be sent */
+
+    /* Logic to negotiate with information of M3 response */
+    /* create M4 request to be sent */
     wfd_res = gst_wfd_message_new (&msg);
     if (wfd_res != GST_WFD_OK) {
       GST_ERROR_OBJECT (client, "Failed to create wfd message...");
@@ -1349,8 +1328,6 @@ _set_wfd_message_body (GstRTSPWFDClient * client, GstWFDMessageType msg_type,
     } else {
       *len = strlen (*data);
     }
-#endif
-
   } else if (msg_type == M5_REQ_MSG) {
     g_string_append (buf, "wfd_trigger_method: SETUP");
     g_string_append (buf, "\r\n");
