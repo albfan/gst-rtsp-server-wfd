@@ -81,8 +81,8 @@ struct _GstRTSPWFDClientPrivate
   guint cvCodec;
   guint cNative;
   guint64 cNativeResolution;
-  guint64 cVideo_reso_supported;
-  gint cSrcNative;
+  guint64 video_resolution_supported;
+  gint video_native_resolution;
   guint cCEAResolution;
   guint cVESAResolution;
   guint cHHResolution;
@@ -220,6 +220,8 @@ gst_rtsp_wfd_client_init (GstRTSPWFDClient * client)
 
   client->priv = priv;
   priv->protection_enabled = FALSE;
+  priv->video_native_resolution = GST_WFD_VIDEO_CEA_RESOLUTION;
+  priv->video_resolution_supported = GST_WFD_CEA_640x480P60;
   GST_INFO_OBJECT (client, "Client is initialized");
 }
 
@@ -285,31 +287,444 @@ gst_rtsp_wfd_client_start_wfd (GstRTSPWFDClient * client)
   res = handle_M1_message (client);
   if (res < GST_RTSP_OK) {
     GST_ERROR_OBJECT (client, "handle_M1_message failed : %d", res);
-    goto error;
   }
 
-error:
   return;
 }
-
-gboolean g_m1_done = FALSE;
-gboolean g_m4_done = FALSE;
 
 static void
 wfd_options_request_done (GstRTSPWFDClient * client)
 {
+  GstRTSPResult res = GST_RTSP_OK;
   GST_INFO_OBJECT (client, "M2 done..");
 
-  handle_M3_message (client);
+  res = handle_M3_message (client);
+  if (res < GST_RTSP_OK) {
+    GST_ERROR_OBJECT (client, "handle_M3_message failed : %d", res);
+  }
+
+  return;
 }
 
 static void
 wfd_get_param_request_done (GstRTSPWFDClient * client)
 {
+  GstRTSPResult res = GST_RTSP_OK;
   GstRTSPWFDClientPrivate *priv = GST_RTSP_WFD_CLIENT_GET_PRIVATE (client);
   priv->m3_done = TRUE;
   GST_INFO_OBJECT (client, "M3 done..");
-  handle_M4_message (client);
+
+  res = handle_M4_message (client);
+  if (res < GST_RTSP_OK) {
+    GST_ERROR_OBJECT (client, "handle_M4_message failed : %d", res);
+  }
+
+  return;
+}
+
+static guint64
+wfd_get_prefered_resolution (guint64 srcResolution,
+    guint64 sinkResolution,
+    GstWFDVideoNativeResolution native,
+    guint32 * cMaxWidth,
+    guint32 * cMaxHeight, guint32 * cFramerate, guint32 * interleaved)
+{
+  int i = 0;
+  guint64 resolution = 0;
+  for (i = 0; i < 32; i++) {
+    if (((sinkResolution << i) & 0x80000000)
+        && ((srcResolution << i) & 0x80000000)) {
+      resolution = (0x00000001 << (31 - i));
+      break;
+    }
+  }
+  switch (native) {
+    case GST_WFD_VIDEO_CEA_RESOLUTION:
+    {
+      switch (resolution) {
+        case GST_WFD_CEA_640x480P60:
+          *cMaxWidth = 640;
+          *cMaxHeight = 480;
+          *cFramerate = 60;
+          *interleaved = 0;
+          break;
+        case GST_WFD_CEA_720x480P60:
+          *cMaxWidth = 720;
+          *cMaxHeight = 480;
+          *cFramerate = 60;
+          *interleaved = 0;
+          break;
+        case GST_WFD_CEA_720x480I60:
+          *cMaxWidth = 720;
+          *cMaxHeight = 480;
+          *cFramerate = 60;
+          *interleaved = 1;
+          break;
+        case GST_WFD_CEA_720x576P50:
+          *cMaxWidth = 720;
+          *cMaxHeight = 576;
+          *cFramerate = 50;
+          *interleaved = 0;
+          break;
+        case GST_WFD_CEA_720x576I50:
+          *cMaxWidth = 720;
+          *cMaxHeight = 576;
+          *cFramerate = 50;
+          *interleaved = 1;
+          break;
+        case GST_WFD_CEA_1280x720P30:
+          *cMaxWidth = 1280;
+          *cMaxHeight = 720;
+          *cFramerate = 30;
+          *interleaved = 0;
+          break;
+        case GST_WFD_CEA_1280x720P60:
+          *cMaxWidth = 1280;
+          *cMaxHeight = 720;
+          *cFramerate = 60;
+          *interleaved = 0;
+          break;
+        case GST_WFD_CEA_1920x1080P30:
+          *cMaxWidth = 1920;
+          *cMaxHeight = 1080;
+          *cFramerate = 30;
+          *interleaved = 0;
+          break;
+        case GST_WFD_CEA_1920x1080P60:
+          *cMaxWidth = 1920;
+          *cMaxHeight = 1080;
+          *cFramerate = 60;
+          *interleaved = 0;
+          break;
+        case GST_WFD_CEA_1920x1080I60:
+          *cMaxWidth = 1920;
+          *cMaxHeight = 1080;
+          *cFramerate = 60;
+          *interleaved = 1;
+          break;
+        case GST_WFD_CEA_1280x720P25:
+          *cMaxWidth = 1280;
+          *cMaxHeight = 720;
+          *cFramerate = 25;
+          *interleaved = 0;
+          break;
+        case GST_WFD_CEA_1280x720P50:
+          *cMaxWidth = 1280;
+          *cMaxHeight = 720;
+          *cFramerate = 50;
+          *interleaved = 0;
+          break;
+        case GST_WFD_CEA_1920x1080P25:
+          *cMaxWidth = 1920;
+          *cMaxHeight = 1080;
+          *cFramerate = 25;
+          *interleaved = 0;
+          break;
+        case GST_WFD_CEA_1920x1080P50:
+          *cMaxWidth = 1920;
+          *cMaxHeight = 1080;
+          *cFramerate = 50;
+          *interleaved = 0;
+          break;
+        case GST_WFD_CEA_1920x1080I50:
+          *cMaxWidth = 1920;
+          *cMaxHeight = 1080;
+          *cFramerate = 50;
+          *interleaved = 1;
+          break;
+        case GST_WFD_CEA_1280x720P24:
+          *cMaxWidth = 1280;
+          *cMaxHeight = 720;
+          *cFramerate = 24;
+          *interleaved = 0;
+          break;
+        case GST_WFD_CEA_1920x1080P24:
+          *cMaxWidth = 1920;
+          *cMaxHeight = 1080;
+          *cFramerate = 24;
+          *interleaved = 0;
+          break;
+        default:
+          *cMaxWidth = 0;
+          *cMaxHeight = 0;
+          *cFramerate = 0;
+          *interleaved = 0;
+          break;
+      }
+    }
+      break;
+    case GST_WFD_VIDEO_VESA_RESOLUTION:
+    {
+      switch (resolution) {
+        case GST_WFD_VESA_800x600P30:
+          *cMaxWidth = 800;
+          *cMaxHeight = 600;
+          *cFramerate = 30;
+          *interleaved = 0;
+          break;
+        case GST_WFD_VESA_800x600P60:
+          *cMaxWidth = 800;
+          *cMaxHeight = 600;
+          *cFramerate = 60;
+          *interleaved = 0;
+          break;
+        case GST_WFD_VESA_1024x768P30:
+          *cMaxWidth = 1024;
+          *cMaxHeight = 768;
+          *cFramerate = 30;
+          *interleaved = 0;
+          break;
+        case GST_WFD_VESA_1024x768P60:
+          *cMaxWidth = 1024;
+          *cMaxHeight = 768;
+          *cFramerate = 60;
+          *interleaved = 0;
+          break;
+        case GST_WFD_VESA_1152x864P30:
+          *cMaxWidth = 1152;
+          *cMaxHeight = 864;
+          *cFramerate = 30;
+          *interleaved = 0;
+          break;
+        case GST_WFD_VESA_1152x864P60:
+          *cMaxWidth = 1152;
+          *cMaxHeight = 864;
+          *cFramerate = 60;
+          *interleaved = 0;
+          break;
+        case GST_WFD_VESA_1280x768P30:
+          *cMaxWidth = 1280;
+          *cMaxHeight = 768;
+          *cFramerate = 30;
+          *interleaved = 0;
+          break;
+        case GST_WFD_VESA_1280x768P60:
+          *cMaxWidth = 1280;
+          *cMaxHeight = 768;
+          *cFramerate = 60;
+          *interleaved = 0;
+          break;
+        case GST_WFD_VESA_1280x800P30:
+          *cMaxWidth = 1280;
+          *cMaxHeight = 800;
+          *cFramerate = 30;
+          *interleaved = 0;
+          break;
+        case GST_WFD_VESA_1280x800P60:
+          *cMaxWidth = 1280;
+          *cMaxHeight = 800;
+          *cFramerate = 60;
+          *interleaved = 0;
+          break;
+        case GST_WFD_VESA_1360x768P30:
+          *cMaxWidth = 1360;
+          *cMaxHeight = 768;
+          *cFramerate = 30;
+          *interleaved = 0;
+          break;
+        case GST_WFD_VESA_1360x768P60:
+          *cMaxWidth = 1360;
+          *cMaxHeight = 768;
+          *cFramerate = 60;
+          *interleaved = 0;
+          break;
+        case GST_WFD_VESA_1366x768P30:
+          *cMaxWidth = 1366;
+          *cMaxHeight = 768;
+          *cFramerate = 30;
+          *interleaved = 0;
+          break;
+        case GST_WFD_VESA_1366x768P60:
+          *cMaxWidth = 1366;
+          *cMaxHeight = 768;
+          *cFramerate = 60;
+          *interleaved = 0;
+          break;
+        case GST_WFD_VESA_1280x1024P30:
+          *cMaxWidth = 1280;
+          *cMaxHeight = 1024;
+          *cFramerate = 30;
+          *interleaved = 0;
+          break;
+        case GST_WFD_VESA_1280x1024P60:
+          *cMaxWidth = 1280;
+          *cMaxHeight = 1024;
+          *cFramerate = 60;
+          *interleaved = 0;
+          break;
+        case GST_WFD_VESA_1400x1050P30:
+          *cMaxWidth = 1400;
+          *cMaxHeight = 1050;
+          *cFramerate = 30;
+          *interleaved = 0;
+          break;
+        case GST_WFD_VESA_1400x1050P60:
+          *cMaxWidth = 1400;
+          *cMaxHeight = 1050;
+          *cFramerate = 60;
+          *interleaved = 0;
+          break;
+        case GST_WFD_VESA_1440x900P30:
+          *cMaxWidth = 1440;
+          *cMaxHeight = 900;
+          *cFramerate = 30;
+          *interleaved = 0;
+          break;
+        case GST_WFD_VESA_1440x900P60:
+          *cMaxWidth = 1440;
+          *cMaxHeight = 900;
+          *cFramerate = 60;
+          *interleaved = 0;
+          break;
+        case GST_WFD_VESA_1600x900P30:
+          *cMaxWidth = 1600;
+          *cMaxHeight = 900;
+          *cFramerate = 30;
+          *interleaved = 0;
+          break;
+        case GST_WFD_VESA_1600x900P60:
+          *cMaxWidth = 1600;
+          *cMaxHeight = 900;
+          *cFramerate = 60;
+          *interleaved = 0;
+          break;
+        case GST_WFD_VESA_1600x1200P30:
+          *cMaxWidth = 1600;
+          *cMaxHeight = 1200;
+          *cFramerate = 30;
+          *interleaved = 0;
+          break;
+        case GST_WFD_VESA_1600x1200P60:
+          *cMaxWidth = 1600;
+          *cMaxHeight = 1200;
+          *cFramerate = 60;
+          *interleaved = 0;
+          break;
+        case GST_WFD_VESA_1680x1024P30:
+          *cMaxWidth = 1680;
+          *cMaxHeight = 1024;
+          *cFramerate = 30;
+          *interleaved = 0;
+          break;
+        case GST_WFD_VESA_1680x1024P60:
+          *cMaxWidth = 1680;
+          *cMaxHeight = 1024;
+          *cFramerate = 60;
+          *interleaved = 0;
+          break;
+        case GST_WFD_VESA_1680x1050P30:
+          *cMaxWidth = 1680;
+          *cMaxHeight = 1050;
+          *cFramerate = 30;
+          *interleaved = 0;
+          break;
+        case GST_WFD_VESA_1680x1050P60:
+          *cMaxWidth = 1680;
+          *cMaxHeight = 1050;
+          *cFramerate = 60;
+          *interleaved = 0;
+          break;
+        case GST_WFD_VESA_1920x1200P30:
+          *cMaxWidth = 1920;
+          *cMaxHeight = 1200;
+          *cFramerate = 30;
+          *interleaved = 0;
+          break;
+        case GST_WFD_VESA_1920x1200P60:
+          *cMaxWidth = 1920;
+          *cMaxHeight = 1200;
+          *cFramerate = 60;
+          *interleaved = 0;
+          break;
+        default:
+          *cMaxWidth = 0;
+          *cMaxHeight = 0;
+          *cFramerate = 0;
+          *interleaved = 0;
+          break;
+      }
+    }
+      break;
+    case GST_WFD_VIDEO_HH_RESOLUTION:
+    {
+      *interleaved = 0;
+      switch (resolution) {
+        case GST_WFD_HH_800x480P30:
+          *cMaxWidth = 800;
+          *cMaxHeight = 480;
+          *cFramerate = 30;
+          break;
+        case GST_WFD_HH_800x480P60:
+          *cMaxWidth = 800;
+          *cMaxHeight = 480;
+          *cFramerate = 60;
+          break;
+        case GST_WFD_HH_854x480P30:
+          *cMaxWidth = 854;
+          *cMaxHeight = 480;
+          *cFramerate = 30;
+          break;
+        case GST_WFD_HH_854x480P60:
+          *cMaxWidth = 854;
+          *cMaxHeight = 480;
+          *cFramerate = 60;
+          break;
+        case GST_WFD_HH_864x480P30:
+          *cMaxWidth = 864;
+          *cMaxHeight = 480;
+          *cFramerate = 30;
+          break;
+        case GST_WFD_HH_864x480P60:
+          *cMaxWidth = 864;
+          *cMaxHeight = 480;
+          *cFramerate = 60;
+          break;
+        case GST_WFD_HH_640x360P30:
+          *cMaxWidth = 640;
+          *cMaxHeight = 360;
+          *cFramerate = 30;
+          break;
+        case GST_WFD_HH_640x360P60:
+          *cMaxWidth = 640;
+          *cMaxHeight = 360;
+          *cFramerate = 60;
+          break;
+        case GST_WFD_HH_960x540P30:
+          *cMaxWidth = 960;
+          *cMaxHeight = 540;
+          *cFramerate = 30;
+          break;
+        case GST_WFD_HH_960x540P60:
+          *cMaxWidth = 960;
+          *cMaxHeight = 540;
+          *cFramerate = 60;
+          break;
+        case GST_WFD_HH_848x480P30:
+          *cMaxWidth = 848;
+          *cMaxHeight = 480;
+          *cFramerate = 30;
+          break;
+        case GST_WFD_HH_848x480P60:
+          *cMaxWidth = 848;
+          *cMaxHeight = 480;
+          *cFramerate = 60;
+          break;
+        default:
+          *cMaxWidth = 0;
+          *cMaxHeight = 0;
+          *cFramerate = 0;
+          *interleaved = 0;
+          break;
+      }
+    }
+      break;
+      *cMaxWidth = 0;
+      *cMaxHeight = 0;
+      *cFramerate = 0;
+      *interleaved = 0;
+      break;
+  }
+  return resolution;
 }
 
 static gchar *
@@ -762,17 +1177,31 @@ _set_wfd_message_body (GstRTSPWFDClient * client, GstWFDMessageType msg_type,
     }
   } else if (msg_type == M4_REQ_MSG) {
     GstRTSPUrl *url = NULL;
+    gchar *url_str = NULL;
 
     GstRTSPClient *parent_client = GST_RTSP_CLIENT_CAST (client);
     GstRTSPConnection *connection =
         gst_rtsp_client_get_connection (parent_client);
+
+    /* Parameters for the preffered audio formats */
+    GstWFDAudioFormats taudiocodec = GST_WFD_AUDIO_UNKNOWN;
+    GstWFDAudioFreq taudiofreq = GST_WFD_FREQ_UNKNOWN;
+    GstWFDAudioChannels taudiochannels = GST_WFD_CHANNEL_UNKNOWN;
+
+    /* Parameters for the preffered video formats */
+    GstWFDVideoCEAResolution tcCEAResolution = GST_WFD_CEA_UNKNOWN;
+    GstWFDVideoVESAResolution tcVESAResolution = GST_WFD_VESA_UNKNOWN;
+    GstWFDVideoHHResolution tcHHResolution = GST_WFD_HH_UNKNOWN;
+    GstWFDVideoH264Profile tcProfile;
+    GstWFDVideoH264Level tcLevel;
+    guint64 resolution_supported = 0;
 
     url = gst_rtsp_connection_get_url (connection);
     if (url == NULL) {
       GST_ERROR_OBJECT (client, "Failed to get connection URL");
       return;
     }
-
+#if 0
     /* TODO-WFD
        1. Define WFD message as a structure just like GstSDPMessage
        2. Logic to negotiate with M3 response
@@ -794,6 +1223,134 @@ _set_wfd_message_body (GstRTSPWFDClient * client, GstWFDMessageType msg_type,
     g_string_append (buf, "\r\n");
     *len = buf->len;
     *data = g_string_free (buf, FALSE);
+#else
+    /* create M3 request to be sent */
+    wfd_res = gst_wfd_message_new (&msg);
+    if (wfd_res != GST_WFD_OK) {
+      GST_ERROR_OBJECT (client, "Failed to create wfd message...");
+      goto error;
+    }
+
+    wfd_res = gst_wfd_message_init (msg);
+    if (wfd_res != GST_WFD_OK) {
+      GST_ERROR_OBJECT (client, "Failed to init wfd message...");
+      goto error;
+    }
+
+    buf = g_string_new ("");
+    g_string_append_printf (buf, "rtsp://");
+    g_string_append (buf, url->host);
+    g_string_append_printf (buf, "/wfd1.0/streamid=0");
+    wfd_res =
+        gst_wfd_message_set_presentation_url (msg, g_string_free (buf, FALSE),
+        NULL);
+    if (wfd_res != GST_WFD_OK) {
+      GST_ERROR_OBJECT (client, "Failed to set presentation url");
+      goto error;
+    }
+
+    /* set the preffered audio formats */
+    if (priv->caCodec & GST_WFD_AUDIO_AC3) {
+      GST_ERROR_OBJECT (client, "AC3 is not supported");
+      goto error;
+    } else if (priv->caCodec & GST_WFD_AUDIO_AAC) {
+      taudiocodec = GST_WFD_AUDIO_AAC;
+    } else if (priv->caCodec & GST_WFD_AUDIO_LPCM) {
+      taudiocodec = GST_WFD_AUDIO_LPCM;
+    }
+    priv->caCodec = taudiocodec;
+
+    if (priv->cFreq & GST_WFD_FREQ_48000)
+      taudiofreq = GST_WFD_FREQ_48000;
+    else if (priv->cFreq & GST_WFD_FREQ_44100)
+      taudiofreq = GST_WFD_FREQ_44100;
+    priv->cFreq = taudiofreq;
+
+    /* TODO-WFD: Currently only 2 channels is present */
+    if (priv->cChanels & GST_WFD_CHANNEL_8)
+      taudiochannels = GST_WFD_CHANNEL_2;
+    else if (priv->cChanels & GST_WFD_CHANNEL_6)
+      taudiochannels = GST_WFD_CHANNEL_2;
+    else if (priv->cChanels & GST_WFD_CHANNEL_4)
+      taudiochannels = GST_WFD_CHANNEL_2;
+    else if (priv->cChanels & GST_WFD_CHANNEL_2)
+      taudiochannels = GST_WFD_CHANNEL_2;
+    priv->cChanels = taudiochannels;
+
+    wfd_res =
+        gst_wfd_message_set_prefered_audio_format (msg, taudiocodec, taudiofreq,
+        taudiochannels, priv->cBitwidth, priv->caLatency);
+    if (wfd_res != GST_WFD_OK) {
+      GST_ERROR_OBJECT (priv, "Failed to set preffered audio formats...");
+      goto error;
+    }
+
+    /* Set the preffered video formats */
+    priv->cvCodec = GST_WFD_VIDEO_H264;
+    priv->cProfile = tcProfile = GST_WFD_H264_BASE_PROFILE;
+    priv->cLevel = tcLevel = GST_WFD_H264_LEVEL_3_1;
+
+    resolution_supported = priv->video_resolution_supported;
+
+    /* TODO-WFD: Need to verify this logic
+       if(priv->edid_supported) {
+       if (priv->edid_hres < 1920) resolution_supported = resolution_supported & 0x8C7F;
+       if (priv->edid_hres < 1280) resolution_supported = resolution_supported & 0x1F;
+       if (priv->edid_hres < 720) resolution_supported = resolution_supported & 0x01;
+       }
+     */
+
+    if (priv->video_native_resolution == GST_WFD_VIDEO_CEA_RESOLUTION) {
+      tcCEAResolution =
+          wfd_get_prefered_resolution (resolution_supported,
+          priv->cCEAResolution, priv->video_native_resolution, &priv->cMaxWidth,
+          &priv->cMaxHeight, &priv->cFramerate, &priv->cInterleaved);
+      GST_DEBUG
+          ("wfd negotiated resolution: %08x, width: %d, height: %d, framerate: %d, interleaved: %d",
+          tcCEAResolution, priv->cMaxWidth, priv->cMaxHeight, priv->cFramerate,
+          priv->cInterleaved);
+    } else if (priv->video_native_resolution == GST_WFD_VIDEO_VESA_RESOLUTION) {
+      tcVESAResolution =
+          wfd_get_prefered_resolution (resolution_supported,
+          priv->cVESAResolution, priv->video_native_resolution,
+          &priv->cMaxWidth, &priv->cMaxHeight, &priv->cFramerate,
+          &priv->cInterleaved);
+      GST_DEBUG
+          ("wfd negotiated resolution: %08x, width: %d, height: %d, framerate: %d, interleaved: %d",
+          tcVESAResolution, priv->cMaxWidth, priv->cMaxHeight, priv->cFramerate,
+          priv->cInterleaved);
+    } else if (priv->video_native_resolution == GST_WFD_VIDEO_HH_RESOLUTION) {
+      tcHHResolution =
+          wfd_get_prefered_resolution (resolution_supported,
+          priv->cHHResolution, priv->video_native_resolution, &priv->cMaxWidth,
+          &priv->cMaxHeight, &priv->cFramerate, &priv->cInterleaved);
+      GST_DEBUG
+          ("wfd negotiated resolution: %08x, width: %d, height: %d, framerate: %d, interleaved: %d",
+          tcHHResolution, priv->cMaxWidth, priv->cMaxHeight, priv->cFramerate,
+          priv->cInterleaved);
+    }
+
+    wfd_res =
+        gst_wfd_message_set_prefered_video_format (msg, priv->cvCodec,
+        priv->video_native_resolution, GST_WFD_CEA_UNKNOWN, tcCEAResolution,
+        tcVESAResolution, tcHHResolution, tcProfile, tcLevel, priv->cvLatency,
+        priv->cMaxWidth, priv->cMaxHeight, priv->cmin_slice_size,
+        priv->cslice_enc_params, priv->cframe_rate_control);
+
+    if (wfd_res != GST_WFD_OK) {
+      GST_ERROR_OBJECT (client, "Failed to set preffered video formats...");
+      goto error;
+    }
+
+    *data = gst_wfd_message_as_text (msg);
+    if (*data == NULL) {
+      GST_ERROR_OBJECT (client, "Failed to get wfd message as text...");
+      goto error;
+    } else {
+      *len = strlen (*data);
+    }
+#endif
+
   } else if (msg_type == M5_REQ_MSG) {
     g_string_append (buf, "wfd_trigger_method: SETUP");
     g_string_append (buf, "\r\n");

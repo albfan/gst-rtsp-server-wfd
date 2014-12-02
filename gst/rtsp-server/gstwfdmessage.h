@@ -648,6 +648,13 @@ GstWFDResult gst_wfd_message_get_prefered_rtp_ports (GstWFDMessage *msg,
                                         GstWFDRTSPLowerTrans *lowertrans,
                                         guint32 *rtp_port0,
                                         guint32 *rtp_port1);
+
+GstWFDResult gst_wfd_message_set_presentation_url(GstWFDMessage *msg,
+                                        gchar *wfd_url0, gchar *wfd_url1);
+
+GstWFDResult gst_wfd_message_get_presentation_url(GstWFDMessage *msg, gchar **wfd_url0,
+                                        gchar **wfd_url1);
+
 G_END_DECLS
 
 #endif /* __GST_WFD_MESSAGE_H__ */

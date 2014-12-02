@@ -42,11 +42,11 @@ c_sources = \
 	rtsp-session-media.c \
 	rtsp-session-pool.c \
 	rtsp-token.c \
+	gstwfdmessage.c \
 	rtsp-client-wfd.c \
 	rtsp-client.c \
 	rtsp-server-wfd.c \
-	rtsp-server.c \
-	gstwfdmessage.c
+	rtsp-server.c
 
 noinst_HEADERS = 
 

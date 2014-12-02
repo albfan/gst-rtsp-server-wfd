@@ -2228,3 +2228,31 @@ gst_wfd_message_get_prefered_rtp_ports (GstWFDMessage * msg,
 
   return GST_WFD_OK;
 }
+
+GstWFDResult
+gst_wfd_message_set_presentation_url (GstWFDMessage * msg, gchar * wfd_url0,
+    gchar * wfd_url1)
+{
+  g_return_val_if_fail (msg != NULL, GST_WFD_EINVAL);
+
+  if (!msg->presentation_url)
+    msg->presentation_url = g_new0 (GstWFDPresentationUrl, 1);
+  if (wfd_url0)
+    msg->presentation_url->wfd_url0 = g_strdup (wfd_url0);
+  if (wfd_url1)
+    msg->presentation_url->wfd_url1 = g_strdup (wfd_url1);
+  return GST_WFD_OK;
+}
+
+GstWFDResult
+gst_wfd_message_get_presentation_url (GstWFDMessage * msg, gchar ** wfd_url0,
+    gchar ** wfd_url1)
+{
+  g_return_val_if_fail (msg != NULL, GST_WFD_EINVAL);
+
+  if (msg->presentation_url) {
+    *wfd_url0 = g_strdup (msg->presentation_url->wfd_url0);
+    *wfd_url1 = g_strdup (msg->presentation_url->wfd_url1);
+  }
+  return GST_WFD_OK;
+}
